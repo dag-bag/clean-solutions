@@ -1,3 +1,31 @@
+/** @format */
+@import url("https://fonts.googleapis.com/css2?family=Open+Sans:wght@300;400;500;600;700;800&family=Zen+Antique&display=swap");
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
+@layer base {
+  html {
+    font-family: "Zen Antique", sans-serif;
+  }
+}
+@layer utilities {
+  .rangeen {
+    @apply bg-gradient-to-r from-green-300 via-blue-500 to-purple-600 bg-clip-text text-3xl font-extrabold text-transparent sm:text-5xl;
+  }
+  .bg1 {
+    background: rgb(56, 189, 248);
+    background: linear-gradient(
+      90deg,
+      rgba(56, 189, 248, 1) 0%,
+      rgba(255, 255, 255, 1) 60%
+    );
+  }
+  .bg2 {
+    background: rgb(56, 189, 248);
+    background: linear-gradient(
+      180deg,
+      rgba(56, 189, 248, 1) 0%,
+      rgba(255, 255, 255, 1) 60%
+    );
+  }
+}
