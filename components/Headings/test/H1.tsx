@@ -21,7 +21,7 @@ function H1({ Text }: Props) {
           ease: [0.48, 0.15, 0.25, 0.96],
         },
       }}
-      className="font-semibold text-5xl"
+      className="bg-gradient-to-r from-green-300 via-blue-500 to-purple-600 bg-clip-text text-3xl font-extrabold text-transparent sm:text-5xl"
     >
       {Text}
       {/* <span className="sm:block"> Increase Conversion. </span> */}

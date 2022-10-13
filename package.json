@@ -11,6 +11,7 @@
     "next": "latest",
     "react": "18.1.0",
     "react-dom": "18.1.0",
+    "recoil": "^0.7.6",
     "yup": "^0.32.11"
   },
   "devDependencies": {

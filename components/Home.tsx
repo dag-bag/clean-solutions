@@ -3,7 +3,7 @@
 import React from "react";
 import Link from "next/link";
 import { motion } from "framer-motion";
-import Flex from "./Flex";
+import Flex from "./utils/Flex";
 // import Loader from "./Loader";
 const buttonVariants = {
   hover: {

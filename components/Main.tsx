@@ -39,19 +39,28 @@ function Main({}: Props) {
           />
         </div>
       </div>
-      <div className="flex items-center justify-center p-16 flex-col space-y-8">
+      <div className="flex items-center justify-center p-16 flex-col space-y-4">
         <h1 className="font-bold text-4xl ">
-          Clean Solutions <br /> Take Your Own Adventure Quiz
+          <span className="text-blue-1">Clean</span>{" "}
+          <span className="text-green-1">Solutions</span> Take Your <br /> Own
+          Adventure Quiz
         </h1>
-        <p className="max-w-sm">
+        <p className="font-semibold italic mb-10">
           Today’s world requires a stronger and safer response for disinfection.
-          Discover easy ways to apply chlorine dioxide on skin contact, hard and
-          soft surfaces, animals, food, plants, water, or fogging entire rooms
-          for odor and kill 99.99% of bacteria, viruses, mold, and more
         </p>
-        <button className="bg-[#2dd4bf] text-white px-8 py-5 text-2xl rounded-md">
-          Start Quiz
-        </button>
+
+        <p className="leading-9">
+          Discover easy ways to use VeriSan to defeat 99.99% <br /> of bacteria,
+          viruses, mold, odor, and more. Use on <br /> hard and soft surfaces,
+          for food and plants, in water, <br /> on skin and animals, or for
+          fogging entire rooms.
+        </p>
+
+        <Link href="/quiz">
+          <button className="bg-green-1 text-white px-10 py-5 text-3xl rounded-md ">
+            Start Quiz
+          </button>
+        </Link>
       </div>
       {/* Container for demo purpose */}
       {/* <section className=" text-white">

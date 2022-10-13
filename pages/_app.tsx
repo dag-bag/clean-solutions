@@ -3,10 +3,15 @@
 import "../styles/globals.css";
 import type { AppProps } from "next/app";
 import { AnimatePresence } from "framer-motion";
+import { RecoilRoot } from "recoil";
+
 function MyApp({ Component, pageProps, router }: AppProps) {
+  console.log(router);
   return (
     <AnimatePresence exitBeforeEnter>
-      <Component {...pageProps} key={router.route} />;
+      <RecoilRoot>
+        <Component {...pageProps} key={router.asPath} />;
+      </RecoilRoot>
     </AnimatePresence>
   );
 }

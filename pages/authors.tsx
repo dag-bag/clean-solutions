@@ -4,7 +4,7 @@ import React from "react";
 import Link from "next/link";
 import { motion } from "framer-motion";
 import { inflateRaw } from "zlib";
-import Flex from "../components/Flex";
+import Flex from "../components/utils/Flex";
 const containerVariants = {
   hidden: {
     opacity: 0,
