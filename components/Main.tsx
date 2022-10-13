@@ -4,6 +4,8 @@ import React from "react";
 import { motion } from "framer-motion";
 import Link from "next/link";
 import Image from "next/image";
+import { useRecoilValue } from "recoil";
+import { stepAtom } from "../atoms/steps";
 type Props = {};
 const fadeInUp = {
   initial: {
@@ -20,6 +22,7 @@ const fadeInUp = {
   },
 };
 function Main({}: Props) {
+  const page = useRecoilValue(stepAtom);
   return (
     <motion.div
       exit={{ opacity: 0 }}
@@ -58,7 +61,7 @@ function Main({}: Props) {
 
         <Link href="/quiz">
           <button className="bg-green-1 text-white px-10 py-5 text-3xl rounded-md ">
-            Start Quiz
+            {page === 0 ? "Start Quiz" : "Continue Quiz"}
           </button>
         </Link>
       </div>

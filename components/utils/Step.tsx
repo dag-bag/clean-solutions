@@ -3,8 +3,8 @@
 import React, { useContext } from "react";
 import { useRecoilValue } from "recoil";
 import { stepAtom } from "../../atoms/steps";
-import Page1 from "../Page1";
-import Page2 from "../Page2";
+import Page1 from "../test/Page1";
+import Page2 from "../test/Page2";
 import Page3 from "../Page3";
 
 function Step() {

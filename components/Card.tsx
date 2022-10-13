@@ -6,30 +6,60 @@ type Props = {};
 
 function Card({}: Props) {
   return (
-    <a className="group grid grid-cols-1 overflow-hidden rounded-lg border border-gray-100 sm:grid-cols-3 bg-white">
-      <div className="relative">
-        <img
-          alt="Climber"
-          src="https://images.unsplash.com/photo-1597698063932-9450882bb1be?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=774&q=80"
-          className="absolute inset-0 h-full w-full object-cover"
-        />
+    <>
+      {/* <div className="flex flex-col text-center w-full mb-20"> */}
+      {/* <h2 className="text-xs text-indigo-500 tracking-widest font-medium title-font mb-1">
+          ROOF PARTY POLAROID
+        </h2>
+        <h1 className="sm:text-3xl text-2xl font-medium title-font text-gray-900">
+          Master Cleanse Reliac Heirloom
+        </h1> */}
+      {/* </div> */}
+      <div>
+        <div className="p-4 md:w-1/3">
+          <div className="flex rounded-lg h-full bg-gray-100 p-8 flex-col">
+            <div className="flex items-center mb-3">
+              <div className="w-8 h-8 mr-3 inline-flex items-center justify-center rounded-full bg-indigo-500 text-white flex-shrink-0">
+                <svg
+                  fill="none"
+                  stroke="currentColor"
+                  strokeLinecap="round"
+                  strokeLinejoin="round"
+                  strokeWidth={2}
+                  className="w-5 h-5"
+                  viewBox="0 0 24 24"
+                >
+                  <path d="M22 12h-4l-3 9L9 3l-3 9H2" />
+                </svg>
+              </div>
+              <h2 className="text-gray-900 text-lg title-font font-medium">
+                Shooting Stars
+              </h2>
+            </div>
+            <div className="flex-grow">
+              <p className="leading-relaxed text-base">
+                Blue bottle crucifix vinyl post-ironic four dollar toast vegan
+                taxidermy. Gastropub indxgo juice poutine.
+              </p>
+              <a className="mt-3 text-indigo-500 inline-flex items-center">
+                Learn More
+                <svg
+                  fill="none"
+                  stroke="currentColor"
+                  strokeLinecap="round"
+                  strokeLinejoin="round"
+                  strokeWidth={2}
+                  className="w-4 h-4 ml-2"
+                  viewBox="0 0 24 24"
+                >
+                  <path d="M5 12h14M12 5l7 7-7 7" />
+                </svg>
+              </a>
+            </div>
+          </div>
+        </div>
       </div>
-      <div className="p-8 sm:col-span-2">
-        <ul className="flex gap-1">
-          <li className="inline-block rounded-full bg-blue-600 px-3 py-1 text-xs font-semibold text-white">
-            Notice
-          </li>
-          <li className="inline-block rounded-full bg-blue-600 px-3 py-1 text-xs font-semibold text-white">
-            Information
-          </li>
-        </ul>
-        <h5 className="mt-4 font-bold">Lorem ipsum dolor sit amet.</h5>
-        <p className="mt-2 text-sm text-gray-500">
-          Lorem ipsum dolor sit amet consectetur adipisicing elit. Voluptatem,
-          adipisci!
-        </p>
-      </div>
-    </a>
+    </>
   );
 }
 
