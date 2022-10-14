@@ -23,11 +23,11 @@ type Props = {};
 
 function Quiz({}: Props) {
   return (
-    <>
+    <div className="quiz-bg">
       {/* <div> */}
       <Step />
-      {/* </div> */}{" "}
-    </>
+      {/* </div> */}
+    </div>
   );
 }
 

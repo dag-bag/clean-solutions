@@ -15,7 +15,7 @@ function Page2({}: Props) {
   const page1Data = useRecoilValue(page1DataAtom);
   return (
     <Flex
-      className="flex-col space-y-8 items-center justify-center mt-40"
+      className="flex-col space-y-8 items-center justify-center pt-40"
       height="auto"
     >
       <div className="flex w-full mx-auto text-left  ">
@@ -34,11 +34,7 @@ function Page2({}: Props) {
           </div>
         </div>
       </div>
-      {/* <div className="  grid grid-cols-3 gap-4 relative">
-        <Card />
-        <Card />
-        <Card />
-      </div> */}
+
       <div className="grid grid-cols-3 w-full place-items-center  relative">
         <Card2 />
         <Card2 />
