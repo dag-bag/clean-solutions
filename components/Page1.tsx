@@ -18,6 +18,7 @@ import { useRouter } from "next/router";
 import { useRecoilState, useSetRecoilState } from "recoil";
 import { stepAtom } from "../atoms/steps";
 import { page1DataAtom } from "../atoms/data";
+import P1 from "./para/P1";
 
 type Props = {};
 const data = [
@@ -61,28 +62,43 @@ function Page1({}: Props) {
   });
 
   return (
-    <>
-      <>
-        <div className="space-y-4">
-          <H1 Text={data[step].question} />
-
-          <P className="" Text="We will use this personlize your experince" />
-        </div>
-        <form onSubmit={handleSubmit} autoComplete="off">
-          <input
-            type="text"
-            name={data[step].data}
-            id=""
-            className="bg-green-1 outline-none py-5 rounded-md placeholder:text-white text-white placeholder:text-center placeholder:text-3xl text-center text-3xl"
-            placeholder="Enter your name"
-            onChange={handleChange}
-            onBlur={handleBlur}
-            value={values.name}
-            onFocus={(e) => (e.target.placeholder = "")}
-          />
-          <p className="text-xs text-red-500">{errors.name}</p>
-        </form>
-      </>
+    <div className="flex items-center flex-col text-center ">
+      <div className="space-y-4 mt-40">
+        <P1>
+          Your responses will aid in the creation of a custom, economical,
+          eco-friendly EPA, NSF, NFPA FDA, CDC & FTC Cleared Solution containing
+          OMRI Listed Ingredients.
+        </P1>
+        <P1>
+          With our focus on improving health through innovative products and
+          services, our solutions are incredibly versatile and typically cost
+          less than 80% of what you’re paying now.
+        </P1>
+        <P1>
+          We reduce our environmental footprint with unique eco-friendly
+          solutions that eliminate over 95% of petroleum plastics used in
+          conventional packaging.
+        </P1>
+      </div>
+      <form
+        onSubmit={handleSubmit}
+        autoComplete="off"
+        className="mt-20 space-y-8"
+      >
+        <H1 Text={data[step].question} />
+        <input
+          type="text"
+          name={data[step].data}
+          id=""
+          className="bg-green-1 outline-none py-5 rounded-md placeholder:text-white text-white placeholder:text-center placeholder:text-3xl text-center text-3xl"
+          placeholder="Enter your name"
+          onChange={handleChange}
+          onBlur={handleBlur}
+          value={values.name}
+          onFocus={(e) => (e.target.placeholder = "")}
+        />
+        <p className="text-xs text-red-500">{errors.name}</p>
+      </form>
       {/* {!completed ? (
        
       ) : (
@@ -149,7 +165,7 @@ function Page1({}: Props) {
           // error={errors.name}
         />
       </form> */}
-    </>
+    </div>
   );
 }
 

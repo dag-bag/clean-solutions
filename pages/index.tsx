@@ -2,18 +2,18 @@
 
 import { motion } from "framer-motion";
 import type { NextPage } from "next";
-import Main from "../components/test/Main";
+import Main from "../components/Main";
 import { Header } from "../components/TestMain";
 import Img from "/logo.png";
 
 const Home: NextPage = () => {
   return (
     <>
-      <div>
+      {/* <div>
         <Main />
-      </div>
-      {/* <Header />
-      <Main /> */}
+      </div> */}
+      {/* <Header /> */}
+      <Main />
     </>
   );
 };

@@ -31,7 +31,7 @@ function Main({}: Props) {
       className="bg2 md:bg1 h-[100vh] w-full grid md:grid-cols-2 text-center"
     >
       <div className="flex justify-center items-center">
-        <div className="relative w-[70%]    ">
+        <div className="relative w-[80%]    ">
           <Image
             src="/page.png"
             layout="responsive"
@@ -42,7 +42,7 @@ function Main({}: Props) {
           />
         </div>
       </div>
-      <div className="flex items-center justify-center p-16 flex-col space-y-4">
+      <div className="flex items-center justify-center p-16 flex-col space-y-4 mt-10">
         <h1 className="font-bold text-4xl ">
           <span className="text-blue-1">Clean</span>{" "}
           <span className="text-green-1">Solutions</span> Take Your <br /> Own
@@ -52,11 +52,19 @@ function Main({}: Props) {
           Today’s world requires a stronger and safer response for disinfection.
         </p>
 
-        <p className="leading-9">
-          Discover easy ways to use VeriSan to defeat 99.99% <br /> of bacteria,
-          viruses, mold, odor, and more. Use on <br /> hard and soft surfaces,
-          for food and plants, in water, <br /> on skin and animals, or for
-          fogging entire rooms.
+        <p className="hidden text-gray-500 md:mt-4 md:block">
+          Discover easy ways to use VeriSan to defeat 99.99% of bacteria,
+          viruses, mold, and odor. You can use it on hard and soft surfaces,
+          food, plants, animals, skin, water, entire rooms, and much more.
+        </p>
+        <p className="hidden text-gray-500 md:mt-4 md:block">
+          No organism tested has proven to be resilient. <br /> Kill 99.99% of
+          ALL germs known to humankind.
+        </p>
+        <p className="hidden text-gray-500 md:mt-4 md:block">
+          Your responses will aid in the creation of a custom, economical,
+          eco-friendly EPA, NSF, NFPA FDA, CDC & FTC Cleared Solution containing
+          OMRI Listed Ingredients.
         </p>
 
         <Link href="/quiz">

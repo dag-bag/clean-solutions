@@ -23,11 +23,11 @@ type Props = {};
 
 function Quiz({}: Props) {
   return (
-    // <Flex className="flex-col space-y-10  justify-center items-center text-center ">
-    <div>
+    <>
+      {/* <div> */}
       <Step />
-    </div>
-    // </Flex>
+      {/* </div> */}{" "}
+    </>
   );
 }
 
