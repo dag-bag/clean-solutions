@@ -61,7 +61,7 @@
 
   .front {
     background-size: cover;
-    padding: 1rem;
+    /* padding: 1rem; */
     font-size: 1.618rem;
     font-weight: 600;
     color: #fff;

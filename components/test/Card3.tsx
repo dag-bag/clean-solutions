@@ -50,7 +50,7 @@ function Card3({ title, svgs, text, index }: Page2) {
             <button
               className={`${
                 isSelected ? "bg-green-1" : "bg-blue-1"
-              }  text-white rounded-md py-3 mt-4 w-1/3 m-auto`}
+              }  text-white rounded-md py-2 mt-4 w-1/3 m-auto`}
               onClick={handleCardClick}
             >
               {isSelected ? "Selected" : "Select"}
