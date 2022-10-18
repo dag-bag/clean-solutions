@@ -18,6 +18,10 @@ module.exports = {
           1: "#518ca4",
         },
       },
+      backgroundImage: {
+        "hero-pattern":
+          "linear-gradient(to right bottom, rgba('#7ed56f',0.8), rgba('#28b485',0.8)), url('https://cleansolutions.tech/wp-content/uploads/2022/09/2nd-section-1.png')",
+      },
     },
   },
   plugins: [],

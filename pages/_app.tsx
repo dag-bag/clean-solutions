@@ -9,7 +9,7 @@ function MyApp({ Component, pageProps, router }: AppProps) {
   return (
     <AnimatePresence exitBeforeEnter>
       <RecoilRoot>
-        <Component {...pageProps} key={router.asPath} />;
+        <Component {...pageProps} key={router.asPath} />
       </RecoilRoot>
     </AnimatePresence>
   );

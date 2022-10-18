@@ -4,9 +4,22 @@ import React from "react";
 import { motion } from "framer-motion";
 type Props = {
   Text: string;
+  size?:
+    | "sm"
+    | "md"
+    | "lg"
+    | "xl"
+    | "2xl"
+    | "3xl"
+    | "4xl"
+    | "5xl"
+    | "6xl"
+    | "7xl"
+    | "8xl"
+    | "9xl";
 };
 
-function H1({ Text }: Props) {
+function H1({ Text, size }: Props) {
   return (
     <motion.h1
       initial={{
@@ -21,7 +34,7 @@ function H1({ Text }: Props) {
           ease: [0.48, 0.15, 0.25, 0.96],
         },
       }}
-      className="font-semibold text-5xl"
+      className={`font-semibold ${size ? `text-${size}` : "text-5xl"}`}
     >
       {Text}
       {/* <span className="sm:block"> Increase Conversion. </span> */}

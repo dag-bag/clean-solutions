@@ -6,6 +6,7 @@ import Link from "next/link";
 import Image from "next/image";
 import { useRecoilValue } from "recoil";
 import { stepAtom } from "../atoms/steps";
+import Bold from "./utils/Bold";
 type Props = {};
 const fadeInUp = {
   initial: {
@@ -29,6 +30,11 @@ function Main({}: Props) {
       initial
       animate="animate"
       className="bg2 md:bg1 h-[100vh] w-full grid md:grid-cols-2 text-center"
+      style={{
+        backgroundImage: "url(/bg.png)",
+        backgroundPosition: "center",
+        backgroundSize: "cover",
+      }}
     >
       <div className="flex justify-center items-center">
         <div className="relative w-[80%]    ">
@@ -49,19 +55,21 @@ function Main({}: Props) {
           Adventure Quiz
         </h1>
         <p className="font-semibold italic mb-10">
-          Today’s world requires a stronger and safer response for disinfection.
+          Today’s world requires a <Bold> stronger</Bold> and safer response for
+          disinfection.
         </p>
 
-        <p className="hidden text-gray-500 md:mt-4 md:block">
-          Discover easy ways to use VeriSan to defeat 99.99% of bacteria,
-          viruses, mold, and odor. You can use it on hard and soft surfaces,
-          food, plants, animals, skin, water, entire rooms, and much more.
+        <p className="hidden text-gray-800 md:mt-4 md:block">
+          Discover easy ways to use VeriSan to defeat <Bold> 99.99% </Bold> of
+          bacteria, viruses, mold, and odor. You can use it on hard and soft
+          surfaces, food, plants, animals, skin, water, entire rooms, and much
+          more.
         </p>
-        <p className="hidden text-gray-500 md:mt-4 md:block">
-          No organism tested has proven to be resilient. <br /> Kill 99.99% of
-          ALL germs known to humankind.
+        <p className="hidden text-gray-800 md:mt-4 md:block">
+          No organism tested has proven to be resilient. <br /> Kill{" "}
+          <Bold> 99.99% </Bold>of ALL germs known to humankind.
         </p>
-        <p className="hidden text-gray-500 md:mt-4 md:block">
+        <p className="hidden text-gray-800 md:mt-4 md:block">
           Your responses will aid in the creation of a custom, economical,
           eco-friendly EPA, NSF, NFPA FDA, CDC & FTC Cleared Solution containing
           OMRI Listed Ingredients.
@@ -73,54 +81,6 @@ function Main({}: Props) {
           </button>
         </Link>
       </div>
-      {/* Container for demo purpose */}
-      {/* <section className=" text-white">
-        <motion.div
-          variants={fadeInUp}
-          initial={{
-            y: 60,
-            opacity: 0,
-          }}
-          animate={{
-            y: 0,
-            opacity: 1,
-            transition: {
-              duration: 0.6,
-              ease: [0.48, 0.15, 0.25, 0.96],
-            },
-          }}
-          className="mx-auto max-w-screen-xl px-4 py-32 lg:flex lg:h-screen lg:items-center"
-        >
-          <div className="mx-auto max-w-3xl text-center">
-            <motion.h1
-              variants={fadeInUp}
-              className="bg-gradient-to-r from-green-300 via-blue-500 to-purple-600 bg-clip-text text-3xl font-extrabold text-transparent sm:text-5xl"
-            >
-              Understand User Flow.
-              <span className="sm:block"> Increase Conversion. </span>
-            </motion.h1>
-            <p className="mx-auto mt-4 max-w-xl sm:text-xl sm:leading-relaxed">
-              Lorem ipsum dolor sit amet consectetur, adipisicing elit. Nesciunt
-              illo tenetur fuga ducimus numquam ea!
-            </p>
-            <div className="mt-8 flex flex-wrap justify-center gap-4">
-              <Link href={"/quiz"}>
-                <a className="block w-full rounded border border-blue-600 bg-blue-600 px-12 py-3 text-sm font-medium text-white hover:bg-transparent hover:text-white focus:outline-none focus:ring active:text-opacity-75 sm:w-auto">
-                  Start Quiz
-                </a>
-              </Link>
-              <a
-                className="block w-full rounded border border-blue-600 px-12 py-3 text-sm font-medium text-white hover:bg-blue-600 focus:outline-none focus:ring active:bg-blue-500 sm:w-auto"
-                href="/about"
-              >
-                Learn More
-              </a>
-            </div>
-          </div>
-        </motion.div>
-      </section> */}
-
-      {/* Container for demo purpose */}
     </motion.div>
   );
 }

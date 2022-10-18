@@ -18,15 +18,21 @@ import { useRouter } from "next/router";
 import { useRecoilState } from "recoil";
 import { stepAtom } from "../atoms/steps";
 import Step from "../components/utils/Step";
+import NextPrev from "../components/NextPrev";
 
 type Props = {};
 
 function Quiz({}: Props) {
   return (
-    <div className="quiz-bg">
+    <div
+      style={{
+        backgroundImage: "url(/bg.png)",
+      }}
+    >
       {/* <div> */}
       <Step />
       {/* </div> */}
+      <NextPrev />
     </div>
   );
 }
