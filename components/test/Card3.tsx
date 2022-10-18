@@ -37,7 +37,7 @@ function Card3({ title, svgs, text, index }: Page2) {
           <h3 className="mt-4 text-3xl font-bold text-gray-900 ">{title}</h3>
           <div className="mt-3 space-x-8 flex p-1">
             {svgs.map((src, index) => {
-              return <Svg src={src} key={index} />;
+              return <Svg src={src} key={index} select={isSelected} />;
             })}
           </div>
         </div>

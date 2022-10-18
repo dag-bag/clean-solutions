@@ -89,7 +89,7 @@ function Page2({}: Props) {
       className="flex-col space-y-8 items-center   p-4 md:p-0 md:pt-20"
       height="auto"
     >
-      <div className="flex w-full mx-auto text-left  ">
+      <div className="flex w-full mx-auto text-left  mt-10 md:mt-0">
         <div className="relative inline-flex  mx-auto align-middle">
           <div className="text-center">
             <h1 className=" max-w-5xl text-3xl font-bold leading-none tracking-tighter text-neutral-900 md:text-5xl lg:text-5xl lg:max-w-7xl">

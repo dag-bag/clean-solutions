@@ -66,7 +66,7 @@ function Page1({}: Props) {
 
   return (
     <div className="flex items-center flex-col text-center ">
-      <div className="space-y-10 mt-32">
+      <div className="space-y-10 mt-10 md:mt-32 p-5">
         <P1 size="2xl">
           Clean Solutions is a bio-security company specializing in quickly
           identifying <Bold> economical and eco-friendly solutions </Bold>to
@@ -86,7 +86,7 @@ function Page1({}: Props) {
       <form
         onSubmit={handleSubmit}
         autoComplete="off"
-        className="mt-20 space-y-8"
+        className="md:mt-20 mt-10 space-y-8"
       >
         <H1 Text={data[step].question} size="5xl" />
         <input
