@@ -4,7 +4,7 @@ import React from "react";
 
 type Props = {
   src: string;
-  select: boolean;
+  select?: boolean;
 };
 
 function Svg({ src, select }: Props) {
