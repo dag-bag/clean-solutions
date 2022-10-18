@@ -32,7 +32,7 @@ function Card3({ title, svgs, text, index }: Page2) {
         <div
           className={`front flex-col  bg-white sd  rounded-md ${
             isSelected ? "border-4 border-green-1" : ""
-          }    `}
+          }   transition-all duration-200 ease-in-out  `}
         >
           <h3 className="mt-4 text-3xl font-bold text-gray-900 ">{title}</h3>
           <div className="mt-3 space-x-8 flex p-1">

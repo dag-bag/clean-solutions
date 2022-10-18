@@ -110,7 +110,7 @@ function Page2({}: Props) {
         </div>
       </div>
 
-      <div className="grid md:grid-cols-3 w-full md:w-[80%] mx-auto place-items-center  relative h-96 ">
+      <div className="grid md:grid-cols-3 w-full md:w-[80%] mx-auto place-items-center ">
         {data.map((item, index) => {
           return <Card3 key={index} {...item} index={index} />;
         })}

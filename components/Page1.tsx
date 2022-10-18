@@ -65,7 +65,7 @@ function Page1({}: Props) {
   });
 
   return (
-    <div className="flex items-center flex-col text-center ">
+    <div className="flex items-center md:flex-col flex-col-reverse text-center ">
       <div className="space-y-10 mt-10 md:mt-32 p-5">
         <P1 size="2xl">
           Clean Solutions is a bio-security company specializing in quickly
@@ -93,7 +93,7 @@ function Page1({}: Props) {
           type="text"
           name={data[step].data}
           id=""
-          className="bg-green-1 outline-none py-5 rounded-md placeholder:text-white text-white placeholder:text-center placeholder:text-3xl text-center text-xl md:text-3xl"
+          className="bg-green-1 outline-none py-5 max-w-xs  rounded-md placeholder:text-white text-white placeholder:text-center placeholder:text-3xl text-center text-xl md:text-3xl"
           placeholder="Enter your name"
           onChange={(e) => {
             handleChange(e);
