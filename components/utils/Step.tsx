@@ -125,21 +125,26 @@ function Step() {
     });
 
     const questions = flattenDeep(q);
-    let length = questions.length;
-    console.log({
-      length,
-      deepState,
-    });
+    // let length = questions.length;
+    // console.log({
+    //   length,
+    //   deepState,
+    // });
 
-    if (deepState > length - 2) {
-    }
+    // if (deepState > length - 2) {
+    //   return [
+    //     {
+    //       question: "No more questions",
+    //     },
+    //   ];
+    // }
     // if (allQuestion[questionState].length) {
     //   setActiveState((prev) => prev + 1);
     // }
-    else {
-      let currentQuestion = questions[deepState].question;
-      return currentQuestion;
-    }
+    // else {
+    let currentQuestion = questions[deepState].question;
+    return currentQuestion;
+    // }
   };
 
   let stepContent: JSX.Element;
