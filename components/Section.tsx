@@ -150,7 +150,7 @@ function Section({ data, slug }: Props) {
                           };
                         });
                       } else {
-                        setAllData((prev) => {
+                        setAllData((prev: any) => {
                           return {
                             ...prev,
                             page3: {
