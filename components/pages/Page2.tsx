@@ -124,7 +124,7 @@ function Page2({}: Props) {
           </div>
         </div>
 
-        <div className="grid md:grid-cols-2 lg:grid-cols-3 sm:grid-cols-2 w-full md:w-[80%] mx-auto place-items-center ">
+        <div className="grid md:grid-cols-2 lg:grid-cols-3 sm:grid-cols-2 w-full md:w-[80%] mx-auto place-items-center overflow-hidden overflow-y-scroll  h-[50vh] md:h-auto pb-20">
           {data.map((item, index) => {
             return <Card3 key={index} {...item} index={index} />;
           })}
