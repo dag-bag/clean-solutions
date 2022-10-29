@@ -1,27 +1,14 @@
 /** @format */
 
-import { useRouter } from "next/router";
-import React, { useContext, useState } from "react";
-import { useRecoilValue } from "recoil";
-import { selectionDataAtom } from "../../atoms/quizData";
-import { stepAtom } from "../../atoms/steps";
-import Slug from "../pages/Slug";
-import Page1 from "../pages/Page1";
-import Page2 from "../pages/Page2";
-
-import Page3 from "../pages/Page3";
-import Page4 from "../pages/Page4";
-import Page5 from "../pages/Page5";
+import React from "react";
 import Section from "../Section";
-import { allPageDataAtom } from "../../atoms/data";
-import { deepStateAtom, innnerStagesAtom } from "../../atoms/innterStages";
-import Questions from "./Questions";
-import { flattenDeep } from "lodash";
+
+type Props = {};
 const page3Data = [
   {
-    title: "SKIN CONTACT     ",
+    title: "GROCERIES & PERISHABLE FOODS    ",
     description:
-      "VeriSan can be used to deactivate germs on skin and eliminate odor. Our solutions meet USDA, EPA, and AMA approved standards as a sanitizer to  kill bacteria. Safe for use on lesions, scratches, and wound sites.  ",
+      "Expect longer shelf or fridge life by eliminating fungi, viruses, and bacteria on raw foods,  fruits, vegetables, eggs, poultry, seafood, and meat.      ",
     modalText:
       "Use VeriSan for convenience, versatility, and to ensure sterility! ClO2 is a size-selective antimicrobial agent, which means it can not penetrate deeply into living tissues. Dermatologist-recommended, no chemical scents or harmful residue left behind leaving skin odor-free.",
     svgs: [
@@ -33,9 +20,9 @@ const page3Data = [
     ],
   },
   {
-    title: "BODY DEODORANT",
+    title: "FOOD SURFACES & PACKAGES    ",
     description:
-      "Our solutions meet USDA, EPA, and AMA standards as a sanitizer and can be used to kill germs, bacteria, and fungi on skin and eliminate odor at the source.",
+      "Use in the kitchen while cleaning and preparing food, in dining areas before and after eating, and on surfaces where food is stored like the refrigerator, pantry, cellar, or shelves.       ",
     modalText:
       "Safely disinfect armpits, feet, and other regions with no harmful residue left behind. Chlorine dioxide leaves skin soft and fragrance-free. It can also repel insects like mosquitoes and sterilize insect bites.",
     svgs: [
@@ -47,9 +34,9 @@ const page3Data = [
     ],
   },
   {
-    title: "HAIR AND FUR SANITIZER ",
+    title: "HARD SURFACES & APPLIANCES     ",
     description:
-      "Use ClO2 to rapidly eliminate microorganisms on hair. Spray or soak with our solution to eliminate strong odors like smoke, urine, and skunk.",
+      "  Our eco-friendly solutions make it easy to sanitize, deodorize and disinfect every inch of your home. Use when soaking, spraying, wiping, or mopping surfaces.",
     modalText:
       "Safely disinfect armpits, feet, and other regions with no harmful residue left behind. Chlorine dioxide leaves skin soft and fragrance-free. It can also repel insects like mosquitoes and sterilize insect bites.",
     svgs: [
@@ -61,9 +48,9 @@ const page3Data = [
     ],
   },
   {
-    title: "SKIN INFECTIONS",
+    title: "SOFT SURFACE SANITIZER     ",
     description:
-      "Bacterial, fungal, and yeast infections on skin, and scalps, like ringworm, athlete’s foot, cold sores, or candida embedded in nail beds.",
+      "Safe on soft, porous materials, fabrics, and surfaces including baby clothing, toys, shoes, furniture, couches, bedding, curtains, rugs, luggage, and more.      ",
     modalText:
       "Safely disinfect armpits, feet, and other regions with no harmful residue left behind. Chlorine dioxide leaves skin soft and fragrance-free. It can also repel insects like mosquitoes and sterilize insect bites.",
     svgs: [
@@ -75,9 +62,9 @@ const page3Data = [
     ],
   },
   {
-    title: "DENTAL & ORAL CARE",
+    title: "LAUNDRY DISINFECTION",
     description:
-      "Used in healthcare such as veterinary, hospital, and dental environments an oral rinse, to sterilize retainers and dentures, reduce plaque, and much",
+      "Don’t mask bacteria-causing odor, mold, or mildew with chemicals and fragrances. Control your environment to eliminate germs and odor right at the source.      ",
     modalText:
       "Safely disinfect armpits, feet, and other regions with no harmful residue left behind. Chlorine dioxide leaves skin soft and fragrance-free. It can also repel insects like mosquitoes and sterilize insect bites.",
     svgs: [
@@ -89,9 +76,9 @@ const page3Data = [
     ],
   },
   {
-    title: "HYGIENIC UTENSILS",
+    title: "SPRAY OR FOG ROOMS & CARPET     ",
     description:
-      "Sterilize personal items such as combs, toothbrushes, dental instruments, bottles, pacifiers, baby toys, respirators, or CPAP machines.      ",
+      "Improve the air quality in your home. Disinfect and deodorize every inch of your house. Use on mold, dust, allergens, and pollutants in air or carpet.     ",
     modalText:
       "Safely disinfect armpits, feet, and other regions with no harmful residue left behind. Chlorine dioxide leaves skin soft and fragrance-free. It can also repel insects like mosquitoes and sterilize insect bites.",
     svgs: [
@@ -103,66 +90,13 @@ const page3Data = [
     ],
   },
 ];
-function Step() {
-  const activeStepIndex = useRecoilValue(stepAtom);
-  const selectedCards = useRecoilValue(allPageDataAtom);
-  const innerState = useRecoilValue(innnerStagesAtom);
-  const title = selectedCards?.page2?.data[innerState]?.title;
-  const slug = title?.toLowerCase().replace(/ /g, "-");
 
-  const deepState = useRecoilValue(deepStateAtom);
-  const [questionState, setActiveState] = useState<number>(0);
-  // console.log("totalQuestions", allQuestion[questionState].length);
-  // console.log("CurrentQuestion", deepState);
-
-  const getQuestions = () => {
-    let q = selectedCards.page3.data.map((i) => {
-      let question = i.questions;
-      // return question;
-      return question.map((i) => {
-        return i;
-      });
-    });
-
-    const questions = flattenDeep(q);
-    let length = questions.length;
-    console.log({
-      length,
-      deepState,
-    });
-
-    if (deepState > length - 2) {
-    }
-    // if (allQuestion[questionState].length) {
-    //   setActiveState((prev) => prev + 1);
-    // }
-    else {
-      let currentQuestion = questions[deepState].question;
-      return currentQuestion;
-    }
-  };
-
-  let stepContent: JSX.Element;
-  switch (activeStepIndex) {
-    case 0:
-      stepContent = <Page1 />;
-      break;
-    case 1:
-      stepContent = <Page2 />;
-      break;
-    case 2:
-      stepContent = <Slug slug={slug} />;
-      break;
-    case 3:
-      stepContent = <Questions question={getQuestions()} />;
-      break;
-
-    default:
-      stepContent = <div>NO page exist Now.</div>;
-      break;
-  }
-
-  return stepContent;
+function Page5({}: Props) {
+  return (
+    <>
+      <Section data={page3Data} />
+    </>
+  );
 }
 
-export default Step;
+export default Page5;

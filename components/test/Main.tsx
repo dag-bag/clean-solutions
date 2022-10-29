@@ -16,11 +16,7 @@ function Main({}: Props) {
           <h2 className="text-2xl font-bold text-gray-900 md:text-3xl">
             Clean Solutions Take Your Own Adventure Quiz
           </h2>
-          <p className="hidden text-gray-500 md:mt-4 md:block">
-            Discover easy ways to use VeriSan to defeat 99.99% of bacteria,
-            viruses, mold, and odor. For use on hard and soft surfaces, food,
-            plants, animals, or skin, in water, for entire rooms, and much more.
-          </p>
+
           <div className="mt-4 md:mt-8">
             <Link href="/quiz">
               <a className="inline-block rounded bg-green-1 px-12 py-3 text-sm font-medium text-white transition hover:bg-emerald-700 focus:outline-none focus:ring focus:ring-yellow-400">

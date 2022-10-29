@@ -6,12 +6,19 @@
 @layer base {
   html {
     font-family: "Poppins", sans-serif;
+    @apply !text-gray-900;
+    overflow: hidden;
+    background-color: white !important;
   }
 }
 @layer utilities {
+  .cardShadow {
+    -webkit-box-shadow: 5.5px 3.5px 2px 3px #16a34a;
+    -moz-box-shadow: 5.5px 3.5px 2px 3px #16a34a;
+    box-shadow: 5.5px 3.5px 2px 3px #16a34a;
+  }
   .sd {
-    box-shadow: rgb(204, 219, 232) 3px 3px 6px 0px inset,
-      rgba(255, 255, 255, 0.5) -3px -3px 6px 1px inset;
+    box-shadow: rgba(0, 0, 0, 0.24) 0px 3px 8px;
   }
   /* .gd {
     background: rgb(149,208,116);
@@ -43,7 +50,7 @@
   .front,
   .back {
     display: flex;
-    /* border-radius: 90px 0px 90px 0px / 120px; */
+    border-radius: 1rem;
     background-position: center;
     background-size: cover;
     /* text-align: center; */
@@ -164,10 +171,7 @@
     height: 1.5em;
     fill: #fff;
   } */
-  .sd {
-    box-shadow: rgba(17, 17, 26, 0.05) 0px 1px 0px,
-      rgba(17, 17, 26, 0.1) 0px 0px 8px;
-  }
+
   .rangeen {
     @apply bg-gradient-to-r from-green-300 via-blue-500 to-purple-600 bg-clip-text text-3xl font-extrabold text-transparent sm:text-5xl;
   }

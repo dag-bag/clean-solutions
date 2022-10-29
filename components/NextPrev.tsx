@@ -5,32 +5,51 @@ import { useRecoilState } from "recoil";
 import { stepAtom } from "../atoms/steps";
 import Flex from "./utils/Flex";
 
-type Props = {};
+type Props = {
+  nextClick?: () => void;
+  backClick?: () => void;
+  state: "inner" | "outer" | "deep";
+  deepClick?: () => void;
+};
 
-function NextPrev({}: Props) {
+function NextPrev({ state, nextClick, backClick, deepClick }: Props) {
   const [step, setStep] = useRecoilState(stepAtom);
+
   const next = () => {
-    setStep((prev) => prev + 1);
+    if (state === "deep") {
+      deepClick && deepClick();
+    } else if (state === "inner") {
+      nextClick && nextClick();
+    } else {
+      setStep((prev) => prev + 1);
+    }
   };
   const prev = () => {
-    setStep((prev) => prev - 1);
+    if (state === "deep") {
+      deepClick && deepClick();
+    }
+    if (state === "inner") {
+      backClick && backClick();
+    } else {
+      setStep((prev) => prev - 1);
+    }
   };
   return (
-    <Flex className="justify-between max-w-[85rem] m-auto py-5">
+    <>
       <button
         disabled={step === 0}
-        className="disabled:opacity-40 bg-green-1 px-3 py-2 text-white rounded-md"
+        className="disabled:opacity-40 bg-green-1 px-2 py-4  fixed text-white rounded-md top-1/2 left-0 transform  translate-y-1/2 z-50"
         onClick={prev}
       >
         Back
       </button>
       <button
-        className="disabled:opacity-40 bg-green-1 px-3 py-2 text-white rounded-md"
+        className="disabled:opacity-40 bg-green-1 px-2 py-4  fixed text-white rounded-md top-1/2 right-0 transform  translate-y-1/2 z-50"
         onClick={next}
       >
         Next
       </button>
-    </Flex>
+    </>
   );
 }
 

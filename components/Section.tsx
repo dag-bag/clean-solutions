@@ -1,27 +1,24 @@
 /** @format */
+import { concat, merge, flattenDeep } from "lodash";
+import React, { ButtonHTMLAttributes, useEffect, useState } from "react";
+import { useRecoilState, useSetRecoilState } from "recoil";
+import { string } from "yup";
+import { allPageDataAtom } from "../atoms/data";
+import { currentModalAtom, modalState } from "../atoms/modalAtom";
+import { Page3 } from "../types/page";
+import Card2 from "./cards/Card2";
+import Flex from "./utils/Flex";
+import Questions from "./utils/Questions";
 
-import { useRouter } from "next/router";
-import React, { useContext, useState } from "react";
-import { useRecoilValue } from "recoil";
-import { selectionDataAtom } from "../../atoms/quizData";
-import { stepAtom } from "../../atoms/steps";
-import Slug from "../pages/Slug";
-import Page1 from "../pages/Page1";
-import Page2 from "../pages/Page2";
-
-import Page3 from "../pages/Page3";
-import Page4 from "../pages/Page4";
-import Page5 from "../pages/Page5";
-import Section from "../Section";
-import { allPageDataAtom } from "../../atoms/data";
-import { deepStateAtom, innnerStagesAtom } from "../../atoms/innterStages";
-import Questions from "./Questions";
-import { flattenDeep } from "lodash";
+type Props = {
+  data: Page3[];
+  slug?: string;
+};
 const page3Data = [
   {
-    title: "SKIN CONTACT     ",
+    title: "HAND SANITIZER",
     description:
-      "VeriSan can be used to deactivate germs on skin and eliminate odor. Our solutions meet USDA, EPA, and AMA approved standards as a sanitizer to  kill bacteria. Safe for use on lesions, scratches, and wound sites.  ",
+      "VeriSan can be used to deactivate germs on hands, or for use on lesions, scratches, and wound sites while protecting your cells and tissue.",
     modalText:
       "Use VeriSan for convenience, versatility, and to ensure sterility! ClO2 is a size-selective antimicrobial agent, which means it can not penetrate deeply into living tissues. Dermatologist-recommended, no chemical scents or harmful residue left behind leaving skin odor-free.",
     svgs: [
@@ -103,66 +100,85 @@ const page3Data = [
     ],
   },
 ];
-function Step() {
-  const activeStepIndex = useRecoilValue(stepAtom);
-  const selectedCards = useRecoilValue(allPageDataAtom);
-  const innerState = useRecoilValue(innnerStagesAtom);
-  const title = selectedCards?.page2?.data[innerState]?.title;
-  const slug = title?.toLowerCase().replace(/ /g, "-");
 
-  const deepState = useRecoilValue(deepStateAtom);
-  const [questionState, setActiveState] = useState<number>(0);
-  // console.log("totalQuestions", allQuestion[questionState].length);
-  // console.log("CurrentQuestion", deepState);
-
-  const getQuestions = () => {
-    let q = selectedCards.page3.data.map((i) => {
-      let question = i.questions;
-      // return question;
-      return question.map((i) => {
-        return i;
-      });
+function Section({ data, slug }: Props) {
+  const setCurrentModal = useSetRecoilState(currentModalAtom);
+  const [Data, setAllData] = useRecoilState(allPageDataAtom);
+  const [currentData, setCurrentData] = useState<any>([]);
+  let q = Data.page3.data.map((i) => {
+    let question = i.questions;
+    // return question;
+    return question.map((i) => {
+      return i;
     });
+  });
 
-    const questions = flattenDeep(q);
-    let length = questions.length;
-    console.log({
-      length,
-      deepState,
-    });
+  const b = flattenDeep(q);
 
-    if (deepState > length - 2) {
-    }
-    // if (allQuestion[questionState].length) {
-    //   setActiveState((prev) => prev + 1);
-    // }
-    else {
-      let currentQuestion = questions[deepState].question;
-      return currentQuestion;
-    }
-  };
-
-  let stepContent: JSX.Element;
-  switch (activeStepIndex) {
-    case 0:
-      stepContent = <Page1 />;
-      break;
-    case 1:
-      stepContent = <Page2 />;
-      break;
-    case 2:
-      stepContent = <Slug slug={slug} />;
-      break;
-    case 3:
-      stepContent = <Questions question={getQuestions()} />;
-      break;
-
-    default:
-      stepContent = <div>NO page exist Now.</div>;
-      break;
-  }
-
-  return stepContent;
+  return (
+    <Flex className="text-center ">
+      <div className="mt-10 max-w-[85rem] z-40">
+        <h4
+          className=" mb-4 text-xl md:leading-10   md:mt-0 md:text-3xl bg-green-1 text-white p-5 rounded-md font-bold
+        max-w-6xl m-auto"
+        >
+          {"Please select all areas you disinfect, sanitize, or deodorize.".toUpperCase()}
+        </h4>
+        <div>
+          <section className="text-gray-600 body-font">
+            <div className="grid  md:grid-cols-3 gap-y-5 gap-x-3 ">
+              {/* <div className="grid "> */}
+              {data.map((item, index) => {
+                return (
+                  <Card2
+                    Data={Data}
+                    key={index}
+                    {...item}
+                    onClick={() => {
+                      setCurrentData([...currentData, item]);
+                      const newData = Data.page3.data;
+                      if (newData.find((i) => i.title === item.title)) {
+                        setAllData((prev) => {
+                          return {
+                            ...prev,
+                            page3: {
+                              ...prev.page3,
+                              data: newData.filter(
+                                (i) => i.title !== item.title
+                              ),
+                            },
+                          };
+                        });
+                      } else {
+                        setAllData((prev) => {
+                          return {
+                            ...prev,
+                            page3: {
+                              ...prev.page3,
+                              data: [...newData, item],
+                            },
+                          };
+                        });
+                      }
+                    }}
+                    buttonClick={(e: any) => {
+                      e.stopPropagation();
+                      setCurrentModal({
+                        title: item.title,
+                        text: item.modalText,
+                        svgs: item.svgs,
+                      });
+                    }}
+                  />
+                );
+              })}
+              {/* </div> */}
+            </div>
+          </section>
+        </div>
+      </div>
+    </Flex>
+  );
 }
 
-export default Step;
+export default Section;

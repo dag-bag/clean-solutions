@@ -15,24 +15,64 @@ import {
 } from "../types/form";
 import P from "../components/para/P";
 import { useRouter } from "next/router";
-import { useRecoilState } from "recoil";
+import { useRecoilState, useRecoilValue, useSetRecoilState } from "recoil";
 import { stepAtom } from "../atoms/steps";
 import Step from "../components/utils/Step";
 import NextPrev from "../components/NextPrev";
+import { deepStateAtom, innnerStagesAtom } from "../atoms/innterStages";
+import { selectedCardIdsAtom } from "../components/pages/Page2";
 
 type Props = {};
 
 function Quiz({}: Props) {
+  const [step, setStep] = useRecoilState(stepAtom);
+  const [innerStep, setInnerStep] = useRecoilState(innnerStagesAtom);
+  const [deepStep, setDeepStep] = useRecoilState(deepStateAtom);
+  const [selectedIds, setCardIds] = useRecoilState(selectedCardIdsAtom);
+  console.log("selectedIds:", selectedIds);
+
+  console.log({
+    deepStep,
+    step,
+    innerStep,
+  });
+
   return (
-    <div
-      style={{
-        backgroundImage: "url(/bg.png)",
-      }}
-    >
+    <div>
       {/* <div> */}
       <Step />
       {/* </div> */}
-      <NextPrev />
+      <NextPrev
+        state={
+          step === 0
+            ? "outer"
+            : step === 1
+            ? "outer"
+            : step === 2
+            ? "inner"
+            : step === 3
+            ? "deep"
+            : "outer"
+        }
+        deepClick={() => {
+          setDeepStep((prev) => prev + 1);
+        }}
+        nextClick={() => {
+          if (innerStep === selectedIds.length - 1) {
+            setStep((prev) => prev + 1);
+            // setInnerStep(0);
+          } else {
+            setInnerStep((prev) => prev + 1);
+          }
+          // setInnerStep((prev) => prev + 1);
+          // setStep((prev) => prev + 1);
+        }}
+        backClick={() => {
+          innerStep === 0
+            ? setStep((prev) => prev - 1)
+            : setInnerStep((prev) => prev - 1);
+        }}
+      />
     </div>
   );
 }

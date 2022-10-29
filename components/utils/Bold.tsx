@@ -4,6 +4,7 @@ import React from "react";
 
 type Props = {
   children: React.ReactNode;
+  bold?: "medium" | "semibold" | "bold";
 };
 
 function Bold({ children }: Props) {
