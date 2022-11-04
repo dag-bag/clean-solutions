@@ -63,7 +63,7 @@ function Questions({
   const manuPulation = useSetRecoilState(manuPulateSelector);
 
   const handleBranchChange = (e: React.FormEvent<HTMLInputElement>) => {
-    setQuestionData([...questionsData, { question: e.currentTarget.value }]);
+    // setQuestionData([...questionsData, { question: e.currentTarget.value }]);
     console.log("questionsData", questionsData);
     // let newValue = [...currentData];
     // let newIngredients = [...questionsData];

@@ -134,7 +134,7 @@ function Section({ data, slug }: Props) {
                     key={index}
                     {...item}
                     onClick={() => {
-                      setCurrentData([...currentData, item]);
+                      // setCurrentData([...currentData, item]);
                       setTestArry([...testArray, item]);
 
                       const newData = Data.page3.data;
