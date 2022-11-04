@@ -1,13 +1,14 @@
 /** @format */
 
-import "../styles/globals.css";
-import type { AppProps } from "next/app";
-import { AnimatePresence } from "framer-motion";
-import { RecoilRoot } from "recoil";
-import { useState } from "react";
+import { string } from "yup";
+/** @format */
 
-function MyApp({ Component, pageProps, router }: AppProps) {
-  const [data, setData] = useState([
+import { atom, selector } from "recoil";
+import { allQuestionsAtom } from "./quizData";
+
+export let testAtom = atom({
+  key: "testAtom",
+  default: [
     {
       slug: "skin-contact",
       data: [
@@ -800,20 +801,28 @@ function MyApp({ Component, pageProps, router }: AppProps) {
         },
       ],
     },
-  ]);
-  return (
-    <AnimatePresence exitBeforeEnter>
-      <RecoilRoot>
-        <Component
-          {...pageProps}
-          key={router.asPath}
-          data={data}
-          setData={setData}
-        />
-      </RecoilRoot>
-    </AnimatePresence>
-  );
-}
+  ],
+});
 
-export default MyApp;
-3;
+export let manuPulateSelector = selector({
+  key: "manuPulateSelector",
+  get: ({ get }) => {
+    const testData = get(testAtom);
+    return testData;
+  },
+  set: ({ set, get }, newValue) => {
+    const testData = get(allQuestionsAtom);
+    let newIngredients = [...testData];
+    newIngredients[0] = {
+      ...newIngredients[0],
+      value: newValue,
+    };
+
+    set(allQuestionsAtom, newIngredients);
+  },
+});
+
+export let testArrayAtom = atom<any>({
+  key: "testArrayAtom",
+  default: [],
+});

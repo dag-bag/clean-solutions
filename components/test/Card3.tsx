@@ -42,7 +42,7 @@ function Card3({ title, svgs, text, index }: Page2) {
 
   return (
     <>
-      <a className="card md:!w-[23rem] " href="#!">
+      <a className="card md:!w-[23rem] " onClick={handleCardClick}>
         <div
           className={`front flex-col  bg-white sd shadow-lg rounded-md ${
             isSelected ? "border-4 border-green-1" : ""
@@ -75,7 +75,6 @@ function Card3({ title, svgs, text, index }: Page2) {
               className={`${
                 isSelected ? "bg-green-1" : "bg-blue-1"
               }  text-white rounded-md py-2 mt-4 w-1/3 m-auto`}
-              onClick={handleCardClick}
             >
               {isSelected ? "Selected" : "Select"}
             </button>

@@ -9,6 +9,7 @@ import P from "../para/P";
 import Flex from "../utils/Flex";
 import Card2 from "../test/Card2";
 import Card3 from "../test/Card3";
+import { url } from "inspector";
 export const selectedCardIdsAtom = atom<number[]>({
   key: "selectedCardIdsAtom",
   default: [],
@@ -85,8 +86,11 @@ function Page2({}: Props) {
   ];
   const page1Data = useRecoilValue(page1DataAtom);
   return (
-    <>
-      <div className="absolute -top-28 -left-14 hidden md:block">
+    <div
+      className="hero min-h-screen"
+      style={{ backgroundImage: `url("./page1.png")` }}
+    >
+      {/* <div className="absolute -top-28 -left-14 hidden md:block">
         <img src="1.svg" alt="" className="w-[25rem] " />
       </div>
       <div className="absolute -bottom-14 -right-14 hidden md:block">
@@ -97,7 +101,7 @@ function Page2({}: Props) {
       </div>
       <div className="absolute -bottom-[6rem] -left-4 hidden md:block">
         <img src="./icons/4.svg" alt="" className="w-[30rem]" />
-      </div>
+      </div> */}
       <Flex
         className="flex-col space-y-8 items-center   p-4 md:p-0 md:pt-16"
         height="auto"
@@ -117,7 +121,7 @@ function Page2({}: Props) {
                 Tired of using so many different, bulky cleaning products for
                 every job?
               </p>
-              <p className="  text-xl md:leading-10 font-bold  md:mt-0 md:text-3xl bg-green-1 text-white md:p-4  p-3 rounded-md">
+              <p className="  text-xl md:leading-10 font-bold  md:mt-0 md:text-3xl bg-white text-green-1 md:p-4  p-3 rounded-full border-2 border-green-1">
                 {"Please select all that interest you".toUpperCase()}
               </p>
             </div>
@@ -130,7 +134,7 @@ function Page2({}: Props) {
           })}
         </div>
       </Flex>
-    </>
+    </div>
   );
 }
 

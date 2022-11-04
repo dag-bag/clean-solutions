@@ -12,6 +12,19 @@
   }
 }
 @layer utilities {
+  .ts {
+    text-shadow: 0 0.3rem 0.5rem rgb(0 0 0 / 30%);
+  }
+  .hollow {
+    -webkit-text-stroke: 3px #95d074;
+
+    -webkit-text-fill-color: transparent;
+  }
+  .hollow-w {
+    -webkit-text-stroke: 4px white;
+    font-size: 50px;
+    -webkit-text-fill-color: transparent;
+  }
   .cardShadow {
     -webkit-box-shadow: 5.5px 3.5px 2px 3px #16a34a;
     -moz-box-shadow: 5.5px 3.5px 2px 3px #16a34a;

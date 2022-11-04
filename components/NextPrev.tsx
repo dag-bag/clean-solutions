@@ -4,15 +4,23 @@ import React from "react";
 import { useRecoilState } from "recoil";
 import { stepAtom } from "../atoms/steps";
 import Flex from "./utils/Flex";
+import { GrNext, GrPrevious } from "react-icons/gr";
 
 type Props = {
   nextClick?: () => void;
   backClick?: () => void;
   state: "inner" | "outer" | "deep";
   deepClick?: () => void;
+  deepBackClick?: () => void;
 };
 
-function NextPrev({ state, nextClick, backClick, deepClick }: Props) {
+function NextPrev({
+  state,
+  nextClick,
+  backClick,
+  deepClick,
+  deepBackClick,
+}: Props) {
   const [step, setStep] = useRecoilState(stepAtom);
 
   const next = () => {
@@ -26,9 +34,8 @@ function NextPrev({ state, nextClick, backClick, deepClick }: Props) {
   };
   const prev = () => {
     if (state === "deep") {
-      deepClick && deepClick();
-    }
-    if (state === "inner") {
+      deepBackClick && deepBackClick();
+    } else if (state === "inner") {
       backClick && backClick();
     } else {
       setStep((prev) => prev - 1);
@@ -41,13 +48,13 @@ function NextPrev({ state, nextClick, backClick, deepClick }: Props) {
         className="disabled:opacity-40 bg-green-1 px-2 py-4  fixed text-white rounded-md top-1/2 left-0 transform  translate-y-1/2 z-50"
         onClick={prev}
       >
-        Back
+        <GrPrevious className="text-2xl " color="white" />
       </button>
       <button
         className="disabled:opacity-40 bg-green-1 px-2 py-4  fixed text-white rounded-md top-1/2 right-0 transform  translate-y-1/2 z-50"
         onClick={next}
       >
-        Next
+        <GrNext className="text-2xl " />
       </button>
     </>
   );

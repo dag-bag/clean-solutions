@@ -1,10 +1,14 @@
 /** @format */
 import { concat, merge, flattenDeep } from "lodash";
+import { tmpdir } from "os";
 import React, { ButtonHTMLAttributes, useEffect, useState } from "react";
-import { useRecoilState, useSetRecoilState } from "recoil";
+import { useRecoilState, useRecoilValue, useSetRecoilState } from "recoil";
 import { string } from "yup";
 import { allPageDataAtom } from "../atoms/data";
+import { deepStateAtom } from "../atoms/innterStages";
 import { currentModalAtom, modalState } from "../atoms/modalAtom";
+import { allQuestionsAtom } from "../atoms/quizData";
+import { testArrayAtom } from "../atoms/test";
 import { Page3 } from "../types/page";
 import Card2 from "./cards/Card2";
 import Flex from "./utils/Flex";
@@ -104,22 +108,17 @@ const page3Data = [
 function Section({ data, slug }: Props) {
   const setCurrentModal = useSetRecoilState(currentModalAtom);
   const [Data, setAllData] = useRecoilState(allPageDataAtom);
-  const [currentData, setCurrentData] = useState<any>([]);
-  let q = Data.page3.data.map((i) => {
-    let question = i.questions;
-    // return question;
-    return question.map((i) => {
-      return i;
-    });
-  });
 
-  const b = flattenDeep(q);
+  console.log("Data:", Data);
+
+  const [currentData, setCurrentData] = useRecoilState(allQuestionsAtom);
+  let [testArray, setTestArry] = useRecoilState(testArrayAtom);
 
   return (
     <Flex className="text-center ">
       <div className="mt-10 max-w-[85rem] z-40">
         <h4
-          className=" mb-4 text-xl md:leading-10   md:mt-0 md:text-3xl bg-green-1 text-white p-5 rounded-md font-bold
+          className=" mb-4 text-xl md:leading-10   md:mt-0 md:text-3xl bg-white text-green p-5 rounded-full border-green-1 border-2 font-bold
         max-w-6xl m-auto"
         >
           {"Please select all areas you disinfect, sanitize, or deodorize.".toUpperCase()}
@@ -136,6 +135,8 @@ function Section({ data, slug }: Props) {
                     {...item}
                     onClick={() => {
                       setCurrentData([...currentData, item]);
+                      setTestArry([...testArray, item]);
+
                       const newData = Data.page3.data;
                       if (newData.find((i) => i.title === item.title)) {
                         setAllData((prev) => {

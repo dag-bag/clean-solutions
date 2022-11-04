@@ -18,9 +18,10 @@ type Props = {
     | "7xl"
     | "8xl"
     | "9xl";
+  color?: string;
 };
 
-function H1({ Text, size, bold }: Props) {
+function H1({ Text, size, bold, color }: Props) {
   return (
     <motion.h1
       initial={{
@@ -35,9 +36,9 @@ function H1({ Text, size, bold }: Props) {
           ease: [0.48, 0.15, 0.25, 0.96],
         },
       }}
-      className={`${bold ? "font-bold" : "font-semibold"}   text-black ${
+      className={`${bold ? "font-bold" : "font-semibold"}    ${
         size ? `text-${size}` : "text-5xl"
-      }`}
+      } text-${color ? color : "base"}`}
     >
       {Text}
       {/* <span className="sm:block"> Increase Conversion. </span> */}

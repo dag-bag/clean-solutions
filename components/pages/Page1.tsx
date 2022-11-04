@@ -65,7 +65,44 @@ function Page1({}: Props) {
 
   return (
     <>
-      <div className="absolute -top-16 -left-14">
+      <div
+        className="hero min-h-screen"
+        style={{ backgroundImage: `url("./page1.png")` }}
+      >
+        <div className=""></div>
+        <div className="hero-content text-center text-neutral-content">
+          <form onSubmit={handleSubmit} className="max-w-4xl text-blue-1 ">
+            <h1 className="mb-5 text-5xl font-bold text-green-1">
+              {data[step].question}
+            </h1>
+            <input
+              type="text"
+              name={data[step].data}
+              placeholder="Enter Your Name"
+              className="input input-bordered w-full max-w-xl bg-white rounded-full border-4 border-green-1 text-green-1 py-7 mb-10"
+              onChange={(e) => {
+                handleChange(e);
+                onChange(e);
+              }}
+              onBlur={handleBlur}
+              value={values.name}
+            />
+            <p className="mb-5 md:text-lg ">
+              Clean Solutions is a bio-security company specializing in quickly
+              <br /> identifying{" "}
+              <Bold> economical and eco-friendly solutions </Bold>to
+              micro-organic challenges.
+            </p>
+            <p className="mb-5 md:text-lg ">
+              With our focus on safety and improving health through innovative
+              products and services, our formulas are incredibly versatile and
+              typically cost less than 80% of what you’re <br /> paying now.
+            </p>
+          </form>
+        </div>
+      </div>
+
+      {/* <div className="absolute -top-16 -left-14">
         <img src="1.svg" alt="" className="w-[25rem] " />
       </div>
       <div className="absolute -bottom-4 -right-6">
@@ -79,8 +116,8 @@ function Page1({}: Props) {
       </div>
       <div className="absolute top-4 right-[140px]">
         <img src="./icons/did.png" alt="" className="w-[15rem]" />
-      </div>
-      <div className="flex items-center md:flex-col flex-col-reverse text-center ">
+      </div> */}
+      {/* <div className="flex items-center md:flex-col flex-col-reverse text-center ">
         <div className="space-y-10 mt-10 md:mt-28 p-5">
           <P1 size="3xl" maxW={true}>
             Clean Solutions is a bio-security company specializing in quickly
@@ -105,12 +142,17 @@ function Page1({}: Props) {
           autoComplete="off"
           className="md:mt-10 mt-10 space-y-8"
         >
-          <H1 Text={data[step].question} size="5xl" bold={true} />
+          <H1
+            Text={data[step].question}
+            size="5xl"
+            bold={true}
+            color="blue-1"
+          />
           <input
             type="text"
             name={data[step].data}
             id=""
-            className="bg-green-1 outline-none py-5 max-w-xs md:max-w-md rounded-md placeholder:text-white text-white placeholder:text-center placeholder:text-3xl text-center text-xl md:text-3xl"
+            className="bg-white rounded-full border-2 border-green-1 outline-none py-5 max-w-xs md:max-w-md   font-medium  placeholder:text-center placeholder:text-3xl text-center text-xl md:text-4xl"
             placeholder="Enter your name"
             onChange={(e) => {
               handleChange(e);
@@ -122,7 +164,7 @@ function Page1({}: Props) {
           />
           <p className="text-xs text-red-500">{errors.name}</p>
         </form>
-      </div>
+      </div> */}
     </>
   );
 }

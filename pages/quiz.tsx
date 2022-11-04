@@ -22,9 +22,12 @@ import NextPrev from "../components/NextPrev";
 import { deepStateAtom, innnerStagesAtom } from "../atoms/innterStages";
 import { selectedCardIdsAtom } from "../components/pages/Page2";
 
-type Props = {};
+type Props = {
+  data: any;
+  setData: any;
+};
 
-function Quiz({}: Props) {
+function Quiz({ data, setData }: Props) {
   const [step, setStep] = useRecoilState(stepAtom);
   const [innerStep, setInnerStep] = useRecoilState(innnerStagesAtom);
   const [deepStep, setDeepStep] = useRecoilState(deepStateAtom);
@@ -40,7 +43,7 @@ function Quiz({}: Props) {
   return (
     <div>
       {/* <div> */}
-      <Step />
+      <Step data={data} setData={setData} />
       {/* </div> */}
       <NextPrev
         state={
@@ -56,6 +59,11 @@ function Quiz({}: Props) {
         }
         deepClick={() => {
           setDeepStep((prev) => prev + 1);
+        }}
+        deepBackClick={() => {
+          deepStep === 0
+            ? setStep((prev) => prev - 1)
+            : setDeepStep((prev) => prev - 1);
         }}
         nextClick={() => {
           if (innerStep === selectedIds.length - 1) {

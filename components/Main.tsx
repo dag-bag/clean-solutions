@@ -7,6 +7,7 @@ import Image from "next/image";
 import { useRecoilValue } from "recoil";
 import { stepAtom } from "../atoms/steps";
 import Bold from "./utils/Bold";
+
 type Props = {};
 const fadeInUp = {
   initial: {
@@ -48,7 +49,7 @@ function Main({}: Props) {
       // }}
     >
       <div className="absolute -top-2 -left-5">
-        <img src="1.svg" alt="" className="w-60" />
+        <Image src="/1.svg" alt="" className="w-60" height={200} width={200} />
       </div>
       <div className="absolute bottom-0 right-0">
         <img src="./icons/2.svg" alt="" className="w-60" />

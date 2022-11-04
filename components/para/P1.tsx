@@ -23,9 +23,9 @@ type Props = {
 function P1({ children, size, maxW }: Props) {
   return (
     <p
-      className={` text-gray-900 ${
-        maxW ? `max-w-[77rem]` : "max-w-[69rem] "
-      }   ${size ? `text-${size} ` : "text-xl"}`}
+      className={` text-blue-1 ${maxW ? `max-w-[77rem]` : "max-w-[69rem] "}   ${
+        size ? `text-${size} ` : "text-xl"
+      }`}
     >
       {children}
     </p>

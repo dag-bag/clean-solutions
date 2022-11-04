@@ -1,9 +1,14 @@
 /** @format */
 
+import { flattenDeep } from "lodash";
 import { atom, selector, selectorFamily } from "recoil";
+import { allPageDataAtom } from "./data";
+import { deepStateAtom } from "./innterStages";
 interface Question {
   question: string;
   value: string | number;
+  options?: string[];
+  type?: "input" | "select";
 }
 export interface ALLData {
   title: string;
@@ -37,11 +42,24 @@ export const selectionDataAtom = atom<QuizData[]>({
             {
               question:
                 "On average, how many times per day do you use skin sanitizer?",
+              type: "input",
               value: "",
             },
             {
-              question: "How many people use the sanitizer per day?",
+              question:
+                "How long would you like your hand sanitizer supply to last?",
+              type: "select",
               value: "",
+              options: [
+                "1 month",
+                "2 months",
+                "3 months",
+                "4 months",
+                "5 months",
+                "6 months",
+                "7 months",
+                "8 months",
+              ],
             },
           ],
         },
@@ -809,4 +827,38 @@ export const singlePageDataSelector = selectorFamily({
       const data = get(selectionDataAtom);
       return data.find((item) => item.slug === slug);
     },
+});
+export const allQuestionsAtom = atom({
+  key: "allQuestionsAtom",
+  default: [],
+});
+
+export const allQuestionsSelector = selector({
+  key: "allQuestionsAtom",
+  get: ({ get }) => {
+    const data = get(allPageDataAtom);
+    let q = data.page3.data.map((i) => {
+      let question = i.questions;
+
+      return question.map((i) => {
+        return i;
+      });
+    });
+
+    const questions = flattenDeep(q);
+    return questions;
+
+    // const questions = flattenDeep(q);
+  },
+  set: ({ set, get }, newValue) => {
+    const data = get(allPageDataAtom);
+    let q = data.page3.data.map((i) => {
+      let question = i.questions;
+
+      return question.map((i) => {
+        return i;
+      });
+    });
+    const questions = flattenDeep(q);
+  },
 });
