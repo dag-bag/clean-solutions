@@ -115,7 +115,7 @@ function Section({ data, slug }: Props) {
   let [testArray, setTestArry] = useRecoilState(testArrayAtom);
 
   return (
-    <Flex className="text-center ">
+    <Flex className="text-center px-4">
       <div className="mt-10 max-w-[85rem] z-40">
         <h4
           className=" mb-4 text-xl md:leading-10   md:mt-0 md:text-3xl bg-white text-green p-5 rounded-full border-green-1 border-2 font-bold

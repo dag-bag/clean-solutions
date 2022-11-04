@@ -12,7 +12,7 @@ const Main3 = () => {
       <div className="flex flex-col items-start w-full max-w-xl px-4 mx-auto lg:px-8 lg:max-w-[92%] text-center">
         <div className="mb-16 lg:my-52 lg:mt-36 lg:max-w-3xl lg:pr-5 ">
           <h1
-            className="hollow text-center text-5xl md:text-[4rem] text-white md:mb-12
+            className="hollow mb-4 text-center text-5xl md:text-[4rem] text-white md:mb-12
           "
           >
             Clean Tech Solutions

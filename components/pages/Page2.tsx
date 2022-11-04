@@ -109,18 +109,18 @@ function Page2({}: Props) {
         <div className="flex w-full mx-auto text-left  mt-10 md:mt-0">
           <div className="relative inline-flex  mx-auto align-middle">
             <div className="text-center">
-              <h1 className=" md:max-w-5xl text-3xl font-bold leading-none tracking-tighter text-neutral-900 md:text-5xl lg:text-5xl lg:max-w-7xl">
+              {/* <h1 className="hidden md:block md:max-w-5xl text-3xl font-bold leading-none tracking-tighter text-neutral-900 md:text-5xl lg:text-5xl lg:max-w-7xl">
                 Hi, {page1Data.name} Welcome to
                 <span className="text-green-1 mx-2">Clean</span>
                 <span className="text-blue-1">Solutions.</span>
               </h1>
               <p
                 className=" mb-8 md:mb-4
-             md:leading-10 mt-3 md:text-2xl text-lg"
+             md:leading-10 mt-3 md:text-2xl text-lg hidden md:block"
               >
                 Tired of using so many different, bulky cleaning products for
                 every job?
-              </p>
+              </p> */}
               <p className="  text-xl md:leading-10 font-bold  md:mt-0 md:text-3xl bg-white text-green-1 md:p-4  p-3 rounded-full border-2 border-green-1">
                 {"Please select all that interest you".toUpperCase()}
               </p>
