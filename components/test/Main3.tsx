@@ -12,7 +12,7 @@ const Main3 = () => {
       <div className="flex flex-col items-start w-full max-w-xl px-4 mx-auto lg:px-8 lg:max-w-[92%] text-center">
         <div className="mb-16 lg:my-52 lg:mt-36 lg:max-w-3xl lg:pr-5 ">
           <h1
-            className="hollow text-center text-4xl md:text-[4rem] text-white md:mb-12
+            className="hollow text-center text-5xl md:text-[4rem] text-white md:mb-12
           "
           >
             Clean Tech Solutions
@@ -30,7 +30,7 @@ const Main3 = () => {
                 New Colaboration
               </p>
             </div> */}
-            <h2 className="max-w-lg mb-6 font-sans text-3xl font-bold tracking-tight  sm:text-4xl sm:leading-none lg:text-5xl xl:text-[4rem] xl:mb-6">
+            <h2 className="max-w-lg mb-6 font-sans text-5xl font-bold tracking-tight  sm:text-5xl sm:leading-none lg:text-5xl xl:text-[4rem] xl:mb-6">
               Take Your Own <br className="hidden md:block" /> Adventure Quiz
               {/* The quick, brown fox */}
               {/* <br className="hidden md:block" />
