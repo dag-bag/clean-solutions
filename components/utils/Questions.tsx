@@ -130,10 +130,10 @@ function Questions({
         </div>
 
         <div
-          className={` flex-shrink-0 w-full m-auto gap-y-4 md:gap-y-14 md:w-1/2 py-10  bg-blue-1 
+          className={` flex-shrink-0 w-full m-auto gap-y-4 md:gap-y-14 md:w-1/2   bg-blue-1 
            ${
              type === "input"
-               ? "flex  justify-center items-start md:items-center "
+               ? "flex  justify-center items-start md:items-center py-10"
                : " grid grid-cols-2 place-items-start"
            }  h-[50vh] md:h-auto`}
         >
