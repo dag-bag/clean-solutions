@@ -117,12 +117,13 @@ function Section({ data, slug }: Props) {
   return (
     <Flex className="text-center px-4">
       <div className="mt-10 max-w-[85rem] z-40">
-        <h4
-          className=" mb-4 text-xl md:leading-10   md:mt-0 md:text-3xl bg-white text-green p-5 rounded-full border-green-1 border-2 font-bold
-        max-w-6xl m-auto"
+        <p
+          className="  text-xl md:leading-10 font-bold  md:mt-0 md:text-3xl bg-white text-blue-1 md:px-14  p-3 rounded-full border-4 border-green-1 uppercase md:min-w-[34rem] px-5
+          mb-5
+"
         >
-          {"Please select all areas you disinfect, sanitize, or deodorize.".toUpperCase()}
-        </h4>
+          Please select all that interest you
+        </p>
         <div>
           <section className="text-gray-600 body-font">
             <div className="grid  md:grid-cols-3 gap-y-5 gap-x-3 h-[70vh] md:h-auto overflow-hidden overflow-y-scroll">

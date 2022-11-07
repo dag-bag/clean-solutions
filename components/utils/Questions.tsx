@@ -116,37 +116,55 @@ function Questions({
     //     </select>
     //   )}
     // </Flex>
-    <div className="hero min-h-screen relative">
+    <div className="hero min-h-screen relative ">
       <div className="absolute hidden md:block h-screen w-1/2 bg-blue-1 right-0 top-0"></div>
       <div className="absolute  md:hidden h-[50%] w-full bg-blue-1 bottom-0 "></div>
       <div className="hero-content flex-col lg:flex-row justify-between md:max-w-[96%]">
-        <div className="text-center md:w-1/2">
+        <div className="text-center md:w-1/2 pb-16 ">
           <Flex>
             <img src="./icons/5.png" alt="" className="md:h-60 h-40" />
           </Flex>
           <h1 className="text-3xl md:text-5xl font-bold text-blue-1">
-            How long would you like your hand sanitizer supply to last?
+            {question}
           </h1>
         </div>
-        <div className=" flex-shrink-0 w-full m-auto gap-y-4 md:gap-y-14 md:w-1/2 grid grid-cols-2">
-          <button className="md:w-2/3 py-3 px-8 bg-white border-4 border-green-1 rounded-full text-blue-1 text-xl  m-auto md:text-2xl">
-            1 Month
-          </button>
-          <button className="md:w-2/3 py-3 px-8 bg-white border-4 border-green-1 rounded-full text-blue-1 text-xl m-auto md:text-2xl">
-            2 Month
-          </button>
-          <button className="md:w-2/3 py-3 px-8 bg-white border-4 border-green-1 rounded-full text-blue-1 text-xl m-auto md:text-2xl">
-            3 Month
-          </button>
-          <button className="md:w-2/3 py-3 px-8 bg-white border-4 border-green-1 rounded-full text-blue-1 text-xl m-auto md:text-2xl">
-            4 Month
-          </button>
-          <button className="md:w-2/3 py-3 px-8 bg-white border-4 border-green-1 rounded-full text-blue-1 text-xl m-auto md:text-2xl">
-            5 Month
-          </button>
-          <button className="md:w-2/3 py-3 px-8 bg-white border-4 border-green-1 rounded-full text-blue-1 text-xl m-auto md:text-2xl">
-            6 Month
-          </button>
+
+        <div
+          className={` flex-shrink-0 w-full m-auto gap-y-4 md:gap-y-14 md:w-1/2 ${
+            type === "input"
+              ? "flex  justify-center items-center "
+              : " grid grid-cols-2 "
+          } `}
+        >
+          {type === "input" ? (
+            <input
+              type="text"
+              className="bg-white border-4 placeholder:px-2 border-green-1 rounded-full  outline-none py-5
+              px-5"
+              placeholder="Enter your answer"
+            />
+          ) : (
+            <>
+              <button className="md:w-2/3 py-3 px-8 bg-white border-4 border-green-1 rounded-full text-blue-1 text-xl  m-auto md:text-2xl">
+                1 Month
+              </button>
+              <button className="md:w-2/3 py-3 px-8 bg-white border-4 border-green-1 rounded-full text-blue-1 text-xl m-auto md:text-2xl">
+                2 Month
+              </button>
+              <button className="md:w-2/3 py-3 px-8 bg-white border-4 border-green-1 rounded-full text-blue-1 text-xl m-auto md:text-2xl">
+                3 Month
+              </button>
+              <button className="md:w-2/3 py-3 px-8 bg-white border-4 border-green-1 rounded-full text-blue-1 text-xl m-auto md:text-2xl">
+                4 Month
+              </button>
+              <button className="md:w-2/3 py-3 px-8 bg-white border-4 border-green-1 rounded-full text-blue-1 text-xl m-auto md:text-2xl">
+                5 Month
+              </button>
+              <button className="md:w-2/3 py-3 px-8 bg-white border-4 border-green-1 rounded-full text-blue-1 text-xl m-auto md:text-2xl">
+                6 Month
+              </button>
+            </>
+          )}
         </div>
       </div>
     </div>

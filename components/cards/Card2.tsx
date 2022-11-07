@@ -30,12 +30,12 @@ function Card2({
   const isSelected = Data.page3.data.find((i: any) => i.title === title);
   return (
     <div
-      className={`p-1 lg:w-ull m-auto  md:w-full rounded-3xl cursor-pointer ${
-        isSelected ? "border border-green-500" : ""
+      className={`p-1 lg:w-full m-auto  md:w-full  cursor-pointer  rounded-3xl ${
+        isSelected ? "border-4 border-green-1" : ""
       } `}
       onClick={onClick}
     >
-      <div className="flex border-2 rounded-2xl bg-white border-gray-200 border-opacity-50 px-5 py-4 sm:flex-row flex-col shadow-lg">
+      <div className="flex  rounded-3xl bg-white  px-5 py-4 sm:flex-row flex-col shadow-lg">
         <div className="flex-grow">
           <h2 className="text-gray-900 text-xl title-font font-bold mb-3">
             {title}

@@ -66,12 +66,12 @@ function Page1({}: Props) {
   return (
     <>
       <div
-        className="hero min-h-screen"
+        className="hero min-h-screen "
         style={{ backgroundImage: `url("./page1.png")` }}
       >
-        <div className=""></div>
+        <div className="hero-overlay bg-opacity-80 bg-blue-1"></div>
         <div className="hero-content text-center text-neutral-content">
-          <form onSubmit={handleSubmit} className="max-w-4xl text-blue-1 ">
+          <form onSubmit={handleSubmit} className="max-w-4xl text-white ">
             <h1 className="mb-5 text-5xl font-bold text-green-1">
               {data[step].question}
             </h1>
@@ -79,7 +79,7 @@ function Page1({}: Props) {
               type="text"
               name={data[step].data}
               placeholder="Enter Your Name"
-              className="input input-bordered w-full max-w-xl bg-white rounded-full border-4 border-green-1 text-green-1 py-7 mb-10"
+              className="input input-bordered w-full max-w-xl bg-white rounded-full border-4 border-green-1 text-green-1 py-7 mb-10 md:text-xl"
               onChange={(e) => {
                 handleChange(e);
                 onChange(e);

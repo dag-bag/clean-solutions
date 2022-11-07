@@ -12,6 +12,7 @@ import Page2 from "../pages/Page2";
 import { allPageDataAtom } from "../../atoms/data";
 import { deepStateAtom, innnerStagesAtom } from "../../atoms/innterStages";
 import Questions from "./Questions";
+import Layout from "../Layout";
 
 //
 function Step({ data, setData }: any) {
@@ -44,7 +45,12 @@ function Step({ data, setData }: any) {
       stepContent = <Page2 />;
       break;
     case 2:
-      stepContent = <Slug slug={slug} />;
+      stepContent = (
+        <Layout>
+          {" "}
+          <Slug slug={slug} />
+        </Layout>
+      );
       break;
     case 3:
       stepContent = (

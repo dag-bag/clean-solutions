@@ -4,6 +4,7 @@ import React from "react";
 import { useRecoilState, useSetRecoilState } from "recoil";
 import { currentModalAtom, modalState } from "../../atoms/modalAtom";
 import Card2 from "../cards/Card2";
+import Layout from "../Layout";
 import Section from "../Section";
 import Flex from "../utils/Flex";
 
@@ -84,7 +85,14 @@ const page3Data = [
 ];
 
 function Page3({}: Props) {
-  return <Section data={page3Data} />;
+  return (
+    <div
+      className="hero min-h-screen place-items-start md:place-items-center"
+      style={{ backgroundImage: `url("./page1.png")` }}
+    >
+      <Section data={page3Data} />;
+    </div>
+  );
 }
 
 export default Page3;

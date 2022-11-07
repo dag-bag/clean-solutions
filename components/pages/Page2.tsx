@@ -87,9 +87,10 @@ function Page2({}: Props) {
   const page1Data = useRecoilValue(page1DataAtom);
   return (
     <div
-      className="hero min-h-screen"
+      className="hero min-h-screen place-items-start md:place-items-center"
       style={{ backgroundImage: `url("./page1.png")` }}
     >
+      <div className="hero-overlay bg-opacity-80 bg-blue-1"></div>
       {/* <div className="absolute -top-28 -left-14 hidden md:block">
         <img src="1.svg" alt="" className="w-[25rem] " />
       </div>
@@ -121,8 +122,11 @@ function Page2({}: Props) {
                 Tired of using so many different, bulky cleaning products for
                 every job?
               </p> */}
-              <p className="  text-xl md:leading-10 font-bold  md:mt-0 md:text-3xl bg-white text-green-1 md:p-4  p-3 rounded-full border-2 border-green-1">
-                {"Please select all that interest you".toUpperCase()}
+              <p
+                className="  text-xl md:leading-10 font-bold  md:mt-0 md:text-3xl bg-white text-blue-1 md:px-14  p-3 rounded-full border-4 border-green-1 uppercase md:min-w-[34rem] px-5
+"
+              >
+                Please select all that interest you
               </p>
             </div>
           </div>

@@ -42,13 +42,21 @@ function Card3({ title, svgs, text, index }: Page2) {
 
   return (
     <>
-      <a className="card md:!w-[23rem] " onClick={handleCardClick}>
+      <a
+        className="card h-[15rem] md:!w-[23rem] 
+     rounded-3xl "
+        onClick={handleCardClick}
+      >
         <div
-          className={`front flex-col  bg-white sd shadow-lg rounded-md ${
+          className={`front flex-col  bg-white shadow-2xl rounded-3xl ${
             isSelected ? "border-4 border-green-1" : ""
-          }   transition-all duration-200 ease-in-out  border-gray-200 border-4`}
+          }   transition-all duration-200 ease-in-out z-50  border-4 border-green-1`}
         >
-          <h3 className="mt-4 text-3xl font-bold text-gray-900 ">{title}</h3>
+          <h3 className="mt-4 text-3xl font-bold text-blue-1 ">{title}</h3>
+          <p className="text-green-1 text-sm text-center mt-4">
+            HAND SANITIZER BODY DEODORANT HAIR OR FUR SANITIZER SKIN INFECTIONS
+            DENTAL & ORAL HYGIENE LAUNDRY DISINFECTION
+          </p>
           <div className="mt-3 space-x-8 flex p-1">
             {svgs.map((src, index) => {
               return (
@@ -64,17 +72,17 @@ function Card3({ title, svgs, text, index }: Page2) {
           </div>
         </div>
         <div
-          className={` back sd ${
+          className={` back sd shadow-lg rounded-3xl ${
             isSelected ? "border-4 border-green-1" : ""
-          } border-gray-200 border-4`}
+          } border-4 border-green-1  `}
         >
           <div className="flex  flex-col">
             {/* <p>Consectetur adipisicing elit. Possimus, praesentium?</p> */}
-            <p className="text-lg text-center font-medium ">{text}</p>
+            <p className="text-xl text-center font-medium ">{text}</p>
             <button
               className={`${
                 isSelected ? "bg-green-1" : "bg-blue-1"
-              }  text-white rounded-md py-2 mt-4 w-1/3 m-auto`}
+              }  text-white rounded-md py-2 mt-4 w-1/3 m-auto `}
             >
               {isSelected ? "Selected" : "Select"}
             </button>
