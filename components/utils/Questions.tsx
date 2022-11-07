@@ -118,9 +118,9 @@ function Questions({
     // </Flex>
     <div className="hero min-h-screen relative ">
       <div className="absolute hidden md:block h-screen w-1/2 bg-blue-1 right-0 top-0"></div>
-      <div className="absolute  md:hidden h-[50%] w-full bg-blue-1 bottom-0 "></div>
-      <div className="hero-content flex-col lg:flex-row justify-between md:max-w-[96%]">
-        <div className="text-center md:w-1/2 pb-16 ">
+      {/* <div className="absolute  md:hidden h-[50%] w-full bg-blue-1 bottom-0 "></div> */}
+      <div className="hero-content flex-col lg:flex-row justify-between md:max-w-[96%] p-0 md:p-4">
+        <div className="text-center md:w-1/2 md:pb-16 p-1 h-[50vh] md:h-auto">
           <Flex>
             <img src="./icons/5.png" alt="" className="md:h-60 h-40" />
           </Flex>
@@ -130,11 +130,12 @@ function Questions({
         </div>
 
         <div
-          className={` flex-shrink-0 w-full m-auto gap-y-4 md:gap-y-14 md:w-1/2 ${
-            type === "input"
-              ? "flex  justify-center items-center "
-              : " grid grid-cols-2 "
-          } `}
+          className={` flex-shrink-0 w-full m-auto gap-y-4 md:gap-y-14 md:w-1/2  bg-blue-1 py-20
+           ${
+             type === "input"
+               ? "flex  justify-center items-center "
+               : " grid grid-cols-2 "
+           }  h-[50vh] md:h-auto`}
         >
           {type === "input" ? (
             <input

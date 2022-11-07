@@ -126,7 +126,7 @@ function Section({ data, slug }: Props) {
         </p>
         <div>
           <section className="text-gray-600 body-font">
-            <div className="grid  md:grid-cols-3 gap-y-5 gap-x-3 h-[70vh] md:h-auto overflow-hidden overflow-y-scroll">
+            <div className="grid  md:grid-cols-3 gap-y-5 gap-x-3 h-[70vh] md:h-auto overflow-hidden overflow-y-scroll scrollbar-hide">
               {/* <div className="grid "> */}
               {data.map((item, index) => {
                 return (

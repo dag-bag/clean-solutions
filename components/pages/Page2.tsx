@@ -104,7 +104,7 @@ function Page2({}: Props) {
         <img src="./icons/4.svg" alt="" className="w-[30rem]" />
       </div> */}
       <Flex
-        className="flex-col space-y-8 items-center   p-4 md:p-0 md:pt-16"
+        className="flex-col space-y-8 items-center   p-4 md:p-0 md:pt-16 scrollbar-hide"
         height="auto"
       >
         <div className="flex w-full mx-auto text-left  mt-10 md:mt-0">
@@ -132,7 +132,7 @@ function Page2({}: Props) {
           </div>
         </div>
 
-        <div className="grid md:grid-cols-2 lg:grid-cols-3 sm:grid-cols-2 w-full md:w-[80%] mx-auto place-items-center overflow-hidden overflow-y-scroll  h-[50vh] md:h-auto pb-20">
+        <div className="grid md:grid-cols-2 lg:grid-cols-3 sm:grid-cols-2 w-full md:w-[80%] mx-auto place-items-center overflow-hidden overflow-y-scroll  h-[70vh] md:h-auto pb-20 scrollbar-hide">
           {data.map((item, index) => {
             return <Card3 key={index} {...item} index={index} />;
           })}
