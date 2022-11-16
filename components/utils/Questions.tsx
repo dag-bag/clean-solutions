@@ -54,7 +54,7 @@ function Questions({
 
   const onSubmit = (values: any, actions: any) => {
     actions.setSubmitting(false);
-    setTest((prev) => {
+    setTest((prev: any) => {
       prev[index].value = values.value;
       prev[index].ml = parseInt(values.value) * prev[index].f;
       return prev;
@@ -171,7 +171,7 @@ function Questions({
                 onChange={handleChange}
                 value={values.value}
               />
-              <p className="text-red-500">{errors.value}</p>
+              <p className="text-red-500"></p>
               <button type="submit"></button>
             </Flex>
           ) : (
