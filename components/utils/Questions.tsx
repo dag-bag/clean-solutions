@@ -1,6 +1,6 @@
 /** @format */
 
-import React, { useState } from "react";
+import React, { useRef, useState } from "react";
 import {
   atom,
   useRecoilState,
@@ -13,6 +13,8 @@ import { allQuestionsAtom, selectionDataAtom } from "../../atoms/quizData";
 import { manuPulateSelector, testArrayAtom, testAtom } from "../../atoms/test";
 import { MdOutlineSanitizer } from "react-icons/md";
 import Flex from "./Flex";
+import { validateNumber, validateString } from "../../types/form";
+import { useFormik } from "formik";
 
 type Props = {
   question: string;
@@ -22,6 +24,7 @@ type Props = {
   setQuestion?: (value: any) => void;
   data: any;
   setData: any;
+  deepCopy: any;
 };
 
 const stringAtom = atom({
@@ -42,29 +45,46 @@ function Questions({
   setQuestion,
   data,
   setData,
+  deepCopy,
 }: Props) {
-  const [string, setString] = useRecoilState(stringAtom);
-  const [Data, setAllData] = useRecoilState(allPageDataAtom);
-  const [testArray, setTestAray] = useRecoilState(testArrayAtom);
-  console.log("testArray", testArray);
+  const [allQuestions, setAllQuestions] = useRecoilState(allQuestionsAtom);
+  const [index, setDeepState] = useRecoilState(deepStateAtom);
 
-  // console.log("currentData", currentData);
-  const [currentData, setCurrentData] = useRecoilState(selectionDataAtom);
+  const [test, setTest] = useState(deepCopy);
+
+  const onSubmit = (values: any, actions: any) => {
+    actions.setSubmitting(false);
+    setTest((prev) => {
+      prev[index].value = values.value;
+      prev[index].ml = parseInt(values.value) * prev[index].f;
+      return prev;
+    });
+    setDeepState((prev) => prev + 1);
+  };
+  console.log(test);
+
+  const {
+    handleChange,
+    handleSubmit,
+    handleBlur,
+    errors,
+    touched,
+    isSubmitting,
+    validateOnBlur,
+    values,
+    setFieldValue,
+  } = useFormik({
+    initialValues: test[index],
+    validationSchema: validateNumber("value"),
+    onSubmit: onSubmit,
+  });
+  console.log("errors ", errors);
+  console.log("values", values);
+  // console.log("values", index);
   const [questionsData, setQuestionData] = useRecoilState(allQuestionsAtom);
-  const index = useRecoilValue(deepStateAtom);
-  const [test, setTest] = useState([
-    {
-      question: "",
-      value: "",
-      type: "",
-    },
-  ]);
-  let [test2, setTest2] = useRecoilState(testAtom);
-  const manuPulation = useSetRecoilState(manuPulateSelector);
 
   const handleBranchChange = (e: React.FormEvent<HTMLInputElement>) => {
     // setQuestionData([...questionsData, { question: e.currentTarget.value }]);
-    console.log("questionsData", questionsData);
     // let newValue = [...currentData];
     // let newIngredients = [...questionsData];
     // newIngredients[0] = {
@@ -87,7 +107,7 @@ function Questions({
     // // temp.variant[i][e.target.name] = e.target.value;
     // console.log("currentData", temp[0].data[0].questions[0].value);
   };
-  console.log(questionsData);
+
   // console.log(Data);
   return (
     // <Flex className="flex-col">
@@ -129,7 +149,8 @@ function Questions({
           </h1>
         </div>
 
-        <div
+        <form
+          onSubmit={handleSubmit}
           className={` flex-shrink-0 w-full m-auto gap-y-4 md:gap-y-14 md:w-1/2   bg-blue-1 
            ${
              type === "input"
@@ -138,35 +159,43 @@ function Questions({
            }  h-[50vh] md:h-auto`}
         >
           {type === "input" ? (
-            <input
-              type="text"
-              className="bg-white border-4 placeholder:px-2 border-green-1 rounded-full  outline-none py-5
-              px-5"
-              placeholder="Enter your answer"
-            />
+            <Flex className="flex-col">
+              <input
+                autoComplete="off"
+                type="text"
+                className={`bg-white border-4 placeholder:px-2  rounded-full  outline-none py-5
+              px-5 ${errors.value ? "border-red-400" : "border-green-1"}`}
+                id="value"
+                name="value"
+                placeholder="Enter your answer"
+                onChange={handleChange}
+                value={values.value}
+              />
+              <p className="text-red-500">{errors.value}</p>
+              <button type="submit"></button>
+            </Flex>
           ) : (
             <>
-              <button className="md:w-2/3 py-3 px-8 bg-white border-4 border-green-1 rounded-full text-blue-1 text-xl  m-auto md:text-2xl">
-                1 Month
-              </button>
-              <button className="md:w-2/3 py-3 px-8 bg-white border-4 border-green-1 rounded-full text-blue-1 text-xl m-auto md:text-2xl">
-                2 Month
-              </button>
-              <button className="md:w-2/3 py-3 px-8 bg-white border-4 border-green-1 rounded-full text-blue-1 text-xl m-auto md:text-2xl">
-                3 Month
-              </button>
-              <button className="md:w-2/3 py-3 px-8 bg-white border-4 border-green-1 rounded-full text-blue-1 text-xl m-auto md:text-2xl">
-                4 Month
-              </button>
-              <button className="md:w-2/3 py-3 px-8 bg-white border-4 border-green-1 rounded-full text-blue-1 text-xl m-auto md:text-2xl">
-                5 Month
-              </button>
-              <button className="md:w-2/3 py-3 px-8 bg-white border-4 border-green-1 rounded-full text-blue-1 text-xl m-auto md:text-2xl">
-                6 Month
-              </button>
+              <>
+                {options?.map((item, index) => {
+                  return (
+                    <button
+                      className="md:w-2/3 py-3 px-8 bg-white border-4 border-green-1 rounded-full text-blue-1 text-xl  m-auto md:text-2xl cursor-pointer"
+                      value={index + 1}
+                      key={index}
+                      type="submit"
+                      onClick={() => {
+                        setFieldValue("value", index + 1);
+                      }}
+                    >
+                      {item}
+                    </button>
+                  );
+                })}
+              </>
             </>
           )}
-        </div>
+        </form>
       </div>
     </div>
   );

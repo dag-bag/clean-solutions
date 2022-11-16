@@ -6,6 +6,10 @@ import { string } from "yup";
 import { atom, selector } from "recoil";
 import { allQuestionsAtom } from "./quizData";
 
+export let forthTestingAtom = atom({
+  key: "forthTestingAtom",
+  default: [],
+});
 export let testAtom = atom({
   key: "testAtom",
   default: [

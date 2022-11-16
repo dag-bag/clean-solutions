@@ -3,13 +3,12 @@
 import React from "react";
 import { atom, useRecoilValue } from "recoil";
 import { page1DataAtom } from "../../atoms/data";
-import Card from "../test/Cart";
-import H1 from "../Headings/H1";
-import P from "../para/P";
+import { motion } from "framer-motion";
 import Flex from "../utils/Flex";
-import Card2 from "../test/Card2";
+
 import Card3 from "../test/Card3";
-import { url } from "inspector";
+import { childVariants, containerVariants } from "../../animation/anime";
+
 export const selectedCardIdsAtom = atom<number[]>({
   key: "selectedCardIdsAtom",
   default: [],
@@ -86,12 +85,13 @@ function Page2({}: Props) {
   ];
   const page1Data = useRecoilValue(page1DataAtom);
   return (
-    <div
-      className="hero min-h-screen place-items-start md:place-items-center"
-      style={{ backgroundImage: `url("./page1.png")` }}
-    >
-      <div className="hero-overlay bg-opacity-80 bg-blue-1"></div>
-      {/* <div className="absolute -top-28 -left-14 hidden md:block">
+    <>
+      <div
+        className="hero min-h-screen place-items-start md:place-items-center"
+        style={{ backgroundImage: `url("./page1.png")` }}
+      >
+        <div className="hero-overlay bg-opacity-80 bg-blue-1"></div>
+        {/* <div className="absolute -top-28 -left-14 hidden md:block">
         <img src="1.svg" alt="" className="w-[25rem] " />
       </div>
       <div className="absolute -bottom-14 -right-14 hidden md:block">
@@ -103,42 +103,36 @@ function Page2({}: Props) {
       <div className="absolute -bottom-[6rem] -left-4 hidden md:block">
         <img src="./icons/4.svg" alt="" className="w-[30rem]" />
       </div> */}
-      <Flex
-        className="flex-col space-y-8 items-center   p-4 md:p-0 md:pt-16 scrollbar-hide"
-        height="auto"
-      >
-        <div className="flex w-full mx-auto text-left  mt-10 md:mt-0">
-          <div className="relative inline-flex  mx-auto align-middle">
-            <div className="text-center">
-              {/* <h1 className="hidden md:block md:max-w-5xl text-3xl font-bold leading-none tracking-tighter text-neutral-900 md:text-5xl lg:text-5xl lg:max-w-7xl">
-                Hi, {page1Data.name} Welcome to
-                <span className="text-green-1 mx-2">Clean</span>
-                <span className="text-blue-1">Solutions.</span>
-              </h1>
-              <p
-                className=" mb-8 md:mb-4
-             md:leading-10 mt-3 md:text-2xl text-lg hidden md:block"
-              >
-                Tired of using so many different, bulky cleaning products for
-                every job?
-              </p> */}
-              <p
-                className="  text-xl md:leading-10 font-bold  md:mt-0 md:text-3xl bg-white text-blue-1 md:px-14  p-3 rounded-full border-4 border-green-1 uppercase md:min-w-[34rem] px-5
+        <Flex
+          className="flex-col space-y-8 items-center   p-4 md:p-0 md:pt-12 scrollbar-hide"
+          height="auto"
+        >
+          <div className="flex w-full mx-auto text-left  mt-10 md:mt-0">
+            <div className="relative inline-flex  mx-auto align-middle">
+              <div className="text-center">
+                <p
+                  className="  text-xl md:leading-10 font-bold  md:mt-0 md:text-3xl bg-white text-blue-1 md:px-14  p-3 rounded-full border-4 border-green-1 uppercase md:min-w-[34rem] px-5
 "
-              >
-                Please select all that interest you
-              </p>
+                >
+                  Please select all that interest you
+                </p>
+              </div>
             </div>
           </div>
-        </div>
 
-        <div className="grid md:grid-cols-2 lg:grid-cols-3 sm:grid-cols-2 w-full md:w-[80%] mx-auto place-items-center overflow-hidden overflow-y-scroll  h-[70vh] md:h-auto pb-20 scrollbar-hide">
-          {data.map((item, index) => {
-            return <Card3 key={index} {...item} index={index} />;
-          })}
-        </div>
-      </Flex>
-    </div>
+          <motion.div
+            className="grid md:grid-cols-2 lg:grid-cols-3 sm:grid-cols-2 w-full md:w-[85%] mx-auto place-items-center overflow-hidden overflow-y-scroll  h-[70vh] md:h-auto pb-20 scrollbar-hide"
+            variants={childVariants(0.1)}
+            initial="hidden"
+            animate="visible"
+          >
+            {data.map((item, index) => {
+              return <Card3 key={index} {...item} index={index} />;
+            })}
+          </motion.div>
+        </Flex>
+      </div>
+    </>
   );
 }
 

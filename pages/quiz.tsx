@@ -13,6 +13,7 @@ import {
   stringSchema,
   validateString,
 } from "../types/form";
+import { AnimatePresence } from "framer-motion";
 import P from "../components/para/P";
 import { useRouter } from "next/router";
 import { useRecoilState, useRecoilValue, useSetRecoilState } from "recoil";
@@ -21,6 +22,7 @@ import Step from "../components/utils/Step";
 import NextPrev from "../components/NextPrev";
 import { deepStateAtom, innnerStagesAtom } from "../atoms/innterStages";
 import { selectedCardIdsAtom } from "../components/pages/Page2";
+import AnimationLayout from "../components/utils/AnimationLayout";
 
 type Props = {
   data: any;
@@ -41,7 +43,7 @@ function Quiz({ data, setData }: Props) {
   });
 
   return (
-    <div>
+    <AnimationLayout>
       {/* <div> */}
       <Step data={data} setData={setData} />
       {/* </div> */}
@@ -81,7 +83,7 @@ function Quiz({ data, setData }: Props) {
             : setInnerStep((prev) => prev - 1);
         }}
       />
-    </div>
+    </AnimationLayout>
   );
 }
 

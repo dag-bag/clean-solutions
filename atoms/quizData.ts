@@ -1,5 +1,8 @@
 /** @format */
 
+import { motion } from "framer-motion";
+/** @format */
+
 import { flattenDeep } from "lodash";
 import { atom, selector, selectorFamily } from "recoil";
 import { allPageDataAtom } from "./data";
@@ -9,6 +12,9 @@ interface Question {
   value: string | number;
   options?: string[];
   type?: "input" | "select";
+  r?: string;
+  ml?: number;
+  f?: string | number;
 }
 export interface ALLData {
   title: string;
@@ -21,6 +27,15 @@ interface QuizData {
   slug: string;
   data: ALLData[];
 }
+let r = [
+  "skin-contact",
+  "water-treatment",
+  "home-and-garden",
+  "food-and-beverage",
+  "personal-use",
+  "farm-and-ranch",
+];
+
 export const selectionDataAtom = atom<QuizData[]>({
   key: "selectionDataAtomKey",
   default: [
@@ -43,13 +58,16 @@ export const selectionDataAtom = atom<QuizData[]>({
               question:
                 "On average, how many times per day do you use skin sanitizer?",
               type: "input",
-              value: "",
+              value: 0,
+              r: r[0],
+              ml: 0,
+              f: 30,
             },
             {
               question:
                 "How long would you like your hand sanitizer supply to last?",
               type: "select",
-              value: "",
+              value: 0,
               options: [
                 "1 month",
                 "2 months",
@@ -60,6 +78,8 @@ export const selectionDataAtom = atom<QuizData[]>({
                 "7 months",
                 "8 months",
               ],
+              r: r[0],
+              ml: 0,
             },
           ],
         },
@@ -78,7 +98,10 @@ export const selectionDataAtom = atom<QuizData[]>({
             {
               question:
                 "On average, how many times per day do you use skin sanitizer?",
+              type: "input",
               value: "",
+              r: r[0],
+              ml: 0,
             },
           ],
         },

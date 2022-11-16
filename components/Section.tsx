@@ -8,9 +8,10 @@ import { allPageDataAtom } from "../atoms/data";
 import { deepStateAtom } from "../atoms/innterStages";
 import { currentModalAtom, modalState } from "../atoms/modalAtom";
 import { allQuestionsAtom } from "../atoms/quizData";
-import { testArrayAtom } from "../atoms/test";
+import { forthTestingAtom, testArrayAtom } from "../atoms/test";
 import { Page3 } from "../types/page";
 import Card2 from "./cards/Card2";
+import Modal from "./modal/Modal";
 import Flex from "./utils/Flex";
 import Questions from "./utils/Questions";
 
@@ -106,17 +107,18 @@ const page3Data = [
 ];
 
 function Section({ data, slug }: Props) {
+  const [alberValue, SetAlbertValue] = useRecoilState(forthTestingAtom);
+
+  console.log("alberValue", alberValue);
   const setCurrentModal = useSetRecoilState(currentModalAtom);
   const [Data, setAllData] = useRecoilState(allPageDataAtom);
-
-  console.log("Data:", Data);
 
   const [currentData, setCurrentData] = useRecoilState(allQuestionsAtom);
   let [testArray, setTestArry] = useRecoilState(testArrayAtom);
 
   return (
     <Flex className="text-center px-4">
-      <div className="mt-10 max-w-[85rem] z-40">
+      <div className="mt-10 md:mt-0 max-w-[85rem] z-40 ">
         <p
           className="  text-xl md:leading-10 font-bold  md:mt-0 md:text-3xl bg-white text-blue-1 md:px-14  p-3 rounded-full border-4 border-green-1 uppercase md:min-w-[34rem] px-5
           mb-5
@@ -125,9 +127,9 @@ function Section({ data, slug }: Props) {
           Please select all that interest you
         </p>
         <div>
+          <Modal />
           <section className="text-gray-600 body-font">
-            <div className="grid  md:grid-cols-3 gap-y-5 gap-x-3 h-[70vh] md:h-auto overflow-hidden overflow-y-scroll scrollbar-hide">
-              {/* <div className="grid "> */}
+            <div className="grid  md:grid-cols-3 gap-y-5 gap-x-3 h-[70vh]   overflow-hidden overflow-y-scroll scrollbar-hide md:overflow-visible">
               {data.map((item, index) => {
                 return (
                   <Card2
@@ -136,6 +138,7 @@ function Section({ data, slug }: Props) {
                     {...item}
                     onClick={() => {
                       // setCurrentData([...currentData, item]);
+
                       setTestArry([...testArray, item]);
 
                       const newData = Data.page3.data;

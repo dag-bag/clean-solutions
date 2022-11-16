@@ -111,7 +111,7 @@
   .back {
     background: #fff;
     transform: rotateX(-180deg);
-    padding: 0 2em;
+    padding: 0 1rem;
   }
   .back .button {
     background: linear-gradient(135deg, #95d074, #6da54d);

@@ -13,6 +13,9 @@ import { allPageDataAtom } from "../../atoms/data";
 import { deepStateAtom, innnerStagesAtom } from "../../atoms/innterStages";
 import Questions from "./Questions";
 import Layout from "../Layout";
+import { cloneDeep } from "lodash";
+import AnimationLayout from "./AnimationLayout";
+import Report from "../pages/Report";
 
 //
 function Step({ data, setData }: any) {
@@ -25,6 +28,7 @@ function Step({ data, setData }: any) {
   const deepState = useRecoilValue(deepStateAtom);
   const [step, setStep] = useRecoilState(stepAtom);
   const [questions, setQuestionData] = useRecoilState(allQuestionsSelector);
+  let questinosDeepCoy = cloneDeep(questions);
 
   const getQuestions = () => {
     let currentQuestion = questions[deepState];
@@ -42,29 +46,37 @@ function Step({ data, setData }: any) {
       stepContent = <Page1 />;
       break;
     case 1:
-      stepContent = <Page2 />;
+      stepContent = (
+        <AnimationLayout key={activeStepIndex}>
+          <Page2 />
+        </AnimationLayout>
+      );
       break;
     case 2:
       stepContent = (
-        <Layout>
-          {" "}
-          <Slug slug={slug} />
-        </Layout>
+        <AnimationLayout key={innerState}>
+          <Layout>
+            <Slug slug={slug} />
+          </Layout>
+        </AnimationLayout>
       );
       break;
     case 3:
       stepContent = (
-        <Questions
-          {...getQuestions()}
-          setQuestion={setQuestionData}
-          data={data}
-          setData={setData}
-        />
+        <AnimationLayout key={deepState}>
+          <Questions
+            {...getQuestions()}
+            setQuestion={setQuestionData}
+            data={data}
+            setData={setData}
+            deepCopy={questinosDeepCoy}
+          />
+        </AnimationLayout>
       );
       break;
 
     default:
-      stepContent = <div>Thanks For it.</div>;
+      stepContent = <Report />;
       break;
   }
 

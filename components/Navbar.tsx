@@ -1,5 +1,6 @@
 /** @format */
 
+import Link from "next/link";
 import React from "react";
 import Btn from "./utils/Btn";
 
@@ -101,7 +102,11 @@ function Navbar() {
       <div className="navbar-end">
         <div className="flex-none md:mr-2">
           <div className="dropdown dropdown-end">
-            <label tabIndex={0} className="btn btn-ghost btn-circle">
+            <label
+              tabIndex={0}
+              className="btn btn-ghost btn-circle drawer-button"
+              htmlFor="my-drawer-4"
+            >
               <div className="indicator">
                 <svg
                   xmlns="http://www.w3.org/2000/svg"
@@ -120,6 +125,7 @@ function Navbar() {
                 <span className="badge badge-sm indicator-item">8</span>
               </div>
             </label>
+
             <div
               tabIndex={0}
               className="mt-3 card card-compact dropdown-content w-52 bg-base-100 shadow"

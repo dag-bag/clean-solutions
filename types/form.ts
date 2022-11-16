@@ -23,6 +23,12 @@ export const validateString = (value: string) => {
   });
   return stringSchema;
 };
+export const validateNumber = (value: string) => {
+  let stringSchema = Yup.object().shape({
+    value: Yup.number().required("Required").typeError("Must be a number"),
+  });
+  return stringSchema;
+};
 export let stringSchema = Yup.object().shape({
   name: Yup.string()
     .min(3, "Too Short!")

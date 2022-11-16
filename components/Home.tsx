@@ -31,7 +31,7 @@ const containerVariants = {
 };
 const Home = () => {
   return (
-    <Flex>
+    <Flex className="bg-black">
       {" "}
       <motion.div
         className="rangeen"
