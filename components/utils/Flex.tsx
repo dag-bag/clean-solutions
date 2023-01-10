@@ -9,7 +9,7 @@ type Props = {
 };
 
 function Flex({ children, className, height }: Props) {
-  const classes = `flex justify-center items-center w-full h-${height} ${className}`;
+  const classes = `${className} flex justify-center  w-full h-${height} `;
   return <div className={classes}>{children}</div>;
 }
 

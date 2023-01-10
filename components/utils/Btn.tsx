@@ -33,7 +33,7 @@ function Btn({ hidden }: Props) {
             ></path>
           </svg>
         </span>
-        <span className="absolute flex items-center justify-center w-full h-full text-white border-white transition-all duration-300 transform group-hover:translate-x-full ease bg-green-1 ">
+        <span className="absolute flex items-center justify-center w-full h-full text-white border-white transition-all duration-300 transform group-hover:translate-x-full ease bg-green-1 rounded-full p-1 ">
           Start Quiz
         </span>
         <span className="relative invisible">Button Text</span>

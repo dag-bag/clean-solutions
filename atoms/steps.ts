@@ -4,3 +4,8 @@ export const stepAtom = atom({
   key: "stepAtom",
   default: 0,
 });
+
+export const disAbleAtom = atom<boolean>({
+  key: "disAbleAtom",
+  default: false,
+});

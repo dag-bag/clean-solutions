@@ -7,9 +7,14 @@ import { allQuestionsSelector, selectionDataAtom } from "../../atoms/quizData";
 import { stepAtom } from "../../atoms/steps";
 import Slug from "../pages/Slug";
 import Page1 from "../pages/Page1";
-import Page2 from "../pages/Page2";
+import Page2 from "../pages/page2/Page2";
 
-import { allPageDataAtom } from "../../atoms/data";
+import {
+  allPageDataAtom,
+  page2DataAtom,
+  page3DataAtom,
+  page4DataAtom,
+} from "../../atoms/data";
 import { deepStateAtom, innnerStagesAtom } from "../../atoms/innterStages";
 import Questions from "./Questions";
 import Layout from "../Layout";
@@ -22,12 +27,13 @@ function Step({ data, setData }: any) {
   const activeStepIndex = useRecoilValue(stepAtom);
   const selectedCards = useRecoilValue(allPageDataAtom);
   const innerState = useRecoilValue(innnerStagesAtom);
-  const title = selectedCards?.page2?.data[innerState]?.title;
+  const page2Data = useRecoilValue(page2DataAtom);
+  const title = page2Data[innerState]?.title;
   const slug = title?.toLowerCase().replace(/ /g, "-");
 
   const deepState = useRecoilValue(deepStateAtom);
   const [step, setStep] = useRecoilState(stepAtom);
-  const [questions, setQuestionData] = useRecoilState(allQuestionsSelector);
+  const [questions, setQuestionData] = useRecoilState(page4DataAtom);
   let questinosDeepCoy = cloneDeep(questions);
 
   const getQuestions = () => {
@@ -65,6 +71,7 @@ function Step({ data, setData }: any) {
       stepContent = (
         <AnimationLayout key={deepState}>
           <Questions
+            q={questions}
             {...getQuestions()}
             setQuestion={setQuestionData}
             data={data}

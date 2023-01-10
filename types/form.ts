@@ -19,13 +19,17 @@ export const validateString = (value: string) => {
     name: Yup.string()
       .min(3, "Too Short!")
       .max(50, "Too Long!")
-      .required("Required"),
+      .required("Required")
+      .trim("Empty space not allowed"),
   });
   return stringSchema;
 };
-export const validateNumber = (value: string) => {
+export const validateNumber = (value: string, max?: number) => {
   let stringSchema = Yup.object().shape({
-    value: Yup.number().required("Required").typeError("Must be a number"),
+    value: Yup.number()
+      .required("Required")
+      .typeError("Must be a number")
+      .max(max || 30),
   });
   return stringSchema;
 };

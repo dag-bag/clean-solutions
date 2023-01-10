@@ -42,7 +42,15 @@ function AnimationLayout({ children }: Props) {
       variants={fadeInUp} // Pass the variant object into Framer Motion
       initial="hidden" // Set the initial state to variants.hidden
       animate="enter" // Animated state to variants.enter
+      className="relative"
     >
+      <a className="btn btn-ghost normal-case text-xl absolute top-5 left-5 bg-white hidden md:block">
+        <img
+          src="https://cleansolutions.tech/wp-content/uploads/2022/09/clean-solution-logo-1024x337-1-2.png"
+          alt=""
+          className="h-10"
+        />
+      </a>
       {children}
     </motion.div>
   );

@@ -1,28 +1,14 @@
 /** @format */
 
-import { useFormik, Form, Field } from "formik";
-
 import React, { useState } from "react";
 
-import Flex from "../components/utils/Flex";
-
-import H1 from "../components/Headings/H1";
-
-import {
-  formValidationSchema,
-  stringSchema,
-  validateString,
-} from "../types/form";
-import { AnimatePresence } from "framer-motion";
-import P from "../components/para/P";
-import { useRouter } from "next/router";
-import { useRecoilState, useRecoilValue, useSetRecoilState } from "recoil";
+import { useRecoilState, useRecoilValue } from "recoil";
 import { stepAtom } from "../atoms/steps";
 import Step from "../components/utils/Step";
 import NextPrev from "../components/NextPrev";
 import { deepStateAtom, innnerStagesAtom } from "../atoms/innterStages";
-import { selectedCardIdsAtom } from "../components/pages/Page2";
 import AnimationLayout from "../components/utils/AnimationLayout";
+import { page2DataAtom } from "../atoms/data";
 
 type Props = {
   data: any;
@@ -33,14 +19,7 @@ function Quiz({ data, setData }: Props) {
   const [step, setStep] = useRecoilState(stepAtom);
   const [innerStep, setInnerStep] = useRecoilState(innnerStagesAtom);
   const [deepStep, setDeepStep] = useRecoilState(deepStateAtom);
-  const [selectedIds, setCardIds] = useRecoilState(selectedCardIdsAtom);
-  console.log("selectedIds:", selectedIds);
-
-  console.log({
-    deepStep,
-    step,
-    innerStep,
-  });
+  const selectedIds = useRecoilValue(page2DataAtom);
 
   return (
     <AnimationLayout>
@@ -70,12 +49,9 @@ function Quiz({ data, setData }: Props) {
         nextClick={() => {
           if (innerStep === selectedIds.length - 1) {
             setStep((prev) => prev + 1);
-            // setInnerStep(0);
           } else {
             setInnerStep((prev) => prev + 1);
           }
-          // setInnerStep((prev) => prev + 1);
-          // setStep((prev) => prev + 1);
         }}
         backClick={() => {
           innerStep === 0

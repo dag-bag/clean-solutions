@@ -1,14 +1,14 @@
 /** @format */
 
 import React from "react";
-import { useSetRecoilState } from "recoil";
-import { modalState } from "../../atoms/modalAtom";
+import { useRecoilValue } from "recoil";
+import { AiOutlineCheckCircle } from "react-icons/ai";
 import truncate from "../../libs/Truncate";
 import A from "../animation/A";
-import Modal from "../modal/Modal";
 import Flex from "../utils/Flex";
 import Svg from "../utils/Svg";
 import { motion } from "framer-motion";
+import { page3DataAtom } from "../../atoms/data";
 
 type Props = {
   svgs: string[];
@@ -17,19 +17,12 @@ type Props = {
   modalText: string;
   onClick: () => void;
   buttonClick?: (e: any) => void;
-  Data: any;
 };
 
-function Card2({
-  svgs,
-  title,
-  description,
-  modalText,
-  onClick,
-  buttonClick,
-  Data,
-}: Props) {
-  const isSelected = Data.page3.data.find((i: any) => i.title === title);
+function Card2({ svgs, title, description, onClick, buttonClick }: Props) {
+  const data = useRecoilValue(page3DataAtom);
+  const isSelected = data.find((i: any) => i.title === title);
+
   return !isSelected ? (
     <A
       className={`p-1 lg:w-full m-auto  md:w-full  cursor-pointer  rounded-3xl `}
@@ -60,7 +53,7 @@ function Card2({
               x: 0,
               color: isSelected ? "#fff" : "#000",
             }}
-            className="text-gray-900 text-xl title-font font-bold mb-3"
+            className="text-gray-900 text-xl title-font font-bold mb-3 uppercase"
           >
             {title}
           </motion.h2>
@@ -105,9 +98,17 @@ function Card2({
               </svg>
             </motion.a>
 
-            <Flex className="space-x-4 ">
+            <Flex className="space-x-4 items-center">
               {svgs.slice(0, 3).map((src, index) => {
-                return <Svg src={src} key={index} h="h-8" w="w-8" />;
+                return (
+                  <Svg
+                    src={src}
+                    key={index}
+                    select={isSelected ? true : false}
+                    h="h-10"
+                    w="w-10"
+                  />
+                );
               })}
             </Flex>
           </Flex>
@@ -159,7 +160,7 @@ function Card2({
           >
             {title}
           </motion.h2>
-          {/* <motion.p
+          <motion.p
             initial={{
               x: -100,
             }}
@@ -170,9 +171,9 @@ function Card2({
             className="leading-relaxed text-[15px] "
           >
             {truncate(description, 160)}
-         
-          </motion.p> */}
-          <>
+            {/* {description} */}
+          </motion.p>
+          <Flex>
             <motion.a
               initial={{
                 x: -100,
@@ -184,7 +185,7 @@ function Card2({
                 color: isSelected ? "#000" : "#fff",
               }}
               href="#my-modal-3"
-              className=" modal-button btn-wide mt-3 !text-xs bg-green-1 text-white inline-flex items-center px-2 py-2 rounded-md my-4 cursor-pointer"
+              className=" modal-button btn-wide  mt-3 !text-xs bg-green-1 text-white inline-flex items-center px-2 py-2 rounded-md my-4 cursor-pointer"
               onClick={buttonClick}
             >
               Read More.
@@ -201,13 +202,21 @@ function Card2({
               </svg>
             </motion.a>
 
-            <Flex className="space-x-4 ">
+            <Flex className="space-x-4 justify-center items-center">
               {svgs.slice(0, 3).map((src, index) => {
-                return <Svg src={src} key={index} h="h-8" w="w-8" />;
+                return (
+                  <Svg
+                    src={src}
+                    key={index}
+                    h="!h-10"
+                    w="w-10"
+                    select={isSelected ? true : false}
+                  />
+                );
               })}
             </Flex>
-          </>
-          <motion.h5
+          </Flex>
+          <motion.button
             initial={{
               x: -100,
             }}
@@ -215,9 +224,13 @@ function Card2({
               x: 0,
               color: isSelected ? "#fff" : "#000",
             }}
+            className="btn bg-white border-none !text-green-1"
           >
             {isSelected ? "Box Selected" : "Click to Select"}
-          </motion.h5>
+            {isSelected && (
+              <AiOutlineCheckCircle className=" text-2xl ml-2 text-green-1" />
+            )}
+          </motion.button>
         </div>
       </motion.div>
     </A>

@@ -1,5 +1,7 @@
 /** @format */
 
+import Image from "next/image";
+import Link from "next/link";
 import React from "react";
 interface Props {
   title: string;
@@ -41,8 +43,9 @@ const rawData = [
 function Item({ title, price, category, image, qty }: Props) {
   return (
     <div className="flex py-6 border border-gray-200 mb-2">
-      <div className="h-24 w-24 flex-shrink-0 overflow-hidden rounded-md border border-gray-200">
-        <img
+      <div className="h-24 w-24 flex-shrink-0 overflow-hidden rounded-md border border-gray-200 relative">
+        <Image
+          layout="fill"
           src={image}
           alt="Salmon orange fabric pouch with match zipper, gray zipper pull, and adjustable hip belt."
           className="h-full w-full object-cover object-center"
@@ -137,12 +140,14 @@ function Drawer() {
               Shipping and taxes calculated at checkout.
             </p>
             <div className="mt-6">
-              <a
-                href="#"
-                className="flex items-center justify-center rounded-md border border-transparent bg-green-1 btn  px-6 py-3 text-base font-medium text-white shadow-sm hover:bg-blue-1"
-              >
-                Checkout
-              </a>
+              <Link href={"/checkout"}>
+                <a
+                  href="#"
+                  className="flex items-center justify-center rounded-md border border-transparent bg-green-1 btn  px-6 py-3 text-base font-medium text-white shadow-sm hover:bg-blue-1"
+                >
+                  Checkout
+                </a>
+              </Link>
             </div>
             <div className="mt-6 flex justify-center text-center text-sm text-gray-500">
               <p>

@@ -4,8 +4,11 @@ import React from "react";
 import { motion } from "framer-motion";
 interface Props {
   text: string;
+  className: string;
+  maxW?: string;
 }
-const AnimatedTextWord = ({ text }: Props) => {
+
+const AnimatedTextWord = ({ text, className, maxW }: Props) => {
   const words = text.split(" ");
 
   // Variants for Container of words.
@@ -42,7 +45,9 @@ const AnimatedTextWord = ({ text }: Props) => {
 
   return (
     <motion.div
-      className="flex overflow-hidden rangeen"
+      className={`flex ${
+        maxW ? maxW : "max-w-xl"
+      } text-center justify-center items-center flex-wrap ${className}`}
       variants={container}
       initial="hidden"
       animate="visible"

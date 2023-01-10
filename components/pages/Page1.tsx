@@ -16,19 +16,15 @@ import {
 import P from "../para/P";
 import { useRouter } from "next/router";
 import { useRecoilState, useSetRecoilState } from "recoil";
-import { stepAtom } from "../../atoms/steps";
+import { disAbleAtom, stepAtom } from "../../atoms/steps";
 import { allPageDataAtom, page1DataAtom } from "../../atoms/data";
 import P1 from "../para/P1";
 import Bold from "../utils/Bold";
 import { MotionConfig } from "framer-motion";
-import {
-  easing,
-  stagger,
-  fadeInUp,
-  containerVariants,
-  dropUpVariants,
-  childVariants,
-} from "../../animation/anime";
+import { dropUpVariants, childVariants } from "../../animation/anime";
+import AnimatedTextWord from "../Headings/test/AnimatedText";
+import Spacing from "./layout/Spacing";
+import Error from "../../Error";
 
 type Props = {};
 const data = [
@@ -38,17 +34,12 @@ const data = [
     case: 1,
   },
 ];
+
 function Page1({}: Props) {
   const [step, setStep] = useRecoilState(stepAtom);
-  const setPage1Values = useSetRecoilState(page1DataAtom);
-  const [allData, setData] = useRecoilState(allPageDataAtom);
-
-  const onChange = (e: any) => {
-    // setData({ ...allData, [e.target.name]: e.target.value });
-  };
+  const [page1Data, setPage1Values] = useRecoilState(page1DataAtom);
 
   const onSubmit = (values: any, actions: any) => {
-    console.log(values);
     setPage1Values(values);
     setStep((prev) => prev + 1);
   };
@@ -63,13 +54,19 @@ function Page1({}: Props) {
     validateOnBlur,
     values,
   } = useFormik({
-    initialValues: {
-      name: "",
-    },
+    initialValues: page1Data,
     validationSchema: validateString("name"),
     onSubmit: onSubmit,
   });
-  console.log(values);
+  const setDisabled = useSetRecoilState(disAbleAtom);
+
+  useEffect(() => {
+    if (errors.name || values.name === "") {
+      setDisabled(true);
+    } else {
+      setDisabled(false);
+    }
+  }, [errors]);
 
   return (
     <>
@@ -89,25 +86,30 @@ function Page1({}: Props) {
             onSubmit={handleSubmit}
             className="max-w-4xl text-white "
           >
-            <motion.h1
-              variants={dropUpVariants}
+            <AnimatedTextWord
+              text={data[step].question}
+              maxW="auto"
+              // variants={dropUpVariants}
               className="mb-5 text-5xl font-bold text-green-1"
-            >
-              {data[step].question}
-            </motion.h1>
-            <motion.input
-              // variants={fadeInUp}
-              variants={dropUpVariants}
-              type="text"
-              name={data[step].data}
-              placeholder="Enter Your Name"
-              className="input input-bordered w-full max-w-xl bg-white rounded-full border-4 border-green-1 text-green-1 py-7 mb-10 md:text-xl"
-              onChange={(e) => {
-                handleChange(e);
-                onChange(e);
-              }}
-              value={values.name}
-            />
+            ></AnimatedTextWord>
+            <Spacing spacing={2} className="mb-10">
+              <motion.input
+                // variants={fadeInUp}
+                // variants={dropUpVariants}
+                type="text"
+                name={data[step].data}
+                placeholder="Enter Your Name"
+                className={`input input-bordered w-full max-w-xl bg-white rounded-full border-4  text-green-1 py-7  md:text-xl ${
+                  errors.name ? "border-red-400" : "border-green-1"
+                } `}
+                onChange={(e) => {
+                  handleChange(e);
+                }}
+                value={values.name}
+              />
+              <Error error={errors.name} />
+            </Spacing>
+
             <motion.p className="mb-5 md:text-lg " variants={dropUpVariants}>
               Clean Solutions is a bio-security company specializing in quickly
               <br /> identifying{" "}

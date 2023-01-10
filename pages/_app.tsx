@@ -1,6 +1,7 @@
 /** @format */
 
 import "../styles/globals.css";
+import "../styles/styles.css";
 import type { AppProps } from "next/app";
 import { AnimatePresence } from "framer-motion";
 import { RecoilRoot } from "recoil";
