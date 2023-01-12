@@ -4,23 +4,9 @@ import { motion } from "framer-motion";
 import Link from "next/link";
 import Div from "../../animation/Div";
 import AnimatedTextWord from "../../Headings/test/AnimatedText";
-
 import Btn from "../../utils/Btn";
-import Drawer from "../../utils/Drawer";
-const variants = {
-  hidden: { opacity: 0, x: -200, y: 0 },
-  enter: { opacity: 1, x: 0, y: 0 },
-  exit: { opacity: 0, x: 0, y: -100 },
-};
-let easing = [0.6, -0.05, 0.01, 0.99];
 
-const stagger = {
-  hidden: {
-    transition: {
-      staggerChildren: 0.05,
-    },
-  },
-};
+let easing = [0.6, -0.05, 0.01, 0.99];
 
 const fadeInUp = {
   hidden: {
@@ -40,6 +26,13 @@ const fadeInUp = {
     opacity: 0,
   },
 };
+const TrustedIcons = [
+  "bigstock-green-earth-and-leaves-14539535",
+  "Non-Toxic-Icon",
+  "pngguru.com",
+  "pngwing.com",
+  "SeekPng.com_support-our-troops-png_5841661",
+];
 const Main = () => {
   return (
     <>
@@ -116,43 +109,20 @@ const Main = () => {
               <h6 className="text-lg text-green-800 dark:text-green-400 font-semibold">
                 Trusted by
               </h6>
-              <div className="mt-2 flex gap-6">
-                <div className="flex items-center">
-                  <img
-                    className=" w-28 h-auto "
-                    src="./label-icons/EPA-ICON.png"
-                    width={50}
-                    height={20}
-                    alt="logo partener"
-                  />
-                </div>
-                <div className="flex items-center">
-                  <img
-                    className="-hue-rotate-30 w-28 h-auto "
-                    src="FDA-icon.png"
-                    width={50}
-                    height={20}
-                    alt="logo partener"
-                  />
-                </div>
-                <div className="flex items-center">
-                  <img
-                    className="-hue-rotate-30 w-28 h-auto dark:grayscale"
-                    src="https://tailus.io/sources/blocks/horse/preview/images/clients/lilly.png"
-                    width={50}
-                    height={20}
-                    alt="logo partener"
-                  />
-                </div>
-                <div className="flex items-center">
-                  <img
-                    className="-hue-rotate-30 w-28 h-auto dark:grayscale"
-                    src="https://tailus.io/sources/blocks/horse/preview/images/clients/microsoft.png"
-                    width={50}
-                    height={20}
-                    alt="logo partener"
-                  />
-                </div>
+              <div className="mt-2 flex gap-6 justify-center items-center">
+                {TrustedIcons.map((icon, index) => {
+                  return (
+                    <div className="flex items-center">
+                      <img
+                        className=" w-24 h-auto "
+                        src={`./label-icons/${icon}.png`}
+                        width={50}
+                        height={20}
+                        alt="logo partener"
+                      />
+                    </div>
+                  );
+                })}
               </div>
             </div>
           </div>
