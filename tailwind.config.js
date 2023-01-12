@@ -8,6 +8,31 @@ module.exports = {
     "./pages/**/*.{js,ts,jsx,tsx}",
     "./components/**/*.{js,ts,jsx,tsx}",
   ],
+  daisyui: {
+    themes: [
+      {
+        mytheme: {
+          primary: "#95D074",
+
+          secondary: "#518ca4",
+
+          accent: "#8B5801",
+
+          neutral: "#FFFFFF",
+
+          "base-100": "#FFFFFF",
+
+          info: "#26C9ED",
+
+          success: "#1CE397",
+
+          warning: "#CB8B15",
+
+          error: "#F3535B",
+        },
+      },
+    ],
+  },
   theme: {
     extend: {
       colors: {

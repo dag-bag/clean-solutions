@@ -11,7 +11,11 @@ type Props = {
 function Btn({ hidden }: Props) {
   return (
     <Link href="/quiz">
-      <button className="relative inline-flex items-center justify-start py-3 pl-4 pr-12 overflow-hidden font-semibold text-white transition-all duration-150 ease-in-out rounded-full hover:pl-10 hover:pr-6 bg-green-1 group border hover:border-green-1">
+      <button
+        className={`relative inline-flex items-center justify-start py-3 pl-4 pr-12 overflow-hidden font-semibold text-white transition-all duration-150 ease-in-out rounded-full hover:pl-10 hover:pr-6 bg-green-1 group border hover:border-green-1 ${
+          hidden ? "hidden md:block" : ""
+        }`}
+      >
         <span className="absolute bottom-0 left-0 w-full h-1 transition-all duration-150 ease-in-out bg-white group-hover:h-full" />
         <span className="absolute right-0 pr-4 duration-200 ease-out group-hover:translate-x-12 ">
           <svg

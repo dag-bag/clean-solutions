@@ -14,10 +14,10 @@ function Page2Component({}: Props) {
   return (
     <MainLayout bgImage={false} bgcolor={false}>
       <Flex
-        className="flex-col space-y-4 items-center   p-4 md:p-0 md:pt-8 scrollbar-hide"
+        className="flex-col space-y-4 items-center   md:pt-8 scrollbar-hide"
         height="auto"
       >
-        <div className="flex w-full mx-auto text-left  mt-10 md:mt-0">
+        <div className="flex w-full mx-auto text-left  mt-10 md:mt-0 px-4">
           <div className="relative inline-flex  mx-auto align-middle">
             <div className="text-center">
               <p className="  text-xl md:leading-10 font-bold  md:mt-0 md:text-3xl bg-white text-blue-1 md:px-14  p-3 rounded-full border-4 border-green-1 uppercase md:min-w-[34rem] px-5">

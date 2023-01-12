@@ -180,12 +180,11 @@ function Card2({ svgs, title, description, onClick, buttonClick }: Props) {
               }}
               animate={{
                 x: 0,
-
                 background: isSelected ? "#fff" : "#95D074",
                 color: isSelected ? "#000" : "#fff",
               }}
               href="#my-modal-3"
-              className=" modal-button btn-wide  mt-3 !text-xs bg-green-1 text-white inline-flex items-center px-2 py-2 rounded-md my-4 cursor-pointer"
+              className=" modal-button mt-3 !text-xs bg-green-1 text-white inline-flex items-center px-2 py-2 rounded-md my-4 cursor-pointer"
               onClick={buttonClick}
             >
               Read More.

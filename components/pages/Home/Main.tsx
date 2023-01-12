@@ -5,6 +5,7 @@ import Link from "next/link";
 import Div from "../../animation/Div";
 import AnimatedTextWord from "../../Headings/test/AnimatedText";
 import Btn from "../../utils/Btn";
+import HomeModal from "./HomeModal";
 
 let easing = [0.6, -0.05, 0.01, 0.99];
 
@@ -48,26 +49,8 @@ const Main = () => {
               className="hollow mb-4 text-center text-5xl md:text-[4rem] text-white md:mb-12
           "
             ></AnimatedTextWord>
-            {/* <motion.h1
-              variants={fadeInUp}
-              className="hollow mb-4 text-center text-5xl md:text-[4rem] text-white md:mb-12
-          "
-            >
-              Clean Tech Solutions
-            </motion.h1> */}
-            <div className="max-w-xl flex justify-center items-center flex-col mb-6 text-center m-auto">
-              {/* <h1 className="hollow text-center  text-5xl text-white">
-              Clean Tech Solutions
-            </h1>
-            <h1 className="hollow text-center  text-5xl text-white">
-              Clean Tech Solutions
-            </h1> */}
 
-              {/* <div>
-              <p className="inline-block px-3 py-px mb-4 text-xs font-semibold tracking-wider text-teal-900 uppercase rounded-full bg-teal-accent-400">
-                New Colaboration
-              </p>
-            </div> */}
+            <div className="max-w-xl flex justify-center items-center flex-col mb-6 text-center m-auto">
               <AnimatedTextWord
                 text=" Take Your Own Adventure Quiz"
                 className="max-w-lg mb-6 font-sans text-5xl font-bold tracking-tight  sm:text-5xl sm:leading-none lg:text-5xl xl:text-[4rem] xl:mb-6"
@@ -78,32 +61,15 @@ const Main = () => {
                 animals, skin, water, entire rooms, and much more."
                 className="text-base  md:text-lg"
               ></AnimatedTextWord>
-              {/* <motion.h2
-                variants={fadeInUp}
-                className="max-w-lg mb-6 font-sans text-5xl font-bold tracking-tight  sm:text-5xl sm:leading-none lg:text-5xl xl:text-[4rem] xl:mb-6"
-              >
-                Take Your Own <br className="hidden md:block" /> Adventure Quiz
-              </motion.h2>
-              <motion.p variants={fadeInUp} className="text-base  md:text-lg">
-                Today’s world requires a stronger and safer response for
-                disinfection. Use it on hard and soft surfaces, food, plants,
-                animals, skin, water, entire rooms, and much more.
-              </motion.p> */}
             </div>
             <motion.div
               variants={fadeInUp}
-              className="flex flex-col items-center  md:flex-row justify-center md:space-x-8"
+              className="flex flex-col items-center  md:flex-row justify-center "
             >
               <Link href={"/quiz"}>
                 <Btn />
               </Link>
-              <a
-                href="/"
-                aria-label=""
-                className="inline-flex items-center font-semibold text-white transition-colors duration-200 hover:text-deep-purple-accent-700 "
-              >
-                Learn more
-              </a>
+              <HomeModal />
             </motion.div>
             <div className="mt-8 pt-8 border-t border-gray-300 ">
               <h6 className="text-lg text-green-800 dark:text-green-400 font-semibold">
