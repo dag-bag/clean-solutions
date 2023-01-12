@@ -103,13 +103,6 @@ const Main = () => {
             >
               <Link href={"/quiz"}>
                 <Btn />
-                {/* <a
-                className="inline-flex  items-center justify-center  h-12 px-6 mb-3 font-medium tracking-wide text-white transition duration-200  shadow-md md:w-auto md:mr-4 md:mb-0 bg-green-1 btn btn-wide hover:bg-white hover:!border-green hover:text-green-1 focus:shadow-outline focus:outline-none border border-white 
-              rounded-full
-              "
-              >
-                Start Quiz
-              </a> */}
               </Link>
               <a
                 href="/"
@@ -165,7 +158,7 @@ const Main = () => {
           </div>
         </div>
 
-        <div className="w-[45%]  absolute right-0  -bottom-[15rem]">
+        <div className="w-[45%]  absolute right-0  -bottom-[15rem] hidden md:block">
           <motion.img
             animate={{ x: 0, opacity: 1 }}
             initial={{ x: 200, opacity: 0 }}

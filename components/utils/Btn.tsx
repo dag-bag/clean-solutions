@@ -11,32 +11,43 @@ type Props = {
 function Btn({ hidden }: Props) {
   return (
     <Link href="/quiz">
-      <button
-        className={`relative btn  items-center justify-center p-4 px-6 py-3 overflow-hidden font-medium text-indigo-600 transition duration-300 ease-out border-2 !border-white rounded-full shadow-md group ${
-          hidden ? "hidden md:inline-flex" : "inline-flex"
-        }`}
-      >
-        <span className="absolute inset-0 flex items-center justify-center w-full h-full text-white duration-300 -translate-x-full bg-blue-1 group-hover:translate-x-0 ease ">
-          Let's Go{" "}
+      <button className="relative inline-flex items-center justify-start py-3 pl-4 pr-12 overflow-hidden font-semibold text-white transition-all duration-150 ease-in-out rounded-full hover:pl-10 hover:pr-6 bg-green-1 group border hover:border-green-1">
+        <span className="absolute bottom-0 left-0 w-full h-1 transition-all duration-150 ease-in-out bg-white group-hover:h-full" />
+        <span className="absolute right-0 pr-4 duration-200 ease-out group-hover:translate-x-12 ">
           <svg
-            className="w-6 h-6 ml-2"
+            className="w-5 h-5 text-white"
             fill="none"
             stroke="currentColor"
             viewBox="0 0 24 24"
             xmlns="http://www.w3.org/2000/svg"
           >
             <path
-              stroke-linecap="round"
-              stroke-linejoin="round"
-              stroke-width="2"
+              strokeLinecap="round"
+              strokeLinejoin="round"
+              strokeWidth={2}
               d="M14 5l7 7m0 0l-7 7m7-7H3"
-            ></path>
+            />
           </svg>
         </span>
-        <span className="absolute flex items-center justify-center w-full h-full text-white border-white transition-all duration-300 transform group-hover:translate-x-full ease bg-green-1 rounded-full p-1 ">
+        <span className="absolute left-0 pl-2.5 -translate-x-12 group-hover:translate-x-0 ease-out duration-200 ">
+          <svg
+            className="w-5 h-5 text-green-400"
+            fill="none"
+            stroke="currentColor"
+            viewBox="0 0 24 24"
+            xmlns="http://www.w3.org/2000/svg"
+          >
+            <path
+              strokeLinecap="round"
+              strokeLinejoin="round"
+              strokeWidth={2}
+              d="M14 5l7 7m0 0l-7 7m7-7H3"
+            />
+          </svg>
+        </span>
+        <span className="relative w-full text-left transition-colors duration-200 ease-in-out group-hover:text-green-1">
           Start Quiz
         </span>
-        <span className="relative invisible">Button Text</span>
       </button>
     </Link>
   );

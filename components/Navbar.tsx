@@ -59,13 +59,15 @@ function Navbar() {
             </li>
           </ul>
         </div>
-        <a className="btn btn-ghost normal-case text-xl">
-          <img
-            src="https://cleansolutions.tech/wp-content/uploads/2022/09/clean-solution-logo-1024x337-1-2.png"
-            alt=""
-            className="h-10"
-          />
-        </a>
+        <Link href={"/"}>
+          <span className="btn btn-ghost normal-case text-xl">
+            <img
+              src="https://cleansolutions.tech/wp-content/uploads/2022/09/clean-solution-logo-1024x337-1-2.png"
+              alt=""
+              className="h-10"
+            />
+          </span>
+        </Link>
       </div>
       <div className="navbar-center hidden lg:flex">
         <ul className="menu menu-horizontal p-0">
