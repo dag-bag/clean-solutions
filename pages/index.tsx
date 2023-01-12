@@ -7,7 +7,7 @@ import Drawer from "../components/utils/Drawer";
 
 const Index = () => {
   return (
-    <div className="">
+    <div className="overflow-hidden">
       <Head>
         <title>Home</title>
         <meta title="Home" />

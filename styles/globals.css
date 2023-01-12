@@ -7,7 +7,7 @@
   html {
     font-family: "Poppins", sans-serif;
     @apply !text-gray-900;
-    overflow: hidden;
+    /* overflow: hidden; */
     background-color: white !important;
   }
 }

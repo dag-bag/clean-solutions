@@ -332,7 +332,7 @@ export const selectionDataAtom = atom<QuizData[]>({
             },
             {
               question:
-                "How long would you like to have an animal drinking water supply                ?                ",
+                "How long would you like to have an animal drinking water supply ?",
               value: "",
               type: "select",
               options: monthOptions,
