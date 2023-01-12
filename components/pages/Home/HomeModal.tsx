@@ -22,8 +22,11 @@ function HomeModal({}: Props) {
             Congratulations random Internet user!
           </h3>
           <p className="py-4 text-black">
-            You've been selected for a chance to get one year of subscription to
-            use Wikipedia for free!
+            99.99% of ALL germs known to humankind. Discover the many ways to
+            use VeriSan to defeat bacteria, viruses, mold, and odor. Your
+            responses will aid in the creation of a custom, economical,
+            eco-friendly EPA, NSF, NFPA FDA, CDC & FTC Cleared Disinfecting
+            Solution.
           </p>
         </label>
       </label>
