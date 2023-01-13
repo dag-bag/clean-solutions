@@ -94,12 +94,10 @@ function Page1({}: Props) {
             ></AnimatedTextWord>
             <Spacing spacing={2} className="mb-10">
               <motion.input
-                // variants={fadeInUp}
-                // variants={dropUpVariants}
                 type="text"
                 name={data[step].data}
                 placeholder="Enter Your Name"
-                className={`input input-bordered w-full max-w-xl bg-white rounded-full border-4  text-green-1 py-7  md:text-xl ${
+                className={`input input-bordered w-full max-w-xl bg-white rounded-full border-4   text-green-1 py-7  md:text-xl ${
                   errors.name ? "border-red-400" : "border-green-1"
                 } `}
                 onChange={(e) => {

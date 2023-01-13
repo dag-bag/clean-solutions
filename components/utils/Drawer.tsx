@@ -82,7 +82,7 @@ function Drawer() {
     <div className="drawer drawer-end absolute ">
       <input id="my-drawer-4" type="checkbox" className="drawer-toggle" />
 
-      <div className="drawer-side">
+      <div className="drawer-side scrollbar-hide">
         <label htmlFor="my-drawer-4" className="drawer-overlay z-40"></label>
 
         <ul className="menu p-4 w-96 bg-white !z-[98]">
