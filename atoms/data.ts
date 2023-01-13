@@ -33,24 +33,20 @@ export const page1DataAtom = atom<Data>({
   default: {
     name: "",
   },
-  effects_UNSTABLE: [persistAtom],
 });
 
 export const page2DataAtom = atom<Page2[] | any>({
   key: "page2dataAtomKey",
   default: [],
-  effects_UNSTABLE: [persistAtom],
 });
 export const page3DataAtom = atom<Page3[] | any>({
   key: "page3dataAtomKey",
   default: [],
-  effects_UNSTABLE: [persistAtom],
 });
 
 export const page4DataAtom = atom<Page3[] | any>({
   key: "page4dataAtomKey",
   default: [],
-  effects_UNSTABLE: [persistAtom],
 });
 
 export const allPageDataAtom = atom<DataState>({

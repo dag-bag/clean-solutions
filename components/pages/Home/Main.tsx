@@ -72,9 +72,6 @@ const Main = () => {
               <HomeModal />
             </motion.div>
             <div className="mt-8 pt-8 border-t border-gray-300 ">
-              <h6 className="text-lg text-green-800 dark:text-green-400 font-semibold">
-                Trusted by
-              </h6>
               <div className="mt-2 flex gap-6 justify-center items-center">
                 {TrustedIcons.map((icon, index) => {
                   return (

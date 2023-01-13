@@ -12,7 +12,7 @@ function Btn({ hidden }: Props) {
   return (
     <Link href="/quiz">
       <button
-        className={`relative inline-flex items-center justify-start py-3 pl-4 pr-12 overflow-hidden font-semibold text-white transition-all duration-150 ease-in-out rounded-full hover:pl-10 hover:pr-6 bg-green-1 group border hover:border-green-1 ${
+        className={`relative inline-flex items-center justify-start py-5 pl-8 pr-12 overflow-hidden font-semibold text-white transition-all duration-150 ease-in-out rounded-full hover:pl-10 hover:pr-6 bg-green-1 group border hover:border-green-1  ${
           hidden ? "hidden md:block" : ""
         }`}
       >
