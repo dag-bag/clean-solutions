@@ -16,10 +16,7 @@ export const selectedCardIdsAtom = atom<number[]>({
 type Props = {};
 
 function Page2({}: Props) {
-  const name = useRecoilValue(page1DataAtom);
-
   const [render, setRender] = useRecoilState(renderPageAtom);
-  // let render = true;
   useEffect(() => {
     setTimeout(() => {
       setRender(true);
