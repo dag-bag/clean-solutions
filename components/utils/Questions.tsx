@@ -98,9 +98,9 @@ function Questions({
         </div>
 
         <Formik
-          validationSchema={
-            max ? validateNumber("value", max) : validateNumber("value")
-          }
+          // validationSchema={
+          //   max ? validateNumber("value", max) : validateNumber("value")
+          // }
           initialValues={allQuestions[index]}
           onSubmit={onSubmit}
         >
@@ -115,7 +115,7 @@ function Questions({
             values,
             setFieldValue,
           }) => {
-            console.log({ values });
+            console.log({ values, errors });
             const [disabled, setDisabled] = useRecoilState(disAbleAtom);
             let isEmptyOrNot = values.value.length;
             useEffect(() => {
@@ -124,7 +124,7 @@ function Questions({
               } else {
                 setDisabled(false);
               }
-            }, [errors]);
+            }, [errors, values]);
 
             return (
               <Form onSubmit={handleSubmit} className={styles.container}>
@@ -155,19 +155,19 @@ function Questions({
                         return (
                           <motion.button
                             className={`md:w-2/3 py-3 px-8  border-4 rounded-full  text-xl  m-auto md:text-2xl cursor-pointer ${
-                              values.value === index + 1
+                              values.value === item
                                 ? "bg-green-1 border-white text-white"
                                 : "bg-white border-green-1 text-blue-1"
                             } `}
                             whileHover={{
                               scale: 1.1,
                             }}
-                            value={index + 1}
+                            value={item}
                             key={index}
-                            // type="submit"
-                            // onClick={() => {
-                            //   setFieldValue("value", index + 1);
-                            // }}
+                            type="submit"
+                            onClick={() => {
+                              setFieldValue("value", item);
+                            }}
                           >
                             {item}
                           </motion.button>

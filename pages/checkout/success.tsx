@@ -7,42 +7,35 @@
 const products = [
   {
     id: 1,
-    name: "Basic Tee",
+    name: "1 gallon reusable mixing and storage container",
     href: "#",
     price: "$36.00",
     color: "Charcoal",
     size: "L",
+    category: "Container",
     imageSrc:
-      "https://tailwindui.com/img/ecommerce-images/confirmation-page-06-product-01.jpg",
+      "https://cleansolutions.tech/wp-content/uploads/2021/06/1gal-768x512.png",
     imageAlt: "Model wearing men's charcoal basic tee in large.",
+    qty: 2,
   },
-  // More products...
 ];
 
 export default function Example() {
   return (
     <>
-      {/*
-          This example requires updating your template:
-  
-          ```
-          <html class="h-full bg-white">
-          <body class="h-full">
-          ```
-        */}
       <main className="relative lg:min-h-full">
         <div className="h-80 overflow-hidden lg:absolute lg:w-1/2 lg:h-full lg:pr-4 xl:pr-12">
           <img
-            src="https://tailwindui.com/img/ecommerce-images/confirmation-page-06-hero.jpg"
+            src="http://localhost:3000/Hero.png"
             alt="TODO"
-            className="h-full w-full object-center object-cover"
+            className="h-full w-full object-right object-cover"
           />
         </div>
 
         <div>
           <div className="max-w-2xl mx-auto py-16 px-4 sm:px-6 sm:py-24 lg:max-w-7xl lg:px-8 lg:py-32 lg:grid lg:grid-cols-2 lg:gap-x-8 xl:gap-x-24">
             <div className="lg:col-start-2">
-              <h1 className="text-sm font-medium text-indigo-600">
+              <h1 className="text-sm font-medium text-green-600">
                 Payment successful
               </h1>
               <p className="mt-2 text-4xl font-extrabold tracking-tight text-gray-900 sm:text-5xl">
@@ -55,7 +48,7 @@ export default function Example() {
 
               <dl className="mt-16 text-sm font-medium">
                 <dt className="text-gray-900">Tracking number</dt>
-                <dd className="mt-2 text-indigo-600">51547878755545848512</dd>
+                <dd className="mt-2 text-green-600">51547878755545848512</dd>
               </dl>
 
               <ul
@@ -73,8 +66,8 @@ export default function Example() {
                       <h3 className="text-gray-900">
                         <a href={product.href}>{product.name}</a>
                       </h3>
-                      <p>{product.color}</p>
-                      <p>{product.size}</p>
+                      <p>{product.category}</p>
+                      <p> X {product.qty}</p>
                     </div>
                     <p className="flex-none font-medium text-gray-900">
                       {product.price}
@@ -151,7 +144,7 @@ export default function Example() {
               <div className="mt-16 border-t border-gray-200 py-6 text-right">
                 <a
                   href="#"
-                  className="text-sm font-medium text-indigo-600 hover:text-indigo-500"
+                  className="text-sm font-medium text-green-600 hover:text-green-500"
                 >
                   Continue Shopping<span aria-hidden="true"> &rarr;</span>
                 </a>

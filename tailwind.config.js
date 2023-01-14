@@ -52,7 +52,10 @@ module.exports = {
   plugins: [
     require("daisyui"),
     require("tailwind-scrollbar-hide"),
-    require("@tailwindcss/forms"),
+    require("@tailwindcss/forms")({
+      strategy: "base", // only generate global styles
+      // strategy: 'class', // only generate classes
+    }),
     require("@tailwindcss/typography"),
   ],
 };

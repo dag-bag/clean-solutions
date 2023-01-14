@@ -15,7 +15,10 @@ const checkoutSchema = Yup.object().shape({
   address: stringRequired,
 
   city: stringRequired,
-  country: stringRequired,
+  country: Yup.string()
+    .min(1, "Too Short!")
+    .max(50, "Too Long!")
+    .required("Required"),
   state: stringRequired,
   postalCode: Yup.string()
     .required("Required")

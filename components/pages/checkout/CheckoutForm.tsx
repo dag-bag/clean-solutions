@@ -175,7 +175,16 @@ function CheckoutForm({ errors, touched, countries, cities, states }: Props) {
               </Field>
             </div>
           </div>
-          <div>
+          <FormikInput
+            type="text"
+            name="city"
+            id="city"
+            autoComplete="city"
+            error={errors.city}
+            touched={touched.city}
+            label="City"
+          />
+          {/* <div>
             <label
               htmlFor="city"
               className="flex justify-between text-sm font-medium text-gray-700"
@@ -206,7 +215,7 @@ function CheckoutForm({ errors, touched, countries, cities, states }: Props) {
                 })}
               </Field>
             </div>
-          </div>
+          </div> */}
           {/* End of the Country State City  */}
           <FormikInput
             type="text"
