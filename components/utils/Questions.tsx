@@ -24,7 +24,27 @@ import { disAbleAtom } from "../../atoms/steps";
 import { motion } from "framer-motion";
 import { childVariants } from "../../animation/anime";
 import Input from "../animation/Input";
-import { filter } from "lodash";
+import { filter, shuffle } from "lodash";
+import NextPrev from "../NextPrev";
+import {
+  SkinContact,
+  Washing,
+  DrinkWater,
+  River,
+  WaterTank,
+  Plants,
+  Vegetables,
+  KitchenWare,
+  HotelRoom,
+  Camping,
+  Boat,
+  ClassRoom,
+  OfficeRoom,
+  BioHazard,
+  Gardening,
+  Toilet,
+  Pots,
+} from "../Icons";
 
 type Props = {
   question: string;
@@ -38,6 +58,7 @@ type Props = {
   q: any;
   Q?: string;
   max?: number;
+  Icons: string[];
 };
 
 function Questions({
@@ -51,6 +72,7 @@ function Questions({
   deepCopy,
   Q,
   max,
+  Icons,
 }: Props) {
   const [allQuestions, setAllQuestions] = useRecoilState(page4DataAtom);
   const [index, setDeepState] = useRecoilState(deepStateAtom);
@@ -77,7 +99,27 @@ function Questions({
       type === "select" ? " grid grid-cols-2 place-items-start" : ""
     } h-[50vh] md:h-auto ${type === "mix" ? "" : ""}`,
   };
-
+  const [disabled, setDisabled] = useRecoilState(disAbleAtom);
+  let icons = [
+    SkinContact,
+    Washing,
+    DrinkWater,
+    River,
+    WaterTank,
+    Plants,
+    Vegetables,
+    KitchenWare,
+    HotelRoom,
+    Camping,
+    Boat,
+    ClassRoom,
+    OfficeRoom,
+    BioHazard,
+    Gardening,
+    Toilet,
+    Pots,
+  ];
+  let CurrentIcon = shuffle(icons)[0];
   return (
     <motion.div
       variants={childVariants(0.4)}
@@ -85,13 +127,24 @@ function Questions({
       animate="visible"
       className="hero min-h-screen relative "
     >
+      <NextPrev disabled={disabled} />
+
       <div className="absolute hidden md:block h-screen w-1/2 bg-blue-1 right-0 top-0"></div>
 
       <div className="hero-content flex-col lg:flex-row justify-between md:max-w-[96%] p-0 md:p-4">
-        <div className="text-center md:w-1/2 md:pb-16 p-1 h-[50vh] md:h-auto">
+        <div className="absolute top-0 w-full text-center flex justify-between mix-blend-difference ">
+          <div></div>
+          <h1 className="uppercase z-50 ml-8 ">
+            {allQuestions[index].r.split("-").join(" ")}
+          </h1>
+          <h1 className="uppercase z-50">{allQuestions[index].uni} </h1>
+        </div>
+        <div className="text-center md:w-1/2 md:pb-16 p-1 h-[50vh] md:h-auto space-y-6">
           <Flex>
-            <img src="./icons/5.png" alt="" className="md:h-60 h-40" />
+            <CurrentIcon color="#95D074" className="w-60 h-40" />
+            {/* <img src={shuffle(Icons)[0]} alt="" className="md:h-60 h-40" /> */}
           </Flex>
+
           <h1 className="text-3xl md:text-5xl font-bold text-blue-1">
             {allQuestions[index].question}
           </h1>
@@ -115,9 +168,7 @@ function Questions({
             values,
             setFieldValue,
           }) => {
-            console.log({ values, errors });
-            const [disabled, setDisabled] = useRecoilState(disAbleAtom);
-            let isEmptyOrNot = values.value.length;
+            // let isEmptyOrNot = values.value.length;
             useEffect(() => {
               if (errors.value || values.value === 0) {
                 setDisabled(true);
@@ -154,7 +205,7 @@ function Questions({
                       {options?.map((item, index) => {
                         return (
                           <motion.button
-                            className={`md:w-2/3 py-3 px-8  border-4 rounded-full  text-xl  m-auto md:text-2xl cursor-pointer ${
+                            className={`md:w-2/3 py-3 px-8  border-4   text-xl  m-auto md:text-2xl cursor-pointer ${
                               values.value === item
                                 ? "bg-green-1 border-white text-white"
                                 : "bg-white border-green-1 text-blue-1"
@@ -177,7 +228,7 @@ function Questions({
                   </>
                 ) : null}
                 {type === "options" ? (
-                  <div className="h-[90vh] overflow-y-scroll w-full flex  justify-center items-center flex-col py-4 space-y-4 pt-52">
+                  <div className="h-[90vh] overflow-y-scroll w-full flex  justify-center items-center flex-col py-4 space-y-4 pt-52 scrollbar-hide">
                     <h2 className=" text-green-1 text-2xl">{Q}</h2>
                     {options?.map((item, index) => {
                       let isSelected = values.value.includes(item);
@@ -195,7 +246,7 @@ function Questions({
                           key={index}
                           onClick={() => {
                             let Soptions = [...values.value, item];
-                            console.log({ Soptions });
+
                             if (!isSelected) {
                               setFieldValue("value", Soptions);
                             } else {
@@ -211,13 +262,15 @@ function Questions({
                   </div>
                 ) : null}
                 {type === "mix" ? (
-                  <div className="h-[90vh] overflow-y-scroll w-full flex  justify-center items-center flex-col py-4 space-y-4 pt-52">
+                  <div className="h-[90vh] overflow-y-scroll w-full flex  justify-center items-center flex-col py-4 space-y-4 pt-52 scrollbar-hide">
                     <h2 className=" text-green-1 text-2xl">{Q}</h2>
                     {options?.map((item, index) => {
+                      const itemArray = item.split(".");
+                      console.log({ itemArray });
                       let isSelected = values.value.includes(item);
                       return (
                         <motion.div
-                          className={`md:w-11/12 py-6 px-8  border-4 rounded-full  text-xl  m-auto md:text-2xl cursor-pointer 
+                          className={`md:w-11/12 py-6 px-8  border-4   text-xl  m-auto md:text-2xl cursor-pointer 
                           ${
                             isSelected
                               ? "bg-green-1 border-white text-white"
@@ -228,26 +281,21 @@ function Questions({
                           whileHover={{
                             scale: 1.1,
                           }}
-                          // value={index + 1}
-                          // key={index}
-                          // onClick={() => {
-                          //   let Soptions = [...values.value, item];
-                          //   console.log({ Soptions });
-                          //   if (!isSelected) {
-                          //     setFieldValue("value", Soptions);
-                          //   } else {
-                          //     let deletedValue = filter(values.value, item);
-                          //     setFieldValue("value", deletedValue);
-                          //   }
-                          // }}
+                          onClick={() => {
+                            setFieldValue("value", item);
+                          }}
                         >
-                          {item}
+                          {itemArray[0]}
+                          <br />
+                          {isSelected ? itemArray[1] && itemArray[1] : null}
                           <input
                             type="text"
                             name="name"
                             id="name"
-                            className="block w-full border-0 border-b 
-                            border-green-1 border-transparent bg-gray-50 focus:border-indigo-600 focus:ring-0 sm:text-sm text-blue-1"
+                            className={`${
+                              isSelected ? "block" : "hidden"
+                            }  w-full border-0 border-b 
+                            border-green-1 border-transparent bg-gray-50 focus:border-indigo-600 focus:ring-0 sm:text-sm text-blue-1 `}
                             placeholder="Ans"
                           />
                         </motion.div>

@@ -2,33 +2,59 @@
 
 import React from "react";
 import { useRecoilState, useRecoilValue } from "recoil";
-import { disAbleAtom, stepAtom } from "../atoms/steps";
-import Flex from "./utils/Flex";
+import { disAbleAtom, stepAtom, stepSelector } from "../atoms/steps";
 import { GrNext, GrPrevious } from "react-icons/gr";
 import { page2DataAtom, page3DataAtom } from "../atoms/data";
-import { isEmpty } from "lodash";
+import { isEmpty, keys } from "lodash";
+import { deepStateAtom, innnerStagesAtom } from "../atoms/innterStages";
 
 type Props = {
-  nextClick?: () => void;
-  backClick?: () => void;
-  state: "inner" | "outer" | "deep";
-  deepClick?: () => void;
-  deepBackClick?: () => void;
+  // nextClick?: () => void;
+  // backClick?: () => void;
+  // state: "inner" | "outer" | "deep";
+  disabled: boolean;
+
+  // deepBackClick?: () => void;
 };
 
 function NextPrev({
-  state,
-  nextClick,
-  backClick,
-  deepClick,
-  deepBackClick,
-}: Props) {
-  const [disabled, setDisabled] = useRecoilState(disAbleAtom);
-  const [step, setStep] = useRecoilState(stepAtom);
+  // state,
+  disabled,
+}: // nextClick,
+// backClick,
+// deepBackClick,
+Props) {
+  // const [disabled, setDisabled] = useRecoilState(disAbleAtom);
+
   const page2Data = useRecoilValue(page2DataAtom);
   const page3Data = useRecoilValue(page3DataAtom);
-  const isDisabledPage2 = isEmpty(page2Data);
-  const isDisabledPage3 = isEmpty(page3Data);
+  const [step, setStep] = useRecoilState(stepAtom);
+  const [innerStep, setInnerStep] = useRecoilState(innnerStagesAtom);
+  const [deepStep, setDeepStep] = useRecoilState(deepStateAtom);
+  const selectedIds = useRecoilValue(page2DataAtom);
+  const deepClick = () => {
+    setDeepStep((prev) => prev + 1);
+  };
+  const deepBackClick = () => {
+    deepStep === 0
+      ? setStep((prev) => prev - 1)
+      : setDeepStep((prev) => prev - 1);
+  };
+  const nextClick = () => {
+    if (innerStep === selectedIds.length - 1) {
+      setStep((prev) => prev + 1);
+    } else {
+      setInnerStep((prev) => prev + 1);
+    }
+  };
+  const backClick = () => {
+    innerStep === 0
+      ? setStep((prev) => prev - 1)
+      : setInnerStep((prev) => prev - 1);
+  };
+  const state = useRecoilValue(stepSelector);
+  // const isDisabledPage2 = isEmpty(page2Data);
+  // const isDisabledPage3 = isEmpty(page3Data);
 
   const next = () => {
     if (state === "deep") {
@@ -60,11 +86,7 @@ function NextPrev({
       <button
         className="disabled:opacity-40 bg-green-1 px-2 py-4  fixed text-white rounded-md top-1/2 right-0 transform  translate-y-1/2 z-50"
         onClick={next}
-        disabled={
-          disabled ||
-          (step === 1 && isDisabledPage2) ||
-          (step === 2 && isDisabledPage3)
-        }
+        disabled={disabled}
       >
         <GrNext className="text-2xl " />
       </button>

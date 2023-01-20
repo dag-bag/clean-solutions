@@ -25,6 +25,7 @@ import { dropUpVariants, childVariants } from "../../animation/anime";
 import AnimatedTextWord from "../Headings/test/AnimatedText";
 import Spacing from "./layout/Spacing";
 import Error from "../../Error";
+import NextPrev from "../NextPrev";
 
 type Props = {};
 const data = [
@@ -58,7 +59,7 @@ function Page1({}: Props) {
     validationSchema: validateString("name"),
     onSubmit: onSubmit,
   });
-  const setDisabled = useSetRecoilState(disAbleAtom);
+  const [disabled, setDisabled] = useRecoilState(disAbleAtom);
 
   useEffect(() => {
     if (errors.name || values.name === "") {
@@ -70,6 +71,7 @@ function Page1({}: Props) {
 
   return (
     <>
+      <NextPrev disabled={disabled} />
       <motion.div
         animate="animate"
         initial="initial"

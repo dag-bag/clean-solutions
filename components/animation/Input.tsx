@@ -25,8 +25,8 @@ function Input({ onChange, error, value }: Props) {
       variants={dropUpVariants}
       autoComplete="off"
       type="text"
-      className={`bg-white border-4 placeholder:px-2  rounded-full  outline-none py-5
-px-5 w-[50%] ${
+      className={`bg-white border-4 placeholder:px-2    outline-none py-5
+px-5 w-[30%] ${
         error ? "border-red-400" : "border-green-1 focus:border-green-1"
       }`}
       id="value"

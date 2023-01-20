@@ -7,12 +7,19 @@ import { motion } from "framer-motion";
 import { page2DataText } from "../../../data/Page2";
 import Card3 from "../../test/Card3";
 import { childVariants } from "../../../animation/anime";
+import NextPrev from "../../NextPrev";
+import { isEmpty } from "lodash";
+import { useRecoilValue } from "recoil";
+import { page2DataAtom } from "../../../atoms/data";
 
 type Props = {};
 
 function Page2Component({}: Props) {
+  const page2Data = useRecoilValue(page2DataAtom);
+  const isDisabledPage2 = isEmpty(page2Data);
   return (
     <MainLayout bgImage={false} bgcolor={false}>
+      <NextPrev disabled={isDisabledPage2} />
       <Flex
         className="flex-col space-y-4 items-center   md:pt-8 scrollbar-hide"
         height="auto"

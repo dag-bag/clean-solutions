@@ -26,39 +26,39 @@ function Quiz({ data, setData }: Props) {
       {/* <div> */}
       <Step data={data} setData={setData} />
       {/* </div> */}
-      <NextPrev
-        state={
-          step === 0
-            ? "outer"
-            : step === 1
-            ? "outer"
-            : step === 2
-            ? "inner"
-            : step === 3
-            ? "deep"
-            : "outer"
-        }
-        deepClick={() => {
-          setDeepStep((prev) => prev + 1);
-        }}
-        deepBackClick={() => {
-          deepStep === 0
-            ? setStep((prev) => prev - 1)
-            : setDeepStep((prev) => prev - 1);
-        }}
-        nextClick={() => {
-          if (innerStep === selectedIds.length - 1) {
-            setStep((prev) => prev + 1);
-          } else {
-            setInnerStep((prev) => prev + 1);
-          }
-        }}
-        backClick={() => {
-          innerStep === 0
-            ? setStep((prev) => prev - 1)
-            : setInnerStep((prev) => prev - 1);
-        }}
-      />
+      {/* <NextPrev
+      // state={
+      //   step === 0
+      //     ? "outer"
+      //     : step === 1
+      //     ? "outer"
+      //     : step === 2
+      //     ? "inner"
+      //     : step === 3
+      //     ? "deep"
+      //     : "outer"
+      // }
+      // deepClick={() => {
+      //   setDeepStep((prev) => prev + 1);
+      // }}
+      // deepBackClick={() => {
+      //   deepStep === 0
+      //     ? setStep((prev) => prev - 1)
+      //     : setDeepStep((prev) => prev - 1);
+      // }}
+      // nextClick={() => {
+      //   if (innerStep === selectedIds.length - 1) {
+      //     setStep((prev) => prev + 1);
+      //   } else {
+      //     setInnerStep((prev) => prev + 1);
+      //   }
+      // }}
+      // backClick={() => {
+      //   innerStep === 0
+      //     ? setStep((prev) => prev - 1)
+      //     : setInnerStep((prev) => prev - 1);
+      // }}
+      /> */}
     </AnimationLayout>
   );
 }

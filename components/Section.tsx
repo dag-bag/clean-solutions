@@ -1,5 +1,5 @@
 /** @format */
-import { concat, merge, flattenDeep, find } from "lodash";
+import { concat, merge, flattenDeep, find, isEmpty } from "lodash";
 import { tmpdir } from "os";
 import React, { ButtonHTMLAttributes, useEffect, useState } from "react";
 import { useRecoilState, useRecoilValue, useSetRecoilState } from "recoil";
@@ -12,6 +12,7 @@ import { Question } from "../atoms/quizData";
 import { Page3 } from "../types/page";
 import Card2 from "./cards/Card2";
 import Modal from "./modal/Modal";
+import NextPrev from "./NextPrev";
 import Flex from "./utils/Flex";
 import Info from "./utils/Info";
 import Questions from "./utils/Questions";
@@ -31,7 +32,7 @@ function Section({ data, slug }: Props) {
     let fin = find(das, { uni: item.title });
 
     let newQuestion = item.questions.map((question, i) => {
-      return { ...question, uni: item.title };
+      return { ...question, uni: item.title, Icons: item.svgs };
     });
     fin
       ? setDash(das.filter((i: Question) => i.uni !== item.title))
@@ -42,9 +43,11 @@ function Section({ data, slug }: Props) {
       ? setPage3Data(page3Data.filter((i: any) => i.title !== item.title))
       : setPage3Data([...page3Data, item]);
   };
+  const isDisabledPage3 = isEmpty(page3Data);
 
   return (
     <Flex className="text-center px-4">
+      <NextPrev disabled={isDisabledPage3} />
       <div className="mt-10 md:mt-0 max-w-[85rem] z-40 ">
         <Info Text="Please select all that interest you" />
         <div>
