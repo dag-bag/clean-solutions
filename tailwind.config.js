@@ -36,6 +36,7 @@ module.exports = {
   theme: {
     extend: {
       colors: {
+        smoke: 'whitesmoke',
         green: {
           1: "#95D074",
         },
