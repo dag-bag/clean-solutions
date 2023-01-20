@@ -1,25 +1,20 @@
 /** @format */
 
-import { page1DataAtom } from "./data";
-/** @format */
-
-import { motion } from "framer-motion";
-/** @format */
-
 import { flattenDeep, values } from "lodash";
 import { atom, selector, selectorFamily } from "recoil";
 import { allPageDataAtom } from "./data";
 import { deepStateAtom } from "./innterStages";
 import { recoilPersist } from "recoil-persist";
+
 const { persistAtom } = recoilPersist();
 export interface Question {
   question: string;
   value: string | number | string[];
   options?: string[];
-  type?: "input" | "select" | "options" | "mix";
-  r?: string;
-  ml?: number;
-  f?: string | number;
+  type: "input" | "select" | "options" | "mix";
+  r: string;
+  ml: number;
+  f?: number;
   uni?: string;
   Q?: string;
   max?: number;
@@ -149,25 +144,39 @@ export const selectionDataAtom = atom<QuizData[]>({
               question: "What length is your hair ?",
               type: "select",
               value: 0,
+              ml: 0,
+              r: r[0],
               options: ["A) Short", "B) Medium", "C) Long", "D) Extra long"],
             },
             {
-              question:
-                " How many animals do you have, and would you use sanitizer as a spray or soak?",
-              type: "select",
+              question: " How many animals do you have?",
+              type: "input",
               value: 0,
-              options: ["Cats", "Dogs"],
+              ml: 0,
+              r: r[0],
             },
+            // {
+            //   question: "would you use sanitizer as a spray or soak?",
+            //   type: "options",
+            //   value: 0,
+            //   ml: 0,
+            //   r: r[0],
+            //   options: ["Soak", "Spray"],
+            // },
             {
               question: "How many gallons do they typically require to wash? ",
               type: "input",
               value: 0,
+              ml: 0,
+              r: r[0],
             },
             {
               question: "How long would you like a hair sanitizing supply?",
               type: "select",
               value: 0,
               options: monthOptions,
+              ml: 0,
+              r: r[0],
             },
           ],
         },
@@ -189,6 +198,8 @@ export const selectionDataAtom = atom<QuizData[]>({
                 "How many times a month do you spray or soak fungi, yeast, or bacteria that can cause contamination or infectious diseases on skin?",
               value: 0,
               type: "input",
+              ml: 0,
+              r: r[0],
             },
             {
               question:
@@ -196,6 +207,8 @@ export const selectionDataAtom = atom<QuizData[]>({
               type: "select",
               value: 0,
               options: monthOptions,
+              ml: 0,
+              r: r[0],
             },
           ],
         },
@@ -228,6 +241,8 @@ export const selectionDataAtom = atom<QuizData[]>({
                 "8) Other Dental Instruments",
                 "9) Mouth Rinse or Gargle",
               ],
+              ml: 0,
+              r: r[0],
             },
             {
               question:
@@ -242,6 +257,8 @@ export const selectionDataAtom = atom<QuizData[]>({
                 "Weekly",
                 "Monthly",
               ],
+              ml: 0,
+              r: r[0],
             },
             {
               question:
@@ -249,6 +266,8 @@ export const selectionDataAtom = atom<QuizData[]>({
               value: [],
               type: "select",
               options: monthOptions,
+              ml: 0,
+              r: r[0],
             },
           ],
         },
@@ -274,6 +293,8 @@ export const selectionDataAtom = atom<QuizData[]>({
                 "3) Fungi, Mold, & Mildew ",
                 "4) Lice, Ticks, & Bedbugs",
               ],
+              ml: 0,
+              r: r[0],
             },
           ],
         },
@@ -283,7 +304,7 @@ export const selectionDataAtom = atom<QuizData[]>({
       slug: "water-treatment",
       data: [
         {
-          title: "WATER TREATMENT",
+          title: "DRINKING WATER",
           description:
             "Whether in an emergency, traveling, camping, prepping or managing home water systems, our solutions are a convenient option for water disinfection.",
           modalText:
@@ -296,13 +317,21 @@ export const selectionDataAtom = atom<QuizData[]>({
           questions: [
             {
               question:
-                "On average, how many times per day do you use skin sanitizer?",
+                "How many gallons of drinking water do you want to have disinfected on an average day?",
+              type: "input",
               value: "",
+              ml: 0,
+              r: r[1],
             },
             {
               question:
                 "How many times a month do you want to be prepared with safe drinking water?",
               value: "",
+              type: "input",
+              ml: 0,
+              r: r[1],
+              max: 30,
+              min: 1,
             },
             {
               question:
@@ -310,6 +339,8 @@ export const selectionDataAtom = atom<QuizData[]>({
               value: "",
               type: "select",
               options: monthOptions,
+              ml: 0,
+              r: r[1],
             },
           ],
         },
@@ -327,8 +358,11 @@ export const selectionDataAtom = atom<QuizData[]>({
           questions: [
             {
               question:
-                "How much water do all of your pets and animals consume weekly?                ",
+                "How much water do all of your pets and animals consume weekly?",
               value: "",
+              ml: 0,
+              r: r[1],
+              type: "input",
             },
             {
               question:
@@ -336,6 +370,8 @@ export const selectionDataAtom = atom<QuizData[]>({
               value: "",
               type: "select",
               options: monthOptions,
+              ml: 0,
+              r: r[1],
             },
           ],
         },
@@ -355,7 +391,7 @@ export const selectionDataAtom = atom<QuizData[]>({
               question:
                 "How many gallons do each of your water retention or storage containment devices hold?",
               value: [],
-              type: "options",
+              type: "mix",
               options: [
                 "1) Ponds, Reservoirs, & Retention Basins",
 
@@ -365,12 +401,16 @@ export const selectionDataAtom = atom<QuizData[]>({
 
                 "4) Other Non-Potable Water Storage",
               ],
+              ml: 0,
+              r: r[1],
             },
             {
               question:
                 "How many times per month do you want to sanitize water containment?",
               value: "",
               type: "input",
+              ml: 0,
+              r: r[1],
             },
             {
               question:
@@ -378,6 +418,8 @@ export const selectionDataAtom = atom<QuizData[]>({
               value: "",
               type: "select",
               options: monthOptions,
+              ml: 0,
+              r: r[1],
             },
           ],
         },
@@ -390,9 +432,40 @@ export const selectionDataAtom = atom<QuizData[]>({
           svgs: ["./pngicons/data-server.png", "./pngicons/hydrotherapy.png"],
           questions: [
             {
-              question:
-                "On average, how many times per day do you use skin sanitizer?",
+              question: "How many gallons are in each water system?",
               value: "",
+              ml: 0,
+              r: r[1],
+              type: "mix",
+              options: [
+                "1) Pools, Hot tubs, & Spas  ",
+
+                "2) Canning Retort & Pasteurizer Cooling Water ",
+
+                "3) Electronic Cooling Towers ",
+
+                "4) Stainless Steel Transfer Lines, & Hydrocoolers ",
+
+                "5) Other Recirculating Water Systems ",
+              ],
+            },
+            {
+              question:
+                "How many times per month do you sanitize water systems?",
+              value: "",
+              ml: 0,
+              r: r[1],
+              type: "input",
+              max: 5,
+            },
+            {
+              question:
+                "How long would you like a recirculating water system disinfectant  supply?",
+              value: "",
+              ml: 0,
+              r: r[1],
+              type: "select",
+              options: monthOptions,
             },
           ],
         },
@@ -414,6 +487,8 @@ export const selectionDataAtom = atom<QuizData[]>({
               type: "input",
               max: 5,
               value: "",
+              ml: 0,
+              r: r[1],
             },
             {
               question:
@@ -421,12 +496,16 @@ export const selectionDataAtom = atom<QuizData[]>({
               type: "select",
               value: "",
               options: monthOptions,
+              ml: 0,
+              r: r[1],
             },
             {
               question: "How much water can each system hold?",
               max: 3,
               type: "input",
               value: "",
+              ml: 0,
+              r: r[1],
             },
           ],
         },
@@ -450,6 +529,17 @@ export const selectionDataAtom = atom<QuizData[]>({
 
                 "3 ) Kill viruses, fungi, or mold on tools and equipment? (Heavy)",
               ],
+              ml: 0,
+              r: r[1],
+            },
+            {
+              question:
+                "How many times per week do you sanitize tools equipment?",
+              value: "",
+              type: "input",
+              f: 4.4,
+              ml: 0,
+              r: r[1],
             },
           ],
         },
@@ -474,11 +564,37 @@ export const selectionDataAtom = atom<QuizData[]>({
               question:
                 "Pick which foods your household eats, and how you typically disinfect each selection.",
               value: "",
+              ml: 0,
+              r: r[2],
+              type: "input",
+            },
+            {
+              question: "How often do you sanitize each type of food?",
+              value: "",
+              ml: 0,
+              r: r[2],
+              type: "select",
+              options: [
+                "A) Daily",
+                "B) Twice a week",
+                "C) Once a week",
+                "D) Every other week",
+                "E) Once a month ",
+              ],
+            },
+            {
+              question:
+                "How long would you like a raw agricultural commodities sanitizer supply?",
+              value: "",
+              ml: 0,
+              r: r[2],
+              type: "select",
+              options: monthOptions,
             },
           ],
         },
         {
-          title: "FOOD SURFACES & PACKAGES    ",
+          title: "FOOD SURFACES & PACKAGES",
           description:
             "Use in the kitchen while cleaning and preparing foods, in dining areas before and after eating, and on surfaces where food is stored or refrigerated.      ",
           modalText:
@@ -490,14 +606,62 @@ export const selectionDataAtom = atom<QuizData[]>({
           ],
           questions: [
             {
-              question:
-                "On average, how many times per day do you use skin sanitizer?",
+              question: "1) Select food-contact surfaces to sanitize",
               value: "",
+              ml: 0,
+              r: r[2],
+              type: "options",
+              options: [
+                "A) Counters",
+                "B) Tables ",
+                "C) Cabinets",
+                "D) Refrigerators",
+                "E) Stoves",
+                "F) Utensils",
+                "G) Glassware",
+                "H) Pots & Pans",
+                "I) Gloves & Hands",
+                "J) Other Appliances & Surface",
+              ],
+            },
+            {
+              question:
+                "2)How many items would you sanitize packages, casing, wrappers, or containers?",
+              value: "",
+              ml: 0,
+              r: r[2],
+              type: "options",
+              options: [
+                "A) 1 package/ week",
+                "B) 5 packages/ week",
+                "C) 10 packages/ week",
+                "D) 20 packages/ week",
+                "E) 40 packages/ week",
+              ],
+            },
+            {
+              question:
+                "How many times per month do you sanitize food contact surfaces?",
+              value: "",
+              ml: 0,
+              r: r[2],
+              type: "input",
+              f: 4.4,
+            },
+            {
+              question:
+                "How long would you like a sanitizer for packages or containers?",
+              value: "",
+              ml: 0,
+              r: r[2],
+              type: "select",
+              f: 4.4,
+              options: monthOptions,
             },
           ],
         },
         {
-          title: "HARD SURFACES & APPLIANCES     ",
+          title: "HARD SURFACES & APPLIANCES",
           description:
             "  Our eco-friendly solutions make it easy to sanitize, deodorize and disinfect every inch of your home. Use when soaking, spraying, wiping, or mopping. ",
           modalText:
@@ -510,13 +674,39 @@ export const selectionDataAtom = atom<QuizData[]>({
           questions: [
             {
               question:
-                "On average, how many times per day do you use skin sanitizer?",
+                "Which methods are preferred for disinfection and deodorizing at home.",
               value: "",
+              ml: 0,
+              r: r[2],
+              type: "mix",
+              options: [
+                "1) Spray.What is the SQ FT of home?",
+                "2) Mop.How many SQ FT in the home are hard-floors?",
+                "3) Soak.How many gallons do you typically use in a week for disinfecting hard, non-food contact surfaces?",
+              ],
+            },
+            {
+              question:
+                "How many times per week do you sanitize hard surfaces?",
+              value: "",
+              ml: 0,
+              r: r[2],
+              type: "input",
+              f: 4.4,
+            },
+            {
+              question:
+                "How long would you like a hard surface sanitizer supply?",
+              value: "",
+              ml: 0,
+              r: r[2],
+              type: "select",
+              options: monthOptions,
             },
           ],
         },
         {
-          title: "SOFT SURFACE SANITIZER     ",
+          title: "SOFT SURFACE SANITIZER",
           description:
             "Don’t mask odor, mold, or mildew with harsh chemicals and fragrances. For soft, porous surfaces eliminate germs and odor right at the source.      ",
           modalText:
@@ -528,9 +718,66 @@ export const selectionDataAtom = atom<QuizData[]>({
           ],
           questions: [
             {
-              question:
-                "On average, how many times per day do you use skin sanitizer?",
+              question: "Choose all that apply.",
               value: "",
+              ml: 0,
+              r: r[2],
+              type: "options",
+              options: [
+                "A) Subfloors",
+                "B) Rugs & Carpeting",
+                "C) Bed Sets ",
+                "D) Animal Bedding & Kennels",
+                "E) Drapes & Curtains",
+                "F) Upholstered Furniture   ",
+                "G) Vehicle Upholstery ",
+                "H) Footwear ",
+                "I) Luggage & Bags",
+                "J) Toys ",
+                "K) Laundry 20 Gallons each",
+              ],
+            },
+            {
+              question: "How frequently do you sanitize or wash each month?",
+              value: "",
+              ml: 0,
+              r: r[2],
+              type: "mix",
+              options: [
+                "A) Subfloors",
+                "B) Rugs & Carpeting",
+                "C) Bed Sets",
+                "D) Animal Bedding",
+                "E) Drapes & Curtains",
+                "F) Upholstered Furnitur",
+                "G) Vehicle Upholstery",
+                "H) Footwear",
+                "I) Luggage & Bags",
+                "J) Toys",
+                "K) Laundry",
+              ],
+            },
+            {
+              question: "What strength do you want to use?",
+              value: "",
+              ml: 0,
+              r: r[2],
+              type: "select",
+              options: [
+                "1) Light 20 ppm",
+                "2)Moderate  100 ppm",
+                "3) Heavy 200 ppm",
+                "4) Insecticide -725 ppm ",
+              ],
+            },
+            {
+              question:
+                "How long would you like a porous surface sanitizer supply?",
+              value: "",
+              ml: 0,
+              r: r[2],
+              type: "select",
+              options: monthOptions,
             },
           ],
         },
@@ -548,8 +795,41 @@ export const selectionDataAtom = atom<QuizData[]>({
           questions: [
             {
               question:
-                "On average, how many times per day do you use skin sanitizer?",
+                "What are you sanitizing and the maximum growing capacity?",
               value: "",
+              ml: 0,
+              r: r[2],
+              type: "options",
+              options: [
+                "1) Seeds & Propagations Room",
+                "2) Soil, Hydro & Aeroponic Grow Beds",
+                "3) Plants & Perpetual Grow",
+                "4) Mushrooms,  Substrates & Fruiting Chamber",
+                "5) Trimming, Curing, Drying, & Harvest",
+              ],
+            },
+            {
+              question:
+                "How many times per month do you sanitize in greenhouses?",
+              value: "",
+              ml: 0,
+              r: r[2],
+              type: "mix",
+              options: [
+                "1) Seeds",
+                "2) Soil",
+                "3) Plant",
+                "4) Mushrooms ",
+                "5) Work Rooms",
+              ],
+            },
+            {
+              question: "How long do you want a greenhouse sanitizer supply?",
+              value: "",
+              ml: 0,
+              r: r[2],
+              type: "select",
+              options: monthOptions,
             },
           ],
         },
@@ -569,6 +849,9 @@ export const selectionDataAtom = atom<QuizData[]>({
               question:
                 "On average, how many times per day do you use skin sanitizer?",
               value: "",
+              ml: 0,
+              r: r[2],
+              type: "input",
             },
           ],
         },
@@ -591,8 +874,28 @@ export const selectionDataAtom = atom<QuizData[]>({
           questions: [
             {
               question:
-                "On average, how many times per day do you use skin sanitizer?",
+                "How many gallons of drinking water do you want to have disinfected for an average day on the road?",
               value: "",
+              ml: 0,
+              r: r[3],
+              type: "input",
+            },
+            {
+              question:
+                "How many times per month do you want to be prepared with safe drinking water?",
+              value: "",
+              ml: 0,
+              r: r[3],
+              type: "input",
+            },
+            {
+              question:
+                "How long would you like to have a potable drinking water supply?",
+              value: "",
+              ml: 0,
+              r: r[3],
+              type: "options",
+              options: monthOptions,
             },
           ],
         },
@@ -609,9 +912,19 @@ export const selectionDataAtom = atom<QuizData[]>({
           ],
           questions: [
             {
-              question:
-                "On average, how many times per day do you use skin sanitizer?",
+              question: "Select all that apply",
               value: "",
+              ml: 0,
+              r: r[3],
+              type: "options",
+              options: [
+                "1) Hotel",
+                "2) Hostel",
+                "3) Camping",
+                "4) AirbNb",
+                "5) Rental Property",
+                "6) Transportation",
+              ],
             },
           ],
         },
@@ -629,8 +942,33 @@ export const selectionDataAtom = atom<QuizData[]>({
           questions: [
             {
               question:
-                "On average, how many times per day do you use skin sanitizer?",
+                "Pick methods for preferred disinfection and deodorizing.",
               value: "",
+              ml: 0,
+              r: r[3],
+              type: "mix",
+              options: [
+                "1) Spray. How many SQ FT is the building or room?",
+                "2) Mop. How many SQ FT are hard-floors? ",
+                "3) Soak.",
+              ],
+            },
+            {
+              question:
+                "How many times per month do you sanitize hard surfaces?",
+              value: "",
+              ml: 0,
+              r: r[3],
+              type: "input",
+            },
+            {
+              question:
+                "How long would you like a hard surface sanitizer supply?",
+              value: "",
+              ml: 0,
+              r: r[3],
+              type: "select",
+              options: monthOptions,
             },
           ],
         },
@@ -647,9 +985,39 @@ export const selectionDataAtom = atom<QuizData[]>({
           ],
           questions: [
             {
-              question:
-                "On average, how many times per day do you use skin sanitizer?",
+              question: "Select all the foods you eat and preferred met",
               value: "",
+              ml: 0,
+              r: r[3],
+              type: "options",
+              options: [
+                "1) Produce, Fruits, Vegetable  ",
+                "2) Eggshells",
+                "3) Raw meat, poultry, seafood",
+                "4) Surfaces",
+              ],
+            },
+            {
+              question: "How often do you sanitize each type of food? ",
+              value: "",
+              ml: 0,
+              r: r[3],
+              type: "options",
+              options: [
+                "A) Daily",
+                "B) Twice a week",
+                "C) Once a week",
+                "D) Every other week",
+                "E) Once a month ",
+              ],
+            },
+            {
+              question: "How often do you sanitize each type of food? ",
+              value: "",
+              ml: 0,
+              r: r[3],
+              type: "select",
+              options: monthOptions,
             },
           ],
         },
@@ -666,9 +1034,33 @@ export const selectionDataAtom = atom<QuizData[]>({
           ],
           questions: [
             {
-              question:
-                "On average, how many times per day do you use skin sanitizer?",
+              question: "How many gallons are within the storage system?",
               value: "",
+              ml: 0,
+              r: r[3],
+              type: "mix",
+              options: [
+                "1) Potable Water",
+                "2) Waste Water",
+                "3) Non-Potable Tanks & Lines ",
+              ],
+            },
+            {
+              question:
+                "How many times per month do you want to sanitize water containment? If unknown, then 2/mo is recommended. ",
+              value: "",
+              ml: 0,
+              r: r[3],
+              type: "select",
+              options: ["1", "2", "3"],
+            },
+            {
+              question: "How long would you like to keep this supply?",
+              value: "",
+              ml: 0,
+              r: r[3],
+              type: "select",
+              options: monthOptions,
             },
           ],
         },
@@ -686,8 +1078,20 @@ export const selectionDataAtom = atom<QuizData[]>({
           questions: [
             {
               question:
-                "On average, how many times per day do you use skin sanitizer?",
+                "While on the road how many times per day do you use skin sanitizer?",
               value: "",
+              ml: 0,
+              r: r[3],
+              f: 30,
+              type: "input",
+            },
+            {
+              question: "How many times per week do you apply deodorant?",
+              value: "",
+              ml: 0,
+              r: r[3],
+              f: 4.4,
+              type: "input",
             },
           ],
         },
@@ -710,8 +1114,37 @@ export const selectionDataAtom = atom<QuizData[]>({
           questions: [
             {
               question:
-                "On average, how many times per day do you use skin sanitizer?",
+                "Pick methods for preferred disinfection and deodorizing.",
               value: "",
+              type: "mix",
+              ml: 0,
+              r: r[4],
+              f: 4.4,
+              options: [
+                "1) Spray. How many SQ FT is the building or room?",
+                "2) Mop. How many SQ FT are hard-floors?",
+                "4) Soak. How many gallons do you typically use in a week for disinfecting hard, non-food contact surfaces?",
+              ],
+            },
+            {
+              question:
+                " How many times per month do you sanitize hard surfaces?",
+              value: "",
+              type: "mix",
+              ml: 0,
+              r: r[4],
+              f: 4.4,
+              options: ["1) Spray", "2) Mop", "3) Soak"],
+            },
+            {
+              question:
+                "How long would you like a hard surface sanitizer supply?",
+              value: "",
+              type: "select",
+              ml: 0,
+              r: r[4],
+
+              options: monthOptions,
             },
           ],
         },
@@ -729,8 +1162,42 @@ export const selectionDataAtom = atom<QuizData[]>({
           questions: [
             {
               question:
-                "On average, how many times per day do you use skin sanitizer?",
+                "Select which foods your establishment typically disinfect. Food Rinse, Misters, & Humidification Water ",
               value: "",
+              type: "select",
+              ml: 0,
+              r: r[4],
+
+              options: [
+                "1) Produce, Fruits, Vegetable  ",
+                "2) Eggshells",
+                "3) Raw meat, poultry, seafood",
+              ],
+            },
+            {
+              question:
+                "How many times per month do you sanitize each type of food?",
+              value: "",
+              type: "select",
+              ml: 0,
+              r: r[4],
+
+              options: [
+                "1 Daily",
+                "2 Twice a week",
+                "3 Once a week",
+                "4 Every other week",
+              ],
+            },
+            {
+              question:
+                "How long would you like a raw agricultural commodities sanitizer supply?",
+              value: "",
+              type: "select",
+              ml: 0,
+              r: r[4],
+
+              options: monthOptions,
             },
           ],
         },
@@ -748,8 +1215,28 @@ export const selectionDataAtom = atom<QuizData[]>({
           questions: [
             {
               question:
-                "On average, how many times per day do you use skin sanitizer?",
+                "How many times per month do you sanitize equipment and machinery?",
               value: "",
+              type: "input",
+              ml: 0,
+              r: r[4],
+            },
+            {
+              question: "What strength do you want to use?",
+              value: "",
+              type: "select",
+              ml: 0,
+              r: r[4],
+              options: ["A) Light", "B) Moderate", "C) Heavy"],
+            },
+            {
+              question: "How long would you like to keep this supply?",
+              value: "",
+              type: "select",
+              ml: 0,
+              r: r[4],
+
+              options: monthOptions,
             },
           ],
         },
@@ -766,9 +1253,35 @@ export const selectionDataAtom = atom<QuizData[]>({
           ],
           questions: [
             {
-              question:
-                "On average, how many times per day do you use skin sanitizer?",
+              question: "Select all that apply",
               value: "",
+              type: "select",
+              ml: 0,
+              r: r[4],
+              options: [
+                "1) Blood & Blood Products",
+                "2) Waste, Feces, & Urine ",
+                "3) Viral Infections ",
+                "4) Airborne Pollutants",
+                "5) Personal Protective",
+              ],
+            },
+            {
+              question:
+                "How many times per month do to sanitize, disinfect, or deodorize hazardous materials? ",
+              value: "",
+              type: "select",
+              ml: 0,
+              r: r[4],
+              options: ["1)", "2)", "3)", "4)"],
+            },
+            {
+              question: "How would you like to use?",
+              value: "",
+              type: "select",
+              ml: 0,
+              r: r[4],
+              options: ["A) Light ", "B) Moderate  ", "C) Heavy "],
             },
           ],
         },
@@ -786,8 +1299,34 @@ export const selectionDataAtom = atom<QuizData[]>({
           questions: [
             {
               question:
-                "On average, how many times per day do you use skin sanitizer?",
+                "How many times per month do to sanitize, disinfect, or deodorize hazardous materials? ",
               value: "",
+              type: "select",
+              ml: 0,
+              r: r[4],
+              options: ["1)", "2)", "3)", "4)"],
+            },
+            {
+              question: "What strength do you want to use for fogging?",
+              value: "",
+              type: "select",
+              ml: 0,
+              r: r[4],
+              options: [
+                "A)Light ",
+                "B)Moderate  ",
+                "C) Heavy   ",
+                "D) HVAC ",
+                "E) Fumigate ",
+              ],
+            },
+            {
+              question: "How long would you like to keep this supply?",
+              value: "",
+              type: "select",
+              ml: 0,
+              r: r[4],
+              options: monthOptions,
             },
           ],
         },
