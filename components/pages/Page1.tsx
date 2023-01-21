@@ -1,64 +1,39 @@
 /** @format */
 
-import { useFormik, Form, Field } from "formik";
-
-import React, { useEffect, useState } from "react";
-import { motion } from "framer-motion";
-import Flex from "../utils/Flex";
-
-import H1 from "../Headings/H1";
-
-import {
-  formValidationSchema,
-  stringSchema,
-  validateString,
-} from "../../types/form";
-import P from "../para/P";
-import { useRouter } from "next/router";
-import { useRecoilState, useSetRecoilState } from "recoil";
-import { disAbleAtom, stepAtom } from "../../atoms/steps";
-import { allPageDataAtom, page1DataAtom } from "../../atoms/data";
-import P1 from "../para/P1";
-import Bold from "../utils/Bold";
-import { MotionConfig } from "framer-motion";
-import { dropUpVariants, childVariants } from "../../animation/anime";
-import AnimatedTextWord from "../Headings/test/AnimatedText";
+import { useFormik } from "formik";
 import Spacing from "./layout/Spacing";
-import Error from "../../Error";
+import React, { useEffect } from "react";
+import { page1DataAtom } from "../../atoms/data";
+import { validateString } from "../../types/form";
+import { motion, AnimatePresence } from "framer-motion";
+import { disAbleAtom, stepAtom } from "../../atoms/steps";
+import { useRecoilState, useSetRecoilState } from "recoil";
+import AnimatedTextWord from "../Headings/test/AnimatedText";
+import { dropUpVariants, childVariants } from "../../animation/anime";
 
-type Props = {};
 const data = [
   {
-    question: "What is your name?",
+    question: "What  Should  I  Call  You?",
     data: "name",
     case: 1,
   },
 ];
 
-function Page1({}: Props) {
+function Page1() {
   const [step, setStep] = useRecoilState(stepAtom);
+  const setDisabled = useSetRecoilState(disAbleAtom);
   const [page1Data, setPage1Values] = useRecoilState(page1DataAtom);
 
-  const onSubmit = (values: any, actions: any) => {
+  const onSubmit = (values: any,) => {
     setPage1Values(values);
     setStep((prev) => prev + 1);
   };
 
-  const {
-    handleChange,
-    handleSubmit,
-    handleBlur,
-    errors,
-    touched,
-    isSubmitting,
-    validateOnBlur,
-    values,
-  } = useFormik({
+  const { handleChange, handleSubmit, errors, values } = useFormik({
+    onSubmit: onSubmit,
     initialValues: page1Data,
     validationSchema: validateString("name"),
-    onSubmit: onSubmit,
   });
-  const setDisabled = useSetRecoilState(disAbleAtom);
 
   useEffect(() => {
     if (errors.name || values.name === "") {
@@ -74,9 +49,10 @@ function Page1({}: Props) {
         animate="animate"
         initial="initial"
         exit={{ opacity: 0 }}
-        className="hero min-h-screen "
         style={{ backgroundImage: `url("./page1.png")` }}
+        className="hero min-h-screen overflow-hidden bg-center bg-cover"
       >
+
         <div className="hero-overlay bg-opacity-80 bg-blue-1"></div>
         <div className="hero-content text-center text-neutral-content">
           <motion.form
@@ -84,43 +60,53 @@ function Page1({}: Props) {
             initial="hidden"
             animate="visible"
             onSubmit={handleSubmit}
-            className="max-w-4xl text-white "
-          >
-            <AnimatedTextWord
-              text={data[step].question}
-              maxW="auto"
-              // variants={dropUpVariants}
-              className="mb-5 text-5xl font-bold text-green-1"
-            ></AnimatedTextWord>
-            <Spacing spacing={2} className="mb-10">
-              <motion.input
-                type="text"
-                name={data[step].data}
-                placeholder="Enter Your Name"
-                className={` ${
-                  errors.name
-                    ? "border-red-400 focus:!border-red-400"
-                    : "!border-green-1 focus-within:!border-green-1"
-                } input input-bordered w-full max-w-xl bg-white rounded-full border-4   text-green-1 py-7  md:text-xl  `}
-                onChange={(e) => {
-                  handleChange(e);
-                }}
-                value={values.name}
-              />
-              <Error error={errors.name} />
-            </Spacing>
+            className="max-w-4xl text-white">
 
-            <motion.p className="mb-5 md:text-lg " variants={dropUpVariants}>
+            <div className=" pt-14 pb-4 my-5 rounded-md px-5">
+
+              <AnimatedTextWord
+                maxW="auto"
+                text={data[step].question}
+                className="text-5xl text-green-1-tt font-semibold sm:text-5xl sm:leading-none lg:text-5xl xl:text-[3rem] mb-7" />
+
+              <Spacing spacing={2} className="mb-10">
+
+                <motion.input
+                  type="text"
+                  value={values.name}
+                  name={data[step].data}
+                  placeholder="Your name goes here..."
+                  onChange={(e) => { handleChange(e); }}
+                  className={` ${errors.name
+                    ? "border-red-400 focus:!border-red-400"
+                    : "focus-within:!border-green-1"
+                    } input input-bordered w-full max-w-xl  rounded-full text-center border-2  py-5  md:text-[20px] placeholder:text-gray-300  bg-transparent !bg-white !text-black `}
+                />
+
+                <AnimatePresence>
+                  {
+                    errors.name && <motion.div
+                      transition={{ duration: .2 }}
+                      exit={{ opacity: 0, height: 0 }}
+                      initial={{ opacity: 0, height: 0 }}
+                      animate={{ opacity: 1, height: 24 }}>
+                      <span > <i className="text-red-500">●</i> {errors.name}</span>
+                    </motion.div>
+                  }
+
+                </AnimatePresence>
+              </Spacing>
+            </div>
+
+            <motion.p className="mb-5 md:text-xl text-base text-gray-100 " variants={dropUpVariants}>
               Clean Solutions is a bio-security company specializing in quickly
-              <br /> identifying{" "}
-              <Bold> economical and eco-friendly solutions </Bold>to
-              micro-organic challenges.
+              identifying <b className="text-green-1 font-semibold">economical and eco-friendly solutions</b> to micro-organic challenges. <br />
+              With our focus on <b className="text-green-1 font-semibold">safety and improving health</b> through innovative products and services,
+              our formulas are incredibly versatile and typically <b className="text-green-1 font-semibold">cost less than 80%</b> of what you’re paying now.
+              We reduce our environmental footprint with unique products
+              that <b className="text-green-1 font-semibold">eliminate over 95% </b> of petroleum plastics used in conventional packaging.
             </motion.p>
-            <motion.p variants={dropUpVariants} className="mb-5 md:text-lg ">
-              With our focus on safety and improving health through innovative
-              products and services, our formulas are incredibly versatile and
-              typically cost less than 80% of what you’re <br /> paying now.
-            </motion.p>
+
           </motion.form>
         </div>
       </motion.div>
