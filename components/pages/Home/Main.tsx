@@ -43,7 +43,7 @@ const Main = () => {
 
   return (
     <>
-      <Div className=" flex flex-col py-16 lg:pt-0 lg:flex-col lg:pb-0 h-screen bg-blue-1 text-white relative">
+      <Div className=" flex flex-col py-16 lg:pt-0 lg:flex-col lg:pb-0 min-h-screen max-h-[1000px] bg-blue-1 text-white relative">
         <div className=" flex flex-col items-start w-full max-w-xl px-4 mx-auto xl:px-10 xl:max-w-[92%] text-center ">
           <div className="mb-16 lg:mt-20 xl:my-52 xl:mt-20 xl:max-w-3xl lg:pr-5 ">
             <AnimatedTextWord

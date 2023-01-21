@@ -79,11 +79,11 @@ function Item({ title, price, category, image, qty }: Props) {
 
 function Drawer() {
   return (
-    <div className="drawer  drawer-end absolute">
+    <div className="drawer drawer-end absolute ">
       <input id="my-drawer-4" type="checkbox" className="drawer-toggle" />
-      <div className="drawer-side  scrollbar-hide">
+      <div className="drawer-side scrollbar-hide">
         <label htmlFor="my-drawer-4" className="drawer-overlay z-40"></label>
-        <ul className="menu p-4 w-96 bg-smoke !z-[98]">
+        <ul className="menu p-4 md:w-96 bg-smoke !z-[98] ">
           <div className="flex items-start justify-between py-4 pl-2">
             <h2 id="slide-over-title" className="text-lg font-medium text-gray-900">Shopping cart</h2>
             <div className="ml-3 flex h-7 items-center ">
