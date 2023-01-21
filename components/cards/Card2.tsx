@@ -1,14 +1,14 @@
 /** @format */
 
 import React from "react";
-import { useRecoilValue } from "recoil";
-import { AiOutlineCheckCircle } from "react-icons/ai";
-import truncate from "../../libs/Truncate";
 import A from "../animation/A";
-import Flex from "../utils/Flex";
 import Svg from "../utils/Svg";
+import Flex from "../utils/Flex";
 import { motion } from "framer-motion";
+import { useRecoilValue } from "recoil";
+import truncate from "../../libs/Truncate";
 import { page3DataAtom } from "../../atoms/data";
+import { AiOutlineCheckCircle } from "react-icons/ai";
 
 type Props = {
   svgs: string[];
@@ -25,25 +25,24 @@ function Card2({ svgs, title, description, onClick, buttonClick }: Props) {
 
   return !isSelected ? (
     <A
-      className={`p-1 lg:w-full m-auto  md:w-full  cursor-pointer  rounded-3xl `}
       onClick={onClick}
-    >
+      className={`p-1 lg:w-full m-auto  md:w-full  cursor-pointer  rounded-3xl w-full h-full `}>
+
       <motion.div
-        key={isSelected}
         initial={{
           border: "4px solid #95D074",
           opacity: 0,
           backgroundColor: "#fff",
         }}
+        key={isSelected}
         animate={{
           backgroundColor: isSelected ? "#95D074" : "#fff",
           opacity: 1,
           border: isSelected ? "4px solid #fff" : "4px solid #95D074",
         }}
-        className={`flex  rounded-3xl   px-5 py-4 sm:flex-row flex-col shadow-lg  ${
-          isSelected ? "border-4 border-green-1" : ""
-        } text-left`}
-      >
+        className={`flex  rounded-3xl  w-full h-full  px-5 py-4 sm:flex-row flex-col shadow-lg  ${isSelected ? "border-4 border-green-1" : ""
+          } text-left`}>
+
         <div className="flex-grow">
           <motion.h2
             initial={{
@@ -53,8 +52,7 @@ function Card2({ svgs, title, description, onClick, buttonClick }: Props) {
               x: 0,
               color: isSelected ? "#fff" : "#000",
             }}
-            className="text-gray-900 text-xl title-font font-bold mb-3 uppercase"
-          >
+            className="text-gray-900 text-xl title-font font-bold mb-3 uppercase">
             {title}
           </motion.h2>
           <motion.p
@@ -143,9 +141,8 @@ function Card2({ svgs, title, description, onClick, buttonClick }: Props) {
           opacity: 1,
           border: isSelected ? "4px solid #fff" : "4px solid #95D074",
         }}
-        className={`flex  rounded-3xl   px-5 py-4 sm:flex-row flex-col shadow-lg  ${
-          isSelected ? "border-4 border-green-1" : ""
-        } text-left min-h-[250px]`}
+        className={`flex  rounded-3xl   px-5 py-4 sm:flex-row flex-col shadow-lg  ${isSelected ? "border-4 border-green-1" : ""
+          } text-left min-h-[250px]`}
       >
         <div className="flex-grow">
           <motion.h2

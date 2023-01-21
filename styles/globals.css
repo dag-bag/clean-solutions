@@ -1,16 +1,20 @@
 /** @format */
+@import url('https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;500;600;700;800;900&display=swap');
 @import url("https://fonts.googleapis.com/css2?family=Poppins:wght@100;200;300;400;500;600;700;800&display=swap");
+
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
+
 @layer base {
   html {
     font-family: "Poppins", sans-serif;
-    @apply !text-gray-900;
+    @apply  !text-gray-900;
     /* overflow: hidden; */
     background-color: white !important;
   }
 }
+
 @layer utilities {
   .hero-section {
     align-items: flex-start;
@@ -74,7 +78,7 @@
     transform: scale(1.05) translateZ(0);
   }
 
-  .card-grid:hover > .card2:not(:hover) .card__background {
+  .card-grid:hover>.card2:not(:hover) .card__background {
     filter: brightness(0.5) saturate(0) contrast(1.2) blur(20px);
   }
 
@@ -103,24 +107,29 @@
   .ts {
     text-shadow: 0 0.3rem 0.5rem rgb(0 0 0 / 30%);
   }
+
   .hollow {
     -webkit-text-stroke: 3px #95d074;
 
     -webkit-text-fill-color: transparent;
   }
+
   .hollow-w {
     -webkit-text-stroke: 4px white;
     font-size: 50px;
     -webkit-text-fill-color: transparent;
   }
+
   .cardShadow {
     -webkit-box-shadow: 5.5px 3.5px 2px 3px #16a34a;
     -moz-box-shadow: 5.5px 3.5px 2px 3px #16a34a;
     box-shadow: 5.5px 3.5px 2px 3px #16a34a;
   }
+
   .sd {
     box-shadow: rgba(0, 0, 0, 0.24) 0px 3px 8px;
   }
+
   /* .gd {
     background: rgb(149,208,116);
     background: radial-gradient(circle, rgba(149,208,116,1) 0%, rgba(255,255,255,1) 100%);
@@ -137,11 +146,13 @@
     margin: 1rem;
     position: relative;
   }
+
   @media screen and (max-width: 800px) {
     .card {
       width: calc(50% - 2rem);
     }
   }
+
   @media screen and (max-width: 500px) {
     .card {
       width: 100%;
@@ -177,6 +188,7 @@
     overflow: hidden;
     font-family: Poppins, sans-serif;
   }
+
   .front:before {
     position: absolute;
     display: block;
@@ -189,9 +201,11 @@
     opacity: 0.25;
     z-index: -1;
   }
+
   .card:hover .front {
     transform: rotateX(180deg);
   }
+
   .card:nth-child(even):hover .front {
     transform: rotateX(-180deg);
   }
@@ -201,27 +215,34 @@
     transform: rotateX(-180deg);
     padding: 0 1rem;
   }
+
   .back .button {
     background: linear-gradient(135deg, #95d074, #6da54d);
     padding: 1rem 2rem;
   }
+
   .back .button:before {
     box-shadow: 0 0 10px 10px rgba(26, 87, 230, 0.25);
     background-color: rgba(26, 87, 230, 0.25);
   }
+
   .card:hover .back {
     transform: rotateX(0deg);
   }
+
   .card:nth-child(even) .back {
     transform: rotateX(180deg);
   }
+
   .card:nth-child(even) .back .button {
     background: linear-gradient(135deg, #e61a80, #e61a3c);
   }
+
   .card:nth-child(even) .back .button:before {
     box-shadow: 0 0 10px 10px rgba(230, 26, 60, 0.25);
     background-color: rgba(230, 26, 60, 0.25);
   }
+
   .card:nth-child(even):hover .back {
     transform: rotateX(0deg);
   }
@@ -241,6 +262,7 @@
     transform-style: preserve-3d;
     transition: 300ms ease;
   }
+
   .button:before {
     transition: 300ms ease;
     position: absolute;
@@ -255,19 +277,24 @@
     left: 10px;
     top: 16px;
   }
+
   .button:hover {
     transform: translateZ(55px);
   }
+
   .button:hover:before {
     transform: translateZ(-55px);
   }
+
   .button:active {
     transform: translateZ(20px);
   }
+
   .button:active:before {
     transform: translateZ(-20px);
     top: 12px;
   }
+
   /* .card__description svg {
     width: 1.5em;
     height: 1.5em;
@@ -275,30 +302,27 @@
   } */
 
   .rangeen {
-    @apply bg-gradient-to-r from-green-300 via-blue-500 to-purple-600 bg-clip-text text-3xl font-extrabold text-transparent sm:text-5xl;
+    /* @apply bg-gradient-to-r from-green-300 via-blue-500 to-purple-600 bg-clip-text text-3xl font-extrabold text-transparent sm: text-5xl; */
   }
+
   .bg1 {
     background: rgb(81, 140, 164);
-    background: linear-gradient(
-      90deg,
-      rgba(81, 140, 164, 1) 0%,
-      rgba(255, 255, 255, 1) 60%
-    );
+    background: linear-gradient(90deg,
+        rgba(81, 140, 164, 1) 0%,
+        rgba(255, 255, 255, 1) 60%);
   }
+
   .bg2 {
     background: rgb(56, 189, 248);
-    background: linear-gradient(
-      180deg,
-      rgba(56, 189, 248, 1) 0%,
-      rgba(255, 255, 255, 1) 60%
-    );
+    background: linear-gradient(180deg,
+        rgba(56, 189, 248, 1) 0%,
+        rgba(255, 255, 255, 1) 60%);
   }
+
   .quiz-bg {
     background: rgb(81, 140, 164);
-    background: linear-gradient(
-      180deg,
-      rgb(81, 140, 164) 0%,
-      rgba(255, 255, 255, 1) 76%
-    );
+    background: linear-gradient(180deg,
+        rgb(81, 140, 164) 0%,
+        rgba(255, 255, 255, 1) 76%);
   }
 }

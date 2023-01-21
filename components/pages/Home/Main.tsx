@@ -55,7 +55,7 @@ const Main = () => {
             <div className=" border-red-500 flex items-center justify-center flex-col">
               <AnimatedTextWord
                 text="Take Your Own Adventure Quiz"
-                className="text-5xl font-semibold sm:text-5xl sm:leading-none lg:text-5xl xl:text-[4.5rem] text-center"
+                className="text-5xl font-semibold sm:text-5xl sm:leading-none lg:text-5xl xl:text-[4.5rem] text-center font-heading"
               />
               <AnimatedTextWord
                 className="text-base  md:text-md my-7 text-gray-200"

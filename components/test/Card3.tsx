@@ -1,18 +1,15 @@
 /** @format */
 
 import React from "react";
-import { AiOutlineCheckCircle } from "react-icons/ai";
-import { useRecoilState, useSetRecoilState } from "recoil";
+import { useRecoilState } from "recoil";
 
 import { Page2 } from "../../types/page";
-import { allPageDataAtom, page2DataAtom } from "../../atoms/data";
-import Svg from "../utils/Svg";
+import { page2DataAtom } from "../../atoms/data";
 
 import { motion } from "framer-motion";
 import A from "../animation/A";
 import { dropOutVariant } from "../../animation/anime";
 
-import Flex from "../utils/Flex";
 import CardFront from "../pages/page2/CardFront";
 import CardBack from "../pages/page2/CardBack";
 
@@ -45,20 +42,14 @@ function Card3({ title, svgs, text, index, l }: Page2) {
         axis: "x",
         axisValue: -400,
       })}
-      className="w-full"
-    >
-      <A
-        className="card h-[17rem]  md:!w-[28rem] 
-     rounded-3xl !w-[90%]"
-        onClick={handleCardClick}
-      >
+      className="w-full flex items-center justify-center">
+      <A className="card h-[17rem]  md:!w-[28rem] rounded-3xl !w-[100%]" onClick={handleCardClick}>
         <CardFront
           title={title}
           svgs={svgs}
           text={text}
           l={l ? l : false}
-          isSelected={isSelected}
-        />
+          isSelected={isSelected} />
         <CardBack title={title} text={text} isSelected={isSelected} />
       </A>
     </motion.div>
