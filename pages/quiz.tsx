@@ -31,12 +31,12 @@ function Quiz({ data, setData }: Props) {
           step === 0
             ? "outer"
             : step === 1
-            ? "outer"
-            : step === 2
-            ? "inner"
-            : step === 3
-            ? "deep"
-            : "outer"
+              ? "outer"
+              : step === 2
+                ? "inner"
+                : step === 3
+                  ? "deep"
+                  : "outer"
         }
         deepClick={() => {
           setDeepStep((prev) => prev + 1);

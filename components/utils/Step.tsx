@@ -1,5 +1,8 @@
 /** @format */
 
+
+import QuizNewWay from "../../quiz-new-way";
+
 import { useRouter } from "next/router";
 import React, { useContext, useState } from "react";
 import { useRecoilState, useRecoilValue } from "recoil";
@@ -68,18 +71,23 @@ function Step({ data, setData }: any) {
       );
       break;
     case 3:
+      // stepContent = (
+      //   <AnimationLayout key={deepState}>
+      //     <Questions
+      //       q={questions}
+      //       {...getQuestions()}
+      //       setQuestion={setQuestionData}
+      //       data={data}
+      //       setData={setData}
+      //       deepCopy={questinosDeepCoy}
+      //     />
+      //   </AnimationLayout>
+      // );
       stepContent = (
-        <AnimationLayout key={deepState}>
-          <Questions
-            q={questions}
-            {...getQuestions()}
-            setQuestion={setQuestionData}
-            data={data}
-            setData={setData}
-            deepCopy={questinosDeepCoy}
-          />
-        </AnimationLayout>
-      );
+        <QuizNewWay />
+      )
+
+
       break;
 
     default:

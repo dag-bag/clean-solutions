@@ -52,13 +52,13 @@ function NextPrev({
     <>
       <button
         disabled={step === 0}
-        className="disabled:opacity-40 bg-green-1 px-2 py-4  fixed text-white rounded-md top-1/2 left-0 transform  translate-y-1/2 z-50"
+        className=" disabled:opacity-40 bg-green-1 px-2 py-4  fixed text-white rounded-md top-1/2 left-0 transform  translate-y-1/2 z-50"
         onClick={prev}
       >
         <GrPrevious className="text-2xl " color="white" />
       </button>
       <button
-        className="disabled:opacity-40 bg-green-1 px-2 py-4  fixed text-white rounded-md top-1/2 right-0 transform  translate-y-1/2 z-50"
+        className=" disabled:opacity-40 bg-green-1 px-2 py-4  fixed text-white rounded-md top-1/2 right-0 transform  translate-y-1/2 z-50"
         onClick={next}
         disabled={
           disabled ||
