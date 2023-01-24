@@ -1,11 +1,11 @@
 // important :  please don't include special characters in options and optionObject of multiple select otherwise we need to 'convertHTMLEntities'
-import Select from '../components/select'
+import Select from '../../components/select'
 import { ChangeEvent, useState } from 'react'
 import { atom, useRecoilState } from 'recoil'
-import Question from '../components/question-wrapper'
-import MultipleSelect from '../components/multiple-select'
-import DurationBasedSelect from '../components/duration-based-select'
-import MultipleNestedSelect from '../components/multiple-select-nested-input'
+import Question from '../../components/question-wrapper'
+import MultipleSelect from '../../components/multiple-select'
+import DurationBasedSelect from '../../components/duration-based-select'
+import MultipleNestedSelect from '../../components/multiple-select-nested-input'
 
 const state = atom({
     key: 'anythingggg',
@@ -26,7 +26,7 @@ const quizState = atom({
 
 
 
-const SkinContact = () => {
+const HandDisinfactant = () => {
     const [step, setStep] = useRecoilState(state)
     const [Quizdata, setQuizdata] = useRecoilState(quizState)
     const [activeInputValue, setActiveInputValue] = useState<string>('')
@@ -266,5 +266,5 @@ const SkinContact = () => {
         </div >
     )
 }
-export default SkinContact
+export default HandDisinfactant
 

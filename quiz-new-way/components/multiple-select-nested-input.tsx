@@ -3,8 +3,11 @@ interface props {
     onClick: any;
     selectedOptions: string[],
     onChangeNestedInputs: any,
+    placeholder: string,
+    min?: number,
+    max?: number,
 }
-const MultipleNestedSelect = ({ options, onClick, selectedOptions, onChangeNestedInputs }: props) => {
+const MultipleNestedSelect = ({ options, onClick, selectedOptions, onChangeNestedInputs, placeholder, min, max }: props) => {
 
     return <div>
         {options.map((keyName, index) => {
@@ -13,6 +16,8 @@ const MultipleNestedSelect = ({ options, onClick, selectedOptions, onChangeNeste
                 keyName,
                 onClick,
                 isSelected,
+                placeholder,
+                min, max,
                 onChangeNestedInputs
             }
             return <Option {...props} key={index} />
@@ -25,10 +30,14 @@ interface optionProps {
     keyName: string,
     onClick: any,
     isSelected: boolean,
-    onChangeNestedInputs: any
+    onChangeNestedInputs: any,
+    placeholder: string,
+    min?: number,
+    max?: number,
 }
+// we need to setup min max values;
 
-const Option = ({ keyName, onClick, isSelected, onChangeNestedInputs }: optionProps) => {
+const Option = ({ keyName, onClick, isSelected, onChangeNestedInputs, placeholder, min, max }: optionProps) => {
     return (
         <div
             style={isSelected ? { color: 'red' } : undefined}
@@ -36,7 +45,9 @@ const Option = ({ keyName, onClick, isSelected, onChangeNestedInputs }: optionPr
 
             <h1>{keyName}</h1>
             {isSelected && <div className="p-2">
-                <input onChange={onChangeNestedInputs} name={keyName} placeholder="Gallon of water use" type="number" />
+                <>
+                    <input className="w-[200px]" min={min} max={max} onChange={onChangeNestedInputs} name={keyName} placeholder={placeholder} type="number" />
+                </>
             </div>}
 
 
