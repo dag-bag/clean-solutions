@@ -22,10 +22,15 @@ const SkinContact = ({ title }: any) => {
         <div>
 
 
+
             <pre className='text-blue-300'>
                 {JSON.stringify(data)}
-
             </pre>
+
+            <h1 className='text-xl font-heading py-2'>
+                <b>category</b> :   {title}
+
+            </h1>
 
 
             {step == 1 && (
