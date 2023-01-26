@@ -25,7 +25,7 @@ import Layout from "../../components/quiz-btn-layout";
 import { motion, AnimatePresence } from "framer-motion";
 import Spacing from "../../components/pages/layout/Spacing";
 import { dropUpVariants, childVariants } from "../../animation/anime";
-import AnimatedTextWord from "../../components/Headings/test/AnimatedText";
+// import AnimatedTextWord from "../../components/Headings/test/AnimatedText";
 
 function Quiz() {
     const [state, setState] = useRecoilState(quizPage);
@@ -77,10 +77,8 @@ function Quiz() {
 
                         <div className=" pt-14 pb-4 my-5 rounded-md px-5">
 
-                            <AnimatedTextWord
-                                maxW="auto"
-                                text={data[0].question}
-                                className="text-5xl text-green-1-tt font-semibold sm:text-5xl sm:leading-none lg:text-5xl xl:text-[3rem] mb-7" />
+                            <h1 className="text-5xl text-green-1-tt font-semibold sm:text-5xl sm:leading-none lg:text-5xl xl:text-[3rem] mb-7"> {data[0].question} </h1>
+
 
                             <Spacing spacing={2} className="mb-10">
 

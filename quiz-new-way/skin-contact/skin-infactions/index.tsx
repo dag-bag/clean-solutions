@@ -1,11 +1,12 @@
 
-import meta from '../../meta';
 import { useState } from 'react'
 import { ChangeEvent } from 'react';
-import Select from '../../components/select';
-
 import categoryState from '../../state';
 import { useRecoilState } from 'recoil';
+import Select from '../../components/select';
+import quizdata from '../../../_____quiz-data';
+import Question from '../../components/question';
+import Layout from '../../components/quiz-layout';
 
 const SkinInfactions = ({ title, category, onComplete }: any) => {
     const Max = 2
@@ -13,6 +14,14 @@ const SkinInfactions = ({ title, category, onComplete }: any) => {
     const [data, updateData] = useRecoilState(categoryState)
 
     const [state, setState] = useState<any>({})
+
+
+    const [isReadMoreToggled, setReadMore] = useState(true)
+    const componentMeta = quizdata[category].categories[title]
+
+    const discription = isReadMoreToggled
+        ? componentMeta.discription
+        : componentMeta.discription.concat(componentMeta.discription_more)
 
 
     function resetStep() {
@@ -33,6 +42,10 @@ const SkinInfactions = ({ title, category, onComplete }: any) => {
         }
     }
 
+    function readMoreClickHandler() {
+        setReadMore(p => !p)
+    }
+
     function numberInputOnChangeHandler(event: ChangeEvent<HTMLInputElement>) {
         const { name, value } = event.target
         setState((prev: any) => { return { ...prev, [name]: parseInt(value) } })
@@ -43,51 +56,33 @@ const SkinInfactions = ({ title, category, onComplete }: any) => {
         setState((prev: any) => { return { ...prev, [id]: innerHTML } })
     }
 
-
-
-
     return (
-        <div>
+        <Layout {...{
+            title,
+            stepUp,
+            category,
+            discription,
+            isReadMoreToggled,
+            readMoreClickHandler,
+        }}>
+            {step == 1 && (
+                <Question name='How many times a month do you spray or soak fungi, yeast, or bacteria that can cause contamination or infectious diseases on skin?'>
+                    <input name="freq" onChange={numberInputOnChangeHandler} type="number" />
+                </Question>
+            )}
 
-            <div>
-                <h1 ><b className='font-heading'>subCategory</b> : {title}</h1>
-                <p className='py-2'>  <b className='font-heading'>discription</b> : {meta[category][title].discription}</p>
-                <pre>{JSON.stringify(state)}</pre>
-            </div>
+            {step == 2 && (
+                <Question name='How long would you like to have a disinfection supply?'>
+                    <Select
+                        options={['1 month', '2 month', '3 month', '6 month', '1 year']}
+                        selectedOption={state?.duration}
+                        onClick={selectInputOnChangeHandler}
+                        id="duration"
+                    />
+                </Question>
+            )}
 
-            <div>
-
-
-                {step == 1 && (
-                    <div>
-                        <h1 className='text-2xl py-2 font-semibold'>How many times a month do you spray or soak fungi, yeast, or bacteria that can cause contamination or infectious diseases on skin?</h1>
-                        <input name="freq" onChange={numberInputOnChangeHandler} type="number" />
-                    </div>
-                )}
-
-                {step == 2 && (
-                    <div>
-                        <h1 className='text-2xl py-2 font-semibold'>How long would you like to have a disinfection supply?</h1>
-                        <Select
-                            options={['1 month', '2 month', '3 month', '6 month', '1 year']}
-                            selectedOption={state?.duration}
-                            onClick={selectInputOnChangeHandler}
-                            id="duration"
-                        />
-                    </div>
-                )}
-
-
-
-                <button onClick={stepUp} className=" m-2 btn-outline btn">Next step</button>
-
-                <button onClick={resetStep} className=" m-2 btn-outline btn">reset state</button>
-
-            </div>
-
-
-
-        </div>
+        </Layout>
     )
 }
 

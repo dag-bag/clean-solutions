@@ -1,26 +1,29 @@
 
-import meta from '../../meta';
 import { useState } from 'react'
 import { ChangeEvent } from 'react';
-import Select from '../../components/select';
-
 import categoryState from '../../state';
 import { useRecoilState } from 'recoil';
+import Select from '../../components/select';
+import quizdata from '../../../_____quiz-data';
+import Question from '../../components/question';
+import Layout from '../../components/quiz-layout';
 import MultipleSelect from '../../components/multiple-select';
 
 const DentalOralHygeine = ({ title, category, onComplete }: any) => {
-    const Max = 2
+    const Max = 3
     const [step, setStep] = useState(1)
+    const componentMeta = quizdata[category].categories[title]
+    const [isReadMoreToggled, setReadMore] = useState(true)
     const [data, updateData] = useRecoilState(categoryState)
 
     const [state, setState] = useState<any>({
         multiselect: []
     })
 
+    const discription = isReadMoreToggled
+        ? componentMeta.discription
+        : componentMeta.discription.concat(componentMeta.discription_more)
 
-    function resetStep() {
-        setStep(1)
-    }
 
     function calculate() {
         return 0
@@ -32,6 +35,10 @@ const DentalOralHygeine = ({ title, category, onComplete }: any) => {
             updateData({ ...data, [title]: calculate() })
             onComplete()
         }
+    }
+
+    function readMoreClickHandler() {
+        setReadMore(p => !p)
     }
 
     function numberInputOnChangeHandler(event: ChangeEvent<HTMLInputElement>) {
@@ -54,87 +61,59 @@ const DentalOralHygeine = ({ title, category, onComplete }: any) => {
         }
     }
 
-
-
-
-
-
     return (
-        <div>
+        <Layout {...{
+            title,
+            stepUp,
+            category,
+            discription,
+            isReadMoreToggled,
+            readMoreClickHandler,
+        }}>
 
-            <div>
-                <h1 ><b className='font-heading'>subCategory</b> : {title}</h1>
-                <p className='py-2'>  <b className='font-heading'>discription</b> : {meta[category][title].discription}</p>
+            {step == 1 && (
+                <Question name="Choose all that apply" >
+                    <h1 className='text-2xl py-2 font-semibold'>Choose all that apply</h1>
+                    <MultipleSelect
+                        options={['Combs and Brushes', 'Nail Tech Tools', 'Respirators and CPAP Parts', ' Pacifiers and Bottles', 'Baby and Child Toys ', 'Toothbrushes', ' Retainers and Dentures', 'Other Dental Instruments', 'Mouth Rinse or Gargle']}
+                        selectedOptions={state.multiselect}
+                        onClick={multiSelectInputOnChangeHandler}
+                        id="multiselect"
+                    />
+                </Question>
+            )}
 
-                <pre>{JSON.stringify(state)}</pre>
-            </div>
-
-            <div>
-
-
-
-                {step == 1 && (
-                    <div>
-                        <h1 className='text-2xl py-2 font-semibold'>Choose all that apply</h1>
-                        <MultipleSelect
-                            options={['Combs and Brushes', 'Nail Tech Tools', 'Respirators and CPAP Parts', ' Pacifiers and Bottles', 'Baby and Child Toys ', 'Toothbrushes', ' Retainers and Dentures', 'Other Dental Instruments', 'Mouth Rinse or Gargle']}
-                            selectedOptions={state.multiselect}
-                            onClick={multiSelectInputOnChangeHandler}
-                            id="multiselect"
-                        />
+            {step == 2 && (
+                <Question name='>How long would you like to have a sanitizer for dental & oral care?'>
+                    <Select
+                        options={['Twice a day ', 'Daily ', 'Twice a week', 'Weekly ', 'Monthly']}
+                        selectedOption={state?.duration}
+                        onClick={selectInputOnChangeHandler}
+                        id="duration"
+                    />
+                    <div style={state?.duration?.includes('Other') ? { color: 'red' } : undefined} className="p-2 border border-black" onClick={selectInputOnChangeHandler as any} id="duration"  >
+                        Other
                     </div>
-                )}
 
-
-                {step == 2 && (
-                    <div>
-                        <h1 className='text-2xl py-2 font-semibold'>How long would you like to have a sanitizer for dental & oral care?</h1>
-                        <Select
-                            options={['Twice a day ', 'Daily ', 'Twice a week', 'Weekly ', 'Monthly']}
-                            selectedOption={state?.duration}
-                            onClick={selectInputOnChangeHandler}
-                            id="duration"
-                        />
-
-                        <div style={state?.duration?.includes('Other') ? { color: 'red' } : undefined} className="p-2 border border-black" onClick={selectInputOnChangeHandler as any} id="duration"  >
-                            Other
-                        </div>
-
-                        <div className='my-5'>
-                            {state?.duration?.includes('Other') && <input name="freq" onChange={numberInputOnChangeHandler} placeholder=" 1 to 30 days " type="number" />}
-                        </div>
-
-
-
+                    <div className='my-5'>
+                        {state?.duration?.includes('Other') && <input name="freq" onChange={numberInputOnChangeHandler} placeholder=" 1 to 30 days " type="number" />}
                     </div>
-                )}
 
+                </Question>
+            )}
 
+            {step == 3 && (
+                <Question name='How long would you like to have a sanitizer for dental & oral care?'>
+                    <Select
+                        options={['1 month', '2 month', '3 month', '6 month', '1 year']}
+                        selectedOption={state?.duration}
+                        onClick={selectInputOnChangeHandler}
+                        id="duration"
+                    />
+                </Question>
+            )}
 
-
-                {step == 3 && (
-                    <div>
-                        <h1 className='text-2xl py-2 font-semibold'>How long would you like to have a sanitizer for dental & oral care?</h1>
-                        <Select
-                            options={['1 month', '2 month', '3 month', '6 month', '1 year']}
-                            selectedOption={state?.duration}
-                            onClick={selectInputOnChangeHandler}
-                            id="duration"
-                        />
-                    </div>
-                )}
-
-
-
-                <button onClick={stepUp} className=" m-2 btn-outline btn">Next step</button>
-
-                <button onClick={resetStep} className=" m-2 btn-outline btn">reset state</button>
-
-            </div>
-
-
-
-        </div>
+        </Layout>
     )
 }
 

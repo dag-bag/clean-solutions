@@ -12,10 +12,10 @@ function Btn({ hidden }: Props) {
   return (
     <Link href="/quiz">
       <button
-        className={`relative block w-full md:w-auto  md:inline-flex items-center justify-start py-4   pl-10 pr-14 overflow-hidden font-semibold text-white transition-all duration-150 ease-in-out rounded-full hover:pl-10 hover:pr-6 bg-green-1 group border hover:border-green-1  ${hidden ? "hidden md:block" : ""
+        className={`relative block w-full md:w-auto  md:inline-flex items-center justify-start py-4 pl-10 pr-14 overflow-hidden font-semibold text-white transition-all duration-150 ease-in-out rounded-full   bg-green-1 group border   ${hidden ? "hidden md:block" : ""
           }`}
       >
-        <span className="absolute right-0 pr-4 duration-200 ease-out group-hover:translate-x-12 ">
+        <span className="absolute right-0 pr-4 duration-200 ease-out  ">
           <svg
             className="w-5 h-5 text-white"
             fill="none"
@@ -31,7 +31,7 @@ function Btn({ hidden }: Props) {
             />
           </svg>
         </span>
-        <span className="absolute left-0 pl-2.5 -translate-x-12 group-hover:translate-x-0 ease-out duration-200 ">
+        <span className="absolute left-0 pl-2.5 -translate-x-12  ease-out duration-200 ">
           <svg
             className="w-5 h-5 text-green-400"
             fill="none"
@@ -47,7 +47,7 @@ function Btn({ hidden }: Props) {
             />
           </svg>
         </span>
-        <span className="relative w-full text-left transition-colors duration-200 ease-in-out group-hover:text-green-1">
+        <span className="relative w-full text-left transition-colors duration-200 ease-in-out">
           Start Quiz
         </span>
       </button>

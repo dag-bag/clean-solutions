@@ -7,8 +7,6 @@ import quizdata from '../../../_____quiz-data';
 import Question from '../../components/question';
 import Layout from '../../components/quiz-layout';
 
-
-
 const HandDisInfactant = ({ title, category, onComplete }: any) => {
     const Max = 2 // total number of question (start from 1)
     const [step, setStep] = useState(1)
@@ -59,7 +57,6 @@ const HandDisInfactant = ({ title, category, onComplete }: any) => {
             isReadMoreToggled,
             readMoreClickHandler,
         }}>
-
 
             {step == 1 && (
                 <Question name="How many times per day do you apply skin sanitizer?">

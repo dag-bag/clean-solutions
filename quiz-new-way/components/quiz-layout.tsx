@@ -19,7 +19,7 @@ const Layout = ({ children, category, title, discription, readMoreClickHandler, 
 
             <div className='md:h-screen flex items-center bg-blue-1 px-10 mt-5 md:mt-0 py-10'>
                 <div>
-                    {JSON.stringify(state)}
+                    {/* {JSON.stringify(state)}  */}
                     {children}
                     <button onClick={stepUp} className="items-center w-[150px] justify-start py-2 overflow-hidden  text-white transition-all duration-150 ease-in-out rounded-full  group border  my-2 font-normal ">
                         Submit

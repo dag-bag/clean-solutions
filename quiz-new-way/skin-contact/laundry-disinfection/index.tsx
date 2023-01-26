@@ -1,27 +1,27 @@
 
-import meta from '../../meta';
 import { useState } from 'react'
 import { ChangeEvent } from 'react';
-import Select from '../../components/select';
-
 import categoryState from '../../state';
 import { useRecoilState } from 'recoil';
+import Select from '../../components/select';
+import quizdata from '../../../_____quiz-data';
+import Question from '../../components/question';
+import Layout from '../../components/quiz-layout';
 import MultipleSelect from '../../components/multiple-select';
 
 const LaundryDisinfection = ({ title, category, onComplete }: any) => {
-
     const Max = 2
     const [step, setStep] = useState(1)
     const [data, updateData] = useRecoilState(categoryState)
-
+    const [isReadMoreToggled, setReadMore] = useState(true)
+    const componentMeta = quizdata[category].categories[title]
     const [state, setState] = useState<any>({
         multiselect: []
     })
 
-
-    function resetStep() {
-        setStep(1)
-    }
+    const discription = isReadMoreToggled
+        ? componentMeta.discription
+        : componentMeta.discription.concat(componentMeta.discription_more)
 
     function calculate() {
         return 0
@@ -35,9 +35,8 @@ const LaundryDisinfection = ({ title, category, onComplete }: any) => {
         }
     }
 
-    function numberInputOnChangeHandler(event: ChangeEvent<HTMLInputElement>) {
-        const { name, value } = event.target
-        setState((prev: any) => { return { ...prev, [name]: parseInt(value) } })
+    function readMoreClickHandler() {
+        setReadMore(p => !p)
     }
 
     function selectInputOnChangeHandler(event: ChangeEvent<HTMLDivElement>) {
@@ -56,56 +55,38 @@ const LaundryDisinfection = ({ title, category, onComplete }: any) => {
     }
 
     return (
-        <div>
+        <Layout {...{
+            title,
+            stepUp,
+            category,
+            discription,
+            isReadMoreToggled,
+            readMoreClickHandler,
+        }}>
 
-            <div>
-                <h1 ><b className='font-heading'>subCategory</b> : {title}</h1>
-                {/* <p className='py-2'>  <b className='font-heading'>discription</b> : {meta[category][title].discription}</p> */}
+            {step == 1 && (
+                <Question name="Choose all that apply">
+                    <MultipleSelect
+                        options={['Everyday, Bodily Fluids Sweat, and Urine', 'Soiled, Heavy Bacteria, & Activewear', 'Fungi, Mold, and Mildew', 'Lice, Ticks, and Bedbugs']}
+                        selectedOptions={state.multiselect}
+                        onClick={multiSelectInputOnChangeHandler}
+                        id="multiselect"
+                    />
+                </Question>
+            )}
 
-                <pre>{JSON.stringify(state)}</pre>
-            </div>
+            {step == 2 && (
+                <Question name="How long do you want to use a laundry disinfectant and deodorizer?">
+                    <Select
+                        options={['1 month', '2 month', '3 month', '6 month', '1 year']}
+                        selectedOption={state?.duration}
+                        onClick={selectInputOnChangeHandler}
+                        id="duration"
+                    />
+                </Question>
+            )}
 
-            <div>
-
-
-
-                {step == 1 && (
-                    <div>
-                        <h1 className='text-2xl py-2 font-semibold'>Choose all that apply</h1>
-                        <MultipleSelect
-                            options={['Everyday, Bodily Fluids Sweat, and Urine', 'Soiled, Heavy Bacteria, & Activewear', 'Fungi, Mold, and Mildew', 'Lice, Ticks, and Bedbugs']}
-                            selectedOptions={state.multiselect}
-                            onClick={multiSelectInputOnChangeHandler}
-                            id="multiselect"
-                        />
-                    </div>
-                )}
-
-
-
-                {step == 2 && (
-                    <div>
-                        <h1 className='text-2xl py-2 font-semibold'>How long do you want to use a laundry disinfectant and deodorizer?</h1>
-                        <Select
-                            options={['1 month', '2 month', '3 month', '6 month', '1 year']}
-                            selectedOption={state?.duration}
-                            onClick={selectInputOnChangeHandler}
-                            id="duration"
-                        />
-                    </div>
-                )}
-
-
-
-                <button onClick={stepUp} className=" m-2 btn-outline btn">Next step</button>
-
-                <button onClick={resetStep} className=" m-2 btn-outline btn">reset state</button>
-
-            </div>
-
-
-
-        </div>
+        </Layout>
     )
 }
 
