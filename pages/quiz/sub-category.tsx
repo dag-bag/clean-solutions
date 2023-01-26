@@ -1,0 +1,80 @@
+import Router from "next/router";
+import data from "../../_____quiz-data";
+import { atom, useRecoilValue } from "recoil";
+import { selectedCategoryAtom } from "./categories";
+import Layout from "../../components/quiz-btn-layout";
+import CategoryCard from "../../components/cards/subCategory-card";
+
+export const selectedSubCategoryAtom = atom<string[]>({
+    key: 'selected-sub-category',
+    default: []
+})
+
+const SubCategoriesPage = () => {
+    const selectedCategories = useRecoilValue(selectedCategoryAtom)
+
+    function getSub() {
+        let arr = {};
+        const categoryNames = Object.keys(data)
+        categoryNames.forEach((key) => {
+            arr = { ...arr, ...data[key].categories }
+        })
+        return arr
+    }
+
+    const subCategories = getSub()
+
+    console.log(selectedCategories)
+    function Next() {
+        Router.back()
+    }
+    function Previous() {
+        Router.push(`start`)
+    }
+
+
+    function getCategory() {
+        return selectedCategories.map((key) => {
+            return Object.keys(data[key].categories).filter((key) => key !== 'self')
+        })[0]
+    }
+
+
+
+    const categories = getCategory()
+
+    return (
+        <Layout onNext={Next} onPrevious={Previous}>
+            <div className="  ">
+                <header className=" md:h-[200px] h-[100px] md:mt-0 flex items-center justify-center flex-col my-10 px-5">
+                    <h1 className="text-center md:text-[50px] text-[35px]  font-heading text-blue-1 font-[800] capitalize">
+                        Choose the sub categories
+                    </h1>
+                    <p className="text-gray-800 text-center p-2 text-lg ">Select the sub categories in which you are interested.</p>
+
+
+
+                </header>
+
+
+                <main className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-2 lg:gap-5 p-2 max-w-[1080px] m-auto ">
+
+                    {categories?.map((keyName, number) => {
+
+                        return (
+                            <CategoryCard data={subCategories} name={keyName} key={number} />
+                        )
+                    })}
+
+                </main>
+            </div>
+
+
+
+
+        </Layout >
+    )
+
+}
+export default SubCategoriesPage
+

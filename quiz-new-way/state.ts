@@ -1,17 +1,18 @@
 import { atom } from 'recoil'
 
 interface atomType {
-    [key: string]: string | undefined;
+    [key: string]: string | false;
 }
 
 const categoryState = atom<atomType>({
     key: 'anythong',
     default: {
-        'hand-disinfactant': undefined,
-        'deodrant-repellent': undefined,
-        'dental-oral-hygeine': undefined,
-        'skin-infactions': undefined,
-        'laundry-disinfection': undefined,
+        'skin infections': false,
+        'hand disinfactant': false,
+        'deodrant & repellent': false,
+        'dental & oral hygiene': false,
+        'laundry disinfection': false,
+
     }
 })
 

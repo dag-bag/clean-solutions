@@ -21,9 +21,8 @@ import {
 } from "../components/Icons";
 export const page2DataText = [
   {
-    title: "SKIN CONTACT",
+    title: "skin content",
     svgs: [SkinContact, Washing, SkinContact],
-
     text: "You can contact us whenever you need help or just curious about something.",
   },
   {

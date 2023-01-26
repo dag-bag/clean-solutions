@@ -7,12 +7,17 @@ import { currentModalAtom } from "../atoms/modalAtom";
 import { useRecoilState, useSetRecoilState } from "recoil";
 import { page3DataAtom, page4DataAtom } from "../atoms/data";
 
+import Card2Element from "./cards/CardElement2";
+
 type Props = {
   data: Page3[];
   slug?: string;
 };
 
 function Section({ data }: Props) {
+
+  console.log(data)
+
   const [das, setDash] = useRecoilState(page4DataAtom);
   const setCurrentModal = useSetRecoilState(currentModalAtom);
   const [page3Data, setPage3Data] = useRecoilState(page3DataAtom);
@@ -43,23 +48,45 @@ function Section({ data }: Props) {
 
       <main className=" h-auto mt-5 px-5">
         <div className="grid max-w-[85rem] lg:grid-cols-3  md:grid-cols-2 gap-y-5 gap-x-3 overflow-hidden overflow-y-scroll scrollbar-hide md:overflow-visible">
+
           {data.map((item, index) => {
             return (
-              <Card2
-                {...item}
-                key={index}
-                onClick={() => {
-                  handleClick(item);
-                }}
-                buttonClick={(e: any) => {
-                  e.stopPropagation();
-                  setCurrentModal({
-                    title: item.title,
-                    text: item.modalText,
-                    svgs: item.svgs,
-                  });
-                }}
-              />
+              <div className=" h-full w-full">
+                <div className="md:hidden block h-full">
+                  <Card2Element
+                    {...item}
+                    key={index}
+                    onClick={() => {
+                      handleClick(item);
+                    }}
+                    buttonClick={(e: any) => {
+                      e.stopPropagation();
+                      setCurrentModal({
+                        title: item.title,
+                        text: item.modalText,
+                        svgs: item.svgs,
+                      });
+                    }}
+                  />
+                </div>
+                <div className="md:block  hidden">
+                  <Card2
+                    {...item}
+                    key={index}
+                    onClick={() => {
+                      handleClick(item);
+                    }}
+                    buttonClick={(e: any) => {
+                      e.stopPropagation();
+                      setCurrentModal({
+                        title: item.title,
+                        text: item.modalText,
+                        svgs: item.svgs,
+                      });
+                    }}
+                  />
+                </div>
+              </div>
             );
           })}
         </div>

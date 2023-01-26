@@ -6,7 +6,7 @@ interface props {
 }
 const Select = ({ options, onClick, selectedOption, id }: props) => {
 
-    return <div >
+    return <div className="lg:grid lg:grid-cols-2 lg:gap-x-2" >
         {options.map((keyName, index) => {
             const isSelected = selectedOption == keyName
             const props = {
@@ -32,7 +32,7 @@ const Option = ({ keyName, onClick, isSelected, id }: optionProps) => {
     return (
         <div
             id={id}
-            style={isSelected ? { color: 'red' } : undefined}
-            className="p-2 border border-black" onClick={onClick}>{keyName}</div>
+            style={isSelected ? { background: '#95D074' } : undefined}
+            className="p-2 border border-black rounded-full text-center my-2" onClick={onClick}>{keyName}</div>
     )
 }

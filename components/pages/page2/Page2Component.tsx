@@ -7,6 +7,8 @@ import MainLayout from "../layout/MainLayout";
 import { page2DataText } from "../../../data/Page2";
 import { childVariants } from "../../../animation/anime";
 
+import data from "../../../_____quiz-data";
+
 type Props = {};
 
 function Page2Component({ }: Props) {

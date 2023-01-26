@@ -52,7 +52,6 @@ const SkinInfactions = ({ title, category, onComplete }: any) => {
             <div>
                 <h1 ><b className='font-heading'>subCategory</b> : {title}</h1>
                 <p className='py-2'>  <b className='font-heading'>discription</b> : {meta[category][title].discription}</p>
-
                 <pre>{JSON.stringify(state)}</pre>
             </div>
 

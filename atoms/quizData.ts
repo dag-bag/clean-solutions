@@ -942,10 +942,10 @@ export const singlePageDataSelector = selectorFamily({
   key: "singlePageDataSelector",
   get:
     (slug) =>
-    ({ get }) => {
-      const data = get(selectionDataAtom);
-      return data.find((item) => item.slug === slug);
-    },
+      ({ get }) => {
+        const data = get(selectionDataAtom);
+        return data.find((item) => item.slug === slug);
+      },
 });
 export const allQuestionsAtom = atom({
   key: "allQuestionsAtom",
