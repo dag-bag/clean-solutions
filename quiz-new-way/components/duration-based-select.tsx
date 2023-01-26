@@ -1,4 +1,3 @@
-// dev : what about defaultvalue?
 
 const DurationBasedSelect = (props: any) => {
     const options = ['select  ', '1 month', '2 month', '3 month', '1 year', , '2 year', , '3 year']

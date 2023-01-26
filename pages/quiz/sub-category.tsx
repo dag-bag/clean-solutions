@@ -1,9 +1,10 @@
 import Router from "next/router";
 import data from "../../_____quiz-data";
-import { atom, useRecoilValue } from "recoil";
 import { selectedCategoryAtom } from "./categories";
 import Layout from "../../components/quiz-btn-layout";
+import { atom, useRecoilValue, useRecoilState } from "recoil";
 import CategoryCard from "../../components/cards/subCategory-card";
+import PrerequisiteDataError from "../../quiz-new-way/components/prerequisite";
 
 export const selectedSubCategoryAtom = atom<string[]>({
     key: 'selected-sub-category',
@@ -12,6 +13,7 @@ export const selectedSubCategoryAtom = atom<string[]>({
 
 const SubCategoriesPage = () => {
     const selectedCategories = useRecoilValue(selectedCategoryAtom)
+    const [state, setState] = useRecoilState(selectedSubCategoryAtom)
 
     function getSub() {
         let arr = {};
@@ -32,35 +34,26 @@ const SubCategoriesPage = () => {
         Router.push(`start`)
     }
 
-
     function getCategory() {
         return selectedCategories.map((key) => {
             return Object.keys(data[key].categories).filter((key) => key !== 'self')
         })[0]
     }
 
-
-
     const categories = getCategory()
 
     return (
-        <Layout onNext={Next} onPrevious={Previous}>
+        <Layout onNext={Next} onPrevious={Previous} isEnabled={state.length == 0} >
             <div className="  ">
                 <header className=" md:h-[200px] h-[100px] md:mt-0 flex items-center justify-center flex-col my-10 px-5">
                     <h1 className="text-center md:text-[50px] text-[35px]  font-heading text-blue-1 font-[800] capitalize">
                         Choose the sub categories
                     </h1>
                     <p className="text-gray-800 text-center p-2 text-lg ">Select the sub categories in which you are interested.</p>
-
-
-
                 </header>
 
-
                 <main className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-2 lg:gap-5 p-2 max-w-[1080px] m-auto ">
-
                     {categories?.map((keyName, number) => {
-
                         return (
                             <CategoryCard data={subCategories} name={keyName} key={number} />
                         )
@@ -69,6 +62,10 @@ const SubCategoriesPage = () => {
                 </main>
             </div>
 
+            <div className="w-full flex items-center justify-center ">
+                <PrerequisiteDataError />
+
+            </div>
 
 
 

@@ -2,13 +2,13 @@ import Header from "./header"
 import categoryState from "../state"
 import { useRecoilValue } from "recoil"
 interface props {
+    stepUp: any
+    children: any,
     title: string,
     category: string,
     discription: string,
-    children: any,
-    isReadMoreToggled: boolean,
     readMoreClickHandler: any,
-    stepUp: any
+    isReadMoreToggled: boolean,
 }
 
 const Layout = ({ children, category, title, discription, readMoreClickHandler, isReadMoreToggled, stepUp }: props) => {

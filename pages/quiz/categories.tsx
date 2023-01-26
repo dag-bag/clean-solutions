@@ -22,7 +22,7 @@ const CategoriesPage = () => {
     const categories = [...Object.keys(data), ...Object.keys(data), ...Object.keys(data)]
 
     return (
-        <Layout onNext={Next} onPrevious={Previous}>
+        <Layout onNext={Next} onPrevious={Previous} isEnabled={state.length == 0}>
             <div className="  ">
                 <header className=" md:h-[200px] h-[100px] md:mt-0 flex items-center justify-center flex-col my-10 px-5">
                     <h1 className="text-center md:text-[50px] text-[35px]  font-heading text-blue-1 font-[800] capitalize">
