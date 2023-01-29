@@ -1,24 +1,23 @@
-
-import meta from '../../meta';
 import { useState } from 'react'
 import { ChangeEvent } from 'react';
-import Select from '../../components/select';
-
 import categoryState from '../../state';
 import { useRecoilState } from 'recoil';
+import Select from '../../components/select';
+import quizdata from '../../../_____quiz-data';
+import Question from '../../components/question';
+import Layout from '../../components/quiz-layout';
 
 const DrinkingWater = ({ title, category, onComplete }: any) => {
-    const Max = 3
+    const Max = 2 // total number of question (start from 1)
     const [step, setStep] = useState(1)
+    const [state, setState] = useState<any>({}) // input data stored for calculation
+    const [isReadMoreToggled, setReadMore] = useState(true)
+    const componentMeta = quizdata[category].categories[title]
     const [data, updateData] = useRecoilState(categoryState)
 
-    const [state, setState] = useState<any>({})
-
-    console.log(data)
-
-    function resetStep() {
-        setStep(1)
-    }
+    const discription = isReadMoreToggled
+        ? componentMeta.discription
+        : componentMeta.discription.concat(componentMeta.discription_more)
 
     function calculate() {
         return 0
@@ -29,7 +28,12 @@ const DrinkingWater = ({ title, category, onComplete }: any) => {
         if (Max == step) {
             updateData({ ...data, [title]: calculate() })
             onComplete()
+            console.log(data)
         }
+    }
+
+    function readMoreClickHandler() {
+        setReadMore(p => !p)
     }
 
     function numberInputOnChangeHandler(event: ChangeEvent<HTMLInputElement>) {
@@ -42,59 +46,40 @@ const DrinkingWater = ({ title, category, onComplete }: any) => {
         setState((prev: any) => { return { ...prev, [id]: innerHTML } })
     }
 
-
-
-
     return (
-        <div>
+        <Layout {...{
+            title,
+            stepUp,
+            category,
+            discription,
+            isReadMoreToggled,
+            readMoreClickHandler,
+        }}>
 
-            <div>
-                <h1 ><b className='font-heading'>subCategory</b> : {title}</h1>
-                <p className='py-2'>  <b className='font-heading'>discription</b> : {meta[category][title].discription}</p>
+            {step == 1 && (
+                <Question name="How many gallons of drinking water do you want to have disinfected on an average day?">
+                    <input name="quantity" onChange={numberInputOnChangeHandler} type="number" placeholder='Times per day' />
+                </Question>
+            )}
 
-                <pre>{JSON.stringify(state)}</pre>
-            </div>
+            {step == 2 && (
+                <Question name="How many times a month do you want to be prepared with safe drinking water?">
+                    <input name="freq" onChange={numberInputOnChangeHandler} type="number" placeholder='Times per day' />
+                </Question>
+            )}
 
-            <div>
+            {step == 3 && (
+                <Question name='How long would you like to have a drinking water supply?'>
+                    <Select
+                        options={['1 month', '2 month', '3 month', '6 month', '1 year', '2 year', '3 year']}
+                        selectedOption={state?.duration}
+                        onClick={selectInputOnChangeHandler}
+                        id="duration"
+                    />
+                </Question>
+            )}
 
-
-                {step == 1 && (
-                    <div>
-                        <h1 className='text-2xl py-2 font-semibold'>How many gallons of drinking water do you want to have disinfected on an average day?</h1>
-                        <input placeholder='water in gallons' name="freq1" onChange={numberInputOnChangeHandler} type="number" />
-                    </div>
-                )}
-
-                {step == 2 && (
-                    <div>
-                        <h1 className='text-2xl py-2 font-semibold'>How many times a month do you want to be prepared with safe drinking water?</h1>
-                        <input name="freq2" onChange={numberInputOnChangeHandler} type="number" />
-                    </div>
-                )}
-
-                {step == 3 && (
-                    <div>
-                        <h1 className='text-2xl py-2 font-semibold'>How long would you like your hand sanitizer supply to last?</h1>
-                        <Select
-                            options={['1 month', '2 month', '3 month', '6 month', '1 year']}
-                            selectedOption={state?.duration}
-                            onClick={selectInputOnChangeHandler}
-                            id="duration"
-                        />
-                    </div>
-                )}
-
-
-
-                <button onClick={stepUp} className=" m-2 btn-outline btn">Next step</button>
-
-                <button onClick={resetStep} className=" m-2 btn-outline btn">reset state</button>
-
-            </div>
-
-
-
-        </div>
+        </Layout>
     )
 }
 

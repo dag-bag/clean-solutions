@@ -23,15 +23,11 @@ const SkinInfactions = ({ title, category, onComplete }: any) => {
         ? componentMeta.discription
         : componentMeta.discription.concat(componentMeta.discription_more)
 
-
-    function resetStep() {
-        setStep(1)
-    }
-
     function calculate() {
-        return (((state?.duration.includes('month'))
-            ? state?.duration.match(/(\d+)/)[0] * state?.freq :
-            (state?.duration.match(/(\d+)/)[0] * 12) * state?.freq) * 30) * 10
+        const months = (state?.duration.includes('month'))
+            ? state?.duration.match(/(\d+)/)[0] :
+            (state?.duration.match(/(\d+)/)[0] * 12)
+        return 946.25 * state.freq * months * 10
     }
 
     function stepUp() {

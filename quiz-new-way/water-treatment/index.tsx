@@ -1,16 +1,34 @@
 import { useState } from 'react'
-import { useRecoilState } from 'recoil';
-import d1 from '../state';
-
+import { useRecoilValue } from 'recoil';
 import DrinkingWater from './drinking-water';
+import DipEquipmentTools from './dip-equiment-tools';
+import RecirculatingShocks from './recirculating-shocks';
+import WasteWaterTreatment from './waste-water-treatment';
 import LivestockPetsAnimals from './livestocks-pets-animals';
 import WaterRetentionStorage from './water-retention-storage';
+import { selectedSubCategoryAtom } from '../../pages/quiz/sub-category';
+import findSimilarInArr from '../components/functions/findSimilarInArr';
 
-
-const WaterTreatment = ({ title, onComplete }: any) => {
-    const [data, updateData] = useRecoilState(d1)
-    const Max = 3;
+const SkinContact = ({ title, onComplete }: any) => {
     const [step, setStep] = useState(1)
+    const subCategories = useRecoilValue(selectedSubCategoryAtom)
+
+    const props = {
+        category: title,
+        onComplete: stepSubCategoriesCount
+    }
+
+    const renderObject: any = {
+        'drinking water': <DrinkingWater title={"drinking water"} {...props} />,
+        'livestocks, pets & animals': <LivestockPetsAnimals title={"livestocks, pets & animals"} {...props} />,
+        'water retention & storage': <WaterRetentionStorage title={"water retention & storage"} {...props} />,
+        'recirculating & shocks': <RecirculatingShocks title={"recirculating & shocks"} {...props} />,
+        'wastewater treatment': <WasteWaterTreatment title={"wastewater treatment"} {...props} />,
+        'dip tools and equipment': <DipEquipmentTools title={"dip tools and equipment"} {...props} />,
+    }
+
+    const mySubCategories = findSimilarInArr(Object.keys(renderObject), subCategories)
+    const Max = mySubCategories.length; // it represent total count of selected categories
 
     function stepSubCategoriesCount() {
         setStep(prev => prev + 1)
@@ -20,45 +38,8 @@ const WaterTreatment = ({ title, onComplete }: any) => {
     }
 
     return (
-        <div>
-
-
-
-            <pre className='text-blue-300'>
-                {JSON.stringify(data)}
-            </pre>
-
-            <h1 className='text-xl font-heading py-2'>
-                <b>category</b> :   {title}
-
-            </h1>
-
-
-            {step == 1 && (
-                <DrinkingWater title="drinking-water"
-                    category={title}
-                    onComplete={stepSubCategoriesCount}
-                />
-            )}
-
-
-            {step == 2 && (
-                <LivestockPetsAnimals title="livestocks-pets-animals"
-                    category={title}
-                    onComplete={stepSubCategoriesCount}
-                />
-            )}
-
-            {step == 3 && (
-                <WaterRetentionStorage title="water-retention-storage"
-                    category={title}
-                    onComplete={stepSubCategoriesCount}
-                />
-            )}
-
-
-        </div>
+        <div>{renderObject[mySubCategories[step - 1]]}</div>
     )
 }
 
-export default WaterTreatment
+export default SkinContact

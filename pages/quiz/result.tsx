@@ -18,9 +18,13 @@ const ResultPage = () => {
             <Drawer />
             <main className=" bg-white max-w-7xl m-auto">
 
+
+
                 <div>
                     <h1 className=" text-blue-1 text-center md:text-5xl text-3xl  font-[500] md:leading-[60px] px-6 py-[5rem]">Congratulation, <br /> You have completed the quiz </h1>
                 </div>
+
+                {JSON.stringify(state)}
 
 
                 <section className="border rounded-md overflow-hidden m-5" >

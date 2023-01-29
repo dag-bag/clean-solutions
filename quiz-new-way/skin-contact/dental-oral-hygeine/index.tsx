@@ -26,7 +26,30 @@ const DentalOralHygeine = ({ title, category, onComplete }: any) => {
 
 
     function calculate() {
-        return 0
+        const multiselectValues: any = {
+            'Combs and Brushes': 100,
+            'Nail Tech Tools': 500,
+            'Respirators and CPAP Parts': 5,
+            ' Pacifiers and Bottles': 25,
+            'Baby and Child Toys ': 100,
+            'Toothbrushes': 100,
+            ' Retainers and Dentures': 1000,
+            'Other Dental Instruments': 1000,
+            'Mouth Rinse or Gargle': 4
+        }
+
+
+
+        const duration = (state?.duration.includes('month'))
+            ? state?.duration.match(/(\d+)/)[0] * 1 :
+            (state?.duration.match(/(\d+)/)[0] * 12)
+
+        const selectedValueData = state?.freq * 4.4
+        const multiselectValuesSum = state?.multiselect?.map((name: string) => multiselectValues[name]).reduce((total: number, num: number) => total + num)
+
+        // console.log(duration, selectedValueData, multiselectValuesSum, state?.multiselect?.length)
+
+        return (state?.multiselect?.length * 946.353) * selectedValueData * multiselectValuesSum * duration
     }
 
     function stepUp() {
@@ -71,6 +94,8 @@ const DentalOralHygeine = ({ title, category, onComplete }: any) => {
             readMoreClickHandler,
         }}>
 
+            {JSON.stringify(state)}
+
             {step == 1 && (
                 <Question name="Choose all that apply" >
                     <h1 className='text-2xl py-2 font-semibold'>Choose all that apply</h1>
@@ -84,21 +109,8 @@ const DentalOralHygeine = ({ title, category, onComplete }: any) => {
             )}
 
             {step == 2 && (
-                <Question name='>How long would you like to have a sanitizer for dental & oral care?'>
-                    <Select
-                        options={['Twice a day ', 'Daily ', 'Twice a week', 'Weekly ', 'Monthly']}
-                        selectedOption={state?.duration}
-                        onClick={selectInputOnChangeHandler}
-                        id="duration"
-                    />
-                    <div style={state?.duration?.includes('Other') ? { color: 'red' } : undefined} className="p-2 border border-black" onClick={selectInputOnChangeHandler as any} id="duration"  >
-                        Other
-                    </div>
-
-                    <div className='my-5'>
-                        {state?.duration?.includes('Other') && <input name="freq" onChange={numberInputOnChangeHandler} placeholder=" 1 to 30 days " type="number" />}
-                    </div>
-
+                <Question name="How frequently do you sanitize hygienic utensils or perform an oral routine?">
+                    <input name="freq" onChange={numberInputOnChangeHandler} type="number" placeholder='Times per weeks' />
                 </Question>
             )}
 

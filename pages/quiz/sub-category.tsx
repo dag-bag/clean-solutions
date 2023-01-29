@@ -1,4 +1,5 @@
 import Router from "next/router";
+import { flatten } from "lodash";
 import data from "../../_____quiz-data";
 import { selectedCategoryAtom } from "./categories";
 import Layout from "../../components/quiz-btn-layout";
@@ -25,8 +26,6 @@ const SubCategoriesPage = () => {
     }
 
     const subCategories = getSub()
-
-    console.log(selectedCategories)
     function Next() {
         Router.back()
     }
@@ -34,10 +33,13 @@ const SubCategoriesPage = () => {
         Router.push(`start`)
     }
 
+    console.log(selectedCategories)
+
+    // here is something
     function getCategory() {
-        return selectedCategories.map((key) => {
+        return flatten(selectedCategories.map((key) => {
             return Object.keys(data[key].categories).filter((key) => key !== 'self')
-        })[0]
+        }))
     }
 
     const categories = getCategory()

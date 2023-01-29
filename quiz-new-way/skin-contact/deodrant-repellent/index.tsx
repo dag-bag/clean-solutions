@@ -20,10 +20,15 @@ const DeodrantRepellent = ({ title, category, onComplete }: any) => {
         : componentMeta.discription.concat(componentMeta.discription_more)
 
     function calculate() {
-        return (((state?.duration.includes('month'))
-            ? state?.duration.match(/(\d+)/)[0] * state?.freq :
-            (state?.duration.match(/(\d+)/)[0] * 12) * state?.freq) * 4.4) * 50
+
+        const months = (state?.duration.includes('month'))
+            ? state?.duration.match(/(\d+)/)[0] :
+            (state?.duration.match(/(\d+)/)[0] * 12)
+
+        return 5 * state?.freq * 4.4 * months * 50
+
     }
+
 
     function stepUp() {
         setStep(prev => prev + 1)
@@ -67,7 +72,7 @@ const DeodrantRepellent = ({ title, category, onComplete }: any) => {
             {step == 2 && (
                 <Question name='How long would you like a body deodorant to last?'>
                     <Select
-                        options={['1 month', '2 month', '3 month', '6 month', '1 year']}
+                        options={['1 month', '2 month', '3 month', '6 month', '1 year', '2 year', '3 year']}
                         selectedOption={state?.duration}
                         onClick={selectInputOnChangeHandler}
                         id="duration"

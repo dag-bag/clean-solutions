@@ -20,9 +20,10 @@ const HandDisInfactant = ({ title, category, onComplete }: any) => {
         : componentMeta.discription.concat(componentMeta.discription_more)
 
     function calculate() {
-        return (((state?.duration.includes('month'))
+        const durationMultiplyFrequncyValue = (state?.duration.includes('month'))
             ? state?.duration.match(/(\d+)/)[0] * state?.freq :
-            (state?.duration.match(/(\d+)/)[0] * 12) * state?.freq) * 30) * 50
+            (state?.duration.match(/(\d+)/)[0] * 12)
+        return 2 * durationMultiplyFrequncyValue * 50
     }
 
     function stepUp() {
@@ -47,6 +48,8 @@ const HandDisInfactant = ({ title, category, onComplete }: any) => {
         const { id, innerHTML } = event.target
         setState((prev: any) => { return { ...prev, [id]: innerHTML } })
     }
+
+
 
     return (
         <Layout {...{

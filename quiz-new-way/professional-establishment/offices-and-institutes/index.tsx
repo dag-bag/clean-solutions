@@ -7,8 +7,9 @@ import quizdata from '../../../_____quiz-data';
 import Question from '../../components/question';
 import Layout from '../../components/quiz-layout';
 import MultipleNestedSelect from '../../components/multiple-select-nested-input';
-const WaterRetentionStorage = ({ title, category, onComplete }: any) => {
-    const Max = 2 // total number of question (start from 1)
+
+const OfficesAndInstitutes = ({ title, category, onComplete }: any) => {
+    const Max = 3 // total number of question (start from 1)
     const [step, setStep] = useState(1)
     const [state, setState] = useState<any>({
         multiselect: []
@@ -70,25 +71,32 @@ const WaterRetentionStorage = ({ title, category, onComplete }: any) => {
         }}>
 
             {step == 1 && (
-                <Question name="How many gallons do each of your water retention or storage containment devices hold?">
+                <Question name="Pick methods for preferred disinfection and deodorizing.">
                     <MultipleNestedSelect
-                        options={['Ponds, Reservoirs, and Retention Basins', 'Once-through Water Cooling Systems ', ' Aircraft, RV, Boat Tanks and Lines ', 'Other Non-Potable Water Storage']}
+                        options={['Spray', 'Mop', 'Soak', 'Pools, Hot tubs, and Spas', 'Athletic Synthetic Turf.']}
                         selectedOptions={state.multiselect}
                         onClick={multiSelectInputOnChangeHandler}
                         onChangeNestedInputs={numberInputOnChangeHandler}
-                        placeholder="In Gallons"
+                        placeholder="Square Feet "
+                        nestedQuestions={['What is the SQ FT of home?', 'How many SQ FT in the home are hard-floors?', 'How many gallons do you typically use in a week for disinfecting hard, non-food contact surfaces?', 'How many SQ FT?', 'How many SQ FT?']}
                     />
                 </Question>
             )}
 
             {step == 2 && (
-                <Question name="How many times per month do you want to sanitize water containment? ">
-                    <input name="freq" onChange={numberInputOnChangeHandler} type="number" placeholder='Times per day' />
+                <Question name="On an average week, how much water do you require to… ?">
+                    <MultipleNestedSelect
+                        options={['Spray', 'Mop', 'Soak', 'Recirculating System', ' Synthetic Turf']}
+                        selectedOptions={state.multiselect}
+                        onClick={multiSelectInputOnChangeHandler}
+                        onChangeNestedInputs={numberInputOnChangeHandler}
+                        placeholder="times "
+                    />
                 </Question>
             )}
 
             {step == 3 && (
-                <Question name='How long would you like a water storage sanitizer supply to last?'>
+                <Question name='How long would you like a hard surface sanitizer supply?'>
                     <Select
                         options={['1 month', '2 month', '3 month', '6 month', '1 year', '2 year', '3 year']}
                         selectedOption={state?.duration}
@@ -103,4 +111,4 @@ const WaterRetentionStorage = ({ title, category, onComplete }: any) => {
     )
 }
 
-export default WaterRetentionStorage
+export default OfficesAndInstitutes
