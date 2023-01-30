@@ -6,6 +6,7 @@ import Select from '../../components/select';
 import quizdata from '../../../_____quiz-data';
 import Question from '../../components/question';
 import Layout from '../../components/quiz-layout';
+import converters from '../../components/functions/convertors';
 
 const HairAndFurSanitizerForHuman = ({ title, category, onComplete }: any) => {
     const Max = 3
@@ -30,14 +31,11 @@ const HairAndFurSanitizerForHuman = ({ title, category, onComplete }: any) => {
             'Long': 20,
             'Extra long': 25
         }
-
         const months = (state?.duration.includes('month'))
             ? state?.duration.match(/(\d+)/)[0] :
             (state?.duration.match(/(\d+)/)[0] * 12)
-
-        const quantity = selectValues[state?.quan]
-
-        return quantity * state.freq * 4.4 * months * 80
+        const quantity = converters.mlToPpm(selectValues[state?.quan])
+        return quantity * (state.freq * 4.4) * months * 80
     }
 
     function stepUp() {
@@ -71,9 +69,6 @@ const HairAndFurSanitizerForHuman = ({ title, category, onComplete }: any) => {
             isReadMoreToggled,
             readMoreClickHandler,
         }}>
-
-            {JSON.stringify(state)}
-
 
 
             {step == 1 && (

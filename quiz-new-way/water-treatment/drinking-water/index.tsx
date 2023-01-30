@@ -20,7 +20,10 @@ const DrinkingWater = ({ title, category, onComplete }: any) => {
         : componentMeta.discription.concat(componentMeta.discription_more)
 
     function calculate() {
-        return 0
+        const months = (state?.duration.includes('month'))
+            ? state?.duration.match(/(\d+)/)[0] :
+            (state?.duration.match(/(\d+)/)[0] * 12)
+        return (state?.quantity / 3785) * state?.freq * months * 0.8
     }
 
     function stepUp() {

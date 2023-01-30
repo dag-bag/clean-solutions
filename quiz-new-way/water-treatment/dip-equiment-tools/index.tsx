@@ -6,13 +6,14 @@ import Select from '../../components/select';
 import quizdata from '../../../_____quiz-data';
 import Question from '../../components/question';
 import Layout from '../../components/quiz-layout';
-import MultipleNestedSelect from '../../components/multiple-select-nested-input';
-
+import AdvancedMultipleNested from '../../components/advanced-multiple-nested-input';
 const DipEquipmentTools = ({ title, category, onComplete }: any) => {
     const Max = 2 // total number of question (start from 1)
     const [step, setStep] = useState(1)
     const [state, setState] = useState<any>({
-        multiselect: []
+        waterRequire: {
+            selected: []
+        },
     }) // input data stored for calculation
     const [isReadMoreToggled, setReadMore] = useState(true)
     const componentMeta = quizdata[category].categories[title]
@@ -23,6 +24,18 @@ const DipEquipmentTools = ({ title, category, onComplete }: any) => {
         : componentMeta.discription.concat(componentMeta.discription_more)
 
     function calculate() {
+
+        const WaterRequirementPerGallons: any = {
+            'Sanitize tools and equipment?': 20,
+            'Disinfect tools and equipment?': 30,
+            'Kill viruses, fungi, or mold on tools and equipment?': 100
+        }
+
+        const QuntityOfWaterUse = state.animalQuantity.selected.map((key: string) => {
+            const k1 = state.waterRequire[key] * WaterRequirementPerGallons[key]
+            return k1
+        }).reduce((total: number, num: number) => total + num)
+
         return 0
     }
 
@@ -70,13 +83,15 @@ const DipEquipmentTools = ({ title, category, onComplete }: any) => {
             readMoreClickHandler,
         }}>
 
+            {JSON.stringify(state)}
+
             {step == 1 && (
                 <Question name="On an average week, how much water do you require to… ?">
-                    <MultipleNestedSelect
-                        options={[' Sanitize tools and equipment? ', ' Disinfect tools and equipment?', 'Kill viruses, fungi, or mold on tools and equipment?']}
-                        selectedOptions={state.multiselect}
-                        onClick={multiSelectInputOnChangeHandler}
-                        onChangeNestedInputs={numberInputOnChangeHandler}
+                    <AdvancedMultipleNested
+                        setState={setState}
+                        state={state}
+                        name="waterRequire"
+                        options={['Sanitize tools and equipment?', ' Disinfect tools and equipment?', 'Kill viruses, fungi, or mold on tools and equipment?']}
                         placeholder="In Gallons"
                     />
                 </Question>

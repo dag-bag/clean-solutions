@@ -6,6 +6,7 @@ import Select from '../../components/select';
 import quizdata from '../../../_____quiz-data';
 import Question from '../../components/question';
 import Layout from '../../components/quiz-layout';
+import converters from '../../components/functions/convertors';
 
 const DeodrantRepellent = ({ title, category, onComplete }: any) => {
     const Max = 2 // how much question is in this subcategory (count start from 1)
@@ -25,7 +26,7 @@ const DeodrantRepellent = ({ title, category, onComplete }: any) => {
             ? state?.duration.match(/(\d+)/)[0] :
             (state?.duration.match(/(\d+)/)[0] * 12)
 
-        return 5 * state?.freq * 4.4 * months * 50
+        return converters.mlToPpm(5) * (state?.freq * 4.4) * months * 50
 
     }
 
@@ -65,7 +66,7 @@ const DeodrantRepellent = ({ title, category, onComplete }: any) => {
 
             {step == 1 && (
                 <Question name='How many times per week do you apply deodorant?'>
-                    <input name="freq" onChange={numberInputOnChangeHandler} type="number" />
+                    <input name="freq" onChange={numberInputOnChangeHandler} type="number" placeholder='Count Usage' />
                 </Question>
             )}
 

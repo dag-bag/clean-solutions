@@ -7,6 +7,7 @@ import Select from '../../components/select';
 import quizdata from '../../../_____quiz-data';
 import Question from '../../components/question';
 import Layout from '../../components/quiz-layout';
+import converters from '../../components/functions/convertors';
 
 const SkinInfactions = ({ title, category, onComplete }: any) => {
     const Max = 2
@@ -27,7 +28,7 @@ const SkinInfactions = ({ title, category, onComplete }: any) => {
         const months = (state?.duration.includes('month'))
             ? state?.duration.match(/(\d+)/)[0] :
             (state?.duration.match(/(\d+)/)[0] * 12)
-        return 946.25 * state.freq * months * 10
+        return converters.gallonsToPpm(1 / 4) * state.freq * months * 10
     }
 
     function stepUp() {
@@ -63,7 +64,7 @@ const SkinInfactions = ({ title, category, onComplete }: any) => {
         }}>
             {step == 1 && (
                 <Question name='How many times a month do you spray or soak fungi, yeast, or bacteria that can cause contamination or infectious diseases on skin?'>
-                    <input name="freq" onChange={numberInputOnChangeHandler} type="number" />
+                    <input placeholder='Times of Usage' name="freq" onChange={numberInputOnChangeHandler} type="number" />
                 </Question>
             )}
 

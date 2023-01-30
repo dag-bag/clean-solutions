@@ -8,6 +8,7 @@ import quizdata from '../../../_____quiz-data';
 import Question from '../../components/question';
 import Layout from '../../components/quiz-layout';
 import MultipleSelect from '../../components/multiple-select';
+import converters from '../../components/functions/convertors';
 
 const DentalOralHygeine = ({ title, category, onComplete }: any) => {
     const Max = 3
@@ -24,7 +25,6 @@ const DentalOralHygeine = ({ title, category, onComplete }: any) => {
         ? componentMeta.discription
         : componentMeta.discription.concat(componentMeta.discription_more)
 
-
     function calculate() {
         const multiselectValues: any = {
             'Combs and Brushes': 100,
@@ -37,19 +37,13 @@ const DentalOralHygeine = ({ title, category, onComplete }: any) => {
             'Other Dental Instruments': 1000,
             'Mouth Rinse or Gargle': 4
         }
-
-
-
         const duration = (state?.duration.includes('month'))
             ? state?.duration.match(/(\d+)/)[0] * 1 :
             (state?.duration.match(/(\d+)/)[0] * 12)
-
         const selectedValueData = state?.freq * 4.4
+        const quantity = converters.quartsToPpm(state?.multiselect?.length)
         const multiselectValuesSum = state?.multiselect?.map((name: string) => multiselectValues[name]).reduce((total: number, num: number) => total + num)
-
-        // console.log(duration, selectedValueData, multiselectValuesSum, state?.multiselect?.length)
-
-        return (state?.multiselect?.length * 946.353) * selectedValueData * multiselectValuesSum * duration
+        return quantity * selectedValueData * multiselectValuesSum * duration
     }
 
     function stepUp() {
@@ -93,8 +87,6 @@ const DentalOralHygeine = ({ title, category, onComplete }: any) => {
             isReadMoreToggled,
             readMoreClickHandler,
         }}>
-
-            {JSON.stringify(state)}
 
             {step == 1 && (
                 <Question name="Choose all that apply" >

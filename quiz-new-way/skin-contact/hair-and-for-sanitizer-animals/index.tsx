@@ -8,6 +8,7 @@ import quizdata from '../../../_____quiz-data';
 import Question from '../../components/question';
 import Layout from '../../components/quiz-layout';
 import AdvancedMultipleNested from '../../components/advanced-multiple-nested-input';
+import converters from '../../components/functions/convertors';
 
 const HairAndFurSanitizerForAnimals = ({ title, category, onComplete }: any) => {
     const Max = 3
@@ -47,7 +48,7 @@ const HairAndFurSanitizerForAnimals = ({ title, category, onComplete }: any) => 
             return k1
         }).reduce((total: number, num: number) => total + num)
 
-        return QuntityOfWaterUse / 3785 * months * 160
+        return converters.gallonsToPpm(QuntityOfWaterUse) * months * 160
     }
 
     function stepUp() {
@@ -77,7 +78,6 @@ const HairAndFurSanitizerForAnimals = ({ title, category, onComplete }: any) => 
             readMoreClickHandler,
         }}>
 
-            {JSON.stringify(state)}
 
             {step == 1 && (
 

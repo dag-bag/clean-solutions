@@ -6,6 +6,7 @@ import Select from '../../components/select';
 import quizdata from '../../../_____quiz-data';
 import Question from '../../components/question';
 import Layout from '../../components/quiz-layout';
+import converters from '../../components/functions/convertors';
 
 const HandDisInfactant = ({ title, category, onComplete }: any) => {
     const Max = 2 // total number of question (start from 1)
@@ -20,10 +21,10 @@ const HandDisInfactant = ({ title, category, onComplete }: any) => {
         : componentMeta.discription.concat(componentMeta.discription_more)
 
     function calculate() {
-        const durationMultiplyFrequncyValue = (state?.duration.includes('month'))
-            ? state?.duration.match(/(\d+)/)[0] * state?.freq :
+        const months = (state?.duration.includes('month'))
+            ? state?.duration.match(/(\d+)/)[0] :
             (state?.duration.match(/(\d+)/)[0] * 12)
-        return 2 * durationMultiplyFrequncyValue * 50
+        return converters.mlToPpm(2) * (months * state?.freq) * 50
     }
 
     function stepUp() {
@@ -31,8 +32,14 @@ const HandDisInfactant = ({ title, category, onComplete }: any) => {
         if (Max == step) {
             updateData({ ...data, [title]: calculate() })
             onComplete()
-            console.log(data)
         }
+    }
+
+    function stepDown() {
+        if (step > 1) {
+            setStep(prev => prev - 1)
+        }
+
     }
 
     function readMoreClickHandler() {
@@ -55,6 +62,7 @@ const HandDisInfactant = ({ title, category, onComplete }: any) => {
         <Layout {...{
             title,
             stepUp,
+            stepDown,
             category,
             discription,
             isReadMoreToggled,
@@ -63,7 +71,7 @@ const HandDisInfactant = ({ title, category, onComplete }: any) => {
 
             {step == 1 && (
                 <Question name="How many times per day do you apply skin sanitizer?">
-                    <input name="freq" onChange={numberInputOnChangeHandler} type="number" placeholder='Times per day' />
+                    <input name="freq" onChange={numberInputOnChangeHandler} type="number" placeholder='Times per day' value={state?.freq} />
                 </Question>
             )}
 
