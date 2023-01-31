@@ -6,9 +6,10 @@ import Select from '../../components/select';
 import quizdata from '../../../_____quiz-data';
 import Question from '../../components/question';
 import Layout from '../../components/quiz-layout';
+import converters from '../../components/functions/convertors';
 
 const DrinkingWater = ({ title, category, onComplete }: any) => {
-    const Max = 2 // total number of question (start from 1)
+    const Max = 3 // total number of question (start from 1)
     const [step, setStep] = useState(1)
     const [state, setState] = useState<any>({}) // input data stored for calculation
     const [isReadMoreToggled, setReadMore] = useState(true)
@@ -23,7 +24,8 @@ const DrinkingWater = ({ title, category, onComplete }: any) => {
         const months = (state?.duration.includes('month'))
             ? state?.duration.match(/(\d+)/)[0] :
             (state?.duration.match(/(\d+)/)[0] * 12)
-        return (state?.quantity / 3785) * state?.freq * months * 0.8
+
+        return converters.gallonsToPpm(state?.quantity) * state?.freq * months * 0.8
     }
 
     function stepUp() {

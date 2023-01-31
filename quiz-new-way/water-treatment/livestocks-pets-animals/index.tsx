@@ -6,6 +6,7 @@ import Select from '../../components/select';
 import quizdata from '../../../_____quiz-data';
 import Question from '../../components/question';
 import Layout from '../../components/quiz-layout';
+import converters from '../../components/functions/convertors';
 
 const LivestockPetsAnimals = ({ title, category, onComplete }: any) => {
     const Max = 2 // total number of question (start from 1)
@@ -20,7 +21,10 @@ const LivestockPetsAnimals = ({ title, category, onComplete }: any) => {
         : componentMeta.discription.concat(componentMeta.discription_more)
 
     function calculate() {
-        return 0
+        const months = (state?.duration.includes('month'))
+            ? state?.duration.match(/(\d+)/)[0] :
+            (state?.duration.match(/(\d+)/)[0] * 12)
+        return converters.gallonsToPpm(state.quantity) * 4.4 * months
     }
 
     function stepUp() {
@@ -61,7 +65,6 @@ const LivestockPetsAnimals = ({ title, category, onComplete }: any) => {
                     <input name="quantity" onChange={numberInputOnChangeHandler} type="number" placeholder='Times per day' />
                 </Question>
             )}
-
 
             {step == 2 && (
                 <Question name='How long would you like to have an animal drinking water supply?'>

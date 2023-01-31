@@ -7,8 +7,9 @@ import quizdata from '../../../_____quiz-data';
 import Question from '../../components/question';
 import Layout from '../../components/quiz-layout';
 import AdvancedMultipleNested from '../../components/advanced-multiple-nested-input';
+import converters from '../../components/functions/convertors';
 const DipEquipmentTools = ({ title, category, onComplete }: any) => {
-    const Max = 2 // total number of question (start from 1)
+    const Max = 3 // total number of question (start from 1)
     const [step, setStep] = useState(1)
     const [state, setState] = useState<any>({
         waterRequire: {
@@ -24,19 +25,20 @@ const DipEquipmentTools = ({ title, category, onComplete }: any) => {
         : componentMeta.discription.concat(componentMeta.discription_more)
 
     function calculate() {
+        const months = (state?.duration.includes('month'))
+            ? state?.duration.match(/(\d+)/)[0] :
+            (state?.duration.match(/(\d+)/)[0] * 12)
 
         const WaterRequirementPerGallons: any = {
-            'Sanitize tools and equipment?': 20,
-            'Disinfect tools and equipment?': 30,
-            'Kill viruses, fungi, or mold on tools and equipment?': 100
+            'Sanitize tools and equipment': 20,
+            'Disinfect tools and equipment': 30,
+            'Kill viruses, fungi, or mold on tools and equipment': 100
         }
-
-        const QuntityOfWaterUse = state.animalQuantity.selected.map((key: string) => {
-            const k1 = state.waterRequire[key] * WaterRequirementPerGallons[key]
-            return k1
+        const totalGallonRequire = state.waterRequire.selected.map((keyname: string) => {
+            return converters.gallonsToPpm(state.waterRequire[keyname]) * WaterRequirementPerGallons[keyname]
         }).reduce((total: number, num: number) => total + num)
 
-        return 0
+        return totalGallonRequire * state?.freq * 4.4 * months
     }
 
     function stepUp() {
@@ -58,16 +60,6 @@ const DipEquipmentTools = ({ title, category, onComplete }: any) => {
     }
 
 
-    function multiSelectInputOnChangeHandler(event: ChangeEvent<HTMLDivElement>) {
-        const selectedOptionValue = event.target.innerHTML
-        if (!state.multiselect.includes(selectedOptionValue)) {
-            setState({ ...state, multiselect: [...state.multiselect, selectedOptionValue] })
-        } else {
-            const filterArrWithoutselectedOptionValue = state.multiselect.filter((value: any) => value !== selectedOptionValue)
-            setState({ ...state, multiselect: filterArrWithoutselectedOptionValue })
-        }
-    }
-
     function selectInputOnChangeHandler(event: ChangeEvent<HTMLDivElement>) {
         const { id, innerHTML } = event.target
         setState((prev: any) => { return { ...prev, [id]: innerHTML } })
@@ -86,12 +78,12 @@ const DipEquipmentTools = ({ title, category, onComplete }: any) => {
             {JSON.stringify(state)}
 
             {step == 1 && (
-                <Question name="On an average week, how much water do you require to… ?">
+                <Question name="On an average week, how much water in gallons do you require to… ?">
                     <AdvancedMultipleNested
                         setState={setState}
                         state={state}
                         name="waterRequire"
-                        options={['Sanitize tools and equipment?', ' Disinfect tools and equipment?', 'Kill viruses, fungi, or mold on tools and equipment?']}
+                        options={['Sanitize tools and equipment', 'Disinfect tools and equipment', 'Kill viruses, fungi, or mold on tools and equipment']}
                         placeholder="In Gallons"
                     />
                 </Question>

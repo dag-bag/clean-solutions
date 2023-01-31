@@ -7,6 +7,10 @@ import { atom, useRecoilValue, useRecoilState } from "recoil";
 import CategoryCard from "../../components/cards/subCategory-card";
 import PrerequisiteDataError from "../../quiz-new-way/components/prerequisite";
 
+
+
+const disebledSubCategories = ['wastewater treatment']
+
 export const selectedSubCategoryAtom = atom<string[]>({
     key: 'selected-sub-category',
     default: []
@@ -57,7 +61,7 @@ const SubCategoriesPage = () => {
                 <main className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-2 lg:gap-5 p-2 max-w-[1080px] m-auto ">
                     {categories?.map((keyName, number) => {
                         return (
-                            <CategoryCard data={subCategories} name={keyName} key={number} />
+                            <CategoryCard disabled={disebledSubCategories.includes(keyName)} data={subCategories} name={keyName} key={number} />
                         )
                     })}
 
