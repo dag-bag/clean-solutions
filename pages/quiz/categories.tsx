@@ -10,7 +10,7 @@ export const selectedCategoryAtom = atom<string[]>({
 })
 
 const CategoriesPage = () => {
-    const [state, setState] = useRecoilState(selectedCategoryAtom)
+    const [state] = useRecoilState(selectedCategoryAtom)
     console.log(state)
     function Next() {
         Router.back()
@@ -19,7 +19,7 @@ const CategoriesPage = () => {
         Router.push(`sub-category`)
     }
 
-    const categories = [...Object.keys(data), ...Object.keys(data), ...Object.keys(data)]
+    const categories = Object.keys(data)
 
     return (
         <Layout onNext={Next} onPrevious={Previous} isEnabled={state.length == 0}>
