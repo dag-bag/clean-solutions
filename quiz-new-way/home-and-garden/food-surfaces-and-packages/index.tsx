@@ -9,14 +9,18 @@ import Question from '../../components/question';
 import Layout from '../../components/quiz-layout';
 import MultipleSelect from '../../components/multiple-select';
 import converters from '../../components/functions/convertors';
-const LaundryDisinfection = ({ title, category, onComplete }: any) => {
+import AdvancedMultipleNested from '../../components/advanced-multiple-nested-input';
+const FoodSurfacesAndPackages = ({ title, category, onComplete }: any) => {
     const Max = 3
     const [step, setStep] = useState(1)
     const [data, updateData] = useRecoilState(categoryState)
     const [isReadMoreToggled, setReadMore] = useState(true)
     const componentMeta = quizdata[category].categories[title]
     const [state, setState] = useState<any>({
-        multiselect: []
+        multiselect: [],
+        sanitize: {
+            selected: []
+        }
     })
 
     const discription = isReadMoreToggled
@@ -24,17 +28,16 @@ const LaundryDisinfection = ({ title, category, onComplete }: any) => {
         : componentMeta.discription.concat(componentMeta.discription_more)
 
     function calculate() {
-        const laundryWeight: any = {
-            'everyday': 100,
-            'heavy': 200,
-            'insecticide': 725
-        }
-        const quantity = converters.gallonsToPpm(state?.multiselect.length * 20)
+
         const months = (state?.duration.includes('month'))
             ? state?.duration.match(/(\d+)/)[0] :
             (state?.duration.match(/(\d+)/)[0] * 12)
 
-        return quantity * laundryWeight[state?.freq] * months
+        const total = state.multiselect.map((keyname: string) => {
+            return converters.gallonsToPpm(parseInt(state.sanitize[keyname]) * (1 / 4))
+        }).reduce((total: number, num: number) => total + num)
+
+        return total * 4.4 * months * 20
     }
 
     function stepUp() {
@@ -45,15 +48,11 @@ const LaundryDisinfection = ({ title, category, onComplete }: any) => {
         }
     }
 
-    function stepDown() {
-        if (step > 1) {
-            setStep(prev => prev - 1)
-        }
-    }
-
     function readMoreClickHandler() {
         setReadMore(p => !p)
     }
+
+
 
     function selectInputOnChangeHandler(event: ChangeEvent<HTMLDivElement>) {
         const { id, innerHTML } = event.target
@@ -74,31 +73,33 @@ const LaundryDisinfection = ({ title, category, onComplete }: any) => {
         <Layout {...{
             title,
             stepUp,
-            stepDown,
             category,
             discription,
             isReadMoreToggled,
             readMoreClickHandler,
         }}>
 
+            {JSON.stringify(state)}
+
             {step == 1 && (
-                <Question name="Choose all that apply">
+                <Question name="Select food-contact surfaces to sanitize">
                     <MultipleSelect
-                        options={['Everyday, Bodily Fluids Sweat, and Urine', 'Soiled, Heavy Bacteria, and Activewear', 'Fungi, Mold, and Mildew', 'Lice, Ticks, and Bedbugs']}
+                        options={['Counters', 'Tables', 'Cabinets', 'Refrigerators', 'Stoves', 'Utensils', 'Glassware', 'Pots and Pans', 'Gloves and Hands', ' Other Appliances and Surfaces']}
                         selectedOptions={state.multiselect}
                         onClick={multiSelectInputOnChangeHandler}
                         id="multiselect"
                     />
                 </Question>
-            )}
+            )}z
 
             {step == 2 && (
-                <Question name="How many loads of laundry (linens and clothes) do you wash on an average month?">
-                    <Select
-                        options={['everyday', 'heavy', 'insecticide']}
-                        selectedOption={state?.freq}
-                        onClick={selectInputOnChangeHandler}
-                        id="freq"
+                <Question name="How many times per month do you sanitize food contact surfaces?">
+                    <AdvancedMultipleNested
+                        state={state}
+                        setState={setState}
+                        name="sanitize"
+                        options={state.multiselect}
+                        placeholder="Times"
                     />
                 </Question>
             )}
@@ -118,4 +119,4 @@ const LaundryDisinfection = ({ title, category, onComplete }: any) => {
     )
 }
 
-export default LaundryDisinfection
+export default FoodSurfacesAndPackages

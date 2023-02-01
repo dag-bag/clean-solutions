@@ -30,13 +30,18 @@ const DeodrantRepellent = ({ title, category, onComplete }: any) => {
 
     }
 
-
     function stepUp() {
         setStep(prev => prev + 1)
         console.log(title)
         if (Max == step) {
             updateData({ ...data, [title]: calculate() })
             onComplete()
+        }
+    }
+
+    function stepDown() {
+        if (step > 1) {
+            setStep(prev => prev - 1)
         }
     }
 
@@ -58,6 +63,7 @@ const DeodrantRepellent = ({ title, category, onComplete }: any) => {
         <Layout {...{
             title,
             stepUp,
+            stepDown,
             category,
             discription,
             isReadMoreToggled,

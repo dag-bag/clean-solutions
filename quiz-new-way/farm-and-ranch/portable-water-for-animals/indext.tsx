@@ -6,6 +6,7 @@ import Select from '../../components/select';
 import quizdata from '../../../_____quiz-data';
 import Question from '../../components/question';
 import Layout from '../../components/quiz-layout';
+import converters from '../../components/functions/convertors';
 
 const PortableWaterForAnimals = ({ title, category, onComplete }: any) => {
     const Max = 2 // total number of question (start from 1)
@@ -20,7 +21,10 @@ const PortableWaterForAnimals = ({ title, category, onComplete }: any) => {
         : componentMeta.discription.concat(componentMeta.discription_more)
 
     function calculate() {
-        return 0
+        const months = (state?.duration.includes('month'))
+            ? state?.duration.match(/(\d+)/)[0] :
+            (state?.duration.match(/(\d+)/)[0] * 12)
+        return converters.gallonsToPpm(state?.freq) * months * 1
     }
 
     function stepUp() {
@@ -60,7 +64,7 @@ const PortableWaterForAnimals = ({ title, category, onComplete }: any) => {
 
             {step == 1 && (
                 <Question name="How many gallons of water do all of your pets and animals consume on a daily basis?">
-                    <input name="freq" onChange={numberInputOnChangeHandler} type="number" placeholder='Times per day' />
+                    <input name="freq" onChange={numberInputOnChangeHandler} type="number" placeholder='Gallons of Water' />
                 </Question>
             )}
 

@@ -6,8 +6,9 @@ import Select from '../../components/select';
 import quizdata from '../../../_____quiz-data';
 import Question from '../../components/question';
 import Layout from '../../components/quiz-layout';
+import converters from '../../components/functions/convertors';
 
-const PortableWaterRecreation = ({ title, category, onComplete }: any) => {
+const FugimentAndInsecticide = ({ title, category, onComplete }: any) => {
     const Max = 3 // total number of question (start from 1)
     const [step, setStep] = useState(1)
     const [state, setState] = useState<any>({}) // input data stored for calculation
@@ -20,7 +21,11 @@ const PortableWaterRecreation = ({ title, category, onComplete }: any) => {
         : componentMeta.discription.concat(componentMeta.discription_more)
 
     function calculate() {
-        return 0
+        console.log(state?.duration)
+        const months = (state?.duration.includes('month'))
+            ? state?.duration.match(/(\d+)/)[0] :
+            (state?.duration.match(/(\d+)/)[0] * 12)
+        return converters.mlToPpm(2) * (months * state?.freq) * 50
     }
 
     function stepUp() {
@@ -28,8 +33,14 @@ const PortableWaterRecreation = ({ title, category, onComplete }: any) => {
         if (Max == step) {
             updateData({ ...data, [title]: calculate() })
             onComplete()
-            console.log(data)
         }
+    }
+
+    function stepDown() {
+        if (step > 1) {
+            setStep(prev => prev - 1)
+        }
+
     }
 
     function readMoreClickHandler() {
@@ -52,6 +63,7 @@ const PortableWaterRecreation = ({ title, category, onComplete }: any) => {
         <Layout {...{
             title,
             stepUp,
+            stepDown,
             category,
             discription,
             isReadMoreToggled,
@@ -59,20 +71,19 @@ const PortableWaterRecreation = ({ title, category, onComplete }: any) => {
         }}>
 
             {step == 1 && (
-                <Question name="How many gallons of drinking water do you want to have disinfected for an average day on the road?">
-                    <input name="freq1" onChange={numberInputOnChangeHandler} type="number" placeholder='Times per day' />
+                <Question name="How much area do you need to keep disinfected? ">
+                    <input name="quantity" onChange={numberInputOnChangeHandler} type="number" placeholder='SQFT' value={state?.freq} />
                 </Question>
             )}
 
-
             {step == 2 && (
-                <Question name="How many times per month do you want to be prepared with safe drinking water?">
-                    <input name="freq1" onChange={numberInputOnChangeHandler} type="number" placeholder='Times per day' />
+                <Question name="How many times per month do you want to fog buildings or transportation?">
+                    <input name="freq" onChange={numberInputOnChangeHandler} type="number" placeholder='SQFT' value={state?.freq} />
                 </Question>
             )}
 
             {step == 3 && (
-                <Question name='How long would you like to have a potable drinking water supply?'>
+                <Question name='How long would you like a room or facility fogging supply?'>
                     <Select
                         options={['1 month', '2 month', '3 month', '6 month', '1 year', '2 year', '3 year']}
                         selectedOption={state?.duration}
@@ -86,4 +97,4 @@ const PortableWaterRecreation = ({ title, category, onComplete }: any) => {
     )
 }
 
-export default PortableWaterRecreation
+export default FugimentAndInsecticide

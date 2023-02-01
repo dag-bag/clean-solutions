@@ -7,12 +7,18 @@ import quizdata from '../../../_____quiz-data';
 import Question from '../../components/question';
 import Layout from '../../components/quiz-layout';
 import MultipleNestedSelect from '../../components/multiple-select-nested-input';
-
+import AdvancedMultipleNested from '../../components/advanced-multiple-nested-input';
+import converters from '../../components/functions/convertors';
 const BoatAircraftAndRVWaterStorage = ({ title, category, onComplete }: any) => {
     const Max = 3 // total number of question (start from 1)
     const [step, setStep] = useState(1)
     const [state, setState] = useState<any>({
-        multiselect: []
+        quantity: {
+            selected: []
+        },
+        frequency: {
+            selected: []
+        }
     }) // input data stored for calculation
     const [isReadMoreToggled, setReadMore] = useState(true)
     const componentMeta = quizdata[category].categories[title]
@@ -23,7 +29,14 @@ const BoatAircraftAndRVWaterStorage = ({ title, category, onComplete }: any) => 
         : componentMeta.discription.concat(componentMeta.discription_more)
 
     function calculate() {
-        return 0
+        const months = (state?.duration.includes('month'))
+            ? state?.duration.match(/(\d+)/)[0] :
+            (state?.duration.match(/(\d+)/)[0] * 12)
+
+        const sum = state.quantity.selected.map((value: string) => {
+            return state.quantity[value] * state.frequency[value]
+        }).reduce((total: number, num: number) => total + num)
+        return converters.gallonsToPpm(sum) * months * 100
     }
 
     function stepUp() {
@@ -37,22 +50,6 @@ const BoatAircraftAndRVWaterStorage = ({ title, category, onComplete }: any) => 
 
     function readMoreClickHandler() {
         setReadMore(p => !p)
-    }
-
-    function numberInputOnChangeHandler(event: ChangeEvent<HTMLInputElement>) {
-        const { name, value } = event.target
-        setState((prev: any) => { return { ...prev, [name ?? 'm']: parseInt(value) } })
-    }
-
-
-    function multiSelectInputOnChangeHandler(event: ChangeEvent<HTMLDivElement>) {
-        const selectedOptionValue = event.target.innerHTML
-        if (!state.multiselect.includes(selectedOptionValue)) {
-            setState({ ...state, multiselect: [...state.multiselect, selectedOptionValue] })
-        } else {
-            const filterArrWithoutselectedOptionValue = state.multiselect.filter((value: any) => value !== selectedOptionValue)
-            setState({ ...state, multiselect: filterArrWithoutselectedOptionValue })
-        }
     }
 
     function selectInputOnChangeHandler(event: ChangeEvent<HTMLDivElement>) {
@@ -69,27 +66,26 @@ const BoatAircraftAndRVWaterStorage = ({ title, category, onComplete }: any) => 
             isReadMoreToggled,
             readMoreClickHandler,
         }}>
-
             {step == 1 && (
                 <Question name="How many gallons are within the storage system?">
-                    <MultipleNestedSelect
-                        options={['Potable Water', 'Waster Water', 'Non-Potable Tanks and Lines ']}
-                        selectedOptions={state.multiselect}
-                        onClick={multiSelectInputOnChangeHandler}
-                        onChangeNestedInputs={numberInputOnChangeHandler}
-                        placeholder="Gallons of Water "
+                    <AdvancedMultipleNested
+                        state={state}
+                        setState={setState}
+                        name="quantity"
+                        options={['Portable Water', 'Waste Water', 'Non-Potable Tanks and Lines']}
+                        placeholder="Square Feet "
                     />
                 </Question>
             )}
 
             {step == 2 && (
-                <Question name="How many times per month do you want to sanitize water containment?">
-                    <MultipleNestedSelect
-                        options={['Potable Water', 'Waster Water', 'Non-Potable Tanks and Lines ']}
-                        selectedOptions={state.multiselect}
-                        onClick={multiSelectInputOnChangeHandler}
-                        onChangeNestedInputs={numberInputOnChangeHandler}
-                        placeholder="Gallons of Water "
+                <Question name="How many times per month do you want to sanitize water containment? ">
+                    <AdvancedMultipleNested
+                        state={state}
+                        name="frequency"
+                        setState={setState}
+                        options={['Portable Water', 'Waste Water', 'Non-Potable Tanks and Lines']}
+                        placeholder="times "
                     />
                 </Question>
             )}

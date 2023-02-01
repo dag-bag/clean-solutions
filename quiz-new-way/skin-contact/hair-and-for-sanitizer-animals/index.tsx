@@ -58,6 +58,11 @@ const HairAndFurSanitizerForAnimals = ({ title, category, onComplete }: any) => 
             onComplete()
         }
     }
+    function stepDown() {
+        if (step > 1) {
+            setStep(prev => prev - 1)
+        }
+    }
 
     function readMoreClickHandler() {
         setReadMore(p => !p)
@@ -72,6 +77,7 @@ const HairAndFurSanitizerForAnimals = ({ title, category, onComplete }: any) => 
         <Layout {...{
             title,
             stepUp,
+            stepDown,
             category,
             discription,
             isReadMoreToggled,
@@ -99,10 +105,6 @@ const HairAndFurSanitizerForAnimals = ({ title, category, onComplete }: any) => 
                 </>
 
             )}
-
-
-
-
 
             {step == 2 && (
                 <Question name="How many times a month would you sanitize animal hair?" >

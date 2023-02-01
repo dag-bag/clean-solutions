@@ -4,7 +4,6 @@ import React from "react";
 import Image from "next/image";
 import { motion } from 'framer-motion'
 import { useRecoilValue } from "recoil";
-// import MainLayout from "../pages/layout/MainLayout";
 import Layout from "../../components/quiz-btn-layout";
 
 import { quizPage } from ".";

@@ -6,13 +6,19 @@ import Select from '../../components/select';
 import quizdata from '../../../_____quiz-data';
 import Question from '../../components/question';
 import Layout from '../../components/quiz-layout';
-import MultipleNestedSelect from '../../components/multiple-select-nested-input';
+import AdvancedMultipleNested from '../../components/advanced-multiple-nested-input';
+import converters from '../../components/functions/convertors';
 
 const GymSpasClubsAndLockerRooms = ({ title, category, onComplete }: any) => {
     const Max = 3 // total number of question (start from 1)
     const [step, setStep] = useState(1)
     const [state, setState] = useState<any>({
-        multiselect: []
+        quantity: {
+            selected: []
+        },
+        frequency: {
+            selected: []
+        }
     }) // input data stored for calculation
     const [isReadMoreToggled, setReadMore] = useState(true)
     const componentMeta = quizdata[category].categories[title]
@@ -23,7 +29,18 @@ const GymSpasClubsAndLockerRooms = ({ title, category, onComplete }: any) => {
         : componentMeta.discription.concat(componentMeta.discription_more)
 
     function calculate() {
-        return 0
+
+        const months = (state?.duration.includes('month'))
+            ? state?.duration.match(/(\d+)/)[0] :
+            (state?.duration.match(/(\d+)/)[0] * 12)
+
+        const sum = state.quantity.selected.map((value: string) => {
+            return converters.mlToPpm(state.quantity[value] * 3.78541) * state.frequency[value]
+        }).reduce((total: number, num: number) => total + num)
+
+        console.log(sum)
+
+        return sum * months * 100
     }
 
     function stepUp() {
@@ -39,21 +56,6 @@ const GymSpasClubsAndLockerRooms = ({ title, category, onComplete }: any) => {
         setReadMore(p => !p)
     }
 
-    function numberInputOnChangeHandler(event: ChangeEvent<HTMLInputElement>) {
-        const { name, value } = event.target
-        setState((prev: any) => { return { ...prev, [name ?? 'm']: parseInt(value) } })
-    }
-
-
-    function multiSelectInputOnChangeHandler(event: ChangeEvent<HTMLDivElement>) {
-        const selectedOptionValue = event.target.innerHTML
-        if (!state.multiselect.includes(selectedOptionValue)) {
-            setState({ ...state, multiselect: [...state.multiselect, selectedOptionValue] })
-        } else {
-            const filterArrWithoutselectedOptionValue = state.multiselect.filter((value: any) => value !== selectedOptionValue)
-            setState({ ...state, multiselect: filterArrWithoutselectedOptionValue })
-        }
-    }
 
     function selectInputOnChangeHandler(event: ChangeEvent<HTMLDivElement>) {
         const { id, innerHTML } = event.target
@@ -70,26 +72,28 @@ const GymSpasClubsAndLockerRooms = ({ title, category, onComplete }: any) => {
             readMoreClickHandler,
         }}>
 
+            {JSON.stringify(state)}
+
             {step == 1 && (
                 <Question name="Pick methods for preferred disinfection and deodorizing.">
-                    <MultipleNestedSelect
+                    <AdvancedMultipleNested
+                        state={state}
+                        setState={setState}
+                        name="quantity"
                         options={['Spray', 'Mop', 'Soak', 'Pools, Hot tubs, and Spas', 'Athletic Synthetic Turf.']}
-                        selectedOptions={state.multiselect}
-                        onClick={multiSelectInputOnChangeHandler}
-                        onChangeNestedInputs={numberInputOnChangeHandler}
                         placeholder="Square Feet "
-                        nestedQuestions={['What is the SQ FT of home?', 'How many SQ FT in the home are hard-floors?', 'How many gallons do you typically use in a week for disinfecting hard, non-food contact surfaces?', 'How many SQ FT?', 'How many SQ FT?']}
+                        questions={['What is the SQ FT of home?', 'How many SQ FT in the home are hard-floors?', 'How many gallons do you typically use in a week for disinfecting hard, non-food contact surfaces?', 'How many SQ FT?', 'How many SQ FT?']}
                     />
                 </Question>
             )}
 
             {step == 2 && (
                 <Question name="On an average week, how much water do you require to… ?">
-                    <MultipleNestedSelect
+                    <AdvancedMultipleNested
+                        state={state}
+                        name="frequency"
+                        setState={setState}
                         options={['Spray', 'Mop', 'Soak', 'Recirculating System', ' Synthetic Turf']}
-                        selectedOptions={state.multiselect}
-                        onClick={multiSelectInputOnChangeHandler}
-                        onChangeNestedInputs={numberInputOnChangeHandler}
                         placeholder="times "
                     />
                 </Question>

@@ -1,3 +1,4 @@
+// !caluculation 
 import { useState } from 'react'
 import { ChangeEvent } from 'react';
 import categoryState from '../../state';
@@ -6,17 +7,20 @@ import Select from '../../components/select';
 import quizdata from '../../../_____quiz-data';
 import Question from '../../components/question';
 import Layout from '../../components/quiz-layout';
+import converters from '../../components/functions/convertors';
 import AdvancedMultipleNested from '../../components/advanced-multiple-nested-input';
-const GreenHouseGarden = ({ title, category, onComplete }: any) => {
-    const Max = 2 // total number of question (start from 1)
+import MultipleSelectInsertedSelect from '../../components/multipe-select-inserted-select';
+const FoodEstablishment = ({ title, category, onComplete }: any) => {
+    const Max = 3 // total number of question (start from 1)
     const [step, setStep] = useState(1)
     const [state, setState] = useState<any>({
         quantity: {
             selected: []
         },
-        frequancy: {
+        frequency: {
             selected: []
         }
+
     }) // input data stored for calculation
     const [isReadMoreToggled, setReadMore] = useState(true)
     const componentMeta = quizdata[category].categories[title]
@@ -28,7 +32,36 @@ const GreenHouseGarden = ({ title, category, onComplete }: any) => {
 
     function calculate() {
 
-        return 0
+        const ppmValueObject: any = {
+            'Produce, Fruits, Vegetable': 5,
+            'Eggshells': 5,
+            'Raw Meat, Poultry, & Seafood': 70,
+        }
+
+        const valuesObject: any = {
+            'Produce, Fruits, Vegetable': {
+                'Spray': 945,
+                'Soak': 3785
+            },
+            'Eggshells': {
+                'Spray': 475,
+                'Soak': 1892
+            },
+            'Raw Meat, Poultry, & Seafood': {
+                'Spray': 945,
+                'Soak': 3785
+            },
+        }
+
+        const months = (state?.duration.includes('month'))
+            ? state?.duration.match(/(\d+)/)[0] :
+            (state?.duration.match(/(\d+)/)[0] * 12)
+
+        const sum = state.quantity.selected.map((key: string) => {
+            return converters.mlToPpm(valuesObject[key][state.quantity[key]]) * ppmValueObject[key] * (state.frequency[key] * 4.4)
+        }).reduce((t: number, v: number) => t + v)
+
+        return sum * months
     }
 
     function stepUp() {
@@ -59,33 +92,38 @@ const GreenHouseGarden = ({ title, category, onComplete }: any) => {
             readMoreClickHandler,
         }}>
 
+            {JSON.stringify(state)}
+
+
             {step == 1 && (
-                <Question name="What are you sanitizing and the maximum growing capacity?">
-                    <AdvancedMultipleNested
+                <Question name="Enter how many pounds of goods and commodities are processed on average and select the preferred method for disinfection.">
+                    <MultipleSelectInsertedSelect
                         state={state}
                         setState={setState}
                         name="quantity"
-                        options={['Seeds and Propagations Rooms', ' Soil, Hydro and Aeroponic Grow Beds', ' Plants and Perpetual Grow Rooms', 'Mushrooms,  Substrates and Fruiting Chamber', 'Trimming, Curing, Drying, and Harvest Rooms', 'Extend the vase life of cutting and flowers']}
-                        placeholders={['SQFT', 'SQFT', 'SQFT', 'SQFT', 'Numbers of flowers']}
-
+                        options={{
+                            'Produce, Fruits, Vegetable': ['Spray', 'Soak'],
+                            'Eggshells': ['Spray', 'Soak'],
+                            'Raw Meat, Poultry, & Seafood': ['Spray', 'Soak'],
+                        }}
                     />
                 </Question>
             )}
 
             {step == 2 && (
-                <Question name="How many times per month do you sanitize in greenhouses?">
+                <Question name="How often is each type of food eaten in weeks?">
                     <AdvancedMultipleNested
                         state={state}
+                        name="frequency"
                         setState={setState}
-                        name="frequancy"
                         options={state.quantity.selected}
-                        placeholder="Times sanitizing "
+                        placeholder="Times per week"
                     />
                 </Question>
             )}
 
             {step == 3 && (
-                <Question name='How long do you want a greenhouse sanitizer supply?'>
+                <Question name='How long would you like a hard surface sanitizer supply?'>
                     <Select
                         options={['1 month', '2 month', '3 month', '6 month', '1 year', '2 year', '3 year']}
                         selectedOption={state?.duration}
@@ -100,4 +138,4 @@ const GreenHouseGarden = ({ title, category, onComplete }: any) => {
     )
 }
 
-export default GreenHouseGarden
+export default FoodEstablishment

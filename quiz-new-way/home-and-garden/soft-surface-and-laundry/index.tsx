@@ -1,20 +1,15 @@
 const stenghtObject = {
-    'water retention': {
+    'Spray': {
         'light': 5,
         'heavy': 5,
         'moderate': 5,
     },
-    'continous': {
+    'Moap': {
         'light': 5,
         'heavy': 5,
         'moderate': 5,
     },
-    'slug dose': {
-        'light': 5,
-        'heavy': 5,
-        'moderate': 5,
-    },
-    'tanks': {
+    'Soak': {
         'light': 5,
         'heavy': 5,
         'moderate': 5,
@@ -31,10 +26,10 @@ import Question from '../../components/question';
 import Layout from '../../components/quiz-layout';
 import converters from '../../components/functions/convertors';
 import AdvancedMultipleNested from '../../components/advanced-multiple-nested-input';
-import AdvancedMultipleNestedSelect from '../../components/advanced-multiple-nested-select';
+// import AdvancedMultipleNestedSelect from '../../components/advanced-multiple-nested-select';
 
-const WaterRetentionStorage = ({ title, category, onComplete }: any) => {
-    const Max = 4 // total number of question (start from 1)
+const SoftSurfaceAndLaundry = ({ title, category, onComplete }: any) => {
+    const Max = 3 // total number of question (start from 1)
     const [step, setStep] = useState(1)
     const [state, setState] = useState<any>({
         quantity: {
@@ -58,6 +53,20 @@ const WaterRetentionStorage = ({ title, category, onComplete }: any) => {
         : componentMeta.discription.concat(componentMeta.discription_more)
 
     function calculate() {
+
+        const multipleObj = {
+            'Subfloors': 1000,
+            'Rugs and Carpenting': 1000,
+            ' Bed Sets (Blankets, Mattress, Pillows)': 35,
+            'Animal Bedding and Kennels': 20,
+            'Drapes and Curtains': 35,
+            'Upholstered Furniture': 100,
+            'Vehicle Upholstery': 100,
+            'Footwear': 2,
+            'Luggage and Bags': 2,
+            'Toys': 1,
+            'Laundry': 20
+        }
 
         const months = (state?.duration.includes('month'))
             ? state?.duration.match(/(\d+)/)[0] :
@@ -99,14 +108,17 @@ const WaterRetentionStorage = ({ title, category, onComplete }: any) => {
             readMoreClickHandler,
         }}>
 
+            {JSON.stringify(state)}
+
             {step == 1 && (
-                <Question name="How many gallons do each of your water retention or storage containment devices hold?" >
+
+                <Question name="How many gallons are in each water system?" >
                     <AdvancedMultipleNested
                         state={state}
                         setState={setState}
                         name="quantity"
-                        placeholder="Quantity in numbers"
-                        options={['Ponds, Reservoirs, and Retention Basins', 'Once-through Water Cooling Systems', 'Aircraft, RV, Boat Tanks and Lines', 'Other Non-Potable Water Storage']}
+                        options={['Subfloors', 'Rugs and Carpenting', ' Bed Sets (Blankets, Mattress, Pillows)', 'Animal Bedding and Kennels', 'Drapes and Curtains', 'Upholstered Furniture', 'Vehicle Upholstery', 'Footwear', 'Luggage and Bags', 'Toys', 'Laundry']}
+                        placeholders={['SQ FT', 'SQ FT', 'Quantity', 'Quantity', 'Quantity', 'Quantity', 'Quantity', 'Quantity', 'Quantity', 'SQ FT', 'Gallons']}
                     />
                 </Question>
 
@@ -114,19 +126,19 @@ const WaterRetentionStorage = ({ title, category, onComplete }: any) => {
 
             {step == 2 && (
 
-                <Question name="How many times per month do you want to sanitize water containment?" >
+                <Question name="How frequently do you sanitize or wash each month?" >
                     <AdvancedMultipleNested
                         state={state}
                         setState={setState}
                         name="frequncy"
-                        placeholder="Quantity in numbers"
                         options={state.quantity.selected}
+                        placeholder="Times Wash"
                     />
                 </Question>
 
             )}
 
-            {step == 3 && (
+            {/* {step == 3 && (
 
                 <Question name="Select which strengths you will need to apply" >
                     <>
@@ -140,11 +152,10 @@ const WaterRetentionStorage = ({ title, category, onComplete }: any) => {
                     </>
                 </Question>
 
-            )}
+            )} */}
 
-
-            {step == 4 && (
-                <Question name='How long would you like a water storage sanitizer supply to last?'>
+            {step == 3 && (
+                <Question name='How long would you like a recirculating water system disinfectant  supply?'>
                     <Select
                         options={['1 month', '2 month', '3 month', '6 month', '1 year', '2 year', '3 year']}
                         selectedOption={state?.duration}
@@ -159,4 +170,4 @@ const WaterRetentionStorage = ({ title, category, onComplete }: any) => {
     )
 }
 
-export default WaterRetentionStorage
+export default SoftSurfaceAndLaundry

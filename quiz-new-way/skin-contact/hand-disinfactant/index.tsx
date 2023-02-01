@@ -39,7 +39,6 @@ const HandDisInfactant = ({ title, category, onComplete }: any) => {
         if (step > 1) {
             setStep(prev => prev - 1)
         }
-
     }
 
     function readMoreClickHandler() {
