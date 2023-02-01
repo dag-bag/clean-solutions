@@ -9,6 +9,7 @@ import marked from "marked";
 import { GetStaticPaths, GetStaticProps } from "next";
 import { PostsInterFace } from "../../types/blogs";
 function BlogsDetailsPage({ post }: Props) {
+  console.log("post:", post);
   return (
     <div
       className=" mx-auto text-center  max-w-6xl prose py-10 md:prose-xl"
@@ -35,8 +36,9 @@ export const getStaticPaths: GetStaticPaths = async () => {
   return { paths, fallback: "blocking" };
 };
 export const getStaticProps: GetStaticProps = async ({ params }) => {
+  // _fields You can Select What kind of properties You Want to Get
   const getPostResponse = await fetch(
-    "https://customcleansolutions.com/wp-json/wp/v2/posts/" + params?.blog
+    `https://customcleansolutions.com/wp-json/wp/v2/posts/${params?.blog}?_embed`
   );
   const getPostData = await getPostResponse.json();
   console.log("getPostData:", getPostData);
