@@ -25,7 +25,6 @@ import Layout from "../../components/quiz-btn-layout";
 import { motion, AnimatePresence } from "framer-motion";
 import Spacing from "../../components/pages/layout/Spacing";
 import { dropUpVariants, childVariants } from "../../animation/anime";
-// import AnimatedTextWord from "../../components/Headings/test/AnimatedText";
 
 function Quiz() {
     const [state, setState] = useRecoilState(quizPage);
@@ -53,7 +52,7 @@ function Quiz() {
         Router.push('/')
     }
     function Prevous() {
-        Router.push(`${Router.asPath}/welcome`)
+        Router.push(`${Router.asPath}/get-email`)
     }
 
     return (
