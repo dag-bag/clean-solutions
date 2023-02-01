@@ -55,7 +55,11 @@ function Item({ title, price, category, image, qty }: Props) {
         <div>
           <div className="flex justify-between text-base font-medium text-gray-900">
             <h3>
-              <a className="capitalize" href="#">{(title.length > 20) ? title.substring(0, 20).concat('...') : title}</a>
+              <a className="capitalize" href="#">
+                {title.length > 20
+                  ? title.substring(0, 20).concat("...")
+                  : title}
+              </a>
             </h3>
             <p className="ml-4">${price}.00</p>
           </div>
@@ -85,21 +89,31 @@ function Drawer() {
         <label htmlFor="my-drawer-4" className="drawer-overlay z-40"></label>
         <ul className="menu p-4 md:w-96 bg-smoke !z-[98] ">
           <div className="flex items-start justify-between py-4 pl-2">
-            <h2 id="slide-over-title" className="text-lg font-medium text-gray-900">Shopping cart</h2>
+            <h2
+              id="slide-over-title"
+              className="text-lg font-medium text-gray-900"
+            >
+              Shopping cart
+            </h2>
             <div className="ml-3 flex h-7 items-center ">
-              <label htmlFor="my-drawer-4" className="drawer-button btn outline-none px-3  border-none bg-white hover:text-white text-black">
+              <label
+                htmlFor="my-drawer-4"
+                className="drawer-button btn outline-none px-3  border-none bg-white hover:text-white text-black"
+              >
                 <svg
                   fill="none"
                   viewBox="0 0 24 24"
-                  stroke-width="1.5"
+                  strokeWidth="1.5"
                   aria-hidden="true"
                   className="h-6 w-6"
                   stroke="currentColor"
-                  xmlns="http://www.w3.org/2000/svg">
+                  xmlns="http://www.w3.org/2000/svg"
+                >
                   <path
-                    stroke-linecap="round"
-                    stroke-linejoin="round"
-                    d="M6 18L18 6M6 6l12 12" />
+                    strokeLinecap="round"
+                    strokeLinejoin="round"
+                    d="M6 18L18 6M6 6l12 12"
+                  />
                 </svg>
               </label>
             </div>
@@ -108,7 +122,7 @@ function Drawer() {
           {rawData.map((item, index) => {
             const { title, price, category, image, qty } = item;
             return (
-              <li>
+              <li key={index}>
                 <Item
                   key={index}
                   title={title}
@@ -118,22 +132,24 @@ function Drawer() {
                   qty={qty}
                 />
               </li>
-            )
+            );
           })}
 
           <div className="border-t border-gray-200 py-6 px-4 sm:px-6">
-
             <div className="flex justify-between text-base font-medium text-gray-900">
               <p>Subtotal</p>
               <p>$262.00</p>
             </div>
 
-            <p className="mt-0.5 text-sm text-gray-500">Shipping and taxes calculated at checkout.</p>
+            <p className="mt-0.5 text-sm text-gray-500">
+              Shipping and taxes calculated at checkout.
+            </p>
             <div className="mt-6">
               <Link href={"/checkout"}>
                 <a
                   href="#"
-                  className="flex items-center justify-center rounded-md border border-transparent bg-green-1 btn  px-6 py-3 text-base font-medium text-white shadow-sm hover:bg-blue-1">
+                  className="flex items-center justify-center rounded-md border border-transparent bg-green-1 btn  px-6 py-3 text-base font-medium text-white shadow-sm hover:bg-blue-1"
+                >
                   Checkout
                 </a>
               </Link>
@@ -142,7 +158,8 @@ function Drawer() {
               <span className="py-2">Or</span>
               <button
                 type="button"
-                className="font-medium text-indigo-600 hover:text-indigo-500">
+                className="font-medium text-indigo-600 hover:text-indigo-500"
+              >
                 Continue Shopping
                 <span aria-hidden="true"> &rarr;</span>
               </button>
