@@ -54,6 +54,12 @@ const DentalOralHygeine = ({ title, category, onComplete }: any) => {
         }
     }
 
+    function stepDown() {
+        if (step > 1) {
+            setStep(prev => prev - 1)
+        }
+    }
+
     function readMoreClickHandler() {
         setReadMore(p => !p)
     }
@@ -82,6 +88,7 @@ const DentalOralHygeine = ({ title, category, onComplete }: any) => {
         <Layout {...{
             title,
             stepUp,
+            stepDown,
             category,
             discription,
             isReadMoreToggled,
@@ -102,7 +109,7 @@ const DentalOralHygeine = ({ title, category, onComplete }: any) => {
 
             {step == 2 && (
                 <Question name="How frequently do you sanitize hygienic utensils or perform an oral routine?">
-                    <input name="freq" onChange={numberInputOnChangeHandler} type="number" placeholder='Times per weeks' />
+                    <input name="freq" value={state?.freq} onChange={numberInputOnChangeHandler} type="number" placeholder='Times per weeks' />
                 </Question>
             )}
 

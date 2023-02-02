@@ -88,7 +88,7 @@ const HairAndFurSanitizerForHuman = ({ title, category, onComplete }: any) => {
 
             {step == 2 && (
                 <Question name="How many times a week would you sanitize your hair?">
-                    <input name="freq" onChange={numberInputOnChangeHandler} type="number" placeholder='Times per week' />
+                    <input name="freq" value={state?.freq} onChange={numberInputOnChangeHandler} type="number" placeholder='Times per week' />
                 </Question>
             )}
 

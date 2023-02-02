@@ -1,14 +1,14 @@
 /** @format */
 
+import Router from "next/router";
+import { useState } from "react";
 import categoryState from "../../quiz-new-way/state";
 import { useRecoilValue } from "recoil";
 import Navbar from "../../components/Navbar";
-import { useState } from "react";
 import Drawer from "../../components/utils/Drawer";
 import { GetStaticProps } from "next";
 import { GetAllBlogs } from "../../services/blogs";
 import { PostsInterFace } from "../../types/blogs";
-import Router from "next/router";
 
 const ResultPage = ({ posts }: { posts: PostsInterFace[] }) => {
   console.log(posts);
@@ -71,7 +71,7 @@ const ResultPage = ({ posts }: { posts: PostsInterFace[] }) => {
         </section>
         {/* Create a Section for blogs According to selections  */}
         <section id="blog" className="blog">
-          {posts.map(({ title, id }) => (
+          {posts?.map(({ title, id }) => (
             <li className="container list-decimal" onClick={() => BlogLink(id)}>
               <h1>{title.rendered}</h1>
             </li>

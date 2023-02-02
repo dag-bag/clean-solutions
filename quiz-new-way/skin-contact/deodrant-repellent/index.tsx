@@ -72,7 +72,7 @@ const DeodrantRepellent = ({ title, category, onComplete }: any) => {
 
             {step == 1 && (
                 <Question name='How many times per week do you apply deodorant?'>
-                    <input name="freq" onChange={numberInputOnChangeHandler} type="number" placeholder='Count Usage' />
+                    <input name="freq" value={state?.freq} onChange={numberInputOnChangeHandler} type="number" placeholder='Count Usage' />
                 </Question>
             )}
 
