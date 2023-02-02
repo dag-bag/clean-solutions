@@ -8,6 +8,7 @@ import HardSurfacesAppliances from './hard-surfaces-appliaces';
 import GroceriesAndPerishableFoods from './groceries-and-perishable-foods';
 import FoodSurfacesAndPackages from './food-surfaces-and-packages';
 import SoftSurfaceAndLaundry from './soft-surface-and-laundry';
+import FogRoomsAndCarpenting from './fog-rooms-and-carpenting';
 const HomeAndGarden = ({ title, onComplete }: any) => {
     console.log(' Home and garden component is rendered')
 
@@ -24,7 +25,8 @@ const HomeAndGarden = ({ title, onComplete }: any) => {
         'greenhouse and garden': <GreenHouseGarden title={'greenhouse and garden'}  {...props} />,
         'gloceries and perishable foods': <GroceriesAndPerishableFoods title={'gloceries and perishable foods'}  {...props} />,
         'food surfaces and packages': <FoodSurfacesAndPackages title={'food surfaces and packages'}  {...props} />,
-        'soft surfaces and laundry': <SoftSurfaceAndLaundry title={'soft surfaces and laundry'} {...props} />
+        'soft surfaces and laundry': <SoftSurfaceAndLaundry title={'soft surfaces and laundry'} {...props} />,
+        'fog rooms and carpenting': <FogRoomsAndCarpenting title={'fog rooms and carpenting'} {...props} />
     }
 
     const mySubCategories = findSimilarInArr(Object.keys(renderObject), subCategories)
