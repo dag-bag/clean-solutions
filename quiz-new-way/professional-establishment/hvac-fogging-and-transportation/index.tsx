@@ -6,13 +6,18 @@ import Select from '../../components/select';
 import quizdata from '../../../_____quiz-data';
 import Question from '../../components/question';
 import Layout from '../../components/quiz-layout';
-import MultipleNestedSelect from '../../components/multiple-select-nested-input';
-
+import AdvancedMultipleNested from '../../components/advanced-multiple-nested-input';
+import converters from '../../components/functions/convertors';
 const HVACFoggingAndTransportation = ({ title, category, onComplete }: any) => {
     const Max = 3 // total number of question (start from 1)
     const [step, setStep] = useState(1)
     const [state, setState] = useState<any>({
-        multiselect: []
+        quanity: {
+            selected: []
+        },
+        frequency: {
+            selected: []
+        }
     }) // input data stored for calculation
     const [isReadMoreToggled, setReadMore] = useState(true)
     const componentMeta = quizdata[category].categories[title]
@@ -23,7 +28,12 @@ const HVACFoggingAndTransportation = ({ title, category, onComplete }: any) => {
         : componentMeta.discription.concat(componentMeta.discription_more)
 
     function calculate() {
-        return 0
+
+        const sum = state.quanity.selected.map((key: string) => {
+            return converters.gallonsToPpm(state.quantity[key]) * state.frequency[key]
+        }).reduce((total: number, num: number) => total + num)
+
+        return sum
     }
 
     function stepUp() {
@@ -37,22 +47,6 @@ const HVACFoggingAndTransportation = ({ title, category, onComplete }: any) => {
 
     function readMoreClickHandler() {
         setReadMore(p => !p)
-    }
-
-    function numberInputOnChangeHandler(event: ChangeEvent<HTMLInputElement>) {
-        const { name, value } = event.target
-        setState((prev: any) => { return { ...prev, [name ?? 'm']: parseInt(value) } })
-    }
-
-
-    function multiSelectInputOnChangeHandler(event: ChangeEvent<HTMLDivElement>) {
-        const selectedOptionValue = event.target.innerHTML
-        if (!state.multiselect.includes(selectedOptionValue)) {
-            setState({ ...state, multiselect: [...state.multiselect, selectedOptionValue] })
-        } else {
-            const filterArrWithoutselectedOptionValue = state.multiselect.filter((value: any) => value !== selectedOptionValue)
-            setState({ ...state, multiselect: filterArrWithoutselectedOptionValue })
-        }
     }
 
     function selectInputOnChangeHandler(event: ChangeEvent<HTMLDivElement>) {
@@ -70,25 +64,26 @@ const HVACFoggingAndTransportation = ({ title, category, onComplete }: any) => {
             readMoreClickHandler,
         }}>
 
+
             {step == 1 && (
-                <Question name="How many gallons are in each water system?                ">
-                    <MultipleNestedSelect
+                <Question name="How many gallons are in each water system?">
+                    <AdvancedMultipleNested
+                        state={state}
+                        setState={setState}
+                        name="quanity"
                         options={[' Pools, Hot tubs, and Spas', 'Recirculating and Cooling Towers', ' Non-Potable Transfer Lines and Tanks', 'Ponds, Reservoirs, and Retention Basins',]}
-                        selectedOptions={state.multiselect}
-                        onClick={multiSelectInputOnChangeHandler}
-                        onChangeNestedInputs={numberInputOnChangeHandler}
                         placeholder="Gallons "
                     />
                 </Question>
             )}
 
-            {step == 1 && (
+            {step == 2 && (
                 <Question name="How many times per month do you sanitize water systems? ">
-                    <MultipleNestedSelect
-                        options={[' Pools, Hot tubs, and Spas', 'Recirculating and Cooling Towers', ' Non-Potable Transfer Lines and Tanks', 'Ponds, Reservoirs, and Retention Basins',]}
-                        selectedOptions={state.multiselect}
-                        onClick={multiSelectInputOnChangeHandler}
-                        onChangeNestedInputs={numberInputOnChangeHandler}
+                    <AdvancedMultipleNested
+                        state={state}
+                        setState={setState}
+                        name="frequency"
+                        options={state.quanity.selected}
                         placeholder="Times "
                     />
                 </Question>

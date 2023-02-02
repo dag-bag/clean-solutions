@@ -1,3 +1,4 @@
+// !calculation
 import { useState } from 'react'
 import { ChangeEvent } from 'react';
 import categoryState from '../../state';
@@ -6,9 +7,9 @@ import Select from '../../components/select';
 import quizdata from '../../../_____quiz-data';
 import Question from '../../components/question';
 import Layout from '../../components/quiz-layout';
+import converters from '../../components/functions/convertors';
 import AdvancedMultipleNested from '../../components/advanced-multiple-nested-input';
-
-const OfficesAndInstitues = ({ title, category, onComplete }: any) => {
+const BottlingEquimentAndFacilities = ({ title, category, onComplete }: any) => {
     const Max = 3 // total number of question (start from 1)
     const [step, setStep] = useState(1)
     const [state, setState] = useState<any>({
@@ -28,15 +29,17 @@ const OfficesAndInstitues = ({ title, category, onComplete }: any) => {
         : componentMeta.discription.concat(componentMeta.discription_more)
 
     function calculate() {
+
         const months = (state?.duration.includes('month'))
             ? state?.duration.match(/(\d+)/)[0] :
             (state?.duration.match(/(\d+)/)[0] * 12)
 
-        const sum = state.quantity.selected.map((value: string) => {
-            return state.quantity[value] * state.frequency[value]
-        }).reduce((total: number, num: number) => total + num)
+        const sum = state.quantity.selected.map((key: string) => {
+            return converters.gallonsToPpm(state.quantity[key] * 3.78541) * state.frequency[key]
+        }).reduce((t: number, v: number) => t + v)
         return sum * months * 100
     }
+
     function stepUp() {
         setStep(prev => prev + 1)
         if (Max == step) {
@@ -45,7 +48,6 @@ const OfficesAndInstitues = ({ title, category, onComplete }: any) => {
             console.log(data)
         }
     }
-
     function stepDown() {
         if (step > 1) {
             setStep(prev => prev - 1)
@@ -74,42 +76,46 @@ const OfficesAndInstitues = ({ title, category, onComplete }: any) => {
 
 
             {step == 1 && (
-                <Question name="Pick methods for preferred disinfection and deodorizing.">
+                <Question name="Select applications and maximum holding size of equipment in gallons for the facility.">
                     <AdvancedMultipleNested
                         state={state}
                         setState={setState}
                         name="quantity"
-                        options={['Spray', 'Mop', 'Soak']}
-                        placeholder="Square Feet "
-                        questions={['What is the SQ FT of home?', 'How many SQ FT in the home are hard-floors?', 'How many gallons do you typically use in a week for disinfecting hard, non-food contact surfaces?',]}
+                        options={['Dairies', 'Breweries and Microbrewing', 'Wineries and Distilleries', 'Bottling and Canning']}
+                        placeholder="Gallons"
                     />
                 </Question>
-            )}
+            )
+            }
 
-            {step == 2 && (
-                <Question name="How many times per month do you sanitize hard surfaces?">
-                    <AdvancedMultipleNested
-                        state={state}
-                        name="frequency"
-                        setState={setState}
-                        options={state.quantity.selected}
-                        placeholder="times "
-                    />
-                </Question>
-            )}
+            {
+                step == 2 && (
+                    <Question name="How many times per month do you sanitize equipment and machinery?">
+                        <AdvancedMultipleNested
+                            state={state}
+                            setState={setState}
+                            name="frequency"
+                            options={state.quantity.selected}
+                            placeholder="times "
+                        />
+                    </Question>
+                )
+            }
 
-            {step == 3 && (
-                <Question name='How long would you like a hard surface sanitizer supply?'>
-                    <Select
-                        options={['1 month', '2 month', '3 month', '6 month', '1 year', '2 year', '3 year']}
-                        selectedOption={state?.duration}
-                        onClick={selectInputOnChangeHandler}
-                        id="duration"
-                    />
-                </Question>
-            )}
-        </Layout>
+            {
+                step == 3 && (
+                    <Question name='How long would you like to keep this supply?'>
+                        <Select
+                            options={['1 month', '2 month', '3 month', '6 month', '1 year', '2 year', '3 year']}
+                            selectedOption={state?.duration}
+                            onClick={selectInputOnChangeHandler}
+                            id="duration"
+                        />
+                    </Question>
+                )
+            }
+        </Layout >
     )
 }
 
-export default OfficesAndInstitues
+export default BottlingEquimentAndFacilities

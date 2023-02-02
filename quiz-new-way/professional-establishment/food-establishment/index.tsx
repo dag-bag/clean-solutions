@@ -1,4 +1,3 @@
-// !caluculation 
 import { useState } from 'react'
 import { ChangeEvent } from 'react';
 import categoryState from '../../state';
@@ -72,6 +71,12 @@ const FoodEstablishment = ({ title, category, onComplete }: any) => {
             console.log(data)
         }
     }
+    function stepDown() {
+        if (step > 1) {
+            setStep(prev => prev - 1)
+        }
+
+    }
 
     function readMoreClickHandler() {
         setReadMore(p => !p)
@@ -86,13 +91,12 @@ const FoodEstablishment = ({ title, category, onComplete }: any) => {
         <Layout {...{
             title,
             stepUp,
+            stepDown,
             category,
             discription,
             isReadMoreToggled,
             readMoreClickHandler,
         }}>
-
-            {JSON.stringify(state)}
 
 
             {step == 1 && (

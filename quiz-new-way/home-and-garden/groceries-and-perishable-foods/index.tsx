@@ -1,4 +1,3 @@
-// !caluculation 
 import { useState } from 'react'
 import { ChangeEvent } from 'react';
 import categoryState from '../../state';
@@ -73,6 +72,13 @@ const GroceriesAndPerishableFoods = ({ title, category, onComplete }: any) => {
         }
     }
 
+    function stepDown() {
+        if (step > 1) {
+            setStep(prev => prev - 1)
+        }
+
+    }
+
     function readMoreClickHandler() {
         setReadMore(p => !p)
     }
@@ -86,6 +92,7 @@ const GroceriesAndPerishableFoods = ({ title, category, onComplete }: any) => {
         <Layout {...{
             title,
             stepUp,
+            stepDown,
             category,
             discription,
             isReadMoreToggled,

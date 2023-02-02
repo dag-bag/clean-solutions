@@ -6,7 +6,8 @@ import WaterSystemBasinsAndStorage from './water-syestems-basins-and-storage'
 
 import { selectedSubCategoryAtom } from '../../pages/quiz/sub-category';
 import findSimilarInArr from '../components/functions/findSimilarInArr';
-
+import BottlingEquimentAndFacilities from './bottling-equipment-and-facilities';
+import FoodEstablishment from './food-establishment';
 
 const ProfessionalEstablishment = ({ title, onComplete }: any) => {
     const [step, setStep] = useState(1)
@@ -18,8 +19,12 @@ const ProfessionalEstablishment = ({ title, onComplete }: any) => {
     }
 
     const renderObject: any = {
+        'food establishments': <FoodEstablishment title={'food establishments'} {...props} />,
         'office and institution': <OfficesAndInstitutes {...props} title='office and institution' />,
-        'water systems, basins and storage': <WaterSystemBasinsAndStorage {...props} title='water systems, basins and storage' />
+        'bottling equipment and facilities': <BottlingEquimentAndFacilities  {...props} title='bottling equipment and facilities' />,
+        'water systems, basins and storage': <WaterSystemBasinsAndStorage {...props} title='water systems, basins and storage' />,
+        // 'HVAC, fogging and transportation': <HVACFoggingAndTransportation title={'HVAC, fogging and transportation'} {...props} />
+
     }
 
     const mySubCategories = findSimilarInArr(Object.keys(renderObject), subCategories)

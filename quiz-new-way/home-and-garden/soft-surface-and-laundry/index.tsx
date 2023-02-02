@@ -26,7 +26,6 @@ import Question from '../../components/question';
 import Layout from '../../components/quiz-layout';
 import converters from '../../components/functions/convertors';
 import AdvancedMultipleNested from '../../components/advanced-multiple-nested-input';
-// import AdvancedMultipleNestedSelect from '../../components/advanced-multiple-nested-select';
 
 const SoftSurfaceAndLaundry = ({ title, category, onComplete }: any) => {
     const Max = 3 // total number of question (start from 1)
@@ -89,6 +88,13 @@ const SoftSurfaceAndLaundry = ({ title, category, onComplete }: any) => {
         }
     }
 
+    function stepDown() {
+        if (step > 1) {
+            setStep(prev => prev - 1)
+        }
+
+    }
+
     function readMoreClickHandler() {
         setReadMore(p => !p)
     }
@@ -102,13 +108,12 @@ const SoftSurfaceAndLaundry = ({ title, category, onComplete }: any) => {
         <Layout {...{
             title,
             stepUp,
+            stepDown,
             category,
             discription,
             isReadMoreToggled,
             readMoreClickHandler,
         }}>
-
-            {JSON.stringify(state)}
 
             {step == 1 && (
 

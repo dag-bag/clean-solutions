@@ -6,13 +6,18 @@ import Select from '../../components/select';
 import quizdata from '../../../_____quiz-data';
 import Question from '../../components/question';
 import Layout from '../../components/quiz-layout';
-import MultipleNestedSelect from '../../components/multiple-select-nested-input';
-
-const WaterSystemBasinsAn = ({ title, category, onComplete }: any) => {
+import converters from '../../components/functions/convertors';
+import AdvancedMultipleNested from '../../components/advanced-multiple-nested-input';
+const WaterSystemBasinsAndStorage = ({ title, category, onComplete }: any) => {
     const Max = 3 // total number of question (start from 1)
     const [step, setStep] = useState(1)
     const [state, setState] = useState<any>({
-        multiselect: []
+        quanity: {
+            selected: []
+        },
+        frequency: {
+            selected: []
+        }
     }) // input data stored for calculation
     const [isReadMoreToggled, setReadMore] = useState(true)
     const componentMeta = quizdata[category].categories[title]
@@ -23,7 +28,12 @@ const WaterSystemBasinsAn = ({ title, category, onComplete }: any) => {
         : componentMeta.discription.concat(componentMeta.discription_more)
 
     function calculate() {
-        return 0
+
+        const sum = state.quanity.selected.map((key: string) => {
+            return converters.gallonsToPpm(state.quanity[key]) * state.frequency[key]
+        }).reduce((total: number, num: number) => total + num)
+
+        return sum * 100
     }
 
     function stepUp() {
@@ -35,24 +45,15 @@ const WaterSystemBasinsAn = ({ title, category, onComplete }: any) => {
         }
     }
 
+    function stepDown() {
+        if (step > 1) {
+            setStep(prev => prev - 1)
+        }
+
+    }
+
     function readMoreClickHandler() {
         setReadMore(p => !p)
-    }
-
-    function numberInputOnChangeHandler(event: ChangeEvent<HTMLInputElement>) {
-        const { name, value } = event.target
-        setState((prev: any) => { return { ...prev, [name ?? 'm']: parseInt(value) } })
-    }
-
-
-    function multiSelectInputOnChangeHandler(event: ChangeEvent<HTMLDivElement>) {
-        const selectedOptionValue = event.target.innerHTML
-        if (!state.multiselect.includes(selectedOptionValue)) {
-            setState({ ...state, multiselect: [...state.multiselect, selectedOptionValue] })
-        } else {
-            const filterArrWithoutselectedOptionValue = state.multiselect.filter((value: any) => value !== selectedOptionValue)
-            setState({ ...state, multiselect: filterArrWithoutselectedOptionValue })
-        }
     }
 
     function selectInputOnChangeHandler(event: ChangeEvent<HTMLDivElement>) {
@@ -60,10 +61,12 @@ const WaterSystemBasinsAn = ({ title, category, onComplete }: any) => {
         setState((prev: any) => { return { ...prev, [id]: innerHTML } })
     }
 
+
     return (
         <Layout {...{
             title,
             stepUp,
+            stepDown,
             category,
             discription,
             isReadMoreToggled,
@@ -72,19 +75,25 @@ const WaterSystemBasinsAn = ({ title, category, onComplete }: any) => {
 
             {step == 1 && (
                 <Question name="How many gallons are in each water system?">
-                    <MultipleNestedSelect
-                        options={[' Pools, Hot tubs, and Spas', 'Recirculating and Cooling Towers', ' Non-Potable Transfer Lines and Tanks', 'Ponds, Reservoirs, and Retention Basins',]}
-                        selectedOptions={state.multiselect}
-                        onClick={multiSelectInputOnChangeHandler}
-                        onChangeNestedInputs={numberInputOnChangeHandler}
-                        placeholder="Gallons "
+                    <AdvancedMultipleNested
+                        state={state}
+                        setState={setState}
+                        name="quanity"
+                        options={['Pools, Hot tubs and Spas', 'Recirculating and Cooling Towers', 'Non-Potable Transfer Lines and Tanks', 'Ponds, Reservoirs, and Retention Basins',]}
+                        placeholder="Gallons"
                     />
                 </Question>
             )}
 
             {step == 2 && (
-                <Question name="How many times per month do you sanitize water systems?">
-                    <input name="freq" onChange={numberInputOnChangeHandler} type="number" placeholder='Times per day' />
+                <Question name="How many times per month do you sanitize water systems? ">
+                    <AdvancedMultipleNested
+                        state={state}
+                        setState={setState}
+                        name="frequency"
+                        options={state.quanity.selected}
+                        placeholder="Times "
+                    />
                 </Question>
             )}
 
@@ -104,4 +113,4 @@ const WaterSystemBasinsAn = ({ title, category, onComplete }: any) => {
     )
 }
 
-export default WaterSystemBasinsAn
+export default WaterSystemBasinsAndStorage
