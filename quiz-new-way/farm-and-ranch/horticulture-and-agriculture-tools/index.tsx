@@ -45,6 +45,14 @@ const HoticultureAndAgriculture = ({ title, category, onComplete }: any) => {
             console.log(data)
         }
     }
+
+    function stepDown() {
+        if (step > 1) {
+            setStep(prev => prev - 1)
+        }
+
+    }
+
     function readMoreClickHandler() {
         setReadMore(p => !p)
     }
@@ -57,6 +65,7 @@ const HoticultureAndAgriculture = ({ title, category, onComplete }: any) => {
         <Layout {...{
             title,
             stepUp,
+            stepDown,
             category,
             discription,
             isReadMoreToggled,

@@ -6,7 +6,7 @@ import RawProduceEggAndMeat from './raw-produce-egg-and-meat';
 import FugimentAndInsecticide from './fugiment-and-insecticide';
 import HoticultureAndAgriculture from './horticulture-and-agriculture-tools';
 import GreenHouseAndGarden from './greenhouse-and-garden';
-import PortableWaterForAnimals from './portable-water-for-animals/indext';
+import PortableWaterForAnimals from './portable-water-for-animals';
 
 const FarmAndRanch = ({ title, onComplete }: any) => {
     const [step, setStep] = useState(1)

@@ -71,11 +71,11 @@ const ResultPage = ({ posts }: { posts: PostsInterFace[] }) => {
         </section>
         {/* Create a Section for blogs According to selections  */}
         <section id="blog" className="blog">
-          {posts?.map(({ title, id }) => (
+          {/* {posts?.map(({ title, id }) => (
             <li className="container list-decimal" onClick={() => BlogLink(id)}>
               <h1>{title.rendered}</h1>
             </li>
-          ))}
+          ))} */}
         </section>
       </main>
     </>
@@ -83,10 +83,10 @@ const ResultPage = ({ posts }: { posts: PostsInterFace[] }) => {
 };
 
 export default ResultPage;
-export const getStaticProps: GetStaticProps = async (context) => {
-  return {
-    props: {
-      posts: await GetAllBlogs(),
-    },
-  };
-};
+// export const getStaticProps: GetStaticProps = async (context) => {
+//   return {
+//     props: {
+//       posts: await GetAllBlogs(),
+//     },
+//   };
+// };
