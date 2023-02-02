@@ -1,9 +1,6 @@
-import { selectedSubCategoryAtom } from "../../pages/quiz/sub-category"
-import { useRecoilState } from "recoil"
-import { dropOutVariant } from "../../animation/anime"
-import { motion } from 'framer-motion'
 import Image from "next/image"
-
+import { useRecoilState } from "recoil"
+import { selectedSubCategoryAtom } from "../../pages/quiz/sub-category"
 
 interface props {
     name: string,
@@ -12,7 +9,6 @@ interface props {
 }
 
 const CategoryCard = ({ name, data, disabled }: props) => {
-
     const [state, setState] = useRecoilState(selectedSubCategoryAtom)
     const isSelected = state.includes(name)
     function onClickHandler() {
@@ -24,15 +20,9 @@ const CategoryCard = ({ name, data, disabled }: props) => {
                 setState([...state, name])
             }
         }
-
     }
     return (
-        <motion.div
-            onClick={onClickHandler}
-            variants={dropOutVariant({
-                axis: "x",
-                axisValue: -400,
-            })}
+        <div onClick={onClickHandler}
             className={`w-full px-10 py-4 h-full rounded-md ${isSelected ? `bg-green-1` : `bg-blue-1`} ${disabled ? `opacity-50` : `opacity-100`} `}>
             <div className="flex items-center">
                 <div className="flex items-center justify-center gap-0">
@@ -44,6 +34,6 @@ const CategoryCard = ({ name, data, disabled }: props) => {
                 <p className="text-gray-200 text-center--">{data[name].discription}</p>
 
             </div>
-        </ motion.div >)
+        </ div >)
 }
 export default CategoryCard

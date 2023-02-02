@@ -2,27 +2,6 @@
 import Link from "next/link";
 import { useState } from "react";
 import Btn from "../../utils/Btn";
-import { motion } from "framer-motion";
-let easing = [0.6, -0.05, 0.01, 0.99];
-
-const fadeInUp = {
-  hidden: {
-    y: 60,
-    opacity: 0,
-    transition: { duration: 0.6, ease: easing },
-  },
-  enter: {
-    y: 0,
-    opacity: 1,
-    transition: {
-      duration: 0.6,
-      ease: easing,
-    },
-  },
-  exit: {
-    opacity: 0,
-  },
-};
 
 const TrustedIcons = [
   "bigstock-green-earth-and-leaves-14539535",
@@ -53,14 +32,14 @@ const Main = () => {
               <p className="text-base  md:text-md my-7 text-gray-200">{`Use it on hard and soft surfaces, food, plants, animals, skin, water, entire rooms, and much more. No organism tested has proven to be resilient. Kill 99.99% of ALL germs known to humankind. ${isViewMoreEnabled ? `Discover the many ways to use to defeat bacteria, viruses, mold, and odor.Your responses will aid in the creation of a custom, economical, eco-frienly EPA, NSF, NFPA FDA, CDC & FTC Cleared Disinfecting Solution.` : ''}`}</p>
 
             </div>
-            <motion.div variants={fadeInUp} className="flex flex-col items-center  md:flex-row justify-center">
+            <div className="flex flex-col items-center  md:flex-row justify-center">
               <Link href={"/quiz"}>
                 <Btn />
               </Link>
 
               <button onClick={onViewMoreBtnHandler} className="md:inline-flex block w-full md:w-auto items-center justify-start py-4 px-10 overflow-hidden font-semibold text-green-1 transition-all duration-150 ease-in-out rounded-full hover:pl-10  bg-none group border border-green-1  mx-5 my-4  md:my-0 ">Read More</button>
 
-            </motion.div>
+            </div>
             <div className="mt-8 pt-8 border-t border-gray-300 ">
               <div className="mt-2 flex gap-6 justify-center items-center">
 
@@ -80,13 +59,9 @@ const Main = () => {
         </div>
 
         <div className="w-[45%] absolute right-0 -bottom-[15rem] hidden xl:block">
-          <motion.img
+          <img
             alt="main-image"
-            exit={{ opacity: 0 }}
             src="./sanitizer-quiz2.png"
-            transition={{ delay: 0.2 }}
-            animate={{ x: 0, opacity: 1 }}
-            initial={{ x: 200, opacity: 0 }}
             className="object-cover  w-full rounded shadow-lg lg:rounded-none lg:shadow-none sm:h-96 lg:h-full "
           />
         </div>
