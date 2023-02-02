@@ -6,7 +6,6 @@ import Select from '../../components/select';
 import quizdata from '../../../_____quiz-data';
 import Question from '../../components/question';
 import Layout from '../../components/quiz-layout';
-import MultipleNestedSelect from '../../components/multiple-select-nested-input';
 import AdvancedMultipleNested from '../../components/advanced-multiple-nested-input';
 import converters from '../../components/functions/convertors';
 const BoatAircraftAndRVWaterStorage = ({ title, category, onComplete }: any) => {
