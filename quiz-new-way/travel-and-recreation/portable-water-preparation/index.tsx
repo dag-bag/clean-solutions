@@ -37,6 +37,12 @@ const PortableWaterRecreation = ({ title, category, onComplete }: any) => {
         }
     }
 
+    function stepDown() {
+        if (step > 1) {
+            setStep(prev => prev - 1)
+        }
+    }
+
     function readMoreClickHandler() {
         setReadMore(p => !p)
     }
@@ -51,20 +57,16 @@ const PortableWaterRecreation = ({ title, category, onComplete }: any) => {
         setState((prev: any) => { return { ...prev, [id]: innerHTML } })
     }
 
-
-
-
     return (
         <Layout {...{
             title,
             stepUp,
+            stepDown,
             category,
             discription,
             isReadMoreToggled,
             readMoreClickHandler,
         }}>
-
-            {JSON.stringify(state)}
 
             {step == 1 && (
                 <Question name="How many gallons of drinking water do you want to have disinfected for an average day on the road?">

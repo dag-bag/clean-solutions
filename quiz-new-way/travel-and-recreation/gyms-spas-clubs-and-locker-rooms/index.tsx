@@ -52,6 +52,12 @@ const GymSpasClubsAndLockerRooms = ({ title, category, onComplete }: any) => {
         }
     }
 
+    function stepDown() {
+        if (step > 1) {
+            setStep(prev => prev - 1)
+        }
+    }
+
     function readMoreClickHandler() {
         setReadMore(p => !p)
     }
@@ -66,13 +72,12 @@ const GymSpasClubsAndLockerRooms = ({ title, category, onComplete }: any) => {
         <Layout {...{
             title,
             stepUp,
+            stepDown,
             category,
             discription,
             isReadMoreToggled,
             readMoreClickHandler,
         }}>
-
-            {JSON.stringify(state)}
 
             {step == 1 && (
                 <Question name="Pick methods for preferred disinfection and deodorizing.">

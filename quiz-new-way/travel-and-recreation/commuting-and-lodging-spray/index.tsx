@@ -81,6 +81,12 @@ const CommutingAndLodgingSpray = ({ title, category, onComplete }: any) => {
         }
     }
 
+    function stepDown() {
+        if (step > 1) {
+            setStep(prev => prev - 1)
+        }
+    }
+
     function readMoreClickHandler() {
         setReadMore(p => !p)
     }
@@ -94,15 +100,14 @@ const CommutingAndLodgingSpray = ({ title, category, onComplete }: any) => {
         <Layout {...{
             title,
             stepUp,
+            stepDown,
             category,
             discription,
             isReadMoreToggled,
             readMoreClickHandler,
         }}>
 
-            <p>{JSON.stringify(state)}</p>
             {step == 1 && (
-
                 <>
                     <Question name="Select all that apply" >
                         <AdvancedMultipleNested
