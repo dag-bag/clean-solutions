@@ -2,7 +2,7 @@
 import Link from "next/link";
 import { useState } from "react";
 import Btn from "../../utils/Btn";
-
+import Image from "next/image";
 const TrustedIcons = [
   "bigstock-green-earth-and-leaves-14539535",
   "Non-Toxic-Icon",
@@ -59,10 +59,11 @@ const Main = () => {
         </div>
 
         <div className="w-[45%] absolute right-0 -bottom-[15rem] hidden xl:block">
-          <img
+          <Image
             alt="main-image"
-            src="./sanitizer-quiz2.png"
-            className="object-cover  w-full rounded shadow-lg lg:rounded-none lg:shadow-none sm:h-96 lg:h-full "
+            src={'/sanitizer-quiz2.png'}
+            width={1000}
+            height={1300}
           />
         </div>
       </div>
