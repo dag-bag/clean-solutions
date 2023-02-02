@@ -6,8 +6,8 @@ import Select from '../../components/select';
 import quizdata from '../../../_____quiz-data';
 import Question from '../../components/question';
 import Layout from '../../components/quiz-layout';
-import AdvancedMultipleNested from '../../components/advanced-multiple-nested-input';
 import converters from '../../components/functions/convertors';
+import AdvancedMultipleNested from '../../components/advanced-multiple-nested-input';
 const DipEquipmentTools = ({ title, category, onComplete }: any) => {
     const Max = 3 // total number of question (start from 1)
     const [step, setStep] = useState(1)
@@ -50,6 +50,12 @@ const DipEquipmentTools = ({ title, category, onComplete }: any) => {
         }
     }
 
+    function stepDown() {
+        if (step > 1) {
+            setStep(prev => prev - 1)
+        }
+    }
+
     function readMoreClickHandler() {
         setReadMore(p => !p)
     }
@@ -69,6 +75,7 @@ const DipEquipmentTools = ({ title, category, onComplete }: any) => {
         <Layout {...{
             title,
             stepUp,
+            stepDown,
             category,
             discription,
             isReadMoreToggled,

@@ -80,6 +80,12 @@ const WaterRetentionStorage = ({ title, category, onComplete }: any) => {
         }
     }
 
+    function stepDown() {
+        if (step > 1) {
+            setStep(prev => prev - 1)
+        }
+    }
+
     function readMoreClickHandler() {
         setReadMore(p => !p)
     }
@@ -93,6 +99,7 @@ const WaterRetentionStorage = ({ title, category, onComplete }: any) => {
         <Layout {...{
             title,
             stepUp,
+            stepDown,
             category,
             discription,
             isReadMoreToggled,
