@@ -1,21 +1,3 @@
-const stenghtObject = {
-    'Spray': {
-        'light': 5,
-        'heavy': 5,
-        'moderate': 5,
-    },
-    'Moap': {
-        'light': 5,
-        'heavy': 5,
-        'moderate': 5,
-    },
-    'Soak': {
-        'light': 5,
-        'heavy': 5,
-        'moderate': 5,
-    }
-}
-
 import { useState } from 'react'
 import { ChangeEvent } from 'react';
 import categoryState from '../../state';
@@ -24,25 +6,19 @@ import Select from '../../components/select';
 import quizdata from '../../../_____quiz-data';
 import Question from '../../components/question';
 import Layout from '../../components/quiz-layout';
-import converters from '../../components/functions/convertors';
 import AdvancedMultipleNested from '../../components/advanced-multiple-nested-input';
-import AdvancedMultipleNestedSelect from '../../components/advanced-multiple-nested-select';
+import converters from '../../components/functions/convertors';
 
-const HardSurfacesAppliances = ({ title, category, onComplete }: any) => {
-    const Max = 4 // total number of question (start from 1)
+const HardSurfaceAppliances = ({ title, category, onComplete }: any) => {
+    const Max = 3 // total number of question (start from 1)
     const [step, setStep] = useState(1)
     const [state, setState] = useState<any>({
         quantity: {
             selected: []
         },
-        frequncy: {
+        frequency: {
             selected: []
-        }, strenght: {
-            value: '',
-            sub_value: ''
         }
-
-
     }) // input data stored for calculation
     const [isReadMoreToggled, setReadMore] = useState(true)
     const componentMeta = quizdata[category].categories[title]
@@ -54,16 +30,15 @@ const HardSurfacesAppliances = ({ title, category, onComplete }: any) => {
 
     function calculate() {
 
+        //3.78541 per sqft
         const months = (state?.duration.includes('month'))
             ? state?.duration.match(/(\d+)/)[0] :
             (state?.duration.match(/(\d+)/)[0] * 12)
 
         const sum = state.quantity.selected.map((value: string) => {
-            return state.quantity[value] * state.frequncy[value]
+            return converters.mlToPpm(state.quantity[value] * 3.78541) * state.frequency[value]
         }).reduce((total: number, num: number) => total + num)
-
-        const defaultStreght = 1
-        return converters.gallonsToPpm(sum) * months * defaultStreght
+        return sum * months * 100
     }
 
     function stepUp() {
@@ -75,10 +50,16 @@ const HardSurfacesAppliances = ({ title, category, onComplete }: any) => {
         }
     }
 
+    function stepDown() {
+        if (step > 1) {
+            setStep(prev => prev - 1)
+        }
+
+    }
+
     function readMoreClickHandler() {
         setReadMore(p => !p)
     }
-
     function selectInputOnChangeHandler(event: ChangeEvent<HTMLDivElement>) {
         const { id, innerHTML } = event.target
         setState((prev: any) => { return { ...prev, [id]: innerHTML } })
@@ -88,62 +69,39 @@ const HardSurfacesAppliances = ({ title, category, onComplete }: any) => {
         <Layout {...{
             title,
             stepUp,
+            stepDown,
             category,
             discription,
             isReadMoreToggled,
             readMoreClickHandler,
         }}>
-
-            {JSON.stringify(state)}
-
             {step == 1 && (
-
-                <Question name="How many gallons are in each water system?" >
+                <Question name="Which methods are preferred for disinfection and deodorizing at home?">
                     <AdvancedMultipleNested
                         state={state}
                         setState={setState}
                         name="quantity"
-                        placeholder="Quantity in numbers"
                         options={['Spray', 'Mop', 'Soak']}
-                        questions={['What is the SQ FT of home?', 'How many SQ FT in the home are hard-floors?', 'How many gallons do you typically use in a week for disinfecting hard, non-food contact surfaces?']}
+                        placeholder="Square Feet "
+                        questions={['What is the SQ FT of home?', 'How many SQ FT in the home are hard-floors?', 'How many gallons do you typically use in a week for disinfecting hard, non-food contact surfaces?',]}
                     />
                 </Question>
-
             )}
 
             {step == 2 && (
-
-                <Question name="How many times per week do you sanitize hard surfaces?" >
+                <Question name="How many times per week do you sanitize hard surfaces?">
                     <AdvancedMultipleNested
                         state={state}
+                        name="frequency"
                         setState={setState}
-                        name="frequncy"
-                        placeholder="Quantity in numbers"
                         options={state.quantity.selected}
+                        placeholder="times "
                     />
-                </Question>)}
-
-
-
-            {step == 3 && (
-
-                <Question name="Select which strengths you will need to apply" >
-                    <>
-                        <AdvancedMultipleNestedSelect
-                            state={state}
-                            name="strenght"
-                            setState={setState}
-                            options={stenghtObject}
-                        />
-
-                    </>
                 </Question>
-
             )}
 
-
-            {step == 4 && (
-                <Question name='How long would you like a recirculating water system disinfectant  supply?'>
+            {step == 3 && (
+                <Question name='How long would you like a hard surface sanitizer supply?'>
                     <Select
                         options={['1 month', '2 month', '3 month', '6 month', '1 year', '2 year', '3 year']}
                         selectedOption={state?.duration}
@@ -152,10 +110,8 @@ const HardSurfacesAppliances = ({ title, category, onComplete }: any) => {
                     />
                 </Question>
             )}
-
-
         </Layout>
     )
 }
 
-export default HardSurfacesAppliances
+export default HardSurfaceAppliances
