@@ -7,7 +7,7 @@ import FugimentAndInsecticide from './fugiment-and-insecticide';
 import HoticultureAndAgriculture from './horticulture-and-agriculture-tools';
 import GreenHouseAndGarden from './greenhouse-and-garden';
 import PortableWaterForAnimals from './portable-water-for-animals';
-
+import LivestocksSanitizerAnsDeodorizer from './livestocks-sanitizer-and-deodorizer';
 const FarmAndRanch = ({ title, onComplete }: any) => {
     const [step, setStep] = useState(1)
     const subCategories = useRecoilValue(selectedSubCategoryAtom)
@@ -22,7 +22,8 @@ const FarmAndRanch = ({ title, onComplete }: any) => {
         'fugiment and insecticide': <FugimentAndInsecticide title="fugiment and insecticide" {...props} />,
         'green house and garden': <GreenHouseAndGarden title="green house and garden" {...props} />,
         'portable water for animals'
-            : <PortableWaterForAnimals title="portable water for animals" {...props} />
+            : <PortableWaterForAnimals title="portable water for animals" {...props} />,
+        'livestock sanitizer and deodorizer': <LivestocksSanitizerAnsDeodorizer title="livestock sanitizer and deodorizer" {...props} />
     }
 
     const mySubCategories = findSimilarInArr(Object.keys(renderObject), subCategories)

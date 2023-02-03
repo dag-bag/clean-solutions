@@ -28,12 +28,14 @@ const HVACFoggingAndTransportation = ({ title, category, onComplete }: any) => {
         : componentMeta.discription.concat(componentMeta.discription_more)
 
     function calculate() {
-
+        const months = (state?.duration.includes('month'))
+            ? state?.duration.match(/(\d+)/)[0] :
+            (state?.duration.match(/(\d+)/)[0] * 12)
         const sum = state.quanity.selected.map((key: string) => {
-            return converters.gallonsToPpm(state.quantity[key]) * state.frequency[key]
+            return converters.mlToPpm(state.quanity[key] * 3.78541) * state.frequency[key]
         }).reduce((total: number, num: number) => total + num)
 
-        return sum
+        return sum * months * 100
     }
 
     function stepUp() {
@@ -65,20 +67,23 @@ const HVACFoggingAndTransportation = ({ title, category, onComplete }: any) => {
         }}>
 
 
+
+            {JSON.stringify(state)}
+
             {step == 1 && (
-                <Question name="How many gallons are in each water system?">
+                <Question name="How many SQ FT are in your home or vehicle?">
                     <AdvancedMultipleNested
                         state={state}
                         setState={setState}
                         name="quanity"
-                        options={[' Pools, Hot tubs, and Spas', 'Recirculating and Cooling Towers', ' Non-Potable Transfer Lines and Tanks', 'Ponds, Reservoirs, and Retention Basins',]}
-                        placeholder="Gallons "
+                        options={['Home and Building', 'Vehicals and Transportation']}
+                        placeholder="SQFT "
                     />
                 </Question>
             )}
 
             {step == 2 && (
-                <Question name="How many times per month do you sanitize water systems? ">
+                <Question name="How many times per month do you want to fog buildings or transportation?">
                     <AdvancedMultipleNested
                         state={state}
                         setState={setState}

@@ -1,4 +1,4 @@
-// !calculation
+
 import { useState } from 'react'
 import { ChangeEvent } from 'react';
 import categoryState from '../../state';

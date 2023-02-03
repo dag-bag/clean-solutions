@@ -8,6 +8,7 @@ import { selectedSubCategoryAtom } from '../../pages/quiz/sub-category';
 import findSimilarInArr from '../components/functions/findSimilarInArr';
 import BottlingEquimentAndFacilities from './bottling-equipment-and-facilities';
 import FoodEstablishment from './food-establishment';
+import HVACFoggingAndTransportation from './hvac-fogging-and-transportation';
 
 const ProfessionalEstablishment = ({ title, onComplete }: any) => {
     const [step, setStep] = useState(1)
@@ -23,7 +24,7 @@ const ProfessionalEstablishment = ({ title, onComplete }: any) => {
         'office and institution': <OfficesAndInstitutes {...props} title='office and institution' />,
         'bottling equipment and facilities': <BottlingEquimentAndFacilities  {...props} title='bottling equipment and facilities' />,
         'water systems, basins and storage': <WaterSystemBasinsAndStorage {...props} title='water systems, basins and storage' />,
-        // 'HVAC, fogging and transportation': <HVACFoggingAndTransportation title={'HVAC, fogging and transportation'} {...props} />
+        'HVAC, fogging and transportation': <HVACFoggingAndTransportation title={'HVAC, fogging and transportation'} {...props} />
 
     }
 

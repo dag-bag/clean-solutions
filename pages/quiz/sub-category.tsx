@@ -7,8 +7,8 @@ import { atom, useRecoilValue, useRecoilState } from "recoil";
 import CategoryCard from "../../components/cards/subCategory-card";
 import PrerequisiteDataError from "../../quiz-new-way/components/prerequisite";
 
-const disebledSubCategories = ['wastewater treatment', 'body sanitizer & deodrant', 'camping hunting & scent eleminator', 'livestock sanitizer and deodorizer', 'food surfaces and packages', 'greenhouse and garden',
-    'bio-trauma remedation', 'HVAC, fogging and transportation']
+const disebledSubCategories = ['food surfaces and packages',
+    'bio-trauma remedation']
 
 export const selectedSubCategoryAtom = atom<string[]>({
     key: 'selected-sub-category',

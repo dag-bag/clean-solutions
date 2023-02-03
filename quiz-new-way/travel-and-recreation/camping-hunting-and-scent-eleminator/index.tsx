@@ -1,4 +1,3 @@
-// !caluculation 
 import { useState } from 'react'
 import { ChangeEvent } from 'react';
 import categoryState from '../../state';
@@ -10,7 +9,7 @@ import Layout from '../../components/quiz-layout';
 import converters from '../../components/functions/convertors';
 import AdvancedMultipleNested from '../../components/advanced-multiple-nested-input';
 import MultipleSelectInsertedSelect from '../../components/multipe-select-inserted-select';
-const CampingHuntingAndScentEleminator = ({ title, category, onComplete }: any) => {
+const FoodEstablishment = ({ title, category, onComplete }: any) => {
     const Max = 3 // total number of question (start from 1)
     const [step, setStep] = useState(1)
     const [state, setState] = useState<any>({
@@ -36,6 +35,7 @@ const CampingHuntingAndScentEleminator = ({ title, category, onComplete }: any) 
             'Produce, Fruits, Vegetable': 5,
             'Eggshells': 5,
             'Raw Meat, Poultry, & Seafood': 70,
+            'Food Contact Surfaces': 20
         }
 
         const valuesObject: any = {
@@ -54,7 +54,7 @@ const CampingHuntingAndScentEleminator = ({ title, category, onComplete }: any) 
             'Food Contact Surfaces': {
                 'Spray': 945,
                 'Soak': 3785
-            }
+            },
         }
 
         const months = (state?.duration.includes('month'))
@@ -76,11 +76,11 @@ const CampingHuntingAndScentEleminator = ({ title, category, onComplete }: any) 
             console.log(data)
         }
     }
-
     function stepDown() {
         if (step > 1) {
             setStep(prev => prev - 1)
         }
+
     }
 
     function readMoreClickHandler() {
@@ -103,8 +103,9 @@ const CampingHuntingAndScentEleminator = ({ title, category, onComplete }: any) 
             readMoreClickHandler,
         }}>
 
+
             {step == 1 && (
-                <Question name="Select the preferred method for disinfection. ">
+                <Question name="Enter how many pounds of goods and commodities are processed on average and select the preferred method for disinfection.">
                     <MultipleSelectInsertedSelect
                         state={state}
                         setState={setState}
@@ -147,4 +148,4 @@ const CampingHuntingAndScentEleminator = ({ title, category, onComplete }: any) 
     )
 }
 
-export default CampingHuntingAndScentEleminator
+export default FoodEstablishment
