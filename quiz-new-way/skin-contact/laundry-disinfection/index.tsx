@@ -25,22 +25,26 @@ const LaundryDisinfection = ({ title, category, onComplete }: any) => {
 
     function calculate() {
         const laundryWeight: any = {
-            'everyday': 100,
-            'heavy': 200,
-            'insecticide': 725
+            'everyday': 100, 'moderate': 200, 'heavy': 500, "insecticide": 725
         }
-        const quantity = converters.gallonsToPpm(state?.multiselect.length * 20)
-        const months = (state?.duration.includes('month'))
-            ? state?.duration.match(/(\d+)/)[0] :
-            (state?.duration.match(/(\d+)/)[0] * 12)
 
-        return quantity * laundryWeight[state?.freq] * months
+        try {
+            const months = (state?.duration.includes('month'))
+                ? state?.duration.match(/(\d+)/)[0] :
+                (state?.duration.match(/(\d+)/)[0] * 12)
+            const quantity = converters.gallonsToPpm(state.multiselect.length * 20)
+            const strenght = laundryWeight[state.freq]
+            return quantity * strenght * months
+        } catch (err) {
+            console.error('Question Skipped : cause --skipped flag in result/calculation')
+        }
     }
 
     function stepUp() {
         setStep(prev => prev + 1)
         if (Max == step) {
-            updateData({ ...data, [title]: calculate() })
+            const calculation = calculate()
+            updateData({ ...data, [title]: calculation ? calculation : '--skipped' })
             onComplete()
         }
     }
@@ -81,6 +85,8 @@ const LaundryDisinfection = ({ title, category, onComplete }: any) => {
             readMoreClickHandler,
         }}>
 
+            {JSON.stringify(state)}
+
             {step == 1 && (
                 <Question name="Choose all that apply">
                     <MultipleSelect
@@ -95,7 +101,7 @@ const LaundryDisinfection = ({ title, category, onComplete }: any) => {
             {step == 2 && (
                 <Question name="How many loads of laundry (linens and clothes) do you wash on an average month?">
                     <Select
-                        options={['everyday', 'heavy', 'insecticide']}
+                        options={['everyday', 'moderate', 'heavy', 'insecticide']}
                         selectedOption={state?.freq}
                         onClick={selectInputOnChangeHandler}
                         id="freq"

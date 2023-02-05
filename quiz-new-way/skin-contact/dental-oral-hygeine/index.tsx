@@ -7,6 +7,7 @@ import Select from '../../components/select';
 import quizdata from '../../../_____quiz-data';
 import Question from '../../components/question';
 import Layout from '../../components/quiz-layout';
+import NumberInput from '../../components/NumberInput';
 import MultipleSelect from '../../components/multiple-select';
 import converters from '../../components/functions/convertors';
 
@@ -16,17 +17,15 @@ const DentalOralHygeine = ({ title, category, onComplete }: any) => {
     const componentMeta = quizdata[category].categories[title]
     const [isReadMoreToggled, setReadMore] = useState(true)
     const [data, updateData] = useRecoilState(categoryState)
-
     const [state, setState] = useState<any>({
         multiselect: []
     })
-
     const discription = isReadMoreToggled
         ? componentMeta.discription
         : componentMeta.discription.concat(componentMeta.discription_more)
 
     function calculate() {
-        const multiselectValues: any = {
+        const strenghtObj: any = {
             'Combs and Brushes': 100,
             'Nail Tech Tools': 500,
             'Respirators and CPAP Parts': 5,
@@ -37,19 +36,25 @@ const DentalOralHygeine = ({ title, category, onComplete }: any) => {
             'Other Dental Instruments': 1000,
             'Mouth Rinse or Gargle': 4
         }
-        const duration = (state?.duration.includes('month'))
-            ? state?.duration.match(/(\d+)/)[0] * 1 :
-            (state?.duration.match(/(\d+)/)[0] * 12)
-        const selectedValueData = state?.freq * 4.4
-        const quantity = converters.quartsToPpm(state?.multiselect?.length)
-        const multiselectValuesSum = state?.multiselect?.map((name: string) => multiselectValues[name]).reduce((total: number, num: number) => total + num)
-        return quantity * selectedValueData * multiselectValuesSum * duration
+        try {
+            const months = (state?.duration.includes('month'))
+                ? state?.duration.match(/(\d+)/)[0] :
+                (state?.duration.match(/(\d+)/)[0] * 12)
+
+            const quantity = converters.quartsToPpm(state.multiselect.length)
+            const strenght = state.multiselect.map((key: string) => strenghtObj[key]).reduce((t: number, k: number) => t + k)
+            const frequency = state.freq
+            return quantity * frequency * strenght * months
+        } catch (err) {
+            console.error('Question Skipped : cause --skipped flag in result/calculation')
+        }
     }
 
     function stepUp() {
         setStep(prev => prev + 1)
         if (Max == step) {
-            updateData({ ...data, [title]: calculate() })
+            const calculation = calculate()
+            updateData({ ...data, [title]: calculation ? calculation : '--skipped' })
             onComplete()
         }
     }
@@ -62,11 +67,6 @@ const DentalOralHygeine = ({ title, category, onComplete }: any) => {
 
     function readMoreClickHandler() {
         setReadMore(p => !p)
-    }
-
-    function numberInputOnChangeHandler(event: ChangeEvent<HTMLInputElement>) {
-        const { name, value } = event.target
-        setState((prev: any) => { return { ...prev, [name]: parseInt(value) } })
     }
 
     function selectInputOnChangeHandler(event: ChangeEvent<HTMLDivElement>) {
@@ -99,28 +99,27 @@ const DentalOralHygeine = ({ title, category, onComplete }: any) => {
                 <Question name="Choose all that apply" >
                     <h1 className='text-2xl py-2 font-semibold'>Choose all that apply</h1>
                     <MultipleSelect
-                        options={['Combs and Brushes', 'Nail Tech Tools', 'Respirators and CPAP Parts', ' Pacifiers and Bottles', 'Baby and Child Toys ', 'Toothbrushes', ' Retainers and Dentures', 'Other Dental Instruments', 'Mouth Rinse or Gargle']}
+                        id="multiselect"
                         selectedOptions={state.multiselect}
                         onClick={multiSelectInputOnChangeHandler}
-                        id="multiselect"
+                        options={['Combs and Brushes', 'Nail Tech Tools', 'Respirators and CPAP Parts', ' Pacifiers and Bottles', 'Baby and Child Toys ', 'Toothbrushes', ' Retainers and Dentures', 'Other Dental Instruments', 'Mouth Rinse or Gargle']}
                     />
                 </Question>
             )}
 
             {step == 2 && (
-                <Question name="How frequently do you sanitize hygienic utensils or perform an oral routine?">
-                    <input name="freq" value={state?.freq} onChange={numberInputOnChangeHandler} type="number" placeholder='Times per weeks' />
+                <Question name="How frequently do you sanitize hygienic utensils or perform an oral routine on weekly basis?">
+                    <NumberInput min={1} max={30} name='freq' state={state} setState={setState} placeholder='1-30' />
                 </Question>
             )}
 
             {step == 3 && (
                 <Question name='How long would you like to have a sanitizer for dental & oral care?'>
                     <Select
-                        options={['1 month', '2 month', '3 month', '6 month', '1 year']}
+                        id="duration"
                         selectedOption={state?.duration}
                         onClick={selectInputOnChangeHandler}
-                        id="duration"
-                    />
+                        options={['1 month', '2 month', '3 month', '6 month', '1 year']} />
                 </Question>
             )}
 

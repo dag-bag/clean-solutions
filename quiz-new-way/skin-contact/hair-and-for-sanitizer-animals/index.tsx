@@ -7,8 +7,9 @@ import Select from '../../components/select';
 import quizdata from '../../../_____quiz-data';
 import Question from '../../components/question';
 import Layout from '../../components/quiz-layout';
-import AdvancedMultipleNested from '../../components/advanced-multiple-nested-input';
 import converters from '../../components/functions/convertors';
+import AdvancedMultipleNested from '../../components/advanced-multiple-nested-input';
+import NumberInput from '../../components/NumberInput';
 
 const HairAndFurSanitizerForAnimals = ({ title, category, onComplete }: any) => {
     const Max = 3
@@ -23,7 +24,8 @@ const HairAndFurSanitizerForAnimals = ({ title, category, onComplete }: any) => 
         },
         animalFrequncy: {
             selected: []
-        }
+        },
+        quantityOfOthers: ''
     })
 
     const discription = isReadMoreToggled
@@ -33,28 +35,36 @@ const HairAndFurSanitizerForAnimals = ({ title, category, onComplete }: any) => 
 
     function calculate() {
 
-        const months = (state?.duration.includes('month'))
-            ? state?.duration.match(/(\d+)/)[0] :
-            (state?.duration.match(/(\d+)/)[0] * 12)
-
         const AnimalsPerQuantityInGallons: any = {
             cats: 3,
             dogs: 5,
-            'Other pets with dander, hair or fur': state['other-quantity'],
+            'Other pets with dander, hair or fur': state['quantityOfOthers'],
         }
 
-        const QuntityOfWaterUse = state.animalQuantity.selected.map((key: string) => {
-            const k1 = state.animalFrequncy[key] * AnimalsPerQuantityInGallons[key]
-            return k1
-        }).reduce((total: number, num: number) => total + num)
+        try {
+            const months = (state?.duration.includes('month'))
+                ? state?.duration.match(/(\d+)/)[0] :
+                (state?.duration.match(/(\d+)/)[0] * 12)
 
-        return converters.gallonsToPpm(QuntityOfWaterUse) * months * 160
+            const sum = state.animalQuantity.selected.map((key: string) => {
+                const quantity = converters.gallonsToPpm(AnimalsPerQuantityInGallons[key]) * state.animalQuantity[key]
+                const frequncy = state.animalFrequncy[key]
+                const strenght = 160
+                console.log(quantity, frequncy, strenght)
+                return quantity * frequncy * strenght
+            }).reduce((t: number, n: number) => t + n)
+
+            return sum * months
+        } catch (err) {
+            console.error('Question Skipped : cause --skipped flag in result/calculation')
+        }
     }
 
     function stepUp() {
         setStep(prev => prev + 1)
         if (Max == step) {
-            updateData({ ...data, [title]: calculate() })
+            const calculation = calculate()
+            updateData({ ...data, [title]: calculation ? calculation : '--skipped' })
             onComplete()
         }
     }
@@ -85,8 +95,10 @@ const HairAndFurSanitizerForAnimals = ({ title, category, onComplete }: any) => 
         }}>
 
 
-            {step == 1 && (
+            {JSON.stringify(state)}
 
+
+            {step == 1 && (
                 <>
                     <Question name="How many animals do you have?" >
                         <AdvancedMultipleNested
@@ -100,7 +112,14 @@ const HairAndFurSanitizerForAnimals = ({ title, category, onComplete }: any) => 
                     </Question>
 
                     {state.animalQuantity.selected.includes('Other pets with dander, hair or fur') && <Question name="How many gallons typically required to wash other animals?">
-                        <input onChange={(event) => { setState({ ...state, 'other-quantity': parseInt(event.target.value) }) }} type="number" placeholder='Times per day' />
+                        <NumberInput
+                            state={state}
+                            name="quantityOfOthers"
+                            placeholder="usage per day"
+                            onChange={(event: any) => {
+                                setState({ ...state, 'quantityOfOthers': parseInt(event.target.value) })
+                            }}
+                        />
                     </Question>}
                 </>
 
@@ -113,7 +132,7 @@ const HairAndFurSanitizerForAnimals = ({ title, category, onComplete }: any) => 
                         setState={setState}
                         name="animalFrequncy"
                         placeholder="Wash Quantity"
-                        options={['cats', 'dogs', 'Other pets with dander, hair or fur']}
+                        options={state.animalQuantity.selected}
                         questions={['How many times a month would you sanitize cat hair?', 'How many times a month would you sanitize dog hair?', 'How many times a month would you sanitize other animals hair?']}
                     />
                 </Question>

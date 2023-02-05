@@ -1,3 +1,4 @@
+// PRODUCTION_READY
 import { useState } from 'react'
 import { ChangeEvent } from 'react';
 import categoryState from '../../state';
@@ -6,14 +7,15 @@ import Select from '../../components/select';
 import quizdata from '../../../_____quiz-data';
 import Question from '../../components/question';
 import Layout from '../../components/quiz-layout';
+import NumberInput from '../../components/NumberInput';
 import converters from '../../components/functions/convertors';
 
 const DeodrantRepellent = ({ title, category, onComplete }: any) => {
-    const Max = 2 // how much question is in this subcategory (count start from 1)
+    const Max = 2
     const [step, setStep] = useState(1)
-    const [state, setState] = useState<any>({}) // input data stored for calculation
-    const componentMeta = quizdata[category].categories[title]
+    const [state, setState] = useState<any>({})
     const [isReadMoreToggled, setReadMore] = useState(true)
+    const componentMeta = quizdata[category].categories[title]
     const [data, updateData] = useRecoilState(categoryState)
 
     const discription = isReadMoreToggled
@@ -21,20 +23,24 @@ const DeodrantRepellent = ({ title, category, onComplete }: any) => {
         : componentMeta.discription.concat(componentMeta.discription_more)
 
     function calculate() {
-
-        const months = (state?.duration.includes('month'))
-            ? state?.duration.match(/(\d+)/)[0] :
-            (state?.duration.match(/(\d+)/)[0] * 12)
-
-        return converters.mlToPpm(5) * (state?.freq * 4.4) * months * 50
-
+        try {
+            const months = (state?.duration.includes('month'))
+                ? state?.duration.match(/(\d+)/)[0] :
+                (state?.duration.match(/(\d+)/)[0] * 12)
+            const quantity = converters.mlToPpm(2) * 4.4
+            const strenght = 50
+            const frequency = state.freq
+            return quantity * frequency * strenght * months
+        } catch (err) {
+            console.log(err)
+        }
     }
 
     function stepUp() {
         setStep(prev => prev + 1)
-        console.log(title)
         if (Max == step) {
-            updateData({ ...data, [title]: calculate() })
+            const calculation = calculate()
+            updateData({ ...data, [title]: calculation ? calculation : 'skipped' })
             onComplete()
         }
     }
@@ -47,11 +53,6 @@ const DeodrantRepellent = ({ title, category, onComplete }: any) => {
 
     function readMoreClickHandler() {
         setReadMore(p => !p)
-    }
-
-    function numberInputOnChangeHandler(event: ChangeEvent<HTMLInputElement>) {
-        const { name, value } = event.target
-        setState((prev: any) => { return { ...prev, [name]: parseInt(value) } })
     }
 
     function selectInputOnChangeHandler(event: ChangeEvent<HTMLDivElement>) {
@@ -72,7 +73,7 @@ const DeodrantRepellent = ({ title, category, onComplete }: any) => {
 
             {step == 1 && (
                 <Question name='How many times per week do you apply deodorant?'>
-                    <input name="freq" value={state?.freq} onChange={numberInputOnChangeHandler} type="number" placeholder='Count Usage' />
+                    <NumberInput min={1} name='freq' state={state} setState={setState} placeholder='usage per week' />
                 </Question>
             )}
 

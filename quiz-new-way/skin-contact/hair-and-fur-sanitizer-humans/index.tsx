@@ -6,6 +6,7 @@ import Select from '../../components/select';
 import quizdata from '../../../_____quiz-data';
 import Question from '../../components/question';
 import Layout from '../../components/quiz-layout';
+import NumberInput from '../../components/NumberInput';
 import converters from '../../components/functions/convertors';
 const HairAndFurSanitizerForHuman = ({ title, category, onComplete }: any) => {
     const Max = 3
@@ -29,17 +30,24 @@ const HairAndFurSanitizerForHuman = ({ title, category, onComplete }: any) => {
             'Long': 20,
             'Extra long': 25
         }
-        const months = (state?.duration.includes('month'))
-            ? state?.duration.match(/(\d+)/)[0] :
-            (state?.duration.match(/(\d+)/)[0] * 12)
-        const quantity = converters.mlToPpm(selectValues[state?.quan])
-        return quantity * (state.freq * 4.4) * months * 80
+        try {
+            const months = (state?.duration.includes('month'))
+                ? state?.duration.match(/(\d+)/)[0] :
+                (state?.duration.match(/(\d+)/)[0] * 12)
+            const quantity = converters.mlToPpm(selectValues[state.quan])
+            const strenght = 80
+            const frequency = state.freq
+            return quantity * frequency * strenght * months
+        } catch (err) {
+            console.error('Question Skipped : cause --skipped flag in result/calculation')
+        }
     }
 
     function stepUp() {
         setStep(prev => prev + 1)
         if (Max == step) {
-            updateData({ ...data, [title]: calculate() })
+            const calculation = calculate()
+            updateData({ ...data, [title]: calculation ? calculation : '--skipped' })
             onComplete()
         }
     }
@@ -52,11 +60,6 @@ const HairAndFurSanitizerForHuman = ({ title, category, onComplete }: any) => {
 
     function readMoreClickHandler() {
         setReadMore(p => !p)
-    }
-
-    function numberInputOnChangeHandler(event: ChangeEvent<HTMLInputElement>) {
-        const { name, value } = event.target
-        setState((prev: any) => { return { ...prev, [name]: parseInt(value) } })
     }
 
     function selectInputOnChangeHandler(event: ChangeEvent<HTMLDivElement>) {
@@ -88,7 +91,7 @@ const HairAndFurSanitizerForHuman = ({ title, category, onComplete }: any) => {
 
             {step == 2 && (
                 <Question name="How many times a week would you sanitize your hair?">
-                    <input name="freq" value={state?.freq} onChange={numberInputOnChangeHandler} type="number" placeholder='Times per week' />
+                    <NumberInput min={1} name='freq' state={state} setState={setState} placeholder='usage per week' />
                 </Question>
             )}
 

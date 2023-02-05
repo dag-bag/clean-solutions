@@ -1,15 +1,13 @@
 interface props {
     state: any,
+    min?: number,
     setState: any
+    max?: number,
     name: string,
     options: string[],
-    placeholder?: string,
-
-
-    placeholders?: string[],
     questions?: string[],
-    min?: number,
-    max?: number,
+    placeholder?: string,
+    placeholders?: string[],
     preDefineProperties?: {}
 }
 
@@ -18,7 +16,6 @@ const AdvancedMultipleNested = ({ state, setState, name, options, placeholder, p
 
     return <div>
         {
-
             options.map((keyName, index) => {
                 const isSelected = state[name]?.selected?.includes(keyName)
                 const arreyWithoutThisKeyName = state[name]?.selected?.filter((k: any) => k !== keyName)
@@ -45,9 +42,7 @@ const AdvancedMultipleNested = ({ state, setState, name, options, placeholder, p
                     }}
                 />
             })
-
         }
-
     </div>
 }
 export default AdvancedMultipleNested
@@ -103,17 +98,16 @@ const Option = ({ state, setState, name, keyName, isSelected, placeholder, min, 
                 setState({ ...state, [name]: { ...state[name], selected: [...state[name].selected, keyName] } })
             }
         }
-
-
-
-
-
-
     }
+
     function onNestedQuestionHandler(event: any) {
-
-        setState({ ...state, [name]: { ...state[name], [keyName]: event?.target.value } })
-
+        setState({
+            ...state,
+            [name]: {
+                ...state[name],
+                [keyName]: parseInt(event?.target.value)
+            }
+        })
     }
     return (
         <div
