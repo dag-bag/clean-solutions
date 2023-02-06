@@ -1,18 +1,69 @@
-const stenghtObject = {
-    'Spray': {
-        'light': 5,
-        'heavy': 5,
-        'moderate': 5,
+const stenghtObject: any = {
+    'Subfloors': {
+        'light': 20,
+        'heavy': 200,
+        'moderate': 100,
+        'insecticide': 725
     },
-    'Moap': {
-        'light': 5,
-        'heavy': 5,
-        'moderate': 5,
+    'Rugs and Carpenting': {
+        'light': 20,
+        'heavy': 200,
+        'moderate': 100,
+        'insecticide': 725
     },
-    'Soak': {
-        'light': 5,
-        'heavy': 5,
-        'moderate': 5,
+    ' Bed Sets (Blankets, Mattress, Pillows)': {
+        'light': 20,
+        'heavy': 200,
+        'moderate': 100,
+        'insecticide': 725
+    },
+    'Animal Bedding and Kennels': {
+        'light': 20,
+        'heavy': 200,
+        'moderate': 100,
+        'insecticide': 725
+    },
+    'Drapes and Curtains': {
+        'light': 20,
+        'heavy': 200,
+        'moderate': 100,
+        'insecticide': 725
+    },
+    'Upholstered Furniture': {
+        'light': 20,
+        'heavy': 200,
+        'moderate': 100,
+        'insecticide': 725
+    },
+    'Vehicle Upholstery': {
+        'light': 20,
+        'heavy': 200,
+        'moderate': 100,
+        'insecticide': 725
+    },
+    'Footwear': {
+        'light': 20,
+        'heavy': 200,
+        'moderate': 100,
+        'insecticide': 725
+    },
+    'Luggage and Bags': {
+        'light': 20,
+        'heavy': 200,
+        'moderate': 100,
+        'insecticide': 725
+    },
+    'Toys': {
+        'light': 20,
+        'heavy': 200,
+        'moderate': 100,
+        'insecticide': 725
+    },
+    'Laundry': {
+        'light': 20,
+        'heavy': 200,
+        'moderate': 100,
+        'insecticide': 725
     }
 }
 
@@ -22,23 +73,24 @@ import categoryState from '../../state';
 import { useRecoilState } from 'recoil';
 import Select from '../../components/select';
 import quizdata from '../../../_____quiz-data';
+import Strenght from '../../components/strenght';
 import Question from '../../components/question';
 import Layout from '../../components/quiz-layout';
 import converters from '../../components/functions/convertors';
 import AdvancedMultipleNested from '../../components/advanced-multiple-nested-input';
-
 const SoftSurfaceAndLaundry = ({ title, category, onComplete }: any) => {
-    const Max = 3 // total number of question (start from 1)
+    const Max = 4 // total number of question (start from 1)
     const [step, setStep] = useState(1)
+    const [defaultStrenght, setDefaultStrenght] = useState(0)
     const [state, setState] = useState<any>({
         quantity: {
             selected: []
         },
         frequncy: {
             selected: []
-        }, strenght: {
-            value: '',
-            sub_value: ''
+        },
+        strenght: {
+            selected: []
         }
 
 
@@ -52,39 +104,47 @@ const SoftSurfaceAndLaundry = ({ title, category, onComplete }: any) => {
         : componentMeta.discription.concat(componentMeta.discription_more)
 
     function calculate() {
-
-        const multipleObj = {
-            'Subfloors': 1000,
-            'Rugs and Carpenting': 1000,
-            ' Bed Sets (Blankets, Mattress, Pillows)': 35,
-            'Animal Bedding and Kennels': 20,
-            'Drapes and Curtains': 35,
-            'Upholstered Furniture': 100,
-            'Vehicle Upholstery': 100,
-            'Footwear': 2,
-            'Luggage and Bags': 2,
-            'Toys': 1,
+        const multipleObj: any = {
+            'Subfloors': 0.001,
+            'Rugs and Carpenting': 0.001,
+            ' Bed Sets (Blankets, Mattress, Pillows)': 0.035,
+            'Animal Bedding and Kennels': 0.020,
+            'Drapes and Curtains': 0.035,
+            'Upholstered Furniture': 0.100,
+            'Vehicle Upholstery': 0.100,
+            'Footwear': 0.002,
+            'Luggage and Bags': 0.004,
+            'Toys': 0.002,
             'Laundry': 20
         }
 
-        const months = (state?.duration.includes('month'))
-            ? state?.duration.match(/(\d+)/)[0] :
-            (state?.duration.match(/(\d+)/)[0] * 12)
+        try {
+            const months = (state?.duration.includes('month'))
+                ? state?.duration.match(/(\d+)/)[0] :
+                (state?.duration.match(/(\d+)/)[0] * 12)
 
-        const sum = state.quantity.selected.map((value: string) => {
-            return state.quantity[value] * state.frequncy[value]
-        }).reduce((total: number, num: number) => total + num)
-
-        const defaultStreght = 1
-        return converters.gallonsToPpm(sum) * months * defaultStreght
+            const sum = state.quantity.selected.map((key: string) => {
+                const q = multipleObj[key] * converters.gallonsToPpm(state.quantity[key])
+                const f = state.frequncy[key]
+                const s = defaultStrenght == 0
+                    ? stenghtObject[key][state.strenght[key]]
+                    : defaultStrenght
+                return q * f * s
+            }).reduce((t: number, k: number) => t + k)
+            return sum * months
+        }
+        catch (err) {
+            console.error('Question Skipped : cause --skipped flag in result/calculation')
+        }
     }
+
 
     function stepUp() {
         setStep(prev => prev + 1)
         if (Max == step) {
-            updateData({ ...data, [title]: calculate() })
+            const calculation = calculate()
+            updateData({ ...data, [title]: calculation ? calculation : '--skipped' })
             onComplete()
-            console.log(data)
         }
     }
 
@@ -92,7 +152,6 @@ const SoftSurfaceAndLaundry = ({ title, category, onComplete }: any) => {
         if (step > 1) {
             setStep(prev => prev - 1)
         }
-
     }
 
     function readMoreClickHandler() {
@@ -116,7 +175,6 @@ const SoftSurfaceAndLaundry = ({ title, category, onComplete }: any) => {
         }}>
 
             {step == 1 && (
-
                 <Question name="How many gallons are in each water system?" >
                     <AdvancedMultipleNested
                         state={state}
@@ -126,7 +184,6 @@ const SoftSurfaceAndLaundry = ({ title, category, onComplete }: any) => {
                         placeholders={['SQ FT', 'SQ FT', 'Quantity', 'Quantity', 'Quantity', 'Quantity', 'Quantity', 'Quantity', 'Quantity', 'SQ FT', 'Gallons']}
                     />
                 </Question>
-
             )}
 
             {step == 2 && (
@@ -143,23 +200,23 @@ const SoftSurfaceAndLaundry = ({ title, category, onComplete }: any) => {
 
             )}
 
-            {/* {step == 3 && (
+            {step == 3 && (
 
-                <Question name="Select which strengths you will need to apply" >
-                    <>
-                        <AdvancedMultipleNestedSelect
-                            state={state}
-                            name="strenght"
-                            setState={setState}
-                            options={stenghtObject}
-                        />
-
-                    </>
+                <Question name="Select which strengths you will need to apply?" >
+                    <Strenght
+                        state={state}
+                        stepUp={stepUp}
+                        name="strenght"
+                        setState={setState}
+                        options={stenghtObject}
+                        filteredOption={state.quantity.selected}
+                        setDefaultStrenght={() => { setDefaultStrenght(50) }}
+                    />
                 </Question>
 
-            )} */}
+            )}
 
-            {step == 3 && (
+            {step == 4 && (
                 <Question name='How long would you like a recirculating water system disinfectant  supply?'>
                     <Select
                         options={['1 month', '2 month', '3 month', '6 month', '1 year', '2 year', '3 year']}

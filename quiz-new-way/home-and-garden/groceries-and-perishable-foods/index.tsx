@@ -1,3 +1,24 @@
+const valuesObject: any = {
+    'Produce, Fruits, Vegetable': {
+        'Spray': 945,
+        'Soak': 3785
+    },
+    'Eggshells': {
+        'Spray': 475,
+        'Soak': 1892
+    },
+    'Raw Meat, Poultry, & Seafood': {
+        'Spray': 945,
+        'Soak': 3785
+    },
+}
+
+const defaultStrenght: any = {
+    'Produce, Fruits, Vegetable': 5,
+    'Eggshells': 5,
+    'Raw Meat, Poultry, & Seafood': 70,
+}
+
 import { useState } from 'react'
 import { ChangeEvent } from 'react';
 import categoryState from '../../state';
@@ -9,6 +30,7 @@ import Layout from '../../components/quiz-layout';
 import converters from '../../components/functions/convertors';
 import AdvancedMultipleNested from '../../components/advanced-multiple-nested-input';
 import MultipleSelectInsertedSelect from '../../components/multipe-select-inserted-select';
+
 const GroceriesAndPerishableFoods = ({ title, category, onComplete }: any) => {
     const Max = 3 // total number of question (start from 1)
     const [step, setStep] = useState(1)
@@ -30,45 +52,29 @@ const GroceriesAndPerishableFoods = ({ title, category, onComplete }: any) => {
         : componentMeta.discription.concat(componentMeta.discription_more)
 
     function calculate() {
+        try {
+            const months = (state?.duration.includes('month'))
+                ? state?.duration.match(/(\d+)/)[0] :
+                (state?.duration.match(/(\d+)/)[0] * 12)
 
-        const ppmValueObject: any = {
-            'Produce, Fruits, Vegetable': 5,
-            'Eggshells': 5,
-            'Raw Meat, Poultry, & Seafood': 70,
+            const sum = state.quantity.selected.map((key: string) => {
+                const q = converters.mlToPpm(valuesObject[key][state.quantity[key]])
+                const f = state.frequency[key]
+                const s = defaultStrenght[key]
+                return q * f * s
+            }).reduce((t: number, v: number) => t + v)
+            return sum * months
+        } catch (err) {
+            console.error('Question Skipped : cause --skipped flag in result/calculation')
         }
-
-        const valuesObject: any = {
-            'Produce, Fruits, Vegetable': {
-                'Spray': 945,
-                'Soak': 3785
-            },
-            'Eggshells': {
-                'Spray': 475,
-                'Soak': 1892
-            },
-            'Raw Meat, Poultry, & Seafood': {
-                'Spray': 945,
-                'Soak': 3785
-            },
-        }
-
-        const months = (state?.duration.includes('month'))
-            ? state?.duration.match(/(\d+)/)[0] :
-            (state?.duration.match(/(\d+)/)[0] * 12)
-
-        const sum = state.quantity.selected.map((key: string) => {
-            return converters.mlToPpm(valuesObject[key][state.quantity[key]]) * ppmValueObject[key] * (state.frequency[key] * 4.4)
-        }).reduce((t: number, v: number) => t + v)
-
-        return sum * months
     }
 
     function stepUp() {
         setStep(prev => prev + 1)
         if (Max == step) {
-            updateData({ ...data, [title]: calculate() })
+            const calculation = calculate()
+            updateData({ ...data, [title]: calculation ? calculation : '--skipped' })
             onComplete()
-            console.log(data)
         }
     }
 
@@ -98,8 +104,6 @@ const GroceriesAndPerishableFoods = ({ title, category, onComplete }: any) => {
             isReadMoreToggled,
             readMoreClickHandler,
         }}>
-
-            {JSON.stringify(state)}
 
 
             {step == 1 && (

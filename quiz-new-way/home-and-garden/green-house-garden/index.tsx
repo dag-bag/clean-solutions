@@ -1,4 +1,23 @@
-// !calculation
+const stenghtObject: any = {
+    'Seeds and Propagations Rooms': {
+        default: 0.5
+    }, 'Soil, Hydro and Aeroponic Grow Beds': {
+        default: 0.25
+    }, 'Plants and Perpetual Grow Rooms': {
+        default: 1
+    }, 'Facilities, Tools, & Equipment': {
+        'light': 20,
+        'moderate': 50,
+        heavy: 100
+    },
+    'Vase Water, Cuttings and Flowers': {
+        'light': 0.5,
+        'moderate': 2,
+        heavy: 5
+    },
+}
+
+
 import { useState } from 'react'
 import { ChangeEvent } from 'react';
 import categoryState from '../../state';
@@ -8,15 +27,21 @@ import quizdata from '../../../_____quiz-data';
 import Question from '../../components/question';
 import Layout from '../../components/quiz-layout';
 import AdvancedMultipleNested from '../../components/advanced-multiple-nested-input';
+import Strenght from '../../components/strenght';
 import converters from '../../components/functions/convertors';
+
 const GreenHouseAndGarden = ({ title, category, onComplete }: any) => {
-    const Max = 3 // total number of question (start from 1)
+    const Max = 4 // total number of question (start from 1)
     const [step, setStep] = useState(1)
+    const [defaultStrenght, setDefaultStrenght] = useState(0)
     const [state, setState] = useState<any>({
         quantity: {
             selected: []
         },
         frequency: {
+            selected: []
+        },
+        strenght: {
             selected: []
         }
     }) // input data stored for calculation
@@ -29,25 +54,34 @@ const GreenHouseAndGarden = ({ title, category, onComplete }: any) => {
         : componentMeta.discription.concat(componentMeta.discription_more)
 
     function calculate() {
+        try {
+            const months = (state?.duration.includes('month'))
+                ? state?.duration.match(/(\d+)/)[0] :
+                (state?.duration.match(/(\d+)/)[0] * 12)
 
-        const months = (state?.duration.includes('month'))
-            ? state?.duration.match(/(\d+)/)[0] :
-            (state?.duration.match(/(\d+)/)[0] * 12)
-
-        const sum = state.quantity.selected.map((key: string) => {
-            return converters.gallonsToPpm(state.quantity[key] * 3.78541) * state.frequency[key]
-        }).reduce((t: number, v: number) => t + v)
-        return sum * months * 100
+            const sum = state.quantity.selected.map((key: string) => {
+                const quantity = converters.gallonsToPpm(state.quantity[key] / 2)
+                const frequncy = state.frequency[key]
+                const strenght = defaultStrenght == 0
+                    ? stenghtObject[key][state.strenght[key]]
+                    : defaultStrenght
+                return quantity * frequncy * strenght
+            }).reduce((t: number, v: number) => t + v)
+            return sum * months
+        } catch (err) {
+            console.error('Question Skipped : cause --skipped flag in result/calculation')
+        }
     }
 
     function stepUp() {
         setStep(prev => prev + 1)
         if (Max == step) {
-            updateData({ ...data, [title]: calculate() })
+            const calculation = calculate()
+            updateData({ ...data, [title]: calculation ? calculation : '--skipped' })
             onComplete()
-            console.log(data)
         }
     }
+
     function stepDown() {
         if (step > 1) {
             setStep(prev => prev - 1)
@@ -74,15 +108,13 @@ const GreenHouseAndGarden = ({ title, category, onComplete }: any) => {
             readMoreClickHandler,
         }}>
 
-            {JSON.stringify(state)}
-
             {step == 1 && (
                 <Question name="What are you sanitizing and the maximum growing capacity?">
                     <AdvancedMultipleNested
                         state={state}
                         setState={setState}
                         name="quantity"
-                        options={['Seeds and Propagations Rooms', ' Soil, Hydro and Aeroponic Grow Beds', ' Plants and Perpetual Grow Rooms', ' Facilities, Tools, & Equipment ']}
+                        options={['Seeds and Propagations Rooms', 'Soil, Hydro and Aeroponic Grow Beds', 'Plants and Perpetual Grow Rooms', 'Facilities, Tools, & Equipment', 'Vase Water, Cuttings and Flowers']}
                         placeholder="Square Feet "
                     />
                 </Question>
@@ -97,14 +129,30 @@ const GreenHouseAndGarden = ({ title, category, onComplete }: any) => {
                             setState={setState}
                             name="frequency"
                             options={state.quantity.selected}
-                            placeholder="times "
+                            placeholder="times"
                         />
                     </Question>
                 )
             }
 
+            {step == 3 && (
+
+                <Question name="Select which strengths you will need to apply?" >
+                    <Strenght
+                        state={state}
+                        stepUp={stepUp}
+                        name="strenght"
+                        setState={setState}
+                        options={stenghtObject}
+                        filteredOption={state.quantity.selected}
+                        setDefaultStrenght={() => { setDefaultStrenght(50) }}
+                    />
+                </Question>
+
+            )}
+
             {
-                step == 3 && (
+                step == 4 && (
                     <Question name='How long do you want a greenhouse sanitizer supply?'>
                         <Select
                             options={['1 month', '2 month', '3 month', '6 month', '1 year', '2 year', '3 year']}

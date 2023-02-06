@@ -1,3 +1,24 @@
+const stenghtObject: any = {
+    'Spray': {
+        'light': 20,
+        'moderate': 100,
+        'heavy': 200,
+        'insecticide': 725
+    },
+    'Mop': {
+        'light': 20,
+        'moderate': 100,
+        'heavy': 200,
+        'insecticide': 725
+    },
+    'Soak': {
+        'light': 20,
+        'moderate': 100,
+        'heavy': 200,
+        'insecticide': 725
+    },
+}
+
 import { useState } from 'react'
 import { ChangeEvent } from 'react';
 import categoryState from '../../state';
@@ -5,18 +26,23 @@ import { useRecoilState } from 'recoil';
 import Select from '../../components/select';
 import quizdata from '../../../_____quiz-data';
 import Question from '../../components/question';
+import Strenght from '../../components/strenght';
 import Layout from '../../components/quiz-layout';
-import AdvancedMultipleNested from '../../components/advanced-multiple-nested-input';
 import converters from '../../components/functions/convertors';
+import AdvancedMultipleNested from '../../components/advanced-multiple-nested-input';
 
 const HardSurfaceAppliances = ({ title, category, onComplete }: any) => {
-    const Max = 3 // total number of question (start from 1)
+    const Max = 4 // total number of question (start from 1)
     const [step, setStep] = useState(1)
+    const [defaultStrenght, setDefaultStrenght] = useState(0)
     const [state, setState] = useState<any>({
         quantity: {
             selected: []
         },
         frequency: {
+            selected: []
+        },
+        strenght: {
             selected: []
         }
     }) // input data stored for calculation
@@ -29,24 +55,31 @@ const HardSurfaceAppliances = ({ title, category, onComplete }: any) => {
         : componentMeta.discription.concat(componentMeta.discription_more)
 
     function calculate() {
+        try {
+            const months = (state?.duration.includes('month'))
+                ? state?.duration.match(/(\d+)/)[0] :
+                (state?.duration.match(/(\d+)/)[0] * 12)
 
-        //3.78541 per sqft
-        const months = (state?.duration.includes('month'))
-            ? state?.duration.match(/(\d+)/)[0] :
-            (state?.duration.match(/(\d+)/)[0] * 12)
-
-        const sum = state.quantity.selected.map((value: string) => {
-            return converters.mlToPpm(state.quantity[value] * 3.78541) * state.frequency[value]
-        }).reduce((total: number, num: number) => total + num)
-        return sum * months * 100
+            const sum = state.quantity.selected.map((key: string) => {
+                const quantity = converters.gallonsToPpm(state.quantity[key] * 3.78541)
+                const frequncy = state.frequency[key] * 4.4
+                const strenght = defaultStrenght == 0
+                    ? stenghtObject[key][state.strenght[key]]
+                    : defaultStrenght
+                return quantity * frequncy * strenght
+            }).reduce((t: number, v: number) => t + v)
+            return sum * months
+        } catch (err) {
+            console.error('Question Skipped : cause --skipped flag in result/calculation')
+        }
     }
 
     function stepUp() {
         setStep(prev => prev + 1)
         if (Max == step) {
-            updateData({ ...data, [title]: calculate() })
+            const calculation = calculate()
+            updateData({ ...data, [title]: calculation ? calculation : '--skipped' })
             onComplete()
-            console.log(data)
         }
     }
 
@@ -75,6 +108,7 @@ const HardSurfaceAppliances = ({ title, category, onComplete }: any) => {
             isReadMoreToggled,
             readMoreClickHandler,
         }}>
+
             {step == 1 && (
                 <Question name="Which methods are preferred for disinfection and deodorizing at home?">
                     <AdvancedMultipleNested
@@ -101,6 +135,21 @@ const HardSurfaceAppliances = ({ title, category, onComplete }: any) => {
             )}
 
             {step == 3 && (
+
+                <Question name="Select which strengths you will need to apply?" >
+                    <Strenght
+                        state={state}
+                        stepUp={stepUp}
+                        name="strenght"
+                        setState={setState}
+                        options={stenghtObject}
+                        filteredOption={state.quantity.selected}
+                        setDefaultStrenght={() => { setDefaultStrenght(50) }}
+                    />
+                </Question>
+            )}
+
+            {step == 4 && (
                 <Question name='How long would you like a hard surface sanitizer supply?'>
                     <Select
                         options={['1 month', '2 month', '3 month', '6 month', '1 year', '2 year', '3 year']}
