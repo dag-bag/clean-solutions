@@ -6,6 +6,7 @@ import Select from '../../components/select';
 import quizdata from '../../../_____quiz-data';
 import Question from '../../components/question';
 import Layout from '../../components/quiz-layout';
+import NumberInput from '../../components/NumberInput';
 import converters from '../../components/functions/convertors';
 
 const DrinkingWater = ({ title, category, onComplete }: any) => {
@@ -21,19 +22,25 @@ const DrinkingWater = ({ title, category, onComplete }: any) => {
         : componentMeta.discription.concat(componentMeta.discription_more)
 
     function calculate() {
-        const months = (state?.duration.includes('month'))
-            ? state?.duration.match(/(\d+)/)[0] :
-            (state?.duration.match(/(\d+)/)[0] * 12)
-
-        return converters.gallonsToPpm(state?.quantity) * state?.freq * months * 0.8
+        try {
+            const months = (state?.duration.includes('month'))
+                ? state?.duration.match(/(\d+)/)[0] :
+                (state?.duration.match(/(\d+)/)[0] * 12)
+            const strenght = 0.8
+            const frequency = state.freq
+            const quantity = converters.gallonsToPpm(state.quantity * 30)
+            return quantity * frequency * strenght * months
+        } catch (err) {
+            console.error('Question Skipped : cause --skipped flag in result/calculation')
+        }
     }
 
     function stepUp() {
         setStep(prev => prev + 1)
         if (Max == step) {
-            updateData({ ...data, [title]: calculate() })
+            const calculation = calculate()
+            updateData({ ...data, [title]: calculation ? calculation : '--skipped' })
             onComplete()
-            console.log(data)
         }
     }
 
@@ -45,11 +52,6 @@ const DrinkingWater = ({ title, category, onComplete }: any) => {
 
     function readMoreClickHandler() {
         setReadMore(p => !p)
-    }
-
-    function numberInputOnChangeHandler(event: ChangeEvent<HTMLInputElement>) {
-        const { name, value } = event.target
-        setState((prev: any) => { return { ...prev, [name]: parseInt(value) } })
     }
 
     function selectInputOnChangeHandler(event: ChangeEvent<HTMLDivElement>) {
@@ -70,13 +72,13 @@ const DrinkingWater = ({ title, category, onComplete }: any) => {
 
             {step == 1 && (
                 <Question name="How many gallons of drinking water do you want to have disinfected on an average day?">
-                    <input name="quantity" onChange={numberInputOnChangeHandler} type="number" placeholder='Times per day' />
+                    <NumberInput min={1} name='quantity' state={state} setState={setState} placeholder='gallons usage per day' />
                 </Question>
             )}
 
             {step == 2 && (
                 <Question name="How many times a month do you want to be prepared with safe drinking water?">
-                    <input name="freq" onChange={numberInputOnChangeHandler} type="number" placeholder='Times per day' />
+                    <NumberInput min={1} max={30} name='freq' state={state} setState={setState} placeholder='1-30' />
                 </Question>
             )}
 
@@ -90,7 +92,6 @@ const DrinkingWater = ({ title, category, onComplete }: any) => {
                     />
                 </Question>
             )}
-
         </Layout>
     )
 }

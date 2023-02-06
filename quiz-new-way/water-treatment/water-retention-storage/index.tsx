@@ -1,23 +1,20 @@
-const stenghtObject = {
-    'water retention': {
-        'light': 5,
-        'heavy': 5,
+const stenghtObject: any = {
+    'Ponds, Reservoirs, and Retention Basins': {
+        'light': 0.25,
         'moderate': 5,
     },
-    'continous': {
-        'light': 5,
-        'heavy': 5,
-        'moderate': 5,
+    'Once-through Water Cooling Systems': {
+        'light': 0.25,
+        'heavy': 2,
+        'moderate': 1,
     },
-    'slug dose': {
+    'Aircraft, RV, Boat Tanks and Lines': {
         'light': 5,
-        'heavy': 5,
-        'moderate': 5,
+        'heavy': 25,
+        'moderate': 15,
     },
-    'tanks': {
-        'light': 5,
-        'heavy': 5,
-        'moderate': 5,
+    'Other Non-Potable Water Storage': {
+        default: 4
     }
 }
 
@@ -28,27 +25,28 @@ import { useRecoilState } from 'recoil';
 import Select from '../../components/select';
 import quizdata from '../../../_____quiz-data';
 import Question from '../../components/question';
+import Strenght from '../../components/strenght';
 import Layout from '../../components/quiz-layout';
 import converters from '../../components/functions/convertors';
 import AdvancedMultipleNested from '../../components/advanced-multiple-nested-input';
-import AdvancedMultipleNestedSelect from '../../components/advanced-multiple-nested-select';
 
 const WaterRetentionStorage = ({ title, category, onComplete }: any) => {
     const Max = 4 // total number of question (start from 1)
     const [step, setStep] = useState(1)
+    const [defaultStrenght, setDefaultStrenght] = useState(0)
     const [state, setState] = useState<any>({
         quantity: {
             selected: []
         },
         frequncy: {
             selected: []
-        }, strenght: {
-            value: '',
-            sub_value: ''
+        },
+        strenght: {
+            selected: []
         }
 
 
-    }) // input data stored for calculation
+    })
     const [isReadMoreToggled, setReadMore] = useState(true)
     const componentMeta = quizdata[category].categories[title]
     const [data, updateData] = useRecoilState(categoryState)
@@ -58,25 +56,32 @@ const WaterRetentionStorage = ({ title, category, onComplete }: any) => {
         : componentMeta.discription.concat(componentMeta.discription_more)
 
     function calculate() {
+        try {
+            const months = (state?.duration.includes('month'))
+                ? state?.duration.match(/(\d+)/)[0] :
+                (state?.duration.match(/(\d+)/)[0] * 12)
 
-        const months = (state?.duration.includes('month'))
-            ? state?.duration.match(/(\d+)/)[0] :
-            (state?.duration.match(/(\d+)/)[0] * 12)
+            const sum = state.quantity.selected.map((key: string) => {
+                const q = converters.gallonsToPpm(state.quantity[key])
+                const f = state.frequncy[key]
+                const s = (defaultStrenght == 0)
+                    ? stenghtObject[key][state.strenght[key]]
+                    : defaultStrenght
+                return q * f * s
+            }).reduce((t: number, k: number) => t + k)
 
-        const sum = state.quantity.selected.map((value: string) => {
-            return state.quantity[value] * state.frequncy[value]
-        }).reduce((total: number, num: number) => total + num)
-
-        const defaultStreght = 1
-        return converters.gallonsToPpm(sum) * months * defaultStreght
+            return sum * months
+        } catch (err) {
+            console.error('Question Skipped : cause --skipped flag in result/calculation')
+        }
     }
 
     function stepUp() {
         setStep(prev => prev + 1)
         if (Max == step) {
-            updateData({ ...data, [title]: calculate() })
+            const calculation = calculate()
+            updateData({ ...data, [title]: calculation ? calculation : '--skipped' })
             onComplete()
-            console.log(data)
         }
     }
 
@@ -105,7 +110,6 @@ const WaterRetentionStorage = ({ title, category, onComplete }: any) => {
             isReadMoreToggled,
             readMoreClickHandler,
         }}>
-
             {step == 1 && (
                 <Question name="How many gallons do each of your water retention or storage containment devices hold?" >
                     <AdvancedMultipleNested
@@ -135,13 +139,16 @@ const WaterRetentionStorage = ({ title, category, onComplete }: any) => {
 
             {step == 3 && (
 
-                <Question name="Select which strengths you will need to apply" >
+                <Question name="Select which strengths you will need to apply?" >
                     <>
-                        <AdvancedMultipleNestedSelect
+                        <Strenght
                             state={state}
+                            stepUp={stepUp}
                             name="strenght"
                             setState={setState}
                             options={stenghtObject}
+                            filteredOption={state.quantity.selected}
+                            setDefaultStrenght={() => { setDefaultStrenght(15) }}
                         />
 
                     </>

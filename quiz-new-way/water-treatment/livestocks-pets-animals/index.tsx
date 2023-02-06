@@ -6,10 +6,12 @@ import Select from '../../components/select';
 import quizdata from '../../../_____quiz-data';
 import Question from '../../components/question';
 import Layout from '../../components/quiz-layout';
+import NumberInput from '../../components/NumberInput';
 import converters from '../../components/functions/convertors';
 
+
 const LivestockPetsAnimals = ({ title, category, onComplete }: any) => {
-    const Max = 2 // total number of question (start from 1)
+    const Max = 3 // total number of question (start from 1)
     const [step, setStep] = useState(1)
     const [state, setState] = useState<any>({}) // input data stored for calculation
     const [isReadMoreToggled, setReadMore] = useState(true)
@@ -21,18 +23,25 @@ const LivestockPetsAnimals = ({ title, category, onComplete }: any) => {
         : componentMeta.discription.concat(componentMeta.discription_more)
 
     function calculate() {
-        const months = (state?.duration.includes('month'))
-            ? state?.duration.match(/(\d+)/)[0] :
-            (state?.duration.match(/(\d+)/)[0] * 12)
-        return converters.gallonsToPpm(state.quantity) * 4.4 * months
+        try {
+            const months = (state?.duration.includes('month'))
+                ? state?.duration.match(/(\d+)/)[0] :
+                (state?.duration.match(/(\d+)/)[0] * 12)
+            const strenght = 5
+            const frequency = state.freq
+            const quantity = converters.gallonsToPpm(state.quantity * 4.4)
+            return quantity * frequency * strenght * months
+        } catch (err) {
+            console.error('Question Skipped : cause --skipped flag in result/calculation')
+        }
     }
 
     function stepUp() {
         setStep(prev => prev + 1)
         if (Max == step) {
-            updateData({ ...data, [title]: calculate() })
+            const calculation = calculate()
+            updateData({ ...data, [title]: calculation ? calculation : '--skipped' })
             onComplete()
-            console.log(data)
         }
     }
 
@@ -44,11 +53,6 @@ const LivestockPetsAnimals = ({ title, category, onComplete }: any) => {
 
     function readMoreClickHandler() {
         setReadMore(p => !p)
-    }
-
-    function numberInputOnChangeHandler(event: ChangeEvent<HTMLInputElement>) {
-        const { name, value } = event.target
-        setState((prev: any) => { return { ...prev, [name]: parseInt(value) } })
     }
 
     function selectInputOnChangeHandler(event: ChangeEvent<HTMLDivElement>) {
@@ -68,12 +72,19 @@ const LivestockPetsAnimals = ({ title, category, onComplete }: any) => {
         }}>
 
             {step == 1 && (
-                <Question name="How much water do all of your pets and animals consume weekly?">
-                    <input name="quantity" onChange={numberInputOnChangeHandler} type="number" placeholder='Times per day' />
+                <Question name="How much water do all of your pets and animals consume(per gallons) weekly?">
+                    <NumberInput min={1} name='quantity' state={state} setState={setState} placeholder='usage per day' />
                 </Question>
             )}
 
+
             {step == 2 && (
+                <Question name='How many times a week do you want to be prepared with safe drinking water?'>
+                    <NumberInput min={1} name='freq' state={state} setState={setState} placeholder='usage per week' />
+                </Question>
+            )}
+
+            {step == 3 && (
                 <Question name='How long would you like to have an animal drinking water supply?'>
                     <Select
                         options={['1 month', '2 month', '3 month', '6 month', '1 year', '2 year', '3 year']}

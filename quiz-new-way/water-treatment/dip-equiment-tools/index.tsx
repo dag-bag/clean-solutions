@@ -1,3 +1,8 @@
+const defaultStrenght: any = {
+    'Sanitize tools and equipment': 20,
+    'Disinfect tools and equipment': 30,
+    'Kill viruses, fungi, or mold on tools and equipment': 100
+}
 import { useState } from 'react'
 import { ChangeEvent } from 'react';
 import categoryState from '../../state';
@@ -6,8 +11,10 @@ import Select from '../../components/select';
 import quizdata from '../../../_____quiz-data';
 import Question from '../../components/question';
 import Layout from '../../components/quiz-layout';
+import NumberInput from '../../components/NumberInput';
 import converters from '../../components/functions/convertors';
 import AdvancedMultipleNested from '../../components/advanced-multiple-nested-input';
+
 const DipEquipmentTools = ({ title, category, onComplete }: any) => {
     const Max = 3 // total number of question (start from 1)
     const [step, setStep] = useState(1)
@@ -15,38 +22,35 @@ const DipEquipmentTools = ({ title, category, onComplete }: any) => {
         waterRequire: {
             selected: []
         },
-    }) // input data stored for calculation
+    })
     const [isReadMoreToggled, setReadMore] = useState(true)
     const componentMeta = quizdata[category].categories[title]
     const [data, updateData] = useRecoilState(categoryState)
-
     const discription = isReadMoreToggled
         ? componentMeta.discription
         : componentMeta.discription.concat(componentMeta.discription_more)
 
     function calculate() {
-        const months = (state?.duration.includes('month'))
-            ? state?.duration.match(/(\d+)/)[0] :
-            (state?.duration.match(/(\d+)/)[0] * 12)
+        try {
+            const months = (state?.duration.includes('month'))
+                ? state?.duration.match(/(\d+)/)[0] :
+                (state?.duration.match(/(\d+)/)[0] * 12)
+            const sum = state.waterRequire.selected.map((keyname: string) => {
+                return converters.gallonsToPpm(state.waterRequire[keyname]) * defaultStrenght[keyname]
+            }).reduce((total: number, num: number) => total + num)
 
-        const WaterRequirementPerGallons: any = {
-            'Sanitize tools and equipment': 20,
-            'Disinfect tools and equipment': 30,
-            'Kill viruses, fungi, or mold on tools and equipment': 100
+            return sum * (state?.freq * 4.4) * months
+        } catch (err) {
+            console.error('Question Skipped : cause --skipped flag in result/calculation')
         }
-        const totalGallonRequire = state.waterRequire.selected.map((keyname: string) => {
-            return converters.gallonsToPpm(state.waterRequire[keyname]) * WaterRequirementPerGallons[keyname]
-        }).reduce((total: number, num: number) => total + num)
-
-        return totalGallonRequire * state?.freq * 4.4 * months
     }
 
     function stepUp() {
         setStep(prev => prev + 1)
         if (Max == step) {
-            updateData({ ...data, [title]: calculate() })
+            const calculation = calculate()
+            updateData({ ...data, [title]: calculation ? calculation : '--skipped' })
             onComplete()
-            console.log(data)
         }
     }
 
@@ -59,12 +63,6 @@ const DipEquipmentTools = ({ title, category, onComplete }: any) => {
     function readMoreClickHandler() {
         setReadMore(p => !p)
     }
-
-    function numberInputOnChangeHandler(event: ChangeEvent<HTMLInputElement>) {
-        const { name, value } = event.target
-        setState((prev: any) => { return { ...prev, [name ?? 'm']: parseInt(value) } })
-    }
-
 
     function selectInputOnChangeHandler(event: ChangeEvent<HTMLDivElement>) {
         const { id, innerHTML } = event.target
@@ -82,8 +80,6 @@ const DipEquipmentTools = ({ title, category, onComplete }: any) => {
             readMoreClickHandler,
         }}>
 
-            {JSON.stringify(state)}
-
             {step == 1 && (
                 <Question name="On an average week, how much water in gallons do you require to… ?">
                     <AdvancedMultipleNested
@@ -98,7 +94,7 @@ const DipEquipmentTools = ({ title, category, onComplete }: any) => {
 
             {step == 2 && (
                 <Question name="How many times per week do you sanitize tools equipment?">
-                    <input name="freq" onChange={numberInputOnChangeHandler} type="number" placeholder='Times per day' />
+                    <NumberInput name="freq" state={state} setState={setState} placeholder="usager per week" />
                 </Question>
             )}
 
