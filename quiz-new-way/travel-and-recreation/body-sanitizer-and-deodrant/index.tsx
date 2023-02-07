@@ -35,25 +35,30 @@ const BodySanitizerAndDeodrant = ({ title, category, onComplete }: any) => {
             'Insect Repellent': 10
         }
 
-        const months = (state?.duration.includes('month'))
-            ? state?.duration.match(/(\d+)/)[0] :
-            (state?.duration.match(/(\d+)/)[0] * 12)
+        try {
+            const months = (state?.duration.includes('month'))
+                ? state?.duration.match(/(\d+)/)[0] :
+                (state?.duration.match(/(\d+)/)[0] * 12)
 
+            const sum = state.multiselect.map((key: string) => {
+                const q = converters.mlToPpm(valueObj[key])
+                const f = state.frequncy[key]
+                const s = 50
+                return q * f * s
+            }).reduce((t: number, k: number) => t + k)
 
-        const sum = state.multiselect.map((key: string) => {
-            return state.frequncy[key] * valueObj[key]
-        }).reduce((t: number, k: number) => t + k)
-
-
-        return converters.mlToPpm(sum) * months * 50
+            return sum * months
+        } catch (err) {
+            console.error('Question Skipped : cause --skipped flag in result/calculation')
+        }
     }
 
     function stepUp() {
         setStep(prev => prev + 1)
         if (Max == step) {
-            updateData({ ...data, [title]: calculate() })
+            const calculation = calculate()
+            updateData({ ...data, [title]: calculation ? calculation : '--skipped' })
             onComplete()
-            console.log(data)
         }
     }
 
@@ -67,10 +72,7 @@ const BodySanitizerAndDeodrant = ({ title, category, onComplete }: any) => {
         setReadMore(p => !p)
     }
 
-    function numberInputOnChangeHandler(event: ChangeEvent<HTMLInputElement>) {
-        const { name, value } = event.target
-        setState((prev: any) => { return { ...prev, [name]: parseInt(value) } })
-    }
+
 
     function selectInputOnChangeHandler(event: ChangeEvent<HTMLDivElement>) {
         const { id, innerHTML } = event.target
@@ -88,7 +90,6 @@ const BodySanitizerAndDeodrant = ({ title, category, onComplete }: any) => {
     }
 
 
-
     return (
         <Layout {...{
             title,
@@ -100,7 +101,6 @@ const BodySanitizerAndDeodrant = ({ title, category, onComplete }: any) => {
             readMoreClickHandler,
         }}>
 
-            {JSON.stringify(state)}
 
             {step == 1 && (
                 <Question name="Select food-contact surfaces to sanitize">

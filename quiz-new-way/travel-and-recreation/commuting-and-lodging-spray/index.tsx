@@ -1,4 +1,4 @@
-const stenghtObject = {
+const stenghtObject: any = {
     'Hotel': {
         'fumigate': 725,
         'HVAC': 500,
@@ -32,17 +32,18 @@ import categoryState from '../../state';
 import { useRecoilState } from 'recoil';
 import Select from '../../components/select';
 import quizdata from '../../../_____quiz-data';
+import Strenght from '../../components/strenght';
 import Question from '../../components/question';
 import Layout from '../../components/quiz-layout';
-import AdvancedMultipleNested from '../../components/advanced-multiple-nested-input';
 import converters from '../../components/functions/convertors';
-import AdvancedMultipleNestedSelect from '../../components/advanced-multiple-nested-select';
+import AdvancedMultipleNested from '../../components/advanced-multiple-nested-input';
 
 const CommutingAndLodgingSpray = ({ title, category, onComplete }: any) => {
     const Max = 4
     const [step, setStep] = useState(1)
     const componentMeta = quizdata[category].categories[title]
     const [isReadMoreToggled, setReadMore] = useState(true)
+    const [defaultStrenght, setDefaultStrenght] = useState(0)
     const [data, updateData] = useRecoilState(categoryState)
 
     const [state, setState] = useState<any>({
@@ -61,25 +62,36 @@ const CommutingAndLodgingSpray = ({ title, category, onComplete }: any) => {
         ? componentMeta.discription
         : componentMeta.discription.concat(componentMeta.discription_more)
 
-
     function calculate() {
-        const months = (state?.duration.includes('month'))
-            ? state?.duration.match(/(\d+)/)[0] :
-            (state?.duration.match(/(\d+)/)[0] * 12)
+        try {
+            const months = (state?.duration.includes('month'))
+                ? state?.duration.match(/(\d+)/)[0] :
+                (state?.duration.match(/(\d+)/)[0] * 12)
 
-        const l = state.quantity.selected.map((key: string) => {
-            return converters.mlToPpm(state.quantity[key]) * state.frequency[key]
-        }).reduce((t: number, n: number) => t + n)
-        return l * months * 100
+            const sum = state.quantity.selected.map((key: string) => {
+                const q = converters.mlToPpm(state.quantity[key])
+                const f = state.frequency[key]
+                const s = defaultStrenght == 0
+                    ? stenghtObject[key][state.strenght[key]]
+                    : defaultStrenght
+                return q * f * s
+            }).reduce((t: number, k: number) => t + k)
+            return sum * months
+        }
+        catch (err) {
+            console.error('Question Skipped : cause --skipped flag in result/calculation')
+        }
     }
 
     function stepUp() {
         setStep(prev => prev + 1)
         if (Max == step) {
-            updateData({ ...data, [title]: calculate() })
+            const calculation = calculate()
+            updateData({ ...data, [title]: calculation ? calculation : '--skipped' })
             onComplete()
         }
     }
+
 
     function stepDown() {
         if (step > 1) {
@@ -106,7 +118,6 @@ const CommutingAndLodgingSpray = ({ title, category, onComplete }: any) => {
             isReadMoreToggled,
             readMoreClickHandler,
         }}>
-
             {step == 1 && (
                 <>
                     <Question name="Select all that apply" >
@@ -117,7 +128,7 @@ const CommutingAndLodgingSpray = ({ title, category, onComplete }: any) => {
                             placeholder="Quantity in numbers"
                             options={['Hotel', 'Hostel', 'Camping', "AirbNb", 'Render Property', 'Transportation']}
                             preDefineProperties={{
-                                'Hotel': 3785.41,
+                                'Hotel': 3.78541,
                                 'Hostel': 755,
                                 'Camping': 1140,
                                 'Transportation': 380
@@ -142,21 +153,18 @@ const CommutingAndLodgingSpray = ({ title, category, onComplete }: any) => {
 
 
             {step == 3 && (
-
                 <Question name="Select which strengths you will need to apply" >
-                    <>
-                        <AdvancedMultipleNestedSelect
-                            state={state}
-                            name="strenght"
-                            setState={setState}
-                            options={stenghtObject}
-                        />
-
-                    </>
+                    <Strenght
+                        state={state}
+                        stepUp={stepUp}
+                        name="strenght"
+                        setState={setState}
+                        options={stenghtObject}
+                        filteredOption={state.quantity.selected}
+                        setDefaultStrenght={() => { setDefaultStrenght(50) }}
+                    />
                 </Question>
-
             )}
-
 
             {step == 4 && (
                 <Question name='How long would you like a hair sanitizing ?'>
@@ -168,7 +176,6 @@ const CommutingAndLodgingSpray = ({ title, category, onComplete }: any) => {
                     />
                 </Question>
             )}
-
         </Layout>
     )
 }

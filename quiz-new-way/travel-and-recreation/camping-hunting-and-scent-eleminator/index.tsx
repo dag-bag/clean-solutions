@@ -9,6 +9,7 @@ import Layout from '../../components/quiz-layout';
 import converters from '../../components/functions/convertors';
 import AdvancedMultipleNested from '../../components/advanced-multiple-nested-input';
 import MultipleSelectInsertedSelect from '../../components/multipe-select-inserted-select';
+
 const FoodEstablishment = ({ title, category, onComplete }: any) => {
     const Max = 3 // total number of question (start from 1)
     const [step, setStep] = useState(1)
@@ -57,23 +58,30 @@ const FoodEstablishment = ({ title, category, onComplete }: any) => {
             },
         }
 
-        const months = (state?.duration.includes('month'))
-            ? state?.duration.match(/(\d+)/)[0] :
-            (state?.duration.match(/(\d+)/)[0] * 12)
+        try {
+            const months = (state?.duration.includes('month'))
+                ? state?.duration.match(/(\d+)/)[0] :
+                (state?.duration.match(/(\d+)/)[0] * 12)
 
-        const sum = state.quantity.selected.map((key: string) => {
-            return converters.mlToPpm(valuesObject[key][state.quantity[key]]) * ppmValueObject[key] * (state.frequency[key] * 4.4)
-        }).reduce((t: number, v: number) => t + v)
+            const sum = state.quantity.selected.map((key: string) => {
+                const q = converters.mlToPpm(valuesObject[key][state.quantity[key]])
+                const f = state.frequency[key]
+                const s = ppmValueObject[key]
+                return q * f * s
+            }).reduce((t: number, v: number) => t + v)
 
-        return sum * months
+            return sum * months
+        } catch (err) {
+            console.error('Question Skipped : cause --skipped flag in result/calculation')
+        }
     }
 
     function stepUp() {
         setStep(prev => prev + 1)
         if (Max == step) {
-            updateData({ ...data, [title]: calculate() })
+            const calculation = calculate()
+            updateData({ ...data, [title]: calculation ? calculation : '--skipped' })
             onComplete()
-            console.log(data)
         }
     }
     function stepDown() {
@@ -102,7 +110,6 @@ const FoodEstablishment = ({ title, category, onComplete }: any) => {
             isReadMoreToggled,
             readMoreClickHandler,
         }}>
-
 
             {step == 1 && (
                 <Question name="Enter how many pounds of goods and commodities are processed on average and select the preferred method for disinfection.">
