@@ -43,7 +43,7 @@ const DentalOralHygeine = ({ title, category, onComplete }: any) => {
 
             const quantity = converters.quartsToPpm(state.multiselect.length)
             const strenght = state.multiselect.map((key: string) => strenghtObj[key]).reduce((t: number, k: number) => t + k)
-            const frequency = state.freq
+            const frequency = state.freq * 4.4
             return quantity * frequency * strenght * months
         } catch (err) {
             console.error('Question Skipped : cause --skipped flag in result/calculation')
@@ -118,7 +118,7 @@ const DentalOralHygeine = ({ title, category, onComplete }: any) => {
                         id="duration"
                         selectedOption={state?.duration}
                         onClick={selectInputOnChangeHandler}
-                        options={['1 month', '2 month', '3 month', '6 month', '1 year']} />
+                        options={['1 month', '2 month', '3 month', '6 month', '1 year', '2 year', '5 year']} />
                 </Question>
             )}
 

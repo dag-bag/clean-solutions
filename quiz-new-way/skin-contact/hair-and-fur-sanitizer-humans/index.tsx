@@ -8,6 +8,7 @@ import Question from '../../components/question';
 import Layout from '../../components/quiz-layout';
 import NumberInput from '../../components/NumberInput';
 import converters from '../../components/functions/convertors';
+
 const HairAndFurSanitizerForHuman = ({ title, category, onComplete }: any) => {
     const Max = 3
     const [step, setStep] = useState(1)
@@ -36,7 +37,7 @@ const HairAndFurSanitizerForHuman = ({ title, category, onComplete }: any) => {
                 (state?.duration.match(/(\d+)/)[0] * 12)
             const quantity = converters.mlToPpm(selectValues[state.quan])
             const strenght = 80
-            const frequency = state.freq
+            const frequency = state.freq * 4.4
             return quantity * frequency * strenght * months
         } catch (err) {
             console.error('Question Skipped : cause --skipped flag in result/calculation')
@@ -99,7 +100,7 @@ const HairAndFurSanitizerForHuman = ({ title, category, onComplete }: any) => {
             {step == 3 && (
                 <Question name='How long would you like a hair sanitizing ?'>
                     <Select
-                        options={['1 month', '2 month', '3 month', '6 month', '1 year']}
+                        options={['1 month', '2 month', '3 month', '6 month', '1 year', '2 year', '5 year']}
                         selectedOption={state?.duration}
                         onClick={selectInputOnChangeHandler}
                         id="duration"

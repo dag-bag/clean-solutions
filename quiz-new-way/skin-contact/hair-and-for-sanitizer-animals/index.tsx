@@ -7,9 +7,9 @@ import Select from '../../components/select';
 import quizdata from '../../../_____quiz-data';
 import Question from '../../components/question';
 import Layout from '../../components/quiz-layout';
+import NumberInput from '../../components/NumberInput';
 import converters from '../../components/functions/convertors';
 import AdvancedMultipleNested from '../../components/advanced-multiple-nested-input';
-import NumberInput from '../../components/NumberInput';
 
 const HairAndFurSanitizerForAnimals = ({ title, category, onComplete }: any) => {
     const Max = 3
@@ -50,7 +50,6 @@ const HairAndFurSanitizerForAnimals = ({ title, category, onComplete }: any) => 
                 const quantity = converters.gallonsToPpm(AnimalsPerQuantityInGallons[key]) * state.animalQuantity[key]
                 const frequncy = state.animalFrequncy[key]
                 const strenght = 160
-                console.log(quantity, frequncy, strenght)
                 return quantity * frequncy * strenght
             }).reduce((t: number, n: number) => t + n)
 
@@ -137,7 +136,7 @@ const HairAndFurSanitizerForAnimals = ({ title, category, onComplete }: any) => 
             {step == 3 && (
                 <Question name='How long would you like a hair sanitizing ?'>
                     <Select
-                        options={['1 month', '2 month', '3 month', '6 month', '1 year']}
+                        options={['1 month', '2 month', '3 month', '6 month', '1 year', '2 year', '5 year']}
                         selectedOption={state?.duration}
                         onClick={selectInputOnChangeHandler}
                         id="duration"

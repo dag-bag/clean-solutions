@@ -1,4 +1,3 @@
-// PRODUCTION_READY
 import { useState } from 'react'
 import { ChangeEvent } from 'react';
 import categoryState from '../../state';
@@ -82,7 +81,7 @@ const HandDisInfactant = ({ title, category, onComplete }: any) => {
                         id="duration"
                         selectedOption={state?.duration}
                         onClick={selectInputOnChangeHandler}
-                        options={['1 month', '2 month', '3 month', '6 month', '1 year', '2 year', '3 year']}
+                        options={['1 month', '2 month', '3 month', '6 month', '1 year', '2 year', '5 year']}
                     />
                 </Question>
             )}

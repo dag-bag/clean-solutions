@@ -29,7 +29,7 @@ const DeodrantRepellent = ({ title, category, onComplete }: any) => {
                 (state?.duration.match(/(\d+)/)[0] * 12)
             const quantity = converters.mlToPpm(2) * 4.4
             const strenght = 50
-            const frequency = state.freq
+            const frequency = state.freq * 4.4
             return quantity * frequency * strenght * months
         } catch (err) {
             console.log(err)
@@ -80,7 +80,7 @@ const DeodrantRepellent = ({ title, category, onComplete }: any) => {
             {step == 2 && (
                 <Question name='How long would you like a body deodorant to last?'>
                     <Select
-                        options={['1 month', '2 month', '3 month', '6 month', '1 year', '2 year', '3 year']}
+                        options={['1 month', '2 month', '3 month', '6 month', '1 year', '2 year', '5 year']}
                         selectedOption={state?.duration}
                         onClick={selectInputOnChangeHandler}
                         id="duration"
