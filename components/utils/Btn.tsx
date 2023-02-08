@@ -10,7 +10,7 @@ type Props = {
 
 function Btn({ hidden }: Props) {
   return (
-    <Link href="/quiz">
+    <Link href="/quiz" legacyBehavior>
       <button
         className={`relative block w-full md:w-auto  md:inline-flex items-center justify-start py-4 pl-10 pr-14 overflow-hidden font-semibold text-white transition-all duration-150 ease-in-out rounded-full   bg-green-1 group border   ${hidden ? "hidden md:block" : ""
           }`}

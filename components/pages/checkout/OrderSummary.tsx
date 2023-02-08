@@ -120,13 +120,13 @@ function OrderSummary({ isSubmitting, isValid, isValidating, values }: Props) {
                 Your personal data will be used to process your order, support
                 your experience throughout this website, and for other purposes
                 described in our
-                <Link href={"https://cleansolutions.tech/privacy-policy-2/"}>
-                  <a
-                    target={"_blank"}
-                    className="ml-2 underline text-blue-1 cursor-pointer"
-                  >
+                <Link
+                  href={"https://cleansolutions.tech/privacy-policy-2/"}
+                  target={"_blank"}
+                  className="ml-2 underline text-blue-1 cursor-pointer">
+                  
                     privacy policy.
-                  </a>
+                  
                 </Link>
               </p>
               <div className="flex items-center mt-10">

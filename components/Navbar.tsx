@@ -7,7 +7,7 @@ function Navbar() {
   return (
     <div className="navbar bg-white max-w-7xl m-auto">
       <div className="navbar-start">
-        <Link href={"/"}>
+        <Link href={"/"} legacyBehavior>
           <span className="btn btn-ghost normal-case text-xl">
             <img
               alt="logo"

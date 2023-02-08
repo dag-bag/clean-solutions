@@ -611,13 +611,11 @@ export default function CheckoutComponent() {
                               href={
                                 "https://cleansolutions.tech/privacy-policy-2/"
                               }
-                            >
-                              <a
-                                target={"_blank"}
-                                className="ml-2 underline text-blue-1 cursor-pointer"
-                              >
+                              target={"_blank"}
+                              className="ml-2 underline text-blue-1 cursor-pointer">
+                              
                                 privacy policy.
-                              </a>
+                              
                             </Link>
                           </p>
                           <div className="flex items-center mt-10">
