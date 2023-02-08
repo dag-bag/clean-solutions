@@ -29,6 +29,7 @@ export interface PostsInterFace {
   yoast_head: string;
   yoast_head_json: YoastHeadJSON;
   _links: Links;
+  _embedded: any
 }
 
 export interface Links {

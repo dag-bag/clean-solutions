@@ -11,6 +11,7 @@ module.exports = {
       "images.unsplash.com",
       "source.unsplash.com",
       "cleansolutions.tech",
+      'customcleansolutions.com'
     ],
   },
 };

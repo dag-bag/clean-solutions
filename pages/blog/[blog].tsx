@@ -40,10 +40,6 @@ export const getStaticPaths: GetStaticPaths = async () => {
   const paths = ids.map((post: { id: number }) => ({
     params: { blog: `${post.id}` },
   }));
-
-  // We'll pre-render only these paths at build time.
-  // { fallback: blocking } will server-render pages
-  // on-demand if the path doesn't exist.
   return { paths, fallback: "blocking" };
 };
 export const getStaticProps: GetStaticProps = async ({ params }) => {

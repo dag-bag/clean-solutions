@@ -1,20 +1,16 @@
 /** @format */
 
+import useSWR from "swr";
 import Router from "next/router";
 import { useState } from "react";
-import categoryState from "../../quiz-new-way/state";
 import { useRecoilValue } from "recoil";
 import Navbar from "../../components/Navbar";
 import Drawer from "../../components/utils/Drawer";
-import { GetStaticProps } from "next";
-import { GetAllBlogs } from "../../services/blogs";
 import { PostsInterFace } from "../../types/blogs";
-import useSWR from "swr";
+import categoryState from "../../quiz-new-way/state";
 import { GetPostsFromNextJsApi } from "../../services/blogs";
 
-
 const ResultPage = () => {
-
   const { data } = useSWR<PostsInterFace[]>(
     "/blogs",
     GetPostsFromNextJsApi
@@ -23,14 +19,6 @@ const ResultPage = () => {
   const [toggles, setToggles] = useState({
     categories: false,
   });
-  const BlogLink = (id: number) => {
-    const { push } = Router;
-    push({
-      pathname: `/blog/${id}`,
-    });
-  };
-
-  console.log(data)
 
   if (!data) {
     return (
@@ -60,7 +48,6 @@ const ResultPage = () => {
             Congratulation, <br /> You have completed the quiz{" "}
           </h1>
         </div>
-
 
         {/* <section className="border rounded-md overflow-hidden m-5">
           <h3 className="py-2 text-lg font-[500] bg-blue-1 px-5 text-white" >
@@ -95,11 +82,11 @@ const ResultPage = () => {
           </div>
         </section> */}
         {/* Create a Section for blogs According to selections  */}
+
+
         <section id="blog" className="blog">
-          {data && data.map(({ title, id }) => (
-            <li className="container list-decimal" onClick={() => BlogLink(id)}>
-              <h1>{title.rendered}</h1>
-            </li>
+          {data && data.map((blogData) => (
+            <BlogTile {...blogData} />
           ))}
         </section>
       </main>
@@ -109,3 +96,4 @@ const ResultPage = () => {
 
 export default ResultPage;
 
+import BlogTile from "../../components/blogTile";
