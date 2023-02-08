@@ -16,6 +16,21 @@
 }
 
 @layer utilities {
+
+
+  .image-container {
+    width: 100% !important;
+    position: unset !important;
+  }
+
+  .image {
+    object-fit: cover;
+    width: 100% !important;
+    position: relative !important;
+    height: 100% !important;
+  }
+
+
   .hero-section {
     align-items: flex-start;
     background-image: linear-gradient(15deg, #0f4667 0%, #2a6973 150%);
