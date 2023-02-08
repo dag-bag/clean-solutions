@@ -11,16 +11,13 @@ export const selectedCategoryAtom = atom<string[]>({
 
 const CategoriesPage = () => {
     const [state] = useRecoilState(selectedCategoryAtom)
-    console.log(state)
     function Next() {
         Router.back()
     }
     function Previous() {
         Router.push(`sub-category`)
     }
-
     const categories = Object.keys(data)
-
     return (
         <Layout onNext={Next} onPrevious={Previous} isEnabled={state.length == 0}>
             <div>
