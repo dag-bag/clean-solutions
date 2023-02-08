@@ -97,7 +97,6 @@ const DentalOralHygeine = ({ title, category, onComplete }: any) => {
 
             {step == 1 && (
                 <Question name="Choose all that apply" >
-                    <h1 className='text-2xl py-2 font-semibold'>Choose all that apply</h1>
                     <MultipleSelect
                         id="multiselect"
                         selectedOptions={state.multiselect}
