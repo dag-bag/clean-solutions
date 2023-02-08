@@ -1,3 +1,36 @@
+const strenghtObject = {
+    'cats': {
+        default: 80
+    },
+    'Pigs': {
+        default: 80
+    },
+    'dogs': {
+        default: 80
+    },
+    'Goats': {
+        default: 80
+    },
+    'Cows': {
+        default: 80
+    },
+    'Sheep': {
+        default: 80
+    },
+    'Ducks': {
+        default: 80
+    },
+    'Chickens': {
+        default: 80
+    },
+    'Rabbits': {
+        default: 80
+    },
+    'Honey Bees': {
+        default: 80
+    },
+}
+
 
 import { useState } from 'react'
 import { ChangeEvent } from 'react';
