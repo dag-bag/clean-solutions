@@ -7,9 +7,11 @@ import quizdata from '../../../_____quiz-data';
 import Question from '../../components/question';
 import Layout from '../../components/quiz-layout';
 import converters from '../../components/functions/convertors';
+import NumberInput from '../../components/NumberInput';
+
 
 const FugimentAndInsecticide = ({ title, category, onComplete }: any) => {
-    const Max = 3 // total number of question (start from 1)
+    const Max = 4 // total number of question (start from 1)
     const [step, setStep] = useState(1)
     const [state, setState] = useState<any>({}) // input data stored for calculation
     const [isReadMoreToggled, setReadMore] = useState(true)
@@ -21,17 +23,29 @@ const FugimentAndInsecticide = ({ title, category, onComplete }: any) => {
         : componentMeta.discription.concat(componentMeta.discription_more)
 
     function calculate() {
-        console.log(state?.duration)
-        const months = (state?.duration.includes('month'))
-            ? state?.duration.match(/(\d+)/)[0] :
-            (state?.duration.match(/(\d+)/)[0] * 12)
-        return converters.mlToPpm(2) * (months * state?.freq) * 50
+
+        const laundryWeight: any = {
+            'moderate': 100, 'heavy': 200, 'HVAC': 500, "Fumigate ": 725
+        }
+
+        try {
+            const months = (state?.duration.includes('month'))
+                ? state?.duration.match(/(\d+)/)[0] :
+                (state?.duration.match(/(\d+)/)[0] * 12)
+            const q = converters.mlToPpm(state.quantity * 3.78541)
+            const f = state.freq
+            const s = laundryWeight[state.strenght]
+            return q * f * s * months
+        } catch (err) {
+            console.error('Question Skipped : cause --skipped flag in result/calculation')
+        }
     }
 
     function stepUp() {
         setStep(prev => prev + 1)
         if (Max == step) {
-            updateData({ ...data, [title]: calculate() })
+            const calculation = calculate()
+            updateData({ ...data, [title]: calculation ? calculation : '--skipped' })
             onComplete()
         }
     }
@@ -47,16 +61,11 @@ const FugimentAndInsecticide = ({ title, category, onComplete }: any) => {
         setReadMore(p => !p)
     }
 
-    function numberInputOnChangeHandler(event: ChangeEvent<HTMLInputElement>) {
-        const { name, value } = event.target
-        setState((prev: any) => { return { ...prev, [name]: parseInt(value) } })
-    }
 
     function selectInputOnChangeHandler(event: ChangeEvent<HTMLDivElement>) {
         const { id, innerHTML } = event.target
         setState((prev: any) => { return { ...prev, [id]: innerHTML } })
     }
-
 
 
     return (
@@ -72,17 +81,27 @@ const FugimentAndInsecticide = ({ title, category, onComplete }: any) => {
 
             {step == 1 && (
                 <Question name="How much area do you need to keep disinfected? ">
-                    <input name="quantity" onChange={numberInputOnChangeHandler} type="number" placeholder='SQFT' value={state?.freq} />
+                    <NumberInput name="quantity" placeholder='SQFT' state={state} setState={setState} />
                 </Question>
             )}
 
             {step == 2 && (
                 <Question name="How many times per month do you want to fog buildings or transportation?">
-                    <input name="freq" onChange={numberInputOnChangeHandler} type="number" placeholder='SQFT' value={state?.freq} />
+                    <NumberInput name="freq" placeholder='usage per month' state={state} setState={setState} />
+                </Question>
+            )}
+            {step == 3 && (
+                <Question name="How many loads of laundry (linens and clothes) do you wash on an average month?">
+                    <Select
+                        options={['moderate', 'heavy', 'HVAC', 'Fumigate']}
+                        selectedOption={state?.strenght}
+                        onClick={selectInputOnChangeHandler}
+                        id="strenght"
+                    />
                 </Question>
             )}
 
-            {step == 3 && (
+            {step == 4 && (
                 <Question name='How long would you like a room or facility fogging supply?'>
                     <Select
                         options={['1 month', '2 month', '3 month', '6 month', '1 year', '2 year', '3 year']}
