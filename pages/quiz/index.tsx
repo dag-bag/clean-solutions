@@ -28,8 +28,12 @@ function Quiz() {
     const [state, setState] = useRecoilState(quizPage);
     const [isEnabled, setEnable] = useState(false)
 
+    console.log(state)
+
     const onSubmit = (values: any,) => {
         setState(values);
+        Router.push('/')
+
     };
 
     const { handleChange, handleSubmit, errors, values, } = useFormik({

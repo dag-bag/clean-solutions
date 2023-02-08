@@ -9,9 +9,20 @@ import Drawer from "../../components/utils/Drawer";
 import { GetStaticProps } from "next";
 import { GetAllBlogs } from "../../services/blogs";
 import { PostsInterFace } from "../../types/blogs";
+import useSWR from "swr";
+import { GetPostsFromNextJsApi } from "../../services/blogs";
 
-const ResultPage = ({ posts }: { posts: PostsInterFace[] }) => {
-  console.log(posts);
+
+const ResultPage = () => {
+
+  const { data } = useSWR<{ posts: PostsInterFace[] }>(
+    "/blogs",
+    GetPostsFromNextJsApi
+  );
+
+
+  console.log(data)
+
   const state = useRecoilValue(categoryState);
   const [toggles, setToggles] = useState({
     categories: false,
@@ -33,10 +44,9 @@ const ResultPage = ({ posts }: { posts: PostsInterFace[] }) => {
           </h1>
         </div>
 
-        {JSON.stringify(state)}
 
-        <section className="border rounded-md overflow-hidden m-5">
-          <h3 className="py-2 text-lg font-[500] bg-blue-1 px-5 text-white ">
+        {/* <section className="border rounded-md overflow-hidden m-5">
+          <h3 className="py-2 text-lg font-[500] bg-blue-1 px-5 text-white" >
             Completed Categories
           </h3>
           <div>
@@ -44,21 +54,19 @@ const ResultPage = ({ posts }: { posts: PostsInterFace[] }) => {
               return (
                 <div
                   key={index}
-                  className="px-5 even:bg-gray-50 py-1 capitalize"
-                >
-                  <b className="font-[500] text-gray-600">{name}</b> :{" "}
-                  {state[name] ? (
-                    <span className="text-green-500 font-bold px-2">
-                      {"✓"}{" "}
-                    </span>
-                  ) : (
-                    <span className="text-red-500 font-bold px-2">{"×"}</span>
-                  )}
+                  className="px-5 even:bg-gray-50 py-1 capitalize  grid grid-cols-2">
+                  <b className="font-[500] text-gray-600">{name}</b>
+                  {state[name]
+                    ? state[name] == '--skipped'
+                      ? <span className="text-blue-500  px-2">{"Skipped"}</span>
+                      : <span className="text-green-500  px-2">{"✓ Selected"}{" "}</span>
+                    : <span className="text-red-500  px-2">{"× Unselected"}</span>}
+
                 </div>
               );
             })}
           </div>
-        </section>
+        </section> */}
 
         <section className="border rounded-md overflow-hidden mt-5 m-5">
           <h3 className="py-2 text-lg font-[500] bg-blue-1 px-5 text-white ">
@@ -71,11 +79,11 @@ const ResultPage = ({ posts }: { posts: PostsInterFace[] }) => {
         </section>
         {/* Create a Section for blogs According to selections  */}
         <section id="blog" className="blog">
-          {posts?.map(({ title, id }) => (
+          {/* {posts?.map(({ title, id }) => (
             <li className="container list-decimal" onClick={() => BlogLink(id)}>
               <h1>{title.rendered}</h1>
             </li>
-          ))}
+          ))} */}
         </section>
       </main>
     </>
@@ -83,10 +91,4 @@ const ResultPage = ({ posts }: { posts: PostsInterFace[] }) => {
 };
 
 export default ResultPage;
-export const getStaticProps: GetStaticProps = async (context) => {
-  return {
-    props: {
-      posts: await GetAllBlogs(),
-    },
-  };
-};
+
