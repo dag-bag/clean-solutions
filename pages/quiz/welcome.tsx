@@ -24,7 +24,7 @@ function WelcomePage() {
                     <Image width={400} height={400} alt="non" src="/welcome.svg" />
                 </div>
                 <div className=" flex-1 items-center justify-center flex md:hidden pt-10 ">
-                    <Image width={250} height={250} alt="non" src="/welcome.svg" />
+                    <Image width={200} height={200} alt="non" src="/welcome.svg" />
                 </div>
             </div>
         </Layout>
