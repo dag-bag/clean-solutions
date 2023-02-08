@@ -9,10 +9,10 @@ const PrerequisiteDataError = () => {
     }
     if (categories.length == 0) {
         return (
-            <div className="m-2 p-5 bg-red-100 rounded-md max-w-[300px]">
-                <h5 className="text-xl font-semibold text-red-500 py-1"> Prerequisite Data Error</h5>
-                <p className="py-2 text-red-500 text-sm">We need categories before starting the quiz and we havent received any.</p>
-                <button onClick={onClickHandler} className="btn btn-error w-full">go back</button>
+            <div className="m-2 p-10 bg-red-100 rounded-md max-w-[350px]">
+                <h5 className="text-xl font-semibold text-red-500 ">Quiz data not found</h5>
+                <p className="py-3 text-red-500 text-sm">We need categories before starting the quiz and we havent received any.</p>
+                <button onClick={onClickHandler} className="btn btn-outline border-red-500 border-2 text-red-500 hover:bg-red-500 w-full">go back</button>
             </div>
         )
     }
