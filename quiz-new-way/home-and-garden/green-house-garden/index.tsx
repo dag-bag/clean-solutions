@@ -5,7 +5,7 @@ const stenghtObject: any = {
         default: 0.25
     }, 'Plants and Perpetual Grow Rooms': {
         default: 1
-    }, 'Facilities, Tools, & Equipment': {
+    }, 'Facilities, Tools and Equipment': {
         'light': 20,
         'moderate': 50,
         heavy: 100
@@ -54,13 +54,20 @@ const GreenHouseAndGarden = ({ title, category, onComplete }: any) => {
         : componentMeta.discription.concat(componentMeta.discription_more)
 
     function calculate() {
+        const calcus: any = {
+            'Seeds and Propagations Rooms': 3.78541,
+            'Plants and Perpetual Grow Rooms': 1892.705,
+            'Vase Water, Cuttings and Flowers': 37855.41,
+            'Facilities, Tools and Equipment': 3.78541,
+            'Soil, Hydro and Aeroponic Grow Beds': 1892.705,
+        }
         try {
             const months = (state?.duration.includes('month'))
                 ? state?.duration.match(/(\d+)/)[0] :
                 (state?.duration.match(/(\d+)/)[0] * 12)
 
             const sum = state.quantity.selected.map((key: string) => {
-                const quantity = converters.gallonsToPpm(state.quantity[key] / 2)
+                const quantity = converters.mlToPpm(state.quantity[key] * calcus[key])
                 const frequncy = state.frequency[key]
                 const strenght = defaultStrenght == 0
                     ? stenghtObject[key][state.strenght[key]]
@@ -114,7 +121,7 @@ const GreenHouseAndGarden = ({ title, category, onComplete }: any) => {
                         state={state}
                         setState={setState}
                         name="quantity"
-                        options={['Seeds and Propagations Rooms', 'Soil, Hydro and Aeroponic Grow Beds', 'Plants and Perpetual Grow Rooms', 'Facilities, Tools, & Equipment', 'Vase Water, Cuttings and Flowers']}
+                        options={['Seeds and Propagations Rooms', 'Soil, Hydro and Aeroponic Grow Beds', 'Plants and Perpetual Grow Rooms', 'Facilities, Tools and Equipment', 'Vase Water, Cuttings and Flowers']}
                         placeholder="Square Feet "
                     />
                 </Question>
