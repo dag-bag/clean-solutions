@@ -85,8 +85,6 @@ const LaundryDisinfection = ({ title, category, onComplete }: any) => {
             readMoreClickHandler,
         }}>
 
-            {JSON.stringify(state)}
-
             {step == 1 && (
                 <Question name="Choose all that apply">
                     <MultipleSelect

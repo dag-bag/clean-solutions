@@ -1,11 +1,11 @@
 interface props {
     state: any,
-    setState: any
+    stepUp: any
     name: string,
     options: any,
+    setState: any
     filteredOption?: any,
     setDefaultStrenght: any,
-    stepUp: any
 }
 
 interface optionProps {
@@ -18,9 +18,9 @@ interface optionProps {
 }
 
 interface nestedOptionProps {
+    name: any,
     state: any,
     setState: any
-    name: any,
     keyName: string,
     keyName2: string,
     isSelected?: boolean,
@@ -35,7 +35,6 @@ const Strenght = ({ state, setState, name, options, filteredOption, setDefaultSt
         setDefaultStrenght()
     }
 
-
     return <div>
         {filteredKeys.map((keyName) => <Option
             {...{
@@ -47,10 +46,7 @@ const Strenght = ({ state, setState, name, options, filteredOption, setDefaultSt
                 isSelected: state[name]?.selected.includes(keyName)
             }} key={keyName} />)}
 
-
-        <button onClick={onNotSureButtonClickHandler} className=" mx-1 items-center w-[150px] justify-start py-2 overflow-hidden  text-white transition-all duration-150 ease-in-out rounded-full  group border  my-2 font-normal ">
-            Not Sure
-        </button>
+        <button onClick={onNotSureButtonClickHandler} className=" mx-1 items-center w-[150px] justify-start py-2 overflow-hidden  text-white transition-all duration-150 ease-in-out rounded-full  group border  my-2 font-normal "> Not Sure</button>
     </div>
 }
 
@@ -60,10 +56,12 @@ const Option = ({ state, setState, name, keyName, isSelected, options }: optionP
     function onClick() {
 
         if (isSelected) {
+            const payloader = { ...state }
+            delete payloader[name][keyName]
             setState({
-                ...state, [name]: {
-                    ...state[name],
-                    selected: [...state[name].selected.filter((key: string) => key !== keyName)],
+                ...payloader, [name]: {
+                    ...payloader[name],
+                    selected: [...payloader[name].selected.filter((key: string) => key !== keyName)],
 
                 }
             })
@@ -90,10 +88,9 @@ const Option = ({ state, setState, name, keyName, isSelected, options }: optionP
 
     return (
         <div
-            style={isSelected ? { border: '2px red dashed' } : undefined}
-            className="  my-2 bg-white overflow-hidden" >
+            className="my-2 bg-white overflow-hidden rounded-md" >
             <div onClick={onClick}>
-                <h1 className="capitalize font-semibold bg-gray-200 p-2 text-lg">{keyName}</h1>
+                <h1 className={`capitalize font-semibold ${isSelected ? `bg-green-1` : `bg-gray-200`} px-4 py-2 text-lg `}>{keyName}</h1>
             </div>
             {isSelected && !isDefaultValuePresent && <div className="p-2">
                 {Object.keys(options).map((keyName2, index) => (
@@ -112,11 +109,7 @@ const Option = ({ state, setState, name, keyName, isSelected, options }: optionP
     )
 }
 
-
 const NestedOption = ({ state, setState, name, isSelected, keyName2, keyName }: nestedOptionProps) => {
-
-
-
     function onClick() {
         setState({
             ...state, [name]: {
@@ -125,14 +118,10 @@ const NestedOption = ({ state, setState, name, isSelected, keyName2, keyName }: 
             }
         })
     }
+
     return (
         <div
-            style={isSelected ? { border: '2px red dashed' } : undefined}
-            className="  my-2 bg-white overflow-hidden" >
-            <div onClick={onClick}>
-                <h1 className="capitalize font-semibold bg-gray-200 p-2 text-lg">{keyName2}</h1>
-            </div>
-        </div>
+            className={`p-2  border-2 border-black rounded-full text-center my-2 capitalize font-semibold ${isSelected ? `bg-blue-300` : `bg-transparent`}`} onClick={onClick}>{keyName2}</div>
     )
 }
 export default Strenght

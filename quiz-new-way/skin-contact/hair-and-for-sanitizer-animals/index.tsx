@@ -93,11 +93,6 @@ const HairAndFurSanitizerForAnimals = ({ title, category, onComplete }: any) => 
             isReadMoreToggled,
             readMoreClickHandler,
         }}>
-
-
-            {JSON.stringify(state)}
-
-
             {step == 1 && (
                 <>
                     <Question name="How many animals do you have?" >

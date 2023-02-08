@@ -1,19 +1,18 @@
 interface props {
-    options: string[],
-    onClick: any;
-    selectedOptions: string[],
     id: string;
+    onClick: any;
+    options: string[],
+    selectedOptions: string[],
 }
 const MultipleSelect = ({ options, onClick, selectedOptions, id }: props) => {
-
-    return <div>
+    return <div className="flex flex-wrap gap-x-3 md:block ">
         {options.map((keyName, index) => {
             const isSelected = selectedOptions.includes(keyName)
             const props = {
-                keyName,
-                onClick,
-                isSelected,
                 id,
+                onClick,
+                keyName,
+                isSelected,
             }
             return <Option {...props} key={index} />
         })}
@@ -32,7 +31,7 @@ const Option = ({ keyName, onClick, isSelected, id }: optionProps) => {
     return (
         <div
             id={id}
-            style={isSelected ? { color: 'red' } : undefined}
-            className="p-2 border border-black" onClick={onClick}>{keyName}</div>
+            style={isSelected ? { background: '#95D074' } : undefined}
+            className="p-2  border-2 border-black rounded-full text-center my-2 capitalize font-semibold" onClick={onClick}>{keyName}</div>
     )
 }

@@ -1,3 +1,5 @@
+import React from 'react'
+import { NumberInputForMultipleNestedInput } from './NumberInput'
 interface props {
     state: any,
     min?: number,
@@ -12,11 +14,26 @@ interface props {
 }
 
 
-const AdvancedMultipleNested = ({ state, setState, name, options, placeholder, placeholders, questions, max, min, preDefineProperties }: props) => {
+interface optionProps {
+    name: any,
+    state: any,
+    min?: number,
+    max?: number,
+    setState: any
+    keyName: string,
+    question?: string,
+    placeholder: string,
+    isSelected: boolean,
+    predefined?: boolean,
+    preDefineProperties?: any
+    arreyWithoutThisKeyName: string[],
 
+}
+const AdvancedMultipleNested: React.FC<props> = ({ state, setState, name, options, placeholder, placeholders, questions, max, min, preDefineProperties }) => {
     return <div>
         {
             options.map((keyName, index) => {
+
                 const isSelected = state[name]?.selected?.includes(keyName)
                 const arreyWithoutThisKeyName = state[name]?.selected?.filter((k: any) => k !== keyName)
 
@@ -47,33 +64,19 @@ const AdvancedMultipleNested = ({ state, setState, name, options, placeholder, p
 }
 export default AdvancedMultipleNested
 
-interface optionProps {
-    state: any,
-    setState: any
-    name: any,
-    keyName: string,
-    isSelected: boolean,
-    placeholder: string,
-    min?: number,
-    max?: number,
-    question?: string,
-    arreyWithoutThisKeyName: string[],
-    predefined?: boolean,
-    preDefineProperties?: any
 
-}
-// we need to setup min max values;
 
 const Option = ({ state, setState, name, keyName, isSelected, placeholder, min, max, question, arreyWithoutThisKeyName, predefined, preDefineProperties }: optionProps) => {
     function onClick() {
 
         if (predefined) {
-
             if (isSelected) {
+                const payloader = { ...state }
+                delete payloader[name][keyName]
                 setState({
-                    ...state,
+                    ...payloader,
                     [name]: {
-                        ...state[name],
+                        ...payloader[name],
                         selected: arreyWithoutThisKeyName,
                         [keyName]: undefined
                     }
@@ -92,7 +95,10 @@ const Option = ({ state, setState, name, keyName, isSelected, placeholder, min, 
 
         } else {
             if (isSelected) {
-                setState({ ...state, [name]: { ...state[name], selected: arreyWithoutThisKeyName } })
+                const payloader = { ...state }
+                delete payloader[name][keyName]
+
+                setState({ ...payloader, [name]: { ...payloader[name], selected: arreyWithoutThisKeyName } })
 
             } else {
                 setState({ ...state, [name]: { ...state[name], selected: [...state[name].selected, keyName] } })
@@ -109,21 +115,20 @@ const Option = ({ state, setState, name, keyName, isSelected, placeholder, min, 
             }
         })
     }
+
+
     return (
         <div
-            style={isSelected ? { border: '2px red dashed' } : undefined}
-            className="  my-2 bg-white overflow-hidden" >
+            className="my-2 bg-white overflow-hidden rounded-md" >
             <div onClick={onClick}>
-                <h1 className="capitalize font-semibold bg-gray-200 p-2 text-lg">{keyName}</h1>
+                <h1 className={`capitalize font-semibold ${isSelected ? `bg-green-1` : `bg-gray-200`} px-4 py-2 text-lg `}>{keyName}</h1>
             </div>
-            {isSelected && !predefined && <div className="p-2">
-                <>
+            {isSelected && !predefined && (
+                <div className="py-4 px-4">
                     <h1 className="font-semibold py-2">{question}</h1>
-                    <input className="w-[200px]" min={min} max={max} onChange={onNestedQuestionHandler} name={keyName} placeholder={placeholder} type="number" />
-                </>
-            </div>}
-
-
+                    <NumberInputForMultipleNestedInput value={state[name][keyName] ?? ''} min={min} max={max} onChange={onNestedQuestionHandler} name={keyName} placeholder={placeholder} />
+                </div>
+            )}
         </div>
     )
 }

@@ -44,8 +44,6 @@ const WaterRetentionStorage = ({ title, category, onComplete }: any) => {
         strenght: {
             selected: []
         }
-
-
     })
     const [isReadMoreToggled, setReadMore] = useState(true)
     const componentMeta = quizdata[category].categories[title]
