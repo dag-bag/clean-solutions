@@ -23,8 +23,6 @@ const ResultPage = () => {
   if (!data) {
     return (
       <div className="w-screen h-screen absolute top-0 left-0 flex items-center justify-center">
-
-
         <div className="inline-flex items-center px-4 py-2 font-[500] leading-6 text-2xl  transition ease-in-out duration-150 cursor-not-allowed">
           <svg className="animate-spin mr-5 h-10 w-10 text-black" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24">
             <circle className="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" stroke-width="4"></circle>
