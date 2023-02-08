@@ -22,18 +22,17 @@ const CategoryCard = ({ name, data, disabled }: props) => {
         }
     }
     return (
-        <div onClick={onClickHandler}
-            className={`w-full px-10 py-4 h-full rounded-md ${isSelected ? `bg-green-1` : `bg-blue-1`} ${disabled ? `opacity-50` : `opacity-100`} `}>
+        <button onClick={onClickHandler}
+            className={`w-full px-10 py-4 h-full rounded-md ${isSelected ? `bg-green-1` : `bg-blue-1`} select-none`} tabIndex={0}>
             <div className="flex items-center">
                 <div className="flex items-center justify-center gap-0">
                     <Image style={{ color: 'white' }} width={40} height={40} alt="none" src='/official/nails.svg' />
                 </div>
-                <h1 className={`text-[22px] py-2 font-semibold uppercase ml-4 ${!isSelected ? `text-green-1` : `text-blue-1`} `}>{name}</h1>
+                <h1 className={` text-left text-[20px] md:text-[21px] py-2 font-semibold capitalize ml-4  ${!isSelected ? `text-green-1` : `text-blue-1`} `}>{name}</h1>
             </div>
             <div className="mt-2">
-                <p className="text-gray-200 text-center--">{data[name].discription}</p>
-
+                <p className="text-gray-200 text-left text-sm md:text-[16px]">{data[name].discription}</p>
             </div>
-        </ div >)
+        </ button >)
 }
 export default CategoryCard
