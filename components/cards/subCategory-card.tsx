@@ -22,7 +22,7 @@ const CategoryCard = ({ name, data, disabled }: props) => {
         }
     }
     return (
-        <button onClick={onClickHandler}
+        <button style={disabled ? { opacity: .5 } : undefined} onClick={onClickHandler}
             className={`w-full px-10 py-4 h-full rounded-md ${isSelected ? `bg-green-1` : `bg-blue-1`} select-none`} tabIndex={0}>
             <div className="flex items-center">
                 <div className="flex items-center justify-center gap-0">
