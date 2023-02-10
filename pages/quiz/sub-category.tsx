@@ -8,7 +8,7 @@ import CategoryCard from "../../components/cards/subCategory-card";
 import PrerequisiteDataError from "../../quiz-new-way/components/prerequisite";
 
 const disebledSubCategories = [
-    'bio-trauma remedation', 'HVAC, fogging and transportation', 'livestock sanitizer and deodorizer']
+    'bio-trauma remedation', 'livestock sanitizer and deodorizer']
 
 export const selectedSubCategoryAtom = atom<string[]>({
     key: 'selected-sub-category',
@@ -58,7 +58,6 @@ const SubCategoriesPage = () => {
                             <CategoryCard disabled={disebledSubCategories.includes(keyName)} data={subCategories} name={keyName} key={number} />
                         )
                     })}
-
                 </main>
             </div>
 
