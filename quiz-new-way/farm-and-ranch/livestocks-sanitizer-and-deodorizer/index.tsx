@@ -43,6 +43,16 @@ import Layout from '../../components/quiz-layout';
 import AdvancedMultipleNested from '../../components/advanced-multiple-nested-input';
 import converters from '../../components/functions/convertors';
 import MultipleSelectInsertedSelect from '../../components/multipe-select-inserted-select';
+
+
+function convertObjectWithArr(arr: string[]) {
+    const obj: any = {}
+    arr.forEach((key) => {
+        obj[key] = ['Spray', 'Soak']
+    })
+    return obj
+}
+
 const LivestocksSanitizerAnsDeodorizer = ({ title, category, onComplete }: any) => {
     const Max = 4
     const [step, setStep] = useState(1)
@@ -71,9 +81,7 @@ const LivestocksSanitizerAnsDeodorizer = ({ title, category, onComplete }: any) 
 
     function calculate() {
 
-        const months = (state?.duration.includes('month'))
-            ? state?.duration.match(/(\d+)/)[0] :
-            (state?.duration.match(/(\d+)/)[0] * 12)
+
 
         const objValue: any = {
             'cats': {
@@ -121,25 +129,34 @@ const LivestocksSanitizerAnsDeodorizer = ({ title, category, onComplete }: any) 
         }
 
 
-        const sum = state.method.selected.map((key: string) => {
-            const disinfactantMethodQuantity = converters.mlToPpm(objValue[key][state.method[key]])
-            const animalQuantity = state.animalQuantity[key]
-            const animalFrequency = state.animalFrequncy[key]
-            return disinfactantMethodQuantity * (animalFrequency * animalQuantity) * 0.5
-        }).reduce((t: number, k: number) => t + k)
+        try {
 
+            const months = (state?.duration.includes('month'))
+                ? state?.duration.match(/(\d+)/)[0] :
+                (state?.duration.match(/(\d+)/)[0] * 12)
 
+            const sum = state.method.selected.map((key: string) => {
+                const disinfactantMethodQuantity = converters.mlToPpm(objValue[key][state.method[key]])
+                const animalQuantity = state.animalQuantity[key]
+                const animalFrequency = state.animalFrequncy[key]
+                return disinfactantMethodQuantity * (animalFrequency * animalQuantity) * 0.5
+            }).reduce((t: number, k: number) => t + k)
 
-        return sum * months
+            return sum * months
+        } catch (err) {
+            console.error('Question Skipped : cause --skipped flag in result/calculation')
+        }
     }
 
     function stepUp() {
         setStep(prev => prev + 1)
         if (Max == step) {
-            updateData({ ...data, [title]: calculate() })
+            const calculation = calculate()
+            updateData({ ...data, [title]: calculation ? calculation : '--skipped' })
             onComplete()
         }
     }
+
     function stepDown() {
         if (step > 1) {
             setStep(prev => prev - 1)
@@ -155,6 +172,7 @@ const LivestocksSanitizerAnsDeodorizer = ({ title, category, onComplete }: any) 
         setState((prev: any) => { return { ...prev, [id]: innerHTML } })
     }
 
+
     return (
         <Layout {...{
             title,
@@ -166,9 +184,7 @@ const LivestocksSanitizerAnsDeodorizer = ({ title, category, onComplete }: any) 
             readMoreClickHandler,
         }}>
 
-            {JSON.stringify(state)}
-
-            {step == 2 && (
+            {step == 1 && (
                 <>
                     <Question name="How many animals do you have?" >
                         <AdvancedMultipleNested
@@ -176,7 +192,18 @@ const LivestocksSanitizerAnsDeodorizer = ({ title, category, onComplete }: any) 
                             setState={setState}
                             name="animalQuantity"
                             placeholder="Quantity in numbers"
-                            options={state.method.selected}
+                            options={[
+                                'cats',
+                                'Pigs',
+                                'dogs',
+                                'Goats',
+                                'Cows',
+                                'Sheep',
+                                'Ducks',
+                                'Chickens',
+                                'Rabbits',
+                                'Honey Bees',
+                                'Other pets with dander, hair or fur']}
                             questions={['How many Cats do you have?', 'How many Dogs do you have?', 'How many Goats animals do you have?', 'How many Cows do you have?', 'How many Ducks do you have?', 'How many Chickens do you have?', 'How many Rabbits do you have?', 'How many Pigs do you have?', 'How many Sheep do you have?', 'How many Honey Bees do you have?', 'How many Other Animals do you have?']}
                         />
 
@@ -189,15 +216,13 @@ const LivestocksSanitizerAnsDeodorizer = ({ title, category, onComplete }: any) 
             )}
 
 
-            {step == 1 && (
+            {step == 2 && (
                 <Question name="Enter how many pounds of goods and commodities are processed on average and select the preferred method for disinfection.">
                     <MultipleSelectInsertedSelect
                         state={state}
                         setState={setState}
                         name="method"
-                        options={{
-                            'cats': ['Spray', 'Soak'], 'dogs': ['Spray', 'Soak'], 'Goats': ['Spray', 'Soak'], 'Cows': ['Spray', 'Soak'], 'Ducks': ['Spray', 'Soak'], 'Chickens': ['Spray', 'Soak'], 'Rabbits': ['Spray', 'Soak'], 'Pigs': ['Spray', 'Soak'], 'Sheep': ['Spray', 'Soak'], 'Honey Bees': ['Spray', 'Soak'], 'Other pets with dander, hair or fur': ['Spray', 'Soak']
-                        }}
+                        options={convertObjectWithArr(state.animalQuantity.selected)}
                     />
                 </Question>
             )}
