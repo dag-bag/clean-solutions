@@ -3,7 +3,7 @@ import { useRecoilValue } from 'recoil';
 
 import OfficesAndInstitutes from './offices-and-institutes';
 import WaterSystemBasinsAndStorage from './water-syestems-basins-and-storage'
-
+import BioTraumaRemedation from './bio-trauma-remedation';
 import { selectedSubCategoryAtom } from '../../pages/quiz/sub-category';
 import findSimilarInArr from '../components/functions/findSimilarInArr';
 import BottlingEquimentAndFacilities from './bottling-equipment-and-facilities';
@@ -24,7 +24,8 @@ const ProfessionalEstablishment = ({ title, onComplete }: any) => {
         'office and institution': <OfficesAndInstitutes {...props} title='office and institution' />,
         'bottling equipment and facilities': <BottlingEquimentAndFacilities  {...props} title='bottling equipment and facilities' />,
         'water systems, basins and storage': <WaterSystemBasinsAndStorage {...props} title='water systems, basins and storage' />,
-        'HVAC, fogging and transportation': <HVACFoggingAndTransportation title={'HVAC, fogging and transportation'} {...props} />
+        'HVAC, fogging and transportation': <HVACFoggingAndTransportation title={'HVAC, fogging and transportation'} {...props} />,
+        'bio-trauma remedation': <BioTraumaRemedation title={'bio-trauma remedation'} {...props} />
 
     }
 
