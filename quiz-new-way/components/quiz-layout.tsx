@@ -15,7 +15,7 @@ const Layout = ({ children, category, title, discription, readMoreClickHandler, 
         <div className='md:grid md:gap-2 md:grid-cols-2 xl:max-w-screen-xl w-screen h-screen overflow-auto' >
             <Header {...{ category, title, discription, readMoreClickHandler, isReadMoreToggled }} />
 
-            <div className='md:h-screen flex items-center bg-blue-1 md:px-10 px-2 mt-5 md:mt-0 py-10'>
+            <div className='md:h-screen flex items-center bg-blue-1 md:px-10 px-5 mt-5 md:mt-0 py-10'>
                 <div>
                     {children}
 
