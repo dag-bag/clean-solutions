@@ -9,6 +9,9 @@ interface props {
 }
 
 const CategoryCard = ({ name, data, disabled }: props) => {
+
+    const icons = ['1.png', '2.png', '3.png']
+
     const [state, setState] = useRecoilState(selectedSubCategoryAtom)
     const isSelected = state.includes(name)
     function onClickHandler() {
@@ -23,15 +26,15 @@ const CategoryCard = ({ name, data, disabled }: props) => {
     }
     return (
         <button style={disabled ? { opacity: .5 } : undefined} onClick={onClickHandler}
-            className={`w-full px-10 py-4 h-full rounded-md ${isSelected ? `bg-green-1` : `bg-blue-1`} select-none`} tabIndex={0}>
-            <div className="flex items-center">
-                <div className="flex items-center justify-center gap-0">
-                    <Image style={{ color: 'white' }} width={40} height={40} alt="none" src='/official/nails.svg' />
+            className={`w-full px-5 py-2  h-full rounded-md ${isSelected ? 'border-2 border-blue-1 bg-blue-50' : 'border-2'} select-none bg-gray-50 `} tabIndex={0}>
+            <div className="flex items-center flex-col">
+                <h1 className={`  text-[20px] md:text-[21px] py-2 font-semibold capitalize ml-4 text-center ${!isSelected ? `text-green-1` : `text-blue-1`} `}>{name}</h1>
+                <div className="flex items-center justify-center gap-5 py-2">
+                    {icons.map((fileName) => <Image style={{ color: 'white' }} width={35} height={35} alt="icon" src={`/icons/${name}/${fileName}`} />)}
                 </div>
-                <h1 className={` text-left text-[20px] md:text-[21px] py-2 font-semibold capitalize ml-4  ${!isSelected ? `text-green-1` : `text-blue-1`} `}>{name}</h1>
             </div>
             <div className="mt-2">
-                <p className="text-gray-200 text-left text-sm md:text-[16px]">{data[name].discription}</p>
+                <p className="text-gray-500 text-sm md:text-[16px] text-center">{data[name].discription}</p>
             </div>
         </ button >)
 }
