@@ -32,7 +32,7 @@ function Quiz() {
 
     const onSubmit = (values: any,) => {
         setState(values);
-        Router.push('/')
+        Router.push(`${Router.asPath}/get-email`)
 
     };
 

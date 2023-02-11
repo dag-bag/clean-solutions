@@ -9,7 +9,7 @@ function WelcomePage() {
     const userName = useRecoilValue(quizPage)
 
     function Next() {
-        Router.back()
+        Router.push(`get-email`);
     }
     function Prevous() {
         Router.push(`categories`)

@@ -12,7 +12,7 @@ export const selectedCategoryAtom = atom<string[]>({
 const CategoriesPage = () => {
     const [state] = useRecoilState(selectedCategoryAtom)
     function Next() {
-        Router.back()
+        Router.push('welcome')
     }
     function Previous() {
         Router.push(`sub-category`)

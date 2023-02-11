@@ -26,7 +26,7 @@ const GetEmailPage = () => {
   const [isEnabled, setEnable] = useState(false);
 
   function Next() {
-    Router.back();
+    Router.push(`/quiz`);
   }
   function Prevous() {
     Router.push(`welcome`);

@@ -7,8 +7,6 @@ import { atom, useRecoilValue, useRecoilState } from "recoil";
 import CategoryCard from "../../components/cards/subCategory-card";
 import PrerequisiteDataError from "../../quiz-new-way/components/prerequisite";
 
-
-
 export const selectedSubCategoryAtom = atom<string[]>({
     key: 'selected-sub-category',
     default: []
@@ -29,7 +27,7 @@ const SubCategoriesPage = () => {
 
     const subCategories = getSub()
     function Next() {
-        Router.back()
+        Router.push('categories')
     }
     function Previous() {
         Router.push(`start`)
