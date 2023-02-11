@@ -32,7 +32,6 @@ const ResultPage = () => {
 
       </div >
     )
-
   }
 
   return (

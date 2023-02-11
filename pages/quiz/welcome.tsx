@@ -7,7 +7,6 @@ import Layout from "../../components/quiz-btn-layout";
 
 function WelcomePage() {
     const userName = useRecoilValue(quizPage)
-
     function Next() {
         Router.push(`get-email`);
     }

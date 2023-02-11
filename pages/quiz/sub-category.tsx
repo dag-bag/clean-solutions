@@ -7,23 +7,23 @@ import { atom, useRecoilValue, useRecoilState } from "recoil";
 import CategoryCard from "../../components/cards/subCategory-card";
 import PrerequisiteDataError from "../../quiz-new-way/components/prerequisite";
 
+function getSub() {
+    let arr = {};
+    const categoryNames = Object.keys(data)
+    categoryNames.forEach((key) => {
+        arr = { ...arr, ...data[key].categories }
+    })
+    return arr
+}
+
 export const selectedSubCategoryAtom = atom<string[]>({
     key: 'selected-sub-category',
     default: []
 })
 
 const SubCategoriesPage = () => {
-    const selectedCategories = useRecoilValue(selectedCategoryAtom)
     const [state] = useRecoilState(selectedSubCategoryAtom)
-
-    function getSub() {
-        let arr = {};
-        const categoryNames = Object.keys(data)
-        categoryNames.forEach((key) => {
-            arr = { ...arr, ...data[key].categories }
-        })
-        return arr
-    }
+    const selectedCategories = useRecoilValue(selectedCategoryAtom)
 
     const subCategories = getSub()
     function Next() {

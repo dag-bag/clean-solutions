@@ -1,12 +1,14 @@
 /** @format */
-import React from "react";
-import Head from "next/head";
-import Navbar from "../../components/Navbar";
+
 type Props = {
   post: PostsInterFace;
 };
+import React from "react";
+import Head from "next/head";
+import Navbar from "../../components/Navbar";
 import { GetStaticPaths, GetStaticProps } from "next";
 import { PostsInterFace } from "../../types/blogs";
+
 function BlogsDetailsPage({ post }: Props) {
   return (
     <>
@@ -42,6 +44,8 @@ export const getStaticPaths: GetStaticPaths = async () => {
   }));
   return { paths, fallback: "blocking" };
 };
+
+
 export const getStaticProps: GetStaticProps = async ({ params }) => {
   // _fields You can Select What kind of properties You Want to Get
   const getPostResponse = await fetch(

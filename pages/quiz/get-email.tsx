@@ -1,12 +1,12 @@
 /** @format */
 
+import * as yup from "yup";
+import { useState } from "react";
 import Router from "next/router";
 import { useFormik } from "formik";
-import { useState, useEffect } from "react";
 import { useRecoilState, atom } from "recoil";
 import Layout from "../../components/quiz-btn-layout";
 import Spacing from "../../components/pages/layout/Spacing";
-import * as yup from "yup";
 
 type emailAtomType = string | undefined;
 const emailAtom = atom<emailAtomType>({
