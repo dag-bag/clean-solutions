@@ -5,7 +5,7 @@ import { selectedCategoryAtom } from "./categories";
 import Layout from "../../components/quiz-btn-layout";
 import { atom, useRecoilValue, useRecoilState } from "recoil";
 import CategoryCard from "../../components/cards/subCategory-card";
-import PrerequisiteDataError from "../../quiz-new-way/components/prerequisite";
+import PrerequisiteDataError from "../../quiz/components/prerequisite";
 
 function getSub() {
     let arr = {};

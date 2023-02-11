@@ -6,7 +6,7 @@ import { useRecoilValue } from "recoil";
 import Navbar from "../../components/Navbar";
 import Drawer from "../../components/utils/Drawer";
 import { PostsInterFace } from "../../types/blogs";
-import categoryState from "../../quiz-new-way/state";
+import categoryState from "../../quiz/state";
 import { GetPostsFromNextJsApi } from "../../services/blogs";
 
 const ResultPage = () => {
