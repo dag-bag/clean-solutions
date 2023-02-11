@@ -1,5 +1,5 @@
 import Router from "next/router";
-import data from "../../_____quiz-data";
+import data from "../../data";
 import { useRecoilState, atom } from "recoil";
 import Layout from "../../components/quiz-btn-layout";
 import CategoryCard from "../../components/cards/category-card";

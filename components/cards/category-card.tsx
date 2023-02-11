@@ -1,6 +1,6 @@
 import Image from "next/image"
 import { useRecoilState } from "recoil"
-import data from "../../_____quiz-data"
+import data from "../../data"
 import { selectedCategoryAtom } from "../../pages/quiz/categories"
 
 const CategoryCard = ({ name }: any) => {

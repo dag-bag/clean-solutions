@@ -31,7 +31,7 @@ import { ChangeEvent } from 'react';
 import categoryState from '../../state';
 import { useRecoilState } from 'recoil';
 import Select from '../../components/select';
-import quizdata from '../../../_____quiz-data';
+import quizdata from '../../../data';
 import Question from '../../components/question';
 import Layout from '../../components/quiz-layout';
 import Strenght from '../../components/strenght';

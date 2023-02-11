@@ -1,6 +1,6 @@
 import Router from "next/router";
 import { flatten } from "lodash";
-import data from "../../_____quiz-data";
+import data from "../../data";
 import { selectedCategoryAtom } from "./categories";
 import Layout from "../../components/quiz-btn-layout";
 import { atom, useRecoilValue, useRecoilState } from "recoil";
