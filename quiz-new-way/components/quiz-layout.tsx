@@ -23,10 +23,10 @@ const Layout = ({ children, category, title, discription, readMoreClickHandler, 
 
                     <div className="flex md:items-center md:justify-between mt-2 md:flex-row flex-col ">
                         <button onClick={stepDown ?? undefined} className="w-full mx-1 items-center md:w-[150px] justify-start py-2 overflow-hidden  text-white text-xl transition-all duration-150 ease-in-out rounded-full  group border  my-2 font-normal hover:bg-green-1 hover:text-blue-1 hover:border-0  focus:bg-green-1 ">
-                            {'<'}
+                            {'<< Back'}
                         </button>
                         <button onClick={stepUp} className="w-full mx-1 items-center md:w-[150px] justify-start py-2 overflow-hidden  text-white text-xl transition-all duration-150 ease-in-out rounded-full group border my-2 font-normal hover:bg-green-1 hover:text-blue-1 hover:border-0  focus:bg-green-1  ">
-                            {'>'}
+                            {'Next >>'}
                         </button>
                     </div>
                 </div>
