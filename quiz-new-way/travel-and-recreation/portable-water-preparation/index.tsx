@@ -85,7 +85,7 @@ const PortableWaterRecreation = ({ title, category, onComplete }: any) => {
             {step == 3 && (
                 <Question name='How long would you like to have a potable drinking water supply?'>
                     <Select
-                        options={['1 month', '2 month', '3 month', '6 month', '1 year', '2 year', '3 year']}
+                        options={['1 month', '2 month', '3 month', '6 month', '1 year', '2 year', '5 year']}
                         selectedOption={state?.duration}
                         onClick={selectInputOnChangeHandler}
                         id="duration"
