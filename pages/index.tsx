@@ -10,7 +10,7 @@ const Index = () => {
         <title>Home</title>
         <meta title="Home" />
         <meta name="description" content="this is a quiz ." />
-        <meta name="viewport" content="initial-scale=0, width=device-width" />
+        <meta name="viewport" content="initial-scale=1, width=device-width" />
       </Head>
       <Navbar />
       <Drawer />
