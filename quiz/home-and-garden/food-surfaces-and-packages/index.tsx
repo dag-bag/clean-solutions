@@ -96,7 +96,6 @@ const FoodSurfacesAndPackages = ({ title, category, onComplete }: any) => {
             readMoreClickHandler,
         }}>
 
-            {JSON.stringify(state)}
 
             {step == 1 && (
                 <Question name="Select food-contact surfaces to sanitize">

@@ -18,6 +18,7 @@
     "@types/woocommerce__woocommerce-rest-api": "^1.0.2",
     "@woocommerce/woocommerce-rest-api": "^1.0.1",
     "country-state-city": "^3.1.2",
+    "cssnano": "^5.1.14",
     "daisyui": "^2.31.0",
     "formik": "^2.2.9",
     "i": "^0.3.7",

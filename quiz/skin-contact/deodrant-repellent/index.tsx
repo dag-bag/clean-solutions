@@ -40,7 +40,7 @@ const DeodrantRepellent = ({ title, category, onComplete }: any) => {
         setStep(prev => prev + 1)
         if (Max == step) {
             const calculation = calculate()
-            updateData({ ...data, [title]: calculation ? calculation : 'skipped' })
+            updateData({ ...data, [title]: calculation ? calculation : '--skipped' })
             onComplete()
         }
     }

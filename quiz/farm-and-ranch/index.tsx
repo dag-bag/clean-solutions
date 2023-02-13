@@ -21,8 +21,7 @@ const FarmAndRanch = ({ title, onComplete }: any) => {
         'horticulture and agriculture tools': <HoticultureAndAgriculture title={'horticulture and agriculture tools'} {...props} />,
         'fugiment and insecticide': <FugimentAndInsecticide title="fugiment and insecticide" {...props} />,
         'green house and garden': <GreenHouseAndGarden title="green house and garden" {...props} />,
-        'portable water for animals'
-            : <PortableWaterForAnimals title="portable water for animals" {...props} />,
+        'portable water for animals': <PortableWaterForAnimals title="portable water for animals" {...props} />,
         'livestock sanitizer and deodorizer': <LivestocksSanitizerAnsDeodorizer title="livestock sanitizer and deodorizer" {...props} />
     }
 
