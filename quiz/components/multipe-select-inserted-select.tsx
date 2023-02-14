@@ -67,10 +67,9 @@ const Option = ({ state, setState, name, keyName, isSelected, options }: optionP
 
     return (
         <div
-            style={isSelected ? { border: '2px red dashed' } : undefined}
-            className="  my-2 bg-white overflow-hidden" >
+            className="my-2 bg-white overflow-hidden rounded-md" >
             <div onClick={onClick}>
-                <h1 className="capitalize font-semibold bg-gray-200 p-2 text-lg">{keyName}</h1>
+                <h1 className={`capitalize font-semibold ${isSelected ? `bg-green-1` : `bg-gray-200`} px-4 py-2 text-lg `}>{keyName}</h1>
             </div>
             {isSelected && <div className="p-2">
                 {options.map((keyName2: string, index: number) => (
@@ -105,13 +104,12 @@ const NestedOption = ({ state, setState, name, isSelected, keyName2, keyName }: 
     console.log(keyName)
 
     return (
-        <div
-            style={isSelected ? { border: '2px red dashed' } : undefined}
-            className="  my-2 bg-white overflow-hidden" >
+        <div className={` my-2 bg-white overflow-hidden rounded-md ${isSelected ? `border-2 border-green-1 text-green-1` : `border-2`}`
+        } >
             <div onClick={onClick}>
-                <h1 className="capitalize font-semibold bg-gray-200 p-2 text-lg">{keyName2}</h1>
+                <h1 className="capitalize  bg-gray-200 p-2 text-md">{keyName2}</h1>
             </div>
-        </div>
+        </div >
     )
 }
 export default MultipleSelectInsertedSelect
