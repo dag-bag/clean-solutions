@@ -1,9 +1,8 @@
-import Router from "next/router";
 import data from "../../data";
 import { useRecoilState, atom } from "recoil";
 import Layout from "../../components/quiz-btn-layout";
 import CategoryCard from "../../components/cards/category-card";
-
+import setQueriesChangeRoutes from "../../components/functions/setQueriesChangeRoutes";
 export const selectedCategoryAtom = atom<string[]>({
     key: 'selected-category',
     default: []
@@ -13,10 +12,10 @@ const CategoriesPage = () => {
     const categories = Object.keys(data)
     const [state] = useRecoilState(selectedCategoryAtom)
     function Next() {
-        Router.push('welcome')
+        setQueriesChangeRoutes('welcome')
     }
     function Previous() {
-        Router.push(`sub-category`)
+        setQueriesChangeRoutes(`sub-category`)
     }
     return (
         <Layout onNext={Next} onPrevious={Previous} isEnabled={state.length == 0}>

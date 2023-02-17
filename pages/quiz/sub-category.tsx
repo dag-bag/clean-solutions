@@ -1,4 +1,3 @@
-import Router from "next/router";
 import { flatten } from "lodash";
 import data from "../../data";
 import { selectedCategoryAtom } from "./categories";
@@ -6,7 +5,7 @@ import Layout from "../../components/quiz-btn-layout";
 import { atom, useRecoilValue, useRecoilState } from "recoil";
 import CategoryCard from "../../components/cards/subCategory-card";
 import PrerequisiteDataError from "../../quiz/components/prerequisite";
-
+import setQueriesChangeRoutes from "../../components/functions/setQueriesChangeRoutes";
 function getSub() {
     let arr = {};
     const categoryNames = Object.keys(data)
@@ -27,10 +26,10 @@ const SubCategoriesPage = () => {
 
     const subCategories = getSub()
     function Next() {
-        Router.push('categories')
+        setQueriesChangeRoutes('categories')
     }
     function Previous() {
-        Router.push(`start`)
+        setQueriesChangeRoutes('start')
     }
 
     function getCategory() {

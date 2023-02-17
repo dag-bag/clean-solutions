@@ -1,10 +1,9 @@
 interface props {
-    children: any,
     name: string,
+    children: JSX.Element | JSX.Element[],
 }
 
-
-const Question = ({ children, name }: props) => {
+const Question: React.FC<props> = ({ children, name }) => {
     return (
         <div>
             <h1 className='text-2xl mb-5 font-normal text-white'>{name}</h1>
@@ -12,5 +11,4 @@ const Question = ({ children, name }: props) => {
         </div>
     )
 }
-
 export default Question 

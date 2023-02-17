@@ -1,5 +1,4 @@
 import { useState } from "react"
-import Router from "next/router"
 import { useRecoilValue } from 'recoil'
 import SkinContact from "./skin-contact"
 import FarmAndRanch from "./farm-and-ranch"
@@ -9,6 +8,7 @@ import TravelAndRecreation from "./travel-and-recreation"
 import PrerequisiteDataError from "./components/prerequisite"
 import { selectedCategoryAtom } from "../pages/quiz/categories"
 import ProfessionalEstablishment from "./professional-establishment"
+import setQueriesChangeRoutes from "../components/functions/setQueriesChangeRoutes"
 
 const QuizNewWay = () => {
     const [step, setStep] = useState(1)
@@ -17,16 +17,16 @@ const QuizNewWay = () => {
     function stepSubCategoriesCount() {
         setStep(prev => prev + 1)
         if (Max == step) {
-            Router.push('result')
+            setQueriesChangeRoutes('result')
         }
     }
     const renderobject: any = {
         'skin contact': <SkinContact title="skin contact" onComplete={stepSubCategoriesCount} />,
-        'water treatment': <WaterTreatment title="water treatment" onComplete={stepSubCategoriesCount} />,
+        'farm and ranch': <FarmAndRanch title='farm and ranch' onComplete={stepSubCategoriesCount} />,
         'home and garden': <HomeAndGarden title="home and garden" onComplete={stepSubCategoriesCount} />,
+        'water treatment': <WaterTreatment title="water treatment" onComplete={stepSubCategoriesCount} />,
         'travel and recreation': <TravelAndRecreation title="travel and recreation" onComplete={stepSubCategoriesCount} />,
         'professional establishments': <ProfessionalEstablishment title='professional establishments' onComplete={stepSubCategoriesCount} />,
-        'farm and ranch': <FarmAndRanch title='farm and ranch' onComplete={stepSubCategoriesCount} />
     }
 
     return (

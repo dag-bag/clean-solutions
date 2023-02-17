@@ -1,17 +1,17 @@
 import React from "react";
 import { quizPage } from ".";
 import Image from "next/image";
-import Router from "next/router";
 import { useRecoilValue } from "recoil";
 import Layout from "../../components/quiz-btn-layout";
+import setQueriesChangeRoutes from "../../components/functions/setQueriesChangeRoutes";
 
 function WelcomePage() {
     const userName = useRecoilValue(quizPage)
     function Next() {
-        Router.push(`get-email`);
+        setQueriesChangeRoutes('get-email')
     }
     function Prevous() {
-        Router.push(`categories`)
+        setQueriesChangeRoutes('categories')
     }
     return (
         <Layout onNext={Next} onPrevious={Prevous}>

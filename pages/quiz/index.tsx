@@ -1,5 +1,4 @@
 /** @format */
-
 const data = [
     {
         question: "What  Should  I  Call  You?",
@@ -14,7 +13,6 @@ export const quizPage = atom({
         name: ''
     }
 })
-
 import Router from "next/router";
 import { useFormik } from "formik";
 import { useState, useEffect } from "react";
@@ -22,15 +20,14 @@ import { useRecoilState, atom } from "recoil";
 import { validateString } from "../../types/form";
 import Layout from "../../components/quiz-btn-layout";
 import Spacing from "../../components/pages/layout/Spacing";
+import setQueriesChangeRoutes from '../../components/functions/setQueriesChangeRoutes'
 
 function Quiz() {
-
     const [isEnabled, setEnable] = useState(false)
     const [state, setState] = useRecoilState(quizPage);
-
     const onSubmit = (values: any,) => {
         setState(values);
-        Router.push(`${Router.asPath}/get-email`)
+        setQueriesChangeRoutes(`${Router.asPath}/get-email`, state)
     };
 
     const { handleChange,
@@ -42,6 +39,10 @@ function Quiz() {
             validationSchema: validateString("name"),
         });
 
+    const onChange = (e: any) => {
+        handleChange(e)
+        setState({ name: e.target.value })
+    }
 
     useEffect(() => {
         if (errors.name || values.name === "") {
@@ -53,9 +54,10 @@ function Quiz() {
 
     function Next() {
         Router.push('/')
+        setQueriesChangeRoutes('/')
     }
     function Prevous() {
-        Router.push(`${Router.asPath}/get-email`)
+        setQueriesChangeRoutes(`${Router.asPath}/get-email`, state)
     }
 
     return (
@@ -73,7 +75,7 @@ function Quiz() {
                                     value={values.name}
                                     name={data[0].data}
                                     placeholder="Your name goes here..."
-                                    onChange={(e) => { handleChange(e) }}
+                                    onChange={onChange}
                                     className={` ${errors.name
                                         ? "border-red-400 focus:!border-red-400"
                                         : "focus-within:!border-green-1"

@@ -1,6 +1,6 @@
-import { selectedCategoryAtom } from "../../pages/quiz/categories"
-import { useRecoilValue } from 'recoil'
 import Router from "next/router"
+import { useRecoilValue } from 'recoil'
+import { selectedCategoryAtom } from "../../pages/quiz/categories"
 
 const PrerequisiteDataError = () => {
     const categories = useRecoilValue(selectedCategoryAtom)

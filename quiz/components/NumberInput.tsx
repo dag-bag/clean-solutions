@@ -1,7 +1,7 @@
 import { ChangeEvent } from "react"
 interface props {
     placeholder: string,
-    name: any,
+    name: string,
     onChange?: any
     setState?: any,
     state?: any,
@@ -11,7 +11,7 @@ interface props {
 
 interface NumberInputForMultipleNestedInputProps {
     placeholder: string,
-    name: any,
+    name: string,
     onChange?: any
     min?: number,
     max?: number,

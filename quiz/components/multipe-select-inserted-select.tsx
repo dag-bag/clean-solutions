@@ -6,7 +6,7 @@ interface props {
 }
 
 interface optionProps {
-    name: any,
+    name: string,
     state: any,
     options: any
     setState: any
@@ -17,31 +17,21 @@ interface optionProps {
 interface nestedOptionProps {
     state: any,
     setState: any
-    name: any,
+    name: string,
     keyName2: string,
     isSelected?: boolean,
     keyName: string
 }
 
-const MultipleSelectInsertedSelect = ({ state, setState, name, options }: props) => {
-
-
-    return <div>
-        {Object.keys(options).map((keyName) => <Option
-            {...{
-                name,
-                state,
-                keyName,
-                setState,
-                options: options[keyName],
-                isSelected: state[name].selected.includes(keyName)
-            }} key={keyName} />)}
-    </div>
-}
+const MultipleSelectInsertedSelect = ({ state, setState, name, options }: props) => (<div>
+    {Object.keys(options).map((keyName) => <Option
+        {...{
+            name, state, keyName, setState, options: options[keyName], isSelected: state[name].selected.includes(keyName)
+        }} key={keyName} />)}
+</div>)
 
 const Option = ({ state, setState, name, keyName, isSelected, options }: optionProps) => {
     function onClick() {
-
         if (isSelected) {
             setState(
                 {
@@ -60,11 +50,8 @@ const Option = ({ state, setState, name, keyName, isSelected, options }: optionP
                         selected: [...state[name].selected, keyName]
                     }
                 })
-
         }
-
     }
-
     return (
         <div
             className="my-2 bg-white overflow-hidden rounded-md" >
@@ -101,7 +88,6 @@ const NestedOption = ({ state, setState, name, isSelected, keyName2, keyName }: 
         })
     }
 
-    console.log(keyName)
 
     return (
         <div className={` my-2 bg-white overflow-hidden rounded-md ${isSelected ? `border-2 border-green-1 text-green-1` : `border-2`}`

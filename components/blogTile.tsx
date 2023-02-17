@@ -1,6 +1,6 @@
 import Router from "next/router"
-import { PostsInterFace } from "../types/blogs"
 import Image from "next/image"
+import { PostsInterFace } from "../types/blogs"
 const BlogTile: React.FC<PostsInterFace> = (props) => {
     const paragraph = props.excerpt.rendered.replace('[&#8230;]', '...')
     function onReadMoreBtnClickHandler() {

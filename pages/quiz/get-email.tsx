@@ -2,11 +2,11 @@
 
 import * as yup from "yup";
 import { useState } from "react";
-import Router from "next/router";
 import { useFormik } from "formik";
 import { useRecoilState, atom } from "recoil";
 import Layout from "../../components/quiz-btn-layout";
 import Spacing from "../../components/pages/layout/Spacing";
+import setQueriesChangeRoutes from "../../components/functions/setQueriesChangeRoutes";
 
 type emailAtomType = string | undefined;
 const emailAtom = atom<emailAtomType>({
@@ -26,10 +26,10 @@ const GetEmailPage = () => {
   const [isEnabled, setEnable] = useState(false);
 
   function Next() {
-    Router.push(`/quiz`);
+    setQueriesChangeRoutes('/quiz')
   }
   function Prevous() {
-    Router.push(`welcome`);
+    setQueriesChangeRoutes('welcome', { email: state as string })
   }
 
   const formik = useFormik({
@@ -38,7 +38,7 @@ const GetEmailPage = () => {
     },
     validationSchema: validationSchema,
     onSubmit: (values) => {
-      Router.push(`welcome`);
+      setQueriesChangeRoutes('welcome', { email: state as string })
     },
   });
   const OnChange = (value: React.ChangeEvent<HTMLInputElement>) => {
