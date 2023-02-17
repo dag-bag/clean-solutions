@@ -31,17 +31,14 @@ const subCateegoriesOfCategories: any = {
     ],
 }
 
-import categoryState from "../../quiz/state"
-import { useRecoilState } from "recoil"
 import Head from "next/head"
+import { useRecoilState } from "recoil"
+import categoryState from "../../quiz/state"
 import Navbar from "../../components/Navbar"
 import Drawer from "../../components/utils/Drawer"
-
 import converters from "../../quiz/components/functions/convertors"
 
-
 const Report = () => {
-
     const [state] = useRecoilState(categoryState)
 
     function insertSubCategoriesToCategoriesObject() {
@@ -63,36 +60,35 @@ const Report = () => {
         })
         return obj
     }
-
-
     const actualData = insertSubCategoriesToCategoriesObject()
-
-
     return (
         <>
             <Head>
                 <title>Report</title>
             </Head>
-
             <Navbar />
             <Drawer />
-
             <h1 className="text-center text-3xl py-5 font-semibold">Your Report</h1>
-
             <section className="border rounded-md overflow-hidden  max-w-7xl m-auto my-5 bg-gray-100">
 
                 <div className="p-5">
                     {
                         Object.keys(actualData).map((keyName: string) => {
                             return (
-                                <div >
+                                <div>
                                     <h3 className=" p-2 capitalize font-semibold">{keyName}</h3>
                                     <div>
                                         {Object.keys(actualData[keyName]).map((t: string) => {
                                             return (
                                                 <div className=" text-gray-500 md:h-10 capitalize grid grid-cols-2 border border-gray-300  md:w-[800px] border-b-0 last:border-b " >
                                                     <h5 className=" border-r border-gray-300 h-full flex items-center pl-5">{t}</h5>
-                                                    <b className="font-mono h-full flex items-center pl-5">{converters.ppmToMl(actualData[keyName][t])}</b> </div>
+                                                    <b className="font-mono h-full flex items-center pl-5">
+                                                        {
+                                                            isNaN(converters.ppmToMl(actualData[keyName][t]))
+                                                                ? 'skipped'
+                                                                : converters.ppmToMl(actualData[keyName][t])
+
+                                                        }</b></div>
                                             )
                                         })}
                                     </div>
