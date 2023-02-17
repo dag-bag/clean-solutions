@@ -1,11 +1,10 @@
-import Router from "next/router"
 import { useRecoilValue } from 'recoil'
 import { selectedCategoryAtom } from "../../pages/quiz/categories"
-
+import setQueriesChangeRoutes from "../../components/functions/setQueriesChangeRoutes"
 const PrerequisiteDataError = () => {
     const categories = useRecoilValue(selectedCategoryAtom)
     function onClickHandler() {
-        Router.push('/quiz/categories')
+        setQueriesChangeRoutes('/quiz/categories')
     }
     if (categories.length == 0) {
         return (
