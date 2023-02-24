@@ -19,10 +19,9 @@ const CategoriesPage = () => {
     }
     return (
         <Layout onNext={Next} onPrevious={Previous} isEnabled={state.length == 0}>
-            <div>
-                <header className=" md:h-[200px] h-[200px] md:mt-0 flex items-center justify-center flex-col my-2 px-5">
-                    <h1 className="text-center md:text-[50px] text-[35px]  text-blue-1 font-[500] capitalize">categories</h1>
-                    <p className="text-blue-1 font-[500] text-center px-2 md:text-lg  ">Select the categories in which you are interested.</p>
+            <div className="bg-[#74A3B6] md:h-full">
+                <header className=" md:h-[20vh] h-[20vh]  flex items-center justify-center flex-col px-5">
+                    <h1 className="text-center md:text-[50px] text-[35px] text-gray-100 uppercase font-bold ">Categories</h1>
                 </header>
                 <main className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-2 lg:gap-5 p-2 max-w-[1080px] m-auto">
                     {categories.map((keyName, number) => (
