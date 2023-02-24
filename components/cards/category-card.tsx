@@ -30,8 +30,9 @@ const CategoryCard = ({ name }: any) => {
                 className={`card-container rounded-md overflow-hidden w-full h-full ${isSelected ? 'bg-blue-1 border' : 'bg-white'}`}>
 
                 <motion.button tabIndex={0}
+                    initial={{ opacity: 1 }}
                     animate={{ opacity: isFlipped ? 0 : 1 }}
-                    className={`w-full absolute px-10 py-4 h-[150px] select-none z-10`}>
+                    className={`w-full absolute px-10 py-4 h-[150px] select-none  z-40`}>
                     <div className="flex items-center">
                         <div className="flex items-center justify-center gap-0">
                             <Image
@@ -44,7 +45,7 @@ const CategoryCard = ({ name }: any) => {
                         <h1 className={` text-left text-[20px] md:text-[21px] py-2 font-semibold capitalize ml-4 ${!isSelected ? 'text-blue-1' : 'text-white'}`}>{name}</h1>
                     </div>
                 </ motion.button>
-                <motion.div style={{ rotateX: 180 }} className=" w-full h-full absolute flex items-center justify-center p-5 z-20" animate={{ opacity: isFlipped ? 1 : 0 }}  >
+                <motion.div initial={{ opacity: 0 }} style={{ rotateX: 180 }} className=" w-full h-full absolute flex items-center justify-center p-5 z-20 select-none" animate={{ opacity: isFlipped ? 1 : 0 }}  >
                     <p className={`${isSelected ? 'text-white' : 'text-black'} text-left text-md font-[600] md:text-[16px]`}>{data[name].self.discription}</p>
                 </motion.div>
             </motion.div>
