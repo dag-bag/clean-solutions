@@ -57,7 +57,7 @@ export const NumberInputForMultipleNestedInput = ({ max, min, name, placeholder,
                 value={value}
                 placeholder={placeholder}
                 onChange={onChange as any}
-                className="rounded-md w-20"
+                className="rounded-md "
             />
             <p className="text-red-700 py-1">{!value ? '🔍Please fill input' : null}</p>
             <p className="text-red-700 py-1">{min ? min > value ? '🔍The value of the input is greater than the minimum value' : null : null}</p>

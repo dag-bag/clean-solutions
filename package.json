@@ -21,6 +21,7 @@
     "cssnano": "^5.1.14",
     "daisyui": "^2.31.0",
     "formik": "^2.2.9",
+    "framer-motion": "^9.0.4",
     "i": "^0.3.7",
     "lodash": "^4.17.21",
     "markdown": "^0.5.0",

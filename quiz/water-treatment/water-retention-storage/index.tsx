@@ -18,33 +18,43 @@ const stenghtObject: any = {
     }
 }
 
+import Vector, { createBranch } from '../../components/Vector';
+
+const vector = {
+    'Ponds, Reservoirs, and Retention Basins': [
+        createBranch('How many times per month do you want to sanitize Ponds, Reservoirs, and Retention Basins?', 'frequency', 'number', "placeholder", 1),
+        createBranch('How many gallons Ponds, Reservoirs, and Retention Basins hold?', 'quantity', 'number', "placeholder", 1),
+        createBranch('Select which strengths you will need to apply in Ponds, Reservoirs, and Retention Basins?', 'strenght', 'select', "placeholder", undefined, undefined, ['Light', 'Moderate'])
+    ],
+    'Once-through Water Cooling Systems': [
+        createBranch('How many times per month do you want to sanitize Once-through Water Cooling Systems?', 'frequency', 'number', "placeholder", 1),
+        createBranch('How many gallons Once-through Water Cooling Systems hold?', 'quantity', 'number', "placeholder", 1),
+        createBranch('Select which strengths you will need to apply in Once-through Water Cooling Systems?', 'strenght', 'select', "placeholder", undefined, undefined, ['Light', 'Moderate', 'Heavy'])
+    ],
+    'Aircraft, RV, Boat Tanks and Lines': [
+        createBranch('How many times per month do you want to sanitize Aircraft, RV, Boat Tanks and Lines?', 'frequency', 'number', "placeholder", 1),
+        createBranch('How many gallonsAircraft, RV, Boat Tanks and Lines hold?', 'quantity', 'number', "placeholder", 1),
+        createBranch('Select which strengths you will need to apply in Once-through Water Cooling Systems?', 'strenght', 'select', "placeholder", undefined, undefined, ['Light', 'Moderate', 'Heavy'])
+    ],
+    'Other Non-Potable Water Storage': [
+        createBranch('How many times per month do you want to sanitize Other Non-Potable Water Storage?', 'frequency', 'number', "placeholder", 1),
+        createBranch('How many gallons Other Non-Potable Water Storage hold?', 'quantity', 'number', "placeholder", 1)
+    ]
+}
+
 import { useState } from 'react'
 import { ChangeEvent } from 'react';
+import quizdata from '../../../data';
 import categoryState from '../../state';
 import { useRecoilState } from 'recoil';
 import Select from '../../components/select';
-import quizdata from '../../../data';
 import Question from '../../components/question';
-import Strenght from '../../components/strenght';
 import Layout from '../../components/quiz-layout';
-import converters from '../../components/functions/convertors';
-import AdvancedMultipleNested from '../../components/advanced-multiple-nested-input';
 
 const WaterRetentionStorage = ({ title, category, onComplete }: any) => {
-    const Max = 4 // total number of question (start from 1)
+    const Max = 2 // total number of question (start from 1)
     const [step, setStep] = useState(1)
-    const [defaultStrenght, setDefaultStrenght] = useState(0)
-    const [state, setState] = useState<any>({
-        quantity: {
-            selected: []
-        },
-        frequncy: {
-            selected: []
-        },
-        strenght: {
-            selected: []
-        }
-    })
+    const [state, setState] = useState<any>({})
     const [isReadMoreToggled, setReadMore] = useState(true)
     const componentMeta = quizdata[category].categories[title]
     const [data, updateData] = useRecoilState(categoryState)
@@ -59,16 +69,7 @@ const WaterRetentionStorage = ({ title, category, onComplete }: any) => {
                 ? state?.duration.match(/(\d+)/)[0] :
                 (state?.duration.match(/(\d+)/)[0] * 12)
 
-            const sum = state.quantity.selected.map((key: string) => {
-                const q = converters.gallonsToPpm(state.quantity[key])
-                const f = state.frequncy[key]
-                const s = (defaultStrenght == 0)
-                    ? stenghtObject[key][state.strenght[key]]
-                    : defaultStrenght
-                return q * f * s
-            }).reduce((t: number, k: number) => t + k)
-
-            return sum * months
+            return 1 * months
         } catch (err) {
             console.error('Question Skipped : cause --skipped flag in result/calculation')
         }
@@ -107,55 +108,16 @@ const WaterRetentionStorage = ({ title, category, onComplete }: any) => {
             discription,
             isReadMoreToggled,
             readMoreClickHandler,
+            hideButton: step == 1
         }}>
-            {step == 1 && (
-                <Question name="How many gallons do each of your water retention or storage containment devices hold?" >
-                    <AdvancedMultipleNested
-                        state={state}
-                        setState={setState}
-                        name="quantity"
-                        placeholder="Quantity in numbers"
-                        options={['Ponds, Reservoirs, and Retention Basins', 'Once-through Water Cooling Systems', 'Aircraft, RV, Boat Tanks and Lines', 'Other Non-Potable Water Storage']}
-                    />
-                </Question>
 
+            {/* {JSON.stringify(vectorState)} */}
+
+            {step == 1 && (
+                <Vector data={vector} question={'Choose your water retention or storage containment devices'} next={stepUp} />
             )}
 
             {step == 2 && (
-
-                <Question name="How many times per month do you want to sanitize water containment?" >
-                    <AdvancedMultipleNested
-                        state={state}
-                        setState={setState}
-                        name="frequncy"
-                        placeholder="Quantity in numbers"
-                        options={state.quantity.selected}
-                    />
-                </Question>
-
-            )}
-
-            {step == 3 && (
-
-                <Question name="Select which strengths you will need to apply?" >
-                    <>
-                        <Strenght
-                            state={state}
-                            stepUp={stepUp}
-                            name="strenght"
-                            setState={setState}
-                            options={stenghtObject}
-                            filteredOption={state.quantity.selected}
-                            setDefaultStrenght={() => { setDefaultStrenght(15) }}
-                        />
-
-                    </>
-                </Question>
-
-            )}
-
-
-            {step == 4 && (
                 <Question name='How long would you like a water storage sanitizer supply to last?'>
                     <Select
                         options={['1 month', '2 month', '3 month', '6 month', '1 year', '2 year', '5 year']}

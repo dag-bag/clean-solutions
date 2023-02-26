@@ -258,5 +258,56 @@ const data: type = {
 
 }
 
+export const subCategories: any = {
+    'skin contact': [
+        'skin infections',
+        'hand disinfactant',
+        'deodrant & repellent',
+        'dental & oral hygiene',
+        'laundry disinfection',
+        'hair & fur sanitizer for humans',
+        'hair & fur sanitizer for animals'
+    ],
+    'water treatment': [
+        'drinking water',
+        'livestocks, pets & animals',
+        'water retention & storage',
+        'recirculating & shocks',
+        'wastewater treatment',
+        'dip tools and equipment'
+    ],
+    'home and garden': [
+        'hard surfaces and appliances',
+        'greenhouse and garden',
+        'gloceries and perishable foods',
+        'food surfaces and packages',
+        'soft surfaces and laundry',
+        'fog rooms and carpenting'
+    ],
+    'travel and recreation': [
+        'portable water preparation',
+        'commuting and lodging spray',
+        'gyms spas clubs & locker rooms',
+        'boat, aircraft & rv water storage',
+        'body sanitizer & deodrant',
+        'camping hunting & scent eleminator'
+    ],
+    'farm and ranch': [
+        'raw produce, egg and meat',
+        'horticulture and agriculture tools',
+        'fugiment and insecticide',
+        'green house and garden',
+        'portable water for animals',
+        'livestock sanitizer and deodorizer',
+    ],
+    'professional establishments': [
+        'food establishments',
+        'office and institution',
+        'bottling equipment and facilities',
+        'water systems, basins and storage',
+        'HVAC, fogging and transportation',
+        'bio-trauma remedation'
+    ],
+}
 
 export default data

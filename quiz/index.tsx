@@ -15,12 +15,12 @@ const QuizNewWay = () => {
     const selectedCategories = useRecoilValue(selectedCategoryAtom)
     const Max = selectedCategories.length;
     function stepSubCategoriesCount() {
-        console.log('start')
+
         setStep(prev => prev + 1)
+        console.log(Max, step)
         if (Max == step) {
             setQueriesChangeRoutes('result')
         }
-        console.log('end')
 
     }
     const renderobject: any = {

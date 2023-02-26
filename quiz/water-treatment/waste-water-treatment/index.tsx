@@ -16,23 +16,36 @@ const stenghtObject: any = {
     },
 }
 
+import Vector, { createBranch } from '../../components/Vector/';
+
+const vector = {
+    'Residential': [
+        createBranch("How much water Residential system with wastewater hold?", 'quantity', 'select', 'placeholder', undefined, undefined, ['small', 'medium', 'large']),
+        createBranch("How many times per month do you sanitize Commercial water systems?", 'frequency', 'number', 'placeholder', 1, 30)
+    ],
+    "Commercial": [
+        createBranch("How much water Commercial system with wastewater hold?", 'quantity', 'select', 'placeholder', undefined, undefined, ['small', 'medium', 'large']),
+        createBranch("How many times per month do you sanitize Commercial water systems?", 'frequency', 'number', 'placeholder', 1, 30)
+    ],
+    "RV Tanks": [
+        createBranch("How much water RV Tanks system with wastewater hold?", 'quantity', 'select', 'placeholder', undefined, undefined, ['small', 'medium', 'large']),
+        createBranch("How many times per month do you sanitize RV Tanks water systems?", 'frequency', 'number', 'placeholder', 1, 30)
+    ]
+}
+
 import { useState } from 'react'
 import { ChangeEvent } from 'react';
+import quizdata from '../../../data';
 import categoryState from '../../state';
 import { useRecoilState } from 'recoil';
 import Select from '../../components/select';
-import quizdata from '../../../data';
 import Question from '../../components/question';
 import Layout from '../../components/quiz-layout';
-import Strenght from '../../components/strenght';
 import converters from '../../components/functions/convertors';
-import MultipleSelectInsertedSelect from '../../components/multipe-select-inserted-select';
-import AdvancedMultipleNested from '../../components/advanced-multiple-nested-input';
 
 const WasteWaterTreatment = ({ title, category, onComplete }: any) => {
-    const Max = 4 // total number of question (start from 1)
+    const Max = 2 // total number of question (start from 1)
     const [step, setStep] = useState(1)
-    const [defaultStrenght, setDefaultStrenght] = useState(0)
     const [state, setState] = useState<any>({
         quantity: {
             selected: []
@@ -60,16 +73,7 @@ const WasteWaterTreatment = ({ title, category, onComplete }: any) => {
             const months = (state?.duration?.includes('month'))
                 ? state?.duration.match(/(\d+)/)[0] :
                 (state?.duration.match(/(\d+)/)[0] * 12)
-
-            const sum = state.quantity.selected.map((key: string) => {
-                const quantity = state.quantity[key]
-                const frequncy = state.frequency[key]
-                const strenght = defaultStrenght == 0
-                    ? stenghtObject[key][state.strenght[key]]
-                    : defaultStrenght
-                return converters.gallonsToPpm(extractNumbers(quantity)[0]) * frequncy * strenght
-            }).reduce((t: number, v: number) => t + v)
-            return sum * months
+            return 0 * months
         } catch (err) {
             console.log(err)
             console.error('Question Skipped : cause --skipped flag in result/calculation')
@@ -109,52 +113,14 @@ const WasteWaterTreatment = ({ title, category, onComplete }: any) => {
             discription,
             isReadMoreToggled,
             readMoreClickHandler,
+            hideButton: step == 1
         }}>
 
             {step == 1 && (
-                <Question name="How much water can each system with wastewater hold? ">
-                    <MultipleSelectInsertedSelect
-                        name="quantity"
-                        options={{
-                            'Residential': ['Small  (750 Gallons)', 'Medium (1200 Gallons)', 'Large (3000 Gallons)'],
-                            'Commercial': ['Small  (10000 Gallons)', 'Medium (50000 Gallons)', 'Large (500000 Gallons)'],
-                            'RV Tanks': ['Small  (5 Gallons)', 'Medium (70 Gallons)', 'Large (300 Gallons)'],
-                        }}
-                        state={state}
-                        setState={setState}
-                    />
-                </Question>
+                <Vector data={vector} question="Choose Water System" next={stepUp} />
             )}
 
             {step == 2 && (
-                <Question name="How many times per month do you sanitize water systems?">
-                    <AdvancedMultipleNested
-                        state={state}
-                        name="frequency"
-                        setState={setState}
-                        options={state.quantity.selected}
-                        placeholder="times"
-                    />
-                </Question>
-            )}
-
-            {step == 3 && (
-
-                <Question name="Select which strengths you will need to apply?" >
-                    <Strenght
-                        state={state}
-                        stepUp={stepUp}
-                        name="strenght"
-                        setState={setState}
-                        options={stenghtObject}
-                        filteredOption={state.quantity.selected}
-                        setDefaultStrenght={() => { setDefaultStrenght(50) }}
-                    />
-                </Question>
-
-            )}
-
-            {step == 4 && (
                 <Question name='How long would you like a wastewater disinfectant supply to last?'>
                     <Select
                         options={['1 month', '2 month', '3 month', '6 month', '1 year', '2 year', '5 year']}

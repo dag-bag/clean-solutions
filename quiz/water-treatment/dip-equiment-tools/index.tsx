@@ -3,6 +3,24 @@ const defaultStrenght: any = {
     'Disinfect tools and equipment': 30,
     'Kill viruses, fungi, or mold on tools and equipment': 100
 }
+
+import Vector, { createBranch, vectorPayload } from '../../components/Vector/';
+
+const vector: vectorPayload = {
+    'Sanitize tools and equipment': [
+        createBranch('on an average week, how much water in gallons do you require to sanitize tools and equipment?', 'quantity', 'number', 'placeholder', 1),
+        createBranch("How many times per week do you sanitize tools and equipment", 'frequency', 'number', 'placeholder')
+    ],
+    'Disinfect tools and equipment': [
+        createBranch('on an average week, how much water in gallons do you require to Disinfect tools and equipment ?', 'quantity', 'number', 'placeholder', 1),
+        createBranch("How many times per week do you disinfect tools and equipment", 'frequency', 'number', 'placeholder')
+    ],
+    'Kill viruses, fungi, or mold on tools and equipment': [
+        createBranch('on an average week, how much water in gallons do you require to kill viruses, fungi, or mold on tools and equipment ?', 'quantity', 'number', 'placeholder', 1),
+        createBranch("How many times per week do you kill viruses, fungi, or mold on tools and equipment", 'frequency', 'number', 'placeholder')
+    ]
+}
+
 import { useState } from 'react'
 import { ChangeEvent } from 'react';
 import categoryState from '../../state';
@@ -11,12 +29,10 @@ import Select from '../../components/select';
 import quizdata from '../../../data';
 import Question from '../../components/question';
 import Layout from '../../components/quiz-layout';
-import NumberInput from '../../components/NumberInput';
 import converters from '../../components/functions/convertors';
-import AdvancedMultipleNested from '../../components/advanced-multiple-nested-input';
 
 const DipEquipmentTools = ({ title, category, onComplete }: any) => {
-    const Max = 3 // total number of question (start from 1)
+    const Max = 2 // total number of question (start from 1)
     const [step, setStep] = useState(1)
     const [state, setState] = useState<any>({
         waterRequire: {
@@ -78,27 +94,14 @@ const DipEquipmentTools = ({ title, category, onComplete }: any) => {
             discription,
             isReadMoreToggled,
             readMoreClickHandler,
+            hideButton: step == 1
         }}>
 
             {step == 1 && (
-                <Question name="On an average week, how much water in gallons do you require to… ?">
-                    <AdvancedMultipleNested
-                        setState={setState}
-                        state={state}
-                        name="waterRequire"
-                        options={['Sanitize tools and equipment', 'Disinfect tools and equipment', 'Kill viruses, fungi, or mold on tools and equipment']}
-                        placeholder="In Gallons"
-                    />
-                </Question>
+                <Vector data={vector} question="Choose Water System" next={stepUp} />
             )}
 
             {step == 2 && (
-                <Question name="How many times per week do you sanitize tools equipment?">
-                    <NumberInput name="freq" state={state} setState={setState} placeholder="usager per week" />
-                </Question>
-            )}
-
-            {step == 3 && (
                 <Question name='How long would you like a tools & equipment sanitizer supply?'>
                     <Select
                         options={['1 month', '2 month', '3 month', '6 month', '1 year', '2 year', '5 year']}

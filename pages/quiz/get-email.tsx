@@ -23,7 +23,7 @@ const validationSchema = yup.object({
 
 const GetEmailPage = () => {
   const [state, setState] = useRecoilState(emailAtom);
-  const [isEnabled, setEnable] = useState(false);
+  // const [isEnabled, setEnable] = useState(false);
 
   function Next() {
     setQueriesChangeRoutes('/quiz')
@@ -40,6 +40,7 @@ const GetEmailPage = () => {
     onSubmit: (values) => {
       setQueriesChangeRoutes('welcome', { email: state as string })
     },
+    validateOnMount: true
   });
   const OnChange = (value: React.ChangeEvent<HTMLInputElement>) => {
     setState(value.target.value);
@@ -47,7 +48,7 @@ const GetEmailPage = () => {
   };
 
   return (
-    <Layout onNext={Next} onPrevious={Prevous} isEnabled={isEnabled}>
+    <Layout onNext={Next} onPrevious={Prevous} isEnabled={!formik.isValid}>
       <div style={{ backgroundImage: `url("./page1.png")` }}
         className="hero min-h-screen overflow-hidden bg-center bg-cover">
         <div className="hero-overlay bg-opacity-80 bg-blue-1"></div>

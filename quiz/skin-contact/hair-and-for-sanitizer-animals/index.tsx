@@ -1,58 +1,59 @@
 
 import { useState } from 'react'
 import { ChangeEvent } from 'react';
-import categoryState from '../../state';
-import { useRecoilState } from 'recoil';
-import Select from '../../components/select';
 import quizdata from '../../../data';
+import categoryState from '../../state';
+import Select from '../../components/select';
 import Question from '../../components/question';
 import Layout from '../../components/quiz-layout';
-import NumberInput from '../../components/NumberInput';
+import { useRecoilState, useRecoilValue } from 'recoil';
 import converters from '../../components/functions/convertors';
-import AdvancedMultipleNested from '../../components/advanced-multiple-nested-input';
+import Vector, { componentStateAtom, createBranch } from '../../components/Vector/';
+
+const vector = {
+    'cats': [
+        createBranch("How many cats do you have?", 'quantity', 'number', 'placeholder', 1),
+        createBranch("How many times a month would you sanitize Cats hair?", 'frequency', 'number', 'placeholder', 1)
+    ],
+    'dogs': [
+        createBranch("How many dogs do you have?", 'quantity', 'number', 'placeholder', 1),
+        createBranch("How many times a month would you sanitize dogs hair?", 'frequency', 'number', 'placeholder', 1)
+    ],
+    'other pets with dander hair or fur': [
+        createBranch("How many other pets with dander hair or fur do you have?", 'quantity', 'number', 'placeholder', 1),
+        createBranch("How many times a month would you sanitize other pets with dander hair or fur hair?", 'frequency', 'number', 'placeholder', 1)
+    ]
+}
 
 const HairAndFurSanitizerForAnimals = ({ title, category, onComplete }: any) => {
-    const Max = 3
+    const Max = 2
     const [step, setStep] = useState(1)
-    const componentMeta = quizdata[category].categories[title]
+    const [state, setState] = useState<any>({})
     const [isReadMoreToggled, setReadMore] = useState(true)
     const [data, updateData] = useRecoilState(categoryState)
-
-    const [state, setState] = useState<any>({
-        animalQuantity: {
-            selected: []
-        },
-        animalFrequncy: {
-            selected: []
-        },
-        quantityOfOthers: ''
-    })
+    const vectorState = useRecoilValue(componentStateAtom)
+    const componentMeta = quizdata[category].categories[title]
 
     const discription = isReadMoreToggled
         ? componentMeta.discription
         : componentMeta.discription.concat(componentMeta.discription_more)
 
-
     function calculate() {
-
-        const AnimalsPerQuantityInGallons: any = {
-            cats: 3,
-            dogs: 5,
-            'Other pets with dander, hair or fur': state['quantityOfOthers'],
-        }
-
         try {
+            const gallonsOfWaterRequire: any = {
+                'cats': 3,
+                dogs: 5,
+                'other pets with dander hair or fur': 3
+            }
             const months = (state?.duration.includes('month'))
                 ? state?.duration.match(/(\d+)/)[0] :
                 (state?.duration.match(/(\d+)/)[0] * 12)
 
-            const sum = state.animalQuantity.selected.map((key: string) => {
-                const quantity = converters.gallonsToPpm(AnimalsPerQuantityInGallons[key]) * state.animalQuantity[key]
-                const frequncy = state.animalFrequncy[key]
-                const strenght = 160
-                return quantity * frequncy * strenght
-            }).reduce((t: number, n: number) => t + n)
-
+            const sum = vectorState.input.selected.map((keyName: string) => {
+                const Q = converters.gallonsToPpm(vectorState.input[keyName].quantity * gallonsOfWaterRequire[keyName])
+                const F = vectorState.input[keyName].frequency
+                return Q * F
+            }).reduce((t: number, k: number) => t + k)
             return sum * months
         } catch (err) {
             console.error('Question Skipped : cause --skipped flag in result/calculation')
@@ -67,6 +68,7 @@ const HairAndFurSanitizerForAnimals = ({ title, category, onComplete }: any) => 
             onComplete()
         }
     }
+
     function stepDown() {
         if (step > 1) {
             setStep(prev => prev - 1)
@@ -82,6 +84,7 @@ const HairAndFurSanitizerForAnimals = ({ title, category, onComplete }: any) => 
         setState((prev: any) => { return { ...prev, [id]: innerHTML } })
     }
 
+
     return (
         <Layout {...{
             title,
@@ -91,49 +94,15 @@ const HairAndFurSanitizerForAnimals = ({ title, category, onComplete }: any) => 
             discription,
             isReadMoreToggled,
             readMoreClickHandler,
+            hideButton: step == 1
         }}>
+
+
             {step == 1 && (
-                <>
-                    <Question name="How many animals do you have?" >
-                        <AdvancedMultipleNested
-                            state={state}
-                            setState={setState}
-                            name="animalQuantity"
-                            placeholder="Quantity in numbers"
-                            options={['cats', 'dogs', 'Other pets with dander, hair or fur']}
-                            questions={['How many Cats do you have?', 'How many Dogs do you have?', 'How many Other animals do you have?']}
-                        />
-                    </Question>
-
-                    {state.animalQuantity.selected.includes('Other pets with dander, hair or fur') && <Question name="How many gallons typically required to wash other animals?">
-                        <NumberInput
-                            state={state}
-                            name="quantityOfOthers"
-                            placeholder="usage per day"
-                            onChange={(event: any) => {
-                                setState({ ...state, 'quantityOfOthers': parseInt(event.target.value) })
-                            }}
-                        />
-                    </Question>}
-                </>
-
+                <Vector data={vector} question={'Choose Animals?'} next={stepUp} />
             )}
 
             {step == 2 && (
-                <Question name="How many times a month would you sanitize animal hair?" >
-                    <AdvancedMultipleNested
-                        state={state}
-                        setState={setState}
-                        name="animalFrequncy"
-                        placeholder="Wash Quantity"
-                        options={state.animalQuantity.selected}
-                        questions={['How many times a month would you sanitize cat hair?', 'How many times a month would you sanitize dog hair?', 'How many times a month would you sanitize other animals hair?']}
-                    />
-                </Question>
-            )}
-
-
-            {step == 3 && (
                 <Question name='How long would you like a hair sanitizing ?'>
                     <Select
                         options={['1 month', '2 month', '3 month', '6 month', '1 year', '2 year', '5 year']}
