@@ -31,7 +31,6 @@ import { ChangeEvent } from 'react';
 import categoryState from '../../state';
 import { useRecoilState } from 'recoil';
 import Select from '../../components/select';
-import quizdata from '../../../data';
 import Strenght from '../../components/strenght';
 import Question from '../../components/question';
 import Layout from '../../components/quiz-layout';
@@ -41,8 +40,6 @@ import AdvancedMultipleNested from '../../components/advanced-multiple-nested-in
 const CommutingAndLodgingSpray = ({ title, category, onComplete }: any) => {
     const Max = 4
     const [step, setStep] = useState(1)
-    const componentMeta = quizdata[category].categories[title]
-    const [isReadMoreToggled, setReadMore] = useState(true)
     const [defaultStrenght, setDefaultStrenght] = useState(0)
     const [data, updateData] = useRecoilState(categoryState)
 
@@ -57,10 +54,6 @@ const CommutingAndLodgingSpray = ({ title, category, onComplete }: any) => {
             selected: []
         }
     })
-
-    const discription = isReadMoreToggled
-        ? componentMeta.discription
-        : componentMeta.discription.concat(componentMeta.discription_more)
 
     function calculate() {
         try {
@@ -99,9 +92,6 @@ const CommutingAndLodgingSpray = ({ title, category, onComplete }: any) => {
         }
     }
 
-    function readMoreClickHandler() {
-        setReadMore(p => !p)
-    }
 
     function selectInputOnChangeHandler(event: ChangeEvent<HTMLDivElement>) {
         const { id, innerHTML } = event.target
@@ -114,9 +104,6 @@ const CommutingAndLodgingSpray = ({ title, category, onComplete }: any) => {
             stepUp,
             stepDown,
             category,
-            discription,
-            isReadMoreToggled,
-            readMoreClickHandler,
         }}>
             {step == 1 && (
                 <>

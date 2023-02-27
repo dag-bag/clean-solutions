@@ -37,7 +37,6 @@ import { ChangeEvent } from 'react';
 import categoryState from '../../state';
 import { useRecoilState } from 'recoil';
 import Select from '../../components/select';
-import quizdata from '../../../data';
 import Question from '../../components/question';
 import Layout from '../../components/quiz-layout';
 import AdvancedMultipleNested from '../../components/advanced-multiple-nested-input';
@@ -56,8 +55,6 @@ function convertObjectWithArr(arr: string[]) {
 const LivestocksSanitizerAnsDeodorizer = ({ title, category, onComplete }: any) => {
     const Max = 4
     const [step, setStep] = useState(1)
-    const componentMeta = quizdata[category].categories[title]
-    const [isReadMoreToggled, setReadMore] = useState(true)
     const [data, updateData] = useRecoilState(categoryState)
 
     const [state, setState] = useState<any>({
@@ -74,15 +71,7 @@ const LivestocksSanitizerAnsDeodorizer = ({ title, category, onComplete }: any) 
 
     })
 
-    const discription = isReadMoreToggled
-        ? componentMeta.discription
-        : componentMeta.discription.concat(componentMeta.discription_more)
-
-
     function calculate() {
-
-
-
         const objValue: any = {
             'cats': {
                 'Spray': 100,
@@ -128,7 +117,6 @@ const LivestocksSanitizerAnsDeodorizer = ({ title, category, onComplete }: any) 
 
         }
 
-
         try {
 
             const months = (state?.duration.includes('month'))
@@ -163,10 +151,6 @@ const LivestocksSanitizerAnsDeodorizer = ({ title, category, onComplete }: any) 
         }
     }
 
-    function readMoreClickHandler() {
-        setReadMore(p => !p)
-    }
-
     function selectInputOnChangeHandler(event: ChangeEvent<HTMLDivElement>) {
         const { id, innerHTML } = event.target
         setState((prev: any) => { return { ...prev, [id]: innerHTML } })
@@ -179,9 +163,6 @@ const LivestocksSanitizerAnsDeodorizer = ({ title, category, onComplete }: any) 
             stepUp,
             stepDown,
             category,
-            discription,
-            isReadMoreToggled,
-            readMoreClickHandler,
         }}>
 
             {step == 1 && (

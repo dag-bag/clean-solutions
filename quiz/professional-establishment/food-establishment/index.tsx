@@ -3,7 +3,6 @@ import { ChangeEvent } from 'react';
 import categoryState from '../../state';
 import { useRecoilState } from 'recoil';
 import Select from '../../components/select';
-import quizdata from '../../../data';
 import Question from '../../components/question';
 import Layout from '../../components/quiz-layout';
 import converters from '../../components/functions/convertors';
@@ -21,13 +20,8 @@ const FoodEstablishment = ({ title, category, onComplete }: any) => {
         }
 
     }) // input data stored for calculation
-    const [isReadMoreToggled, setReadMore] = useState(true)
-    const componentMeta = quizdata[category].categories[title]
     const [data, updateData] = useRecoilState(categoryState)
 
-    const discription = isReadMoreToggled
-        ? componentMeta.discription
-        : componentMeta.discription.concat(componentMeta.discription_more)
 
     function calculate() {
 
@@ -86,9 +80,6 @@ const FoodEstablishment = ({ title, category, onComplete }: any) => {
 
     }
 
-    function readMoreClickHandler() {
-        setReadMore(p => !p)
-    }
 
     function selectInputOnChangeHandler(event: ChangeEvent<HTMLDivElement>) {
         const { id, innerHTML } = event.target
@@ -101,9 +92,6 @@ const FoodEstablishment = ({ title, category, onComplete }: any) => {
             stepUp,
             stepDown,
             category,
-            discription,
-            isReadMoreToggled,
-            readMoreClickHandler,
         }}>
 
             {step == 1 && (

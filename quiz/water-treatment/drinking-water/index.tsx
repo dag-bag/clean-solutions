@@ -66,8 +66,7 @@ const DrinkingWater = ({ title, category, onComplete }: any) => {
             stepDown,
             category,
             discription,
-            isReadMoreToggled,
-            readMoreClickHandler,
+
         }}>
 
             {step == 1 && (

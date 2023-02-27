@@ -1,10 +1,8 @@
-
 import { useState } from 'react'
 import { ChangeEvent } from 'react';
 import categoryState from '../../state';
 import { useRecoilState } from 'recoil';
 import Select from '../../components/select';
-import quizdata from '../../../data';
 import Question from '../../components/question';
 import Layout from '../../components/quiz-layout';
 import MultipleSelect from '../../components/multiple-select';
@@ -13,15 +11,9 @@ const LaundryDisinfection = ({ title, category, onComplete }: any) => {
     const Max = 3
     const [step, setStep] = useState(1)
     const [data, updateData] = useRecoilState(categoryState)
-    const [isReadMoreToggled, setReadMore] = useState(true)
-    const componentMeta = quizdata[category].categories[title]
     const [state, setState] = useState<any>({
         multiselect: []
     })
-
-    const discription = isReadMoreToggled
-        ? componentMeta.discription
-        : componentMeta.discription.concat(componentMeta.discription_more)
 
     function calculate() {
         const laundryWeight: any = {
@@ -55,10 +47,6 @@ const LaundryDisinfection = ({ title, category, onComplete }: any) => {
         }
     }
 
-    function readMoreClickHandler() {
-        setReadMore(p => !p)
-    }
-
     function selectInputOnChangeHandler(event: ChangeEvent<HTMLDivElement>) {
         const { id, innerHTML } = event.target
         setState((prev: any) => { return { ...prev, [id]: innerHTML } })
@@ -80,9 +68,6 @@ const LaundryDisinfection = ({ title, category, onComplete }: any) => {
             stepUp,
             stepDown,
             category,
-            discription,
-            isReadMoreToggled,
-            readMoreClickHandler,
         }}>
 
             {step == 1 && (

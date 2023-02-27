@@ -3,7 +3,6 @@ import { ChangeEvent } from 'react';
 import categoryState from '../../state';
 import { useRecoilState } from 'recoil';
 import Select from '../../components/select';
-import quizdata from '../../../data';
 import Question from '../../components/question';
 import Layout from '../../components/quiz-layout';
 import NumberInput from '../../components/NumberInput';
@@ -12,17 +11,8 @@ import converters from '../../components/functions/convertors';
 const HairAndFurSanitizerForHuman = ({ title, category, onComplete }: any) => {
     const Max = 3
     const [step, setStep] = useState(1)
-    const componentMeta = quizdata[category].categories[title]
-    const [isReadMoreToggled, setReadMore] = useState(true)
     const [data, updateData] = useRecoilState(categoryState)
-
-    const [state, setState] = useState<any>({
-    })
-
-    const discription = isReadMoreToggled
-        ? componentMeta.discription
-        : componentMeta.discription.concat(componentMeta.discription_more)
-
+    const [state, setState] = useState<any>({})
 
     function calculate() {
         const selectValues: any = {
@@ -59,10 +49,6 @@ const HairAndFurSanitizerForHuman = ({ title, category, onComplete }: any) => {
         }
     }
 
-    function readMoreClickHandler() {
-        setReadMore(p => !p)
-    }
-
     function selectInputOnChangeHandler(event: ChangeEvent<HTMLDivElement>) {
         const { id, innerHTML } = event.target
         setState((prev: any) => { return { ...prev, [id]: innerHTML } })
@@ -74,10 +60,8 @@ const HairAndFurSanitizerForHuman = ({ title, category, onComplete }: any) => {
             stepUp,
             stepDown,
             category,
-            discription,
-            isReadMoreToggled,
-            readMoreClickHandler,
         }}>
+
             {step == 1 && (
                 <Question name='What length is your hair?'>
                     <Select
@@ -95,7 +79,6 @@ const HairAndFurSanitizerForHuman = ({ title, category, onComplete }: any) => {
                     <NumberInput min={1} name='freq' state={state} setState={setState} placeholder='usage per week' />
                 </Question>
             )}
-
 
             {step == 3 && (
                 <Question name='How long would you like a hair sanitizing ?'>

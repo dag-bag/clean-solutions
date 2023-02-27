@@ -1,10 +1,8 @@
-
 import { useState } from 'react'
 import { ChangeEvent } from 'react';
 import categoryState from '../../state';
 import { useRecoilState } from 'recoil';
 import Select from '../../components/select';
-import quizdata from '../../../data';
 import Question from '../../components/question';
 import Layout from '../../components/quiz-layout';
 import NumberInput from '../../components/NumberInput';
@@ -14,15 +12,10 @@ import converters from '../../components/functions/convertors';
 const DentalOralHygeine = ({ title, category, onComplete }: any) => {
     const Max = 3
     const [step, setStep] = useState(1)
-    const componentMeta = quizdata[category].categories[title]
-    const [isReadMoreToggled, setReadMore] = useState(true)
     const [data, updateData] = useRecoilState(categoryState)
     const [state, setState] = useState<any>({
         multiselect: []
     })
-    const discription = isReadMoreToggled
-        ? componentMeta.discription
-        : componentMeta.discription.concat(componentMeta.discription_more)
 
     function calculate() {
         const strenghtObj: any = {
@@ -65,10 +58,6 @@ const DentalOralHygeine = ({ title, category, onComplete }: any) => {
         }
     }
 
-    function readMoreClickHandler() {
-        setReadMore(p => !p)
-    }
-
     function selectInputOnChangeHandler(event: ChangeEvent<HTMLDivElement>) {
         const { id, innerHTML } = event.target
         setState((prev: any) => { return { ...prev, [id]: innerHTML } })
@@ -90,9 +79,6 @@ const DentalOralHygeine = ({ title, category, onComplete }: any) => {
             stepUp,
             stepDown,
             category,
-            discription,
-            isReadMoreToggled,
-            readMoreClickHandler,
         }}>
 
             {step == 1 && (

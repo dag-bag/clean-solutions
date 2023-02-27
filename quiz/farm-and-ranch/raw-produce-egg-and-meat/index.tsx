@@ -9,6 +9,7 @@ import Layout from '../../components/quiz-layout';
 import converters from '../../components/functions/convertors';
 import AdvancedMultipleNested from '../../components/advanced-multiple-nested-input';
 import MultipleSelectInsertedSelect from '../../components/multipe-select-inserted-select';
+
 const RawProduceEggAndMeat = ({ title, category, onComplete }: any) => {
     const Max = 3 // total number of question (start from 1)
     const [step, setStep] = useState(1)
@@ -21,16 +22,9 @@ const RawProduceEggAndMeat = ({ title, category, onComplete }: any) => {
         }
 
     }) // input data stored for calculation
-    const [isReadMoreToggled, setReadMore] = useState(true)
-    const componentMeta = quizdata[category].categories[title]
     const [data, updateData] = useRecoilState(categoryState)
 
-    const discription = isReadMoreToggled
-        ? componentMeta.discription
-        : componentMeta.discription.concat(componentMeta.discription_more)
-
     function calculate() {
-
         const ppmValueObject: any = {
             'Produce, Fruits, Vegetable': 5,
             'Eggshells': 5,
@@ -86,9 +80,6 @@ const RawProduceEggAndMeat = ({ title, category, onComplete }: any) => {
 
     }
 
-    function readMoreClickHandler() {
-        setReadMore(p => !p)
-    }
 
     function selectInputOnChangeHandler(event: ChangeEvent<HTMLDivElement>) {
         const { id, innerHTML } = event.target
@@ -100,10 +91,7 @@ const RawProduceEggAndMeat = ({ title, category, onComplete }: any) => {
             title,
             stepUp,
             stepDown,
-            category,
-            discription,
-            isReadMoreToggled,
-            readMoreClickHandler,
+            category
         }}>
 
             {step == 1 && (

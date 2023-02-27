@@ -1,13 +1,11 @@
-
 import { useState } from 'react'
 import { ChangeEvent } from 'react';
-import quizdata from '../../../data';
 import categoryState from '../../state';
 import Select from '../../components/select';
 import Question from '../../components/question';
 import Layout from '../../components/quiz-layout';
-import { useRecoilState, useRecoilValue, useResetRecoilState } from 'recoil';
 import converters from '../../components/functions/convertors';
+import { useRecoilState, useRecoilValue, useResetRecoilState } from 'recoil';
 import Vector, { componentStateAtom, createBranch, type vectorPayload } from '../../components/Vector/';
 
 const vector: vectorPayload = {
@@ -29,16 +27,9 @@ const HairAndFurSanitizerForAnimals = ({ title, category, onComplete }: any) => 
     const Max = 2
     const [step, setStep] = useState(1)
     const [state, setState] = useState<any>({})
-    const [isReadMoreToggled, setReadMore] = useState(true)
     const [data, updateData] = useRecoilState(categoryState)
     const vectorState = useRecoilValue(componentStateAtom)
-    const componentMeta = quizdata[category].categories[title]
     const resetVectorAtom = useResetRecoilState(componentStateAtom);
-
-
-    const discription = isReadMoreToggled
-        ? componentMeta.discription
-        : componentMeta.discription.concat(componentMeta.discription_more)
 
     function calculate() {
         try {
@@ -78,9 +69,6 @@ const HairAndFurSanitizerForAnimals = ({ title, category, onComplete }: any) => 
         }
     }
 
-    function readMoreClickHandler() {
-        setReadMore(p => !p)
-    }
 
     function selectInputOnChangeHandler(event: ChangeEvent<HTMLDivElement>) {
         const { id, innerHTML } = event.target
@@ -94,12 +82,8 @@ const HairAndFurSanitizerForAnimals = ({ title, category, onComplete }: any) => 
             stepUp,
             stepDown,
             category,
-            discription,
-            isReadMoreToggled,
-            readMoreClickHandler,
             hideButton: step == 1
         }}>
-
 
             {step == 1 && (
                 <Vector data={vector} question={'Choose Animals?'} next={stepUp} />

@@ -77,6 +77,7 @@ const SubCategoriesPage = () => {
                     <header className=" md:h-[20vh] h-[20vh] md:mt-0 flex items-center justify-center flex-col  px-5">
 
                         <h1 className="text-center md:text-[50px] text-[35px] text-gray-100 uppercase font-bold ">{categoryName}</h1>
+                        <p className="text-white text-xl">Please select all that interest you from {categoryName}</p>
 
                         <div className="md:block hidden w-[500px] bg-gray-100 rounded-full mt-5 ">
                             <motion.div

@@ -3,7 +3,6 @@ import { ChangeEvent } from 'react';
 import categoryState from '../../state';
 import { useRecoilState } from 'recoil';
 import Select from '../../components/select';
-import quizdata from '../../../data';
 import Question from '../../components/question';
 import Layout from '../../components/quiz-layout';
 import NumberInput from '../../components/NumberInput';
@@ -13,13 +12,7 @@ const HandDisInfactant = ({ title, category, onComplete }: any) => {
     const Max = 2
     const [step, setStep] = useState(1)
     const [state, setState] = useState<any>({})
-    const [isReadMoreToggled, setReadMore] = useState(true)
-    const componentMeta = quizdata[category].categories[title]
     const [data, updateData] = useRecoilState(categoryState)
-
-    const discription = isReadMoreToggled
-        ? componentMeta.discription
-        : componentMeta.discription.concat(componentMeta.discription_more)
 
     function calculate() {
         try {
@@ -50,10 +43,6 @@ const HandDisInfactant = ({ title, category, onComplete }: any) => {
         }
     }
 
-    function readMoreClickHandler() {
-        setReadMore(p => !p)
-    }
-
     function selectInputOnChangeHandler(event: ChangeEvent<HTMLDivElement>) {
         const { id, innerHTML } = event.target
         setState((prev: any) => { return { ...prev, [id]: innerHTML } })
@@ -64,10 +53,7 @@ const HandDisInfactant = ({ title, category, onComplete }: any) => {
             title,
             stepUp,
             stepDown,
-            category,
-            discription,
-            isReadMoreToggled,
-            readMoreClickHandler,
+            category
         }}>
             {step == 1 && (
                 <Question name="How many times per day do you apply skin sanitizer?">
