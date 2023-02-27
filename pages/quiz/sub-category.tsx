@@ -15,6 +15,11 @@ export const selectedSubCategoryAtom = atom<string[]>({
     ]
 })
 
+const ModelAtom = atom<any>({
+    key: 'model-atom',
+    default: false
+})
+
 export const categoryCounterAtom = atom({
     key: 'category-counter',
     default: 0
@@ -32,6 +37,7 @@ const varients = {
 }
 
 const SubCategoriesPage = () => {
+    const [model, setModel] = useRecoilState(ModelAtom)
     const [categoryCounter, setCategoryCounter] = useRecoilState(categoryCounterAtom)
     const selectedCategories = useRecoilValue(selectedCategoryAtom)
     const [selectedSubCategories] = useRecoilState(selectedSubCategoryAtom)
@@ -65,10 +71,11 @@ const SubCategoriesPage = () => {
 
     return (
         <Layout onNext={Next} onPrevious={Previous} isEnabled={selectedSubCategories.length == 0} >
-            <div className="bg-[#74A3B6] h-full overflow-hidden">
+            <div className="bg-[#74A3B6] h-full lg:overflow-hidden">
 
-                <motion.div className="bg-[#74A3B6] h-full" key={categoryCounter} animate={'animate'} initial="initial" variants={varients} >
-                    <header className=" md:h-[20vh] h-[20vh] md:mt-0 flex items-center justify-center flex-col my-2 px-5">
+                <motion.div className="bg-[#74A3B6] lg:h-full" key={categoryCounter} animate={'animate'} initial="initial" variants={varients} >
+                    <header className=" md:h-[20vh] h-[20vh] md:mt-0 flex items-center justify-center flex-col  px-5">
+
                         <h1 className="text-center md:text-[50px] text-[35px] text-gray-100 uppercase font-bold ">{categoryName}</h1>
 
                         <div className="md:block hidden w-[500px] bg-gray-100 rounded-full mt-5 ">
@@ -87,14 +94,13 @@ const SubCategoriesPage = () => {
                         </div>
                     </header>
 
-                    <main className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-2 lg:gap-5 p-2 max-w-[1080px] m-auto">
+                    <main className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-2 lg:gap-10 p-2 max-w-[1080px] m-auto h">
                         {subCategoriesList?.map((keyName, number) => <CategoryCard disabled={false} data={subCategoriesDataList[keyName]} name={keyName} key={number} />)}
                     </main>
 
                 </motion.div>
-
-
             </div>
+
         </Layout >
     )
 

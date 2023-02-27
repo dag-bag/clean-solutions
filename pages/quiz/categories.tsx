@@ -9,7 +9,7 @@ export const selectedCategoryAtom = atom<string[]>({
     key: 'selected-category',
     default: [
 
-        // 'water treatment'
+        'water treatment'
     ]
 })
 

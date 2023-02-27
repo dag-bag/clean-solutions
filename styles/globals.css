@@ -11,6 +11,13 @@
 
 @layer utilities {
 
+  .line-clamp {
+    display: -webkit-box;
+    -webkit-line-clamp: 3;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+  }
+
   .card-container {
     width: 300px;
     height: 150px;
