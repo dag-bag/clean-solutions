@@ -10,7 +10,9 @@ import PrerequisiteDataError from "../../quiz/components/prerequisite";
 
 export const selectedSubCategoryAtom = atom<string[]>({
     key: 'selected-sub-category',
-    default: ['dip tools and equipment']
+    default: [
+        // 'recirculating & shocks'
+    ]
 })
 
 export const categoryCounterAtom = atom({

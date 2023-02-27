@@ -25,7 +25,7 @@ const stenghtObject: any = {
     }
 }
 
-import Vector, { createBranch, type vectorPayload } from '../../components/Vector';
+import Vector, { createBranch, type vectorPayload, componentStateAtom } from '../../components/Vector';
 
 const vector: vectorPayload = {
     'Pools, Hot tubs, and Spas': [
@@ -57,11 +57,11 @@ const vector: vectorPayload = {
 import { useState } from 'react'
 import { ChangeEvent } from 'react';
 import categoryState from '../../state';
-import { useRecoilState } from 'recoil';
 import Select from '../../components/select';
 import quizdata from '../../../data';
 import Question from '../../components/question';
 import Layout from '../../components/quiz-layout';
+import { useRecoilState, useResetRecoilState } from 'recoil';
 import converters from '../../components/functions/convertors';
 
 const RecirculatingShocks = ({ title, category, onComplete }: any) => {
@@ -84,6 +84,7 @@ const RecirculatingShocks = ({ title, category, onComplete }: any) => {
     const [isReadMoreToggled, setReadMore] = useState(true)
     const componentMeta = quizdata[category].categories[title]
     const [data, updateData] = useRecoilState(categoryState)
+    const resetVectorAtom = useResetRecoilState(componentStateAtom);
 
     const discription = isReadMoreToggled
         ? componentMeta.discription
@@ -114,6 +115,7 @@ const RecirculatingShocks = ({ title, category, onComplete }: any) => {
     function stepUp() {
         setStep(prev => prev + 1)
         if (Max == step) {
+            resetVectorAtom()
             const calculation = calculate()
             updateData({ ...data, [title]: calculation ? calculation : '--skipped' })
             onComplete()

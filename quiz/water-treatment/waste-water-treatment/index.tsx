@@ -16,9 +16,9 @@ const stenghtObject: any = {
     },
 }
 
-import Vector, { createBranch } from '../../components/Vector/';
+import Vector, { createBranch, componentStateAtom, vectorPayload } from '../../components/Vector/';
 
-const vector = {
+const vector: vectorPayload = {
     'Residential': [
         createBranch("How much water Residential system with wastewater hold?", 'quantity', 'select', 'placeholder', undefined, undefined, ['small', 'medium', 'large']),
         createBranch("How many times per month do you sanitize Commercial water systems?", 'frequency', 'number', 'placeholder', 1, 30)
@@ -37,10 +37,10 @@ import { useState } from 'react'
 import { ChangeEvent } from 'react';
 import quizdata from '../../../data';
 import categoryState from '../../state';
-import { useRecoilState } from 'recoil';
 import Select from '../../components/select';
 import Question from '../../components/question';
 import Layout from '../../components/quiz-layout';
+import { useRecoilState, useResetRecoilState } from 'recoil';
 import converters from '../../components/functions/convertors';
 
 const WasteWaterTreatment = ({ title, category, onComplete }: any) => {
@@ -60,6 +60,8 @@ const WasteWaterTreatment = ({ title, category, onComplete }: any) => {
     const [isReadMoreToggled, setReadMore] = useState(true)
     const componentMeta = quizdata[category].categories[title]
     const [data, updateData] = useRecoilState(categoryState)
+    const resetVectorAtom = useResetRecoilState(componentStateAtom);
+
 
     const discription = isReadMoreToggled
         ? componentMeta.discription
@@ -83,6 +85,7 @@ const WasteWaterTreatment = ({ title, category, onComplete }: any) => {
     function stepUp() {
         setStep(prev => prev + 1)
         if (Max == step) {
+            resetVectorAtom()
             const calculation = calculate()
             updateData({ ...data, [title]: calculation ? calculation : '--skipped' })
             onComplete()

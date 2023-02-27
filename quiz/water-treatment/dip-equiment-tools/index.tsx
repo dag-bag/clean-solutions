@@ -4,7 +4,7 @@ const defaultStrenght: any = {
     'Kill viruses, fungi, or mold on tools and equipment': 100
 }
 
-import Vector, { createBranch, vectorPayload } from '../../components/Vector/';
+import Vector, { createBranch, vectorPayload, componentStateAtom } from '../../components/Vector/';
 
 const vector: vectorPayload = {
     'Sanitize tools and equipment': [
@@ -24,7 +24,7 @@ const vector: vectorPayload = {
 import { useState } from 'react'
 import { ChangeEvent } from 'react';
 import categoryState from '../../state';
-import { useRecoilState } from 'recoil';
+import { useRecoilState, useResetRecoilState } from 'recoil';
 import Select from '../../components/select';
 import quizdata from '../../../data';
 import Question from '../../components/question';
@@ -32,6 +32,9 @@ import Layout from '../../components/quiz-layout';
 import converters from '../../components/functions/convertors';
 
 const DipEquipmentTools = ({ title, category, onComplete }: any) => {
+
+
+
     const Max = 2 // total number of question (start from 1)
     const [step, setStep] = useState(1)
     const [state, setState] = useState<any>({
@@ -42,6 +45,8 @@ const DipEquipmentTools = ({ title, category, onComplete }: any) => {
     const [isReadMoreToggled, setReadMore] = useState(true)
     const componentMeta = quizdata[category].categories[title]
     const [data, updateData] = useRecoilState(categoryState)
+    const resetVectorAtom = useResetRecoilState(componentStateAtom);
+
     const discription = isReadMoreToggled
         ? componentMeta.discription
         : componentMeta.discription.concat(componentMeta.discription_more)
@@ -64,6 +69,7 @@ const DipEquipmentTools = ({ title, category, onComplete }: any) => {
     function stepUp() {
         setStep(prev => prev + 1)
         if (Max == step) {
+            resetVectorAtom()
             const calculation = calculate()
             updateData({ ...data, [title]: calculation ? calculation : '--skipped' })
             onComplete()

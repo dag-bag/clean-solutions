@@ -55,7 +55,6 @@ const Vector: React.FC<props> = ({ data, question, next }) => {
         state.input.selected.forEach((keyName) => {
             __vector.push(data[keyName])
         })
-        console.log(__vector)
         return __vector
     }
 
@@ -108,7 +107,7 @@ const Vector: React.FC<props> = ({ data, question, next }) => {
                 <Selector data={data} question={question} />
             )}
 
-            {state.address == "B" && <Branch name={keys[Y]} data={__vector[Y][X]} onNext={onNextButtonClickHandler} />}
+            {state.address == "B" && __vector && <Branch name={keys[Y]} data={(__vector[Y][X])} onNext={onNextButtonClickHandler} />}
 
             <hr className="my-3 md:my-5 opacity-50" />
 

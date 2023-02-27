@@ -6,11 +6,11 @@ import categoryState from '../../state';
 import Select from '../../components/select';
 import Question from '../../components/question';
 import Layout from '../../components/quiz-layout';
-import { useRecoilState, useRecoilValue } from 'recoil';
+import { useRecoilState, useRecoilValue, useResetRecoilState } from 'recoil';
 import converters from '../../components/functions/convertors';
-import Vector, { componentStateAtom, createBranch } from '../../components/Vector/';
+import Vector, { componentStateAtom, createBranch, type vectorPayload } from '../../components/Vector/';
 
-const vector = {
+const vector: vectorPayload = {
     'cats': [
         createBranch("How many cats do you have?", 'quantity', 'number', 'placeholder', 1),
         createBranch("How many times a month would you sanitize Cats hair?", 'frequency', 'number', 'placeholder', 1)
@@ -33,6 +33,8 @@ const HairAndFurSanitizerForAnimals = ({ title, category, onComplete }: any) => 
     const [data, updateData] = useRecoilState(categoryState)
     const vectorState = useRecoilValue(componentStateAtom)
     const componentMeta = quizdata[category].categories[title]
+    const resetVectorAtom = useResetRecoilState(componentStateAtom);
+
 
     const discription = isReadMoreToggled
         ? componentMeta.discription
@@ -63,6 +65,7 @@ const HairAndFurSanitizerForAnimals = ({ title, category, onComplete }: any) => 
     function stepUp() {
         setStep(prev => prev + 1)
         if (Max == step) {
+            resetVectorAtom()
             const calculation = calculate()
             updateData({ ...data, [title]: calculation ? calculation : '--skipped' })
             onComplete()

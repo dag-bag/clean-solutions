@@ -18,9 +18,9 @@ const stenghtObject: any = {
     }
 }
 
-import Vector, { createBranch } from '../../components/Vector';
+import Vector, { createBranch, componentStateAtom, type vectorPayload } from '../../components/Vector';
 
-const vector = {
+const vector: vectorPayload = {
     'Ponds, Reservoirs, and Retention Basins': [
         createBranch('How many times per month do you want to sanitize Ponds, Reservoirs, and Retention Basins?', 'frequency', 'number', "placeholder", 1),
         createBranch('How many gallons Ponds, Reservoirs, and Retention Basins hold?', 'quantity', 'number', "placeholder", 1),
@@ -46,10 +46,10 @@ import { useState } from 'react'
 import { ChangeEvent } from 'react';
 import quizdata from '../../../data';
 import categoryState from '../../state';
-import { useRecoilState } from 'recoil';
 import Select from '../../components/select';
 import Question from '../../components/question';
 import Layout from '../../components/quiz-layout';
+import { useRecoilState, useResetRecoilState } from 'recoil';
 
 const WaterRetentionStorage = ({ title, category, onComplete }: any) => {
     const Max = 2 // total number of question (start from 1)
@@ -58,6 +58,7 @@ const WaterRetentionStorage = ({ title, category, onComplete }: any) => {
     const [isReadMoreToggled, setReadMore] = useState(true)
     const componentMeta = quizdata[category].categories[title]
     const [data, updateData] = useRecoilState(categoryState)
+    const resetVectorAtom = useResetRecoilState(componentStateAtom);
 
     const discription = isReadMoreToggled
         ? componentMeta.discription
@@ -78,6 +79,7 @@ const WaterRetentionStorage = ({ title, category, onComplete }: any) => {
     function stepUp() {
         setStep(prev => prev + 1)
         if (Max == step) {
+            resetVectorAtom()
             const calculation = calculate()
             updateData({ ...data, [title]: calculation ? calculation : '--skipped' })
             onComplete()
