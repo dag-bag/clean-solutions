@@ -35,7 +35,6 @@ const vector: vectorPayload = {
 
 import { useState } from 'react'
 import { ChangeEvent } from 'react';
-import quizdata from '../../../data';
 import categoryState from '../../state';
 import Select from '../../components/select';
 import Question from '../../components/question';
@@ -57,15 +56,8 @@ const WasteWaterTreatment = ({ title, category, onComplete }: any) => {
             selected: []
         }
     }) // input data stored for calculation
-    const [isReadMoreToggled, setReadMore] = useState(true)
-    const componentMeta = quizdata[category].categories[title]
     const [data, updateData] = useRecoilState(categoryState)
     const resetVectorAtom = useResetRecoilState(componentStateAtom);
-
-
-    const discription = isReadMoreToggled
-        ? componentMeta.discription
-        : componentMeta.discription.concat(componentMeta.discription_more)
 
     function calculate() {
         function extractNumbers(str: string): number[] {
@@ -98,10 +90,6 @@ const WasteWaterTreatment = ({ title, category, onComplete }: any) => {
         }
     }
 
-    function readMoreClickHandler() {
-        setReadMore(p => !p)
-    }
-
     function selectInputOnChangeHandler(event: ChangeEvent<HTMLDivElement>) {
         const { id, innerHTML } = event.target
         setState((prev: any) => { return { ...prev, [id]: innerHTML } })
@@ -113,9 +101,6 @@ const WasteWaterTreatment = ({ title, category, onComplete }: any) => {
             stepUp,
             stepDown,
             category,
-            discription,
-            isReadMoreToggled,
-            readMoreClickHandler,
             hideButton: step == 1
         }}>
 

@@ -21,16 +21,40 @@ const stenghtObject: any = {
 import { useState } from 'react'
 import { ChangeEvent } from 'react';
 import categoryState from '../../state';
-import { useRecoilState } from 'recoil';
 import Select from '../../components/select';
 import Question from '../../components/question';
 import Layout from '../../components/quiz-layout';
-import AdvancedMultipleNested from '../../components/advanced-multiple-nested-input';
-import Strenght from '../../components/strenght';
+import { useRecoilState, useResetRecoilState } from 'recoil';
 import converters from '../../components/functions/convertors';
+import Vector, { createBranch, componentStateAtom, vectorPayload } from '../../components/Vector/';
+
+const vector: vectorPayload = {
+    'Seeds and Propagations Rooms': [
+        createBranch('What are you sanitizing and the maximum growing capacity of Seeds and Propagations Rooms?', 'quantity', 'number', 'palceholder', 1),
+        createBranch('How many times would you sanitize Seeds and Propagations Rooms?', 'frequency', 'number', 'placeholder', 1)
+    ],
+    'Soil, Hydro and Aeroponic Grow Beds': [
+        createBranch('What are you sanitizing and the maximum growing capacity of Soil, Hydro and Aeroponic Grow Beds?', 'quantity', 'number', 'palceholder', 1),
+        createBranch('How many times would you sanitize Soil, Hydro and Aeroponic Grow Beds?', 'frequency', 'number', 'placeholder', 1)
+    ],
+    'Plants and Perpetual Grow Rooms': [
+        createBranch('What are you sanitizing and the maximum growing capacity of Plants and Perpetual Grow Rooms?', 'quantity', 'number', 'palceholder', 1),
+        createBranch('How many times would you sanitize Plants and Perpetual Grow Rooms?', 'frequency', 'number', 'placeholder', 1)
+    ],
+    'Trimming, Curing, Drying, Harvest Rooms, Tools, and Equipment': [
+        createBranch('What are you sanitizing and the maximum growing capacity of Trimming, Curing, Drying, Harvest Rooms, Tools, and Equipment?', 'quantity', 'number', 'palceholder', 1),
+        createBranch('How many times would you sanitize Trimming, Curing, Drying, Harvest Rooms, Tools, and Equipment?', 'frequency', 'number', 'placeholder', 1),
+        createBranch('select which strenght you will need to apply in Trimming, Curing, Drying, Harvest Rooms, Tools, and Equipment?', 'strenght', 'select', 'placeholder', undefined, undefined, ['light', 'moderate', 'heavy'])
+    ],
+    'Vase Water, Cuttings and Flowers': [
+        createBranch('What are you sanitizing and the maximum growing capacity of Vase Water, Cuttings and Flowers ?', 'quantity', 'number', 'palceholder', 1),
+        createBranch('How many times would you sanitize Vase Water, Cuttings and Flowers?', 'frequency', 'number', 'placeholder', 1),
+        createBranch('select which strenght you will need to apply in Vase Water, Cuttings and Flowers', 'strenght', 'select', 'placeholder', undefined, undefined, ['light', 'moderate', 'heavy'])
+    ]
+}
 
 const GreenHouseAndGarden = ({ title, category, onComplete }: any) => {
-    const Max = 4 // total number of question (start from 1)
+    const Max = 2 // total number of question (start from 1)
     const [step, setStep] = useState(1)
     const [defaultStrenght, setDefaultStrenght] = useState(0)
     const [state, setState] = useState<any>({
@@ -45,6 +69,7 @@ const GreenHouseAndGarden = ({ title, category, onComplete }: any) => {
         }
     })
     const [data, updateData] = useRecoilState(categoryState)
+    const resetVectorAtom = useResetRecoilState(componentStateAtom);
 
 
     function calculate() {
@@ -79,6 +104,7 @@ const GreenHouseAndGarden = ({ title, category, onComplete }: any) => {
     function stepUp() {
         setStep(prev => prev + 1)
         if (Max == step) {
+            resetVectorAtom()
             const calculation = calculate()
             updateData({ ...data, [title]: calculation ? calculation : '--skipped' })
             onComplete()
@@ -103,53 +129,14 @@ const GreenHouseAndGarden = ({ title, category, onComplete }: any) => {
             stepUp,
             stepDown,
             category,
+            hideButton: step == 1,
+
         }}>
 
-            {step == 1 && (
-                <Question name="What are you sanitizing and the maximum growing capacity?">
-                    <AdvancedMultipleNested
-                        state={state}
-                        setState={setState}
-                        name="quantity"
-                        options={['Seeds and Propagations Rooms', 'Soil, Hydro and Aeroponic Grow Beds', 'Plants and Perpetual Grow Rooms', 'Trimming, Curing, Drying, Harvest Rooms, Tools, and Equipment', 'Vase Water, Cuttings and Flowers']}
-                        placeholder="Square Feet "
-                    />
-                </Question>
-            )
-            }
+            {step == 1 && (<Vector data={vector} question="What are you sanitizing?" next={stepUp} />)}
 
             {
                 step == 2 && (
-                    <Question name="How many times per month do you sanitize in greenhouses?">
-                        <AdvancedMultipleNested
-                            state={state}
-                            setState={setState}
-                            name="frequency"
-                            options={state.quantity.selected}
-                            placeholder="times"
-                        />
-                    </Question>
-                )
-            }
-
-            {step == 3 && (
-
-                <Question name="Select which strengths you will need to apply?" >
-                    <Strenght
-                        state={state}
-                        stepUp={stepUp}
-                        name="strenght"
-                        setState={setState}
-                        options={stenghtObject}
-                        filteredOption={state.quantity.selected}
-                        setDefaultStrenght={() => { setDefaultStrenght(50) }}
-                    />
-                </Question>
-
-            )}
-
-            {
-                step == 4 && (
                     <Question name='How long do you want a greenhouse sanitizer supply?'>
                         <Select
                             options={['1 month', '2 month', '3 month', '6 month', '1 year', '2 year', '5 year']}

@@ -1,17 +1,31 @@
 import { useState } from 'react'
 import { ChangeEvent } from 'react';
 import categoryState from '../../state';
-import { useRecoilState } from 'recoil';
 import Select from '../../components/select';
-import quizdata from '../../../data';
 import Question from '../../components/question';
 import Layout from '../../components/quiz-layout';
+import { useRecoilState, useResetRecoilState } from 'recoil';
 import converters from '../../components/functions/convertors';
-import AdvancedMultipleNested from '../../components/advanced-multiple-nested-input';
-import MultipleSelectInsertedSelect from '../../components/multipe-select-inserted-select';
+import Vector, { createBranch, componentStateAtom, vectorPayload } from '../../components/Vector/';
+
+const vector: vectorPayload = {
+    'Produce, Fruits and Vegetable': [
+        createBranch("Select foods preferred methods for produce, Fruits and Vegetable disinfection", "quantity", "select", "placeholder", undefined, undefined, ['Spray', 'Soak']),
+        createBranch("How often is Produce, Fruits and Vegetable of food eaten in weeks?", "frequency", "number", "placeholder", 1)
+    ],
+    'Eggshells': [
+        createBranch("Select foods preferred methods for Eggshells disinfection", "quantity", "select", "placeholder", undefined, undefined, ['Spray', 'Soak']),
+        createBranch("How often is Eggshells of food eaten in weeks?", "frequency", "number", "placeholder", 1)
+    ],
+    'Raw Meat, Poultry and Seafood': [
+        createBranch("Select foods preferred methods for Raw Meat, Poultry and Seafood disinfection", "quantity", "select", "placeholder", undefined, undefined, ['Spray', 'Soak']),
+        createBranch("How often is Raw Meat, Poultry and Seafood of food eaten in weeks?", "frequency", "number", "placeholder", 1)
+    ]
+}
+
 
 const RawProduceEggAndMeat = ({ title, category, onComplete }: any) => {
-    const Max = 3 // total number of question (start from 1)
+    const Max = 2 // total number of question (start from 1)
     const [step, setStep] = useState(1)
     const [state, setState] = useState<any>({
         quantity: {
@@ -23,6 +37,7 @@ const RawProduceEggAndMeat = ({ title, category, onComplete }: any) => {
 
     }) // input data stored for calculation
     const [data, updateData] = useRecoilState(categoryState)
+    const resetVectorAtom = useResetRecoilState(componentStateAtom);
 
     function calculate() {
         const ppmValueObject: any = {
@@ -67,6 +82,7 @@ const RawProduceEggAndMeat = ({ title, category, onComplete }: any) => {
     function stepUp() {
         setStep(prev => prev + 1)
         if (Max == step) {
+            resetVectorAtom()
             const calculation = calculate()
             updateData({ ...data, [title]: calculation ? calculation : '--skipped' })
             onComplete()
@@ -91,37 +107,14 @@ const RawProduceEggAndMeat = ({ title, category, onComplete }: any) => {
             title,
             stepUp,
             stepDown,
-            category
+            category,
+            hideButton: step == 1,
         }}>
 
-            {step == 1 && (
-                <Question name="Enter how many pounds of goods and commodities are processed on average and select the preferred method for disinfection.">
-                    <MultipleSelectInsertedSelect
-                        state={state}
-                        setState={setState}
-                        name="quantity"
-                        options={{
-                            'Produce, Fruits, Vegetable': ['Spray', 'Soak'],
-                            'Eggshells': ['Spray', 'Soak'],
-                            'Raw Meat, Poultry, & Seafood': ['Spray', 'Soak'],
-                        }}
-                    />
-                </Question>
+            {step == 1 && (<Vector data={vector} question="Select Foods for Disinfectant" next={stepUp} />
             )}
 
             {step == 2 && (
-                <Question name="How often is each type of food eaten in weeks?">
-                    <AdvancedMultipleNested
-                        state={state}
-                        name="frequency"
-                        setState={setState}
-                        options={state.quantity.selected}
-                        placeholder="Times per week"
-                    />
-                </Question>
-            )}
-
-            {step == 3 && (
                 <Question name='How long would you like a hard surface sanitizer supply?'>
                     <Select
                         options={['1 month', '2 month', '3 month', '6 month', '1 year', '2 year', '5 year']}

@@ -43,6 +43,77 @@ import AdvancedMultipleNested from '../../components/advanced-multiple-nested-in
 import converters from '../../components/functions/convertors';
 import MultipleSelectInsertedSelect from '../../components/multipe-select-inserted-select';
 
+import Vector, { createBranch, componentStateAtom, vectorPayload } from '../../components/Vector/';
+
+
+const vector: vectorPayload = {
+    'cats': [
+        createBranch("How many cats do you have?", "quantity", "number", "placeholder", 1)
+        ,
+        createBranch('select preffered disinfection method for cats', 'additional', 'select', 'placeholder', undefined, undefined, ['spray', 'soak']),
+
+    ],
+    'Pigs': [
+        createBranch("How many Pigs do you have?", "quantity", "number", "placeholder", 1)
+        ,
+        createBranch('select preffered disinfection method for Pigs', 'additional', 'select', 'placeholder', undefined, undefined, ['spray', 'soak']),
+
+    ],
+    'dogs': [
+        createBranch("How many dogs do you have?", "quantity", "number", "placeholder", 1)
+        ,
+        createBranch('select preffered disinfection method for dogs', 'additional', 'select', 'placeholder', undefined, undefined, ['spray', 'soak']),
+
+    ],
+    'Goats': [
+        createBranch("How many Goats do you have?", "quantity", "number", "placeholder", 1)
+        ,
+        createBranch('select preffered disinfection method for Goats', 'additional', 'select', 'placeholder', undefined, undefined, ['spray', 'soak']),
+
+    ],
+    'Cows': [
+        createBranch("How many Cows do you have?", "quantity", "number", "placeholder", 1)
+        ,
+        createBranch('select preffered disinfection method for Cows', 'additional', 'select', 'placeholder', undefined, undefined, ['spray', 'soak']),
+
+    ],
+    'Sheep': [
+        createBranch("How many Sheep do you have?", "quantity", "number", "placeholder", 1)
+        ,
+        createBranch('select preffered disinfection method for Sheep', 'additional', 'select', 'placeholder', undefined, undefined, ['spray', 'soak']),
+
+    ],
+    'Ducks': [
+        createBranch("How many Ducks do you have?", "quantity", "number", "placeholder", 1)
+        ,
+        createBranch('select preffered disinfection method for Ducks', 'additional', 'select', 'placeholder', undefined, undefined, ['spray', 'soak']),
+
+    ],
+    'Chickens': [
+        createBranch("How many Chickens do you have?", "quantity", "number", "placeholder", 1)
+        ,
+        createBranch('select preffered disinfection method for Chickens', 'additional', 'select', 'placeholder', undefined, undefined, ['spray', 'soak']),
+
+    ],
+    'Rabbits': [
+        createBranch("How many Rabbits do you have?", "quantity", "number", "placeholder", 1)
+        ,
+        createBranch('select preffered disinfection method for Rabbits', 'additional', 'select', 'placeholder', undefined, undefined, ['spray', 'soak']),
+
+    ],
+    'Honey Bees': [
+        createBranch("How many Honey do you have?", "quantity", "number", "placeholder", 1)
+        ,
+        createBranch('select preffered disinfection method for Honey', 'additional', 'select', 'placeholder', undefined, undefined, ['spray', 'soak']),
+
+    ],
+    'Other pets with dander, hair or fur': [
+        createBranch("How many Other do you have?", "quantity", "number", "placeholder", 1)
+        ,
+        createBranch('select preffered disinfection method for Other', 'additional', 'select', 'placeholder', undefined, undefined, ['spray', 'soak']),
+
+    ]
+}
 
 function convertObjectWithArr(arr: string[]) {
     const obj: any = {}
