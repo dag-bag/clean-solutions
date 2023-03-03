@@ -1,39 +1,30 @@
 /** @format */
-
 import React from "react";
-import { useRecoilValue } from "recoil";
-import { currentModalAtom } from "../../atoms/modalAtom";
-import Svg from "../utils/Svg";
-
-function Modal() {
-  const { title, text, svgs } = useRecoilValue(currentModalAtom);
+import { useRecoilState } from "recoil";
+import { ModelAtom } from "../../pages/quiz/sub-category";
+function Modal({ title, discription }: any) {
+  const [model, setModel] = useRecoilState(ModelAtom)
+  const onCloseHandler = () => {
+    setModel(false)
+  }
   return (
-    <>
-      {/* <!-- The button to open modal --> */}
-
-      <div
-        className="modal "
-        id="my-modal-3"
-        onClick={(e) => {
-          e.stopPropagation();
-        }}
-      >
-        <div className="modal-box bg-white">
-          <h3 className="font-bold text-lg">{title}</h3>
-          <p className="py-4">{text}</p>
-          <div className="modal-action ">
-            <div className="flex mr-12 space-x-4">
-              {svgs.map((src, index) => {
-                return <Svg src={src} h="h-10" w="w-10" />;
-              })}
-            </div>
-            <a href="#" className="btn bg-red-500 text-white border-none ">
-              Close
-            </a>
-          </div>
+    <div
+      className="fixed top-0 left-0 w-full h-full bg-black bg-opacity-50 flex items-center justify-center z-50"
+      id="my-modal-3"
+      onClick={(e) => {
+        e.stopPropagation();
+      }}
+    >
+      <div className="modal-box bg-white">
+        <h3 className="font-bold text-2xl capitalize">{title}</h3>
+        <p className="py-4 text-md">{discription}</p>
+        <div className="modal-laction ">
+          <a href="#" onClick={onCloseHandler} className="btn bg-red-500 text-white border-none ">
+            Close
+          </a>
         </div>
       </div>
-    </>
+    </div>
   );
 }
 

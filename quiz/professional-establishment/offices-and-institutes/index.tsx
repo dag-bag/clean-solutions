@@ -21,12 +21,30 @@ import Strenght from '../../components/strenght';
 import { useState } from 'react'
 import { ChangeEvent } from 'react';
 import categoryState from '../../state';
-import { useRecoilState } from 'recoil';
+import { useRecoilState, useResetRecoilState } from 'recoil';
 import Select from '../../components/select';
 import Question from '../../components/question';
 import Layout from '../../components/quiz-layout';
 import AdvancedMultipleNested from '../../components/advanced-multiple-nested-input';
+import Vector, { createBranch, componentStateAtom, vectorPayload } from '../../components/Vector/';
 
+const vector: vectorPayload = {
+    'Spray': [
+        createBranch("What is the SQFT of home for Spray disinfection", "quantity", "number", "placeholder", 1),
+        createBranch("How many times would you sanitize hard surfaces with Spray?", "frequency", "number", "placeholder", 0),
+        createBranch("select which strenght you will need to apply with Spray", "additional", "select", "placeholder", undefined, undefined, ["light", "moderate", "heavy"])
+    ],
+    'Mop': [
+        createBranch("What is the SQFT of home for Mop disinfection", "quantity", "number", "placeholder", 1),
+        createBranch("How many times would you sanitize hard surfaces with Mop?", "frequency", "number", "placeholder", 0),
+        createBranch("select which strenght you will need to apply with Mop", "additional", "select", "placeholder", undefined, undefined, ["light", "moderate", "heavy"])
+    ],
+    'Soak': [
+        createBranch("What is the SQFT of home for Soak disinfection", "quantity", "number", "placeholder", 1),
+        createBranch("How many times would you sanitize hard surfaces with Soak?", "frequency", "number", "placeholder", 0),
+        createBranch("select which strenght you will need to apply with Soak", "additional", "select", "placeholder", undefined, undefined, ["light", "moderate", "heavy"])
+    ]
+}
 const OfficesAndInstitues = ({ title, category, onComplete }: any) => {
     const Max = 4 // total number of question (start from 1)
     const [step, setStep] = useState(1)
@@ -44,6 +62,7 @@ const OfficesAndInstitues = ({ title, category, onComplete }: any) => {
 
     }) // input data stored for calculation
     const [data, updateData] = useRecoilState(categoryState)
+    const resetVectorAtom = useResetRecoilState(componentStateAtom);
 
     function calculate() {
         try {
@@ -68,6 +87,7 @@ const OfficesAndInstitues = ({ title, category, onComplete }: any) => {
     function stepUp() {
         setStep(prev => prev + 1)
         if (Max == step) {
+            resetVectorAtom()
             const calculation = calculate()
             updateData({ ...data, [title]: calculation ? calculation : '--skipped' })
             onComplete()
@@ -92,51 +112,13 @@ const OfficesAndInstitues = ({ title, category, onComplete }: any) => {
             stepUp,
             stepDown,
             category,
+            hideButton: step == 1,
         }}>
 
-
-            {step == 1 && (
-                <Question name="Pick methods for preferred disinfection and deodorizing.">
-                    <AdvancedMultipleNested
-                        state={state}
-                        setState={setState}
-                        name="quantity"
-                        options={['Spray', 'Mop', 'Soak']}
-                        placeholder="Square Feet "
-                        questions={['What is the SQ FT of home?', 'How many SQ FT in the home are hard-floors?', 'How many gallons do you typically use in a week for disinfecting hard, non-food contact surfaces?',]}
-                    />
-                </Question>
+            {step == 1 && (<Vector data={vector} question="Pick methods for preferred disinfection and deodorizing" next={stepUp} />
             )}
 
             {step == 2 && (
-                <Question name="How many times per month do you sanitize hard surfaces?">
-                    <AdvancedMultipleNested
-                        state={state}
-                        name="frequency"
-                        setState={setState}
-                        options={state.quantity.selected}
-                        placeholder="times "
-                    />
-                </Question>
-            )}
-
-            {step == 3 && (
-
-                <Question name="Select which strengths you will need to apply?" >
-                    <Strenght
-                        state={state}
-                        stepUp={stepUp}
-                        name="strenght"
-                        setState={setState}
-                        options={stenghtObject}
-                        filteredOption={state.quantity.selected}
-                        setDefaultStrenght={() => { setDefaultStrenght(50) }}
-                    />
-                </Question>
-
-            )}
-
-            {step == 4 && (
                 <Question name='How long would you like a hard surface sanitizer supply?'>
                     <Select
                         options={['1 month', '2 month', '3 month', '6 month', '1 year', '2 year', '5 year']}

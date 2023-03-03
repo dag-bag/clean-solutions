@@ -1,13 +1,13 @@
 /** @format */
 
 import * as yup from "yup";
-import { useState } from "react";
+import Router from 'next/router'
 import { useFormik } from "formik";
+import { useRef, useEffect } from "react";
 import { useRecoilState, atom } from "recoil";
 import Layout from "../../components/quiz-btn-layout";
 import Spacing from "../../components/pages/layout/Spacing";
 import setQueriesChangeRoutes from "../../components/functions/setQueriesChangeRoutes";
-
 type emailAtomType = string | undefined;
 const emailAtom = atom<emailAtomType>({
   key: "user-email",
@@ -22,14 +22,14 @@ const validationSchema = yup.object({
 });
 
 const GetEmailPage = () => {
+  const ref = useRef<any>(null)
   const [state, setState] = useRecoilState(emailAtom);
-  // const [isEnabled, setEnable] = useState(false);
 
   function Next() {
-    setQueriesChangeRoutes('/quiz')
+    Router.push('/quiz')
   }
   function Prevous() {
-    setQueriesChangeRoutes('welcome', { email: state as string })
+    Router.push('welcome')
   }
 
   const formik = useFormik({
@@ -47,6 +47,11 @@ const GetEmailPage = () => {
     formik.handleChange(value);
   };
 
+  useEffect(() => {
+    ref.current.focus()
+  }, [])
+
+
   return (
     <Layout onNext={Next} onPrevious={Prevous} isEnabled={!formik.isValid}>
       <div style={{ backgroundImage: `url("./page1.png")` }}
@@ -62,6 +67,7 @@ const GetEmailPage = () => {
               </h1>
               <Spacing spacing={2} className="mb-10">
                 <input
+                  ref={ref}
                   name="email"
                   value={formik.values.email}
                   onChange={OnChange}
@@ -69,7 +75,7 @@ const GetEmailPage = () => {
                   className={` ${formik.errors.email
                     ? "border-red-400 focus:!border-red-400"
                     : "focus-within:!border-green-1"
-                    } input input-bordered w-full max-w-xl  rounded-full text-center border-2  py-5  md:text-[20px] placeholder:text-gray-300  bg-transparent !bg-white !text-black `}
+                    } input input-bordered w-full max-w-xl  rounded-full text-center border-2  py-5  md:text-[18px] placeholder:text-gray-300  bg-transparent !bg-white !text-black `}
                 />
                 {formik.errors && (
                   <div>

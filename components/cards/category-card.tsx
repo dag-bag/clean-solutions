@@ -30,7 +30,6 @@ const dropOutVariant = ({ axis, axisValue, delay }: any) => {
 
 
 const CategoryCard = ({ name }: any) => {
-    const [isFlipped, setIsFlipped] = useState(false);
     const [state, setState] = useRecoilState(selectedCategoryAtom)
     const isSelected = state.includes(name)
     function onClickHandler() {
@@ -58,7 +57,7 @@ const CategoryCard = ({ name }: any) => {
 
                     <h3 className="mt-4 text-center text-2xl font-semibold text-blue-1  uppercase">{name}</h3>
                     <p className="text-black text-base text-center mt-4 font-normal lowercase px-4">{data[name].self.discription}</p>
-                    {/* <div className="mt-3 space-x-8 flex p-1">
+                    <div className="mt-3 space-x-8 flex p-1">
                         {[
                             "https://cleansolutions.tech/wp-content/uploads/2022/03/long-wavy-hair-variant.png",
                             "https://cleansolutions.tech/wp-content/uploads/2022/03/skincare-1.png",
@@ -74,13 +73,13 @@ const CategoryCard = ({ name }: any) => {
                                 />
                             );
                         })}
-                    </div> */}
+                    </div>
                 </div>
                 <div
                     className={` back sd shadow-lg rounded-lg ${isSelected ? "border-4 border-green-1" : ""
                         } bg-white  `}>
                     <div className="flex  flex-col">
-                        <p className="text-xl text-center font-medium ">{data[name].self.discription}</p>
+                        <p className="text-xl text-center font-medium capitalize ">{data[name].self.discription}</p>
                         <button
                             className={`${isSelected ? "bg-green-1" : "bg-blue-1"
                                 }  text-white rounded-lg py-2 mt-4 w-1/3 m-auto `}

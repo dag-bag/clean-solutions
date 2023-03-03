@@ -14,16 +14,34 @@ const stenghtObject: any = {
 import { useState } from 'react'
 import { ChangeEvent } from 'react';
 import categoryState from '../../state';
-import { useRecoilState } from 'recoil';
 import Select from '../../components/select';
 import Question from '../../components/question';
-import Strenght from '../../components/strenght';
 import Layout from '../../components/quiz-layout';
 import converters from '../../components/functions/convertors';
-import AdvancedMultipleNested from '../../components/advanced-multiple-nested-input';
+import { useRecoilState, useRecoilValue, useResetRecoilState } from 'recoil';
+import Vector, { componentStateAtom, createBranch, type vectorPayload } from '../../components/Vector/';
+
+const vector: vectorPayload = {
+    'Portable Water': [
+        createBranch('How many gallons are within the Portable Water storage system', 'quantity', 'number', 'placeholder', 1),
+        createBranch('How many times per month do you want to sanitize Portable Water?', 'frequency', 'number', 'placeholder', 1),
+        createBranch('Select which strengths you will need to apply in Portable Water?"', 'strenght', 'select', 'placeholder', undefined, undefined, ['light', 'moderate', 'heavy'])
+    ],
+    'Waste Water': [
+        createBranch('How many gallons are within the Waste Water storage system', 'quantity', 'number', 'placeholder', 1),
+        createBranch('How many times per month do you want to sanitize Waste Water?', 'frequency', 'number', 'placeholder', 1),
+        createBranch('Select which strengths you will need to apply in Waste Water?', 'strenght', 'select', 'placeholder', undefined, undefined, ['light', 'moderate', 'heavy'])
+    ],
+    'Non-Potable Tanks and Lines': [
+        createBranch('How many gallons are within the Non-Potable Tanks and Lines storage system', 'quantity', 'number', 'placeholder', 1),
+        createBranch('How many times per month do you want to sanitize Non-Potable Tanks and Lines?', 'frequency', 'number', 'placeholder', 1),
+        createBranch('Select which strengths you will need to apply in Non-Potable Tanks and Lines?"', 'strenght', 'select', 'placeholder', undefined, undefined, ['light', 'moderate', 'heavy'])
+    ]
+
+}
 
 const BoatAircraftAndRVWaterStorage = ({ title, category, onComplete }: any) => {
-    const Max = 4 // total number of question (start from 1)
+    const Max = 2 // total number of question (start from 1)
     const [step, setStep] = useState(1)
     const [defaultStrenght, setDefaultStrenght] = useState(0)
     const [state, setState] = useState<any>({
@@ -37,7 +55,9 @@ const BoatAircraftAndRVWaterStorage = ({ title, category, onComplete }: any) => 
             selected: []
         }
     }) // input data stored for calculation
+    const resetVectorAtom = useResetRecoilState(componentStateAtom);
     const [data, updateData] = useRecoilState(categoryState)
+
 
 
     function calculate() {
@@ -64,6 +84,7 @@ const BoatAircraftAndRVWaterStorage = ({ title, category, onComplete }: any) => 
     function stepUp() {
         setStep(prev => prev + 1)
         if (Max == step) {
+            resetVectorAtom()
             const calculation = calculate()
             updateData({ ...data, [title]: calculation ? calculation : '--skipped' })
             onComplete()
@@ -88,48 +109,14 @@ const BoatAircraftAndRVWaterStorage = ({ title, category, onComplete }: any) => 
             stepUp,
             stepDown,
             category,
+            hideButton: step == 1
         }}>
+
             {step == 1 && (
-                <Question name="How many gallons are within the storage system?">
-                    <AdvancedMultipleNested
-                        state={state}
-                        setState={setState}
-                        name="quantity"
-                        options={['Portable Water', 'Waste Water', 'Non-Potable Tanks and Lines']}
-                        placeholder="Square Feet "
-                    />
-                </Question>
+                <Vector data={vector} question={'select water systems'} next={stepUp} />
             )}
 
             {step == 2 && (
-                <Question name="How many times per month do you want to sanitize water containment? ">
-                    <AdvancedMultipleNested
-                        state={state}
-                        name="frequency"
-                        setState={setState}
-                        options={['Portable Water', 'Waste Water', 'Non-Potable Tanks and Lines']}
-                        placeholder="times "
-                    />
-                </Question>
-            )}
-
-            {step == 3 && (
-
-                <Question name="Select which strengths you will need to apply?" >
-                    <Strenght
-                        state={state}
-                        stepUp={stepUp}
-                        name="strenght"
-                        setState={setState}
-                        options={stenghtObject}
-                        filteredOption={state.quantity.selected}
-                        setDefaultStrenght={() => { setDefaultStrenght(50) }}
-                    />
-                </Question>
-
-            )}
-
-            {step == 4 && (
                 <Question name='How long would you like to keep this supply?'>
                     <Select
                         options={['1 month', '2 month', '3 month', '6 month', '1 year', '2 year', '5 year']}

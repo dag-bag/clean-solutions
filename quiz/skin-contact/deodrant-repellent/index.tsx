@@ -6,7 +6,7 @@ import Select from '../../components/select';
 import Question from '../../components/question';
 import Layout from '../../components/quiz-layout';
 import NumberInput from '../../components/NumberInput';
-import converters from '../../components/functions/convertors';
+import calculateWaterForMonth from '../../components/functions/calculateWaterForMonth';
 
 const DeodrantRepellent = ({ title, category, onComplete }: any) => {
     const Max = 2
@@ -14,16 +14,12 @@ const DeodrantRepellent = ({ title, category, onComplete }: any) => {
     const [state, setState] = useState<any>({})
     const [data, updateData] = useRecoilState(categoryState)
 
-
     function calculate() {
         try {
             const months = (state?.duration.includes('month'))
                 ? state?.duration.match(/(\d+)/)[0] :
                 (state?.duration.match(/(\d+)/)[0] * 12)
-            const quantity = converters.mlToPpm(2) * 4.4
-            const strenght = 50
-            const frequency = state.freq * 4.4
-            return quantity * frequency * strenght * months
+            return calculateWaterForMonth(50, (state.freq * 30 * 2 * months))
         } catch (err) {
             console.log(err)
         }
@@ -58,7 +54,7 @@ const DeodrantRepellent = ({ title, category, onComplete }: any) => {
         }} >
 
             {step == 1 && (
-                <Question name='How many times per week do you apply deodorant?'>
+                <Question name='How many times per day do you apply deodorant?'>
                     <NumberInput min={1} name='freq' state={state} setState={setState} placeholder='usage per week' />
                 </Question>
             )}

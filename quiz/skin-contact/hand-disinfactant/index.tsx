@@ -6,7 +6,7 @@ import Select from '../../components/select';
 import Question from '../../components/question';
 import Layout from '../../components/quiz-layout';
 import NumberInput from '../../components/NumberInput';
-import converters from '../../components/functions/convertors';
+import calculateWaterForMonth from '../../components/functions/calculateWaterForMonth';
 
 const HandDisInfactant = ({ title, category, onComplete }: any) => {
     const Max = 2
@@ -19,10 +19,8 @@ const HandDisInfactant = ({ title, category, onComplete }: any) => {
             const months = (state?.duration.includes('month'))
                 ? state?.duration.match(/(\d+)/)[0] :
                 (state?.duration.match(/(\d+)/)[0] * 12)
-            const quantity = converters.mlToPpm(2) * 30
-            const strenght = 50
-            const frequency = state.freq
-            return quantity * frequency * strenght * months
+            return calculateWaterForMonth(50, (state.freq * 30 * 2 * months))
+
         } catch (err) {
             console.error('Question Skipped : cause --skipped flag in result/calculation')
         }

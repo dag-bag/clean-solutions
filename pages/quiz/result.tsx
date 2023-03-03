@@ -10,8 +10,14 @@ import setQueriesChangeRoutes from "../../components/functions/setQueriesChangeR
 const DynamicBlogs = dynamic(() => import('../../components/blogs-section'), {
   loading: () => <Loading contain />
 })
+
+import categoryState from "../../quiz/state";
+import { useRecoilState } from "recoil";
+
 const ResultPage = () => {
   const Router = useRouter()
+  const [data, updateData] = useRecoilState(categoryState)
+
   return (
     <>
       <Head>
@@ -45,6 +51,7 @@ const ResultPage = () => {
           </div>
         </div>
       </section >
+      {JSON.stringify(data)}
       <DynamicBlogs />
     </>
   );

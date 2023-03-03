@@ -7,7 +7,7 @@ import Question from '../../components/question';
 import Layout from '../../components/quiz-layout';
 import NumberInput from '../../components/NumberInput';
 import MultipleSelect from '../../components/multiple-select';
-import converters from '../../components/functions/convertors';
+import calculateWaterForMonth from '../../components/functions/calculateWaterForMonth';
 
 const DentalOralHygeine = ({ title, category, onComplete }: any) => {
     const Max = 3
@@ -34,10 +34,20 @@ const DentalOralHygeine = ({ title, category, onComplete }: any) => {
                 ? state?.duration.match(/(\d+)/)[0] :
                 (state?.duration.match(/(\d+)/)[0] * 12)
 
-            const quantity = converters.quartsToPpm(state.multiselect.length)
-            const strenght = state.multiselect.map((key: string) => strenghtObj[key]).reduce((t: number, k: number) => t + k)
-            const frequency = state.freq * 4.4
-            return quantity * frequency * strenght * months
+            // const quantity = state.multiselect.length * 946.353
+            // const strenght = state.multiselect.map((key: string) => strenghtObj[key]).reduce((t: number, k: number) => t + k)
+            // const frequency = state.freq * 4.4
+            // return quantity * frequency * strenght * months
+
+
+            const sum = state.multiselect.map((key: string) => {
+                const q = state.multiselect.length * 946.353
+                const s = strenghtObj[key]
+            })
+
+            return 0
+
+
         } catch (err) {
             console.error('Question Skipped : cause --skipped flag in result/calculation')
         }

@@ -84,9 +84,9 @@ const Report = () => {
                                                     <h5 className=" border-r border-gray-300 h-full flex items-center pl-5">{t}</h5>
                                                     <b className="font-mono h-full flex items-center pl-5">
                                                         {
-                                                            isNaN(converters.ppmToMl(actualData[keyName][t]))
+                                                            isNaN(actualData[keyName][t])
                                                                 ? 'skipped'
-                                                                : converters.ppmToMl(actualData[keyName][t])
+                                                                : actualData[keyName][t]
 
                                                         }</b></div>
                                             )

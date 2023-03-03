@@ -2,25 +2,37 @@
 import { useState } from 'react'
 import { ChangeEvent } from 'react';
 import categoryState from '../../state';
-import { useRecoilState } from 'recoil';
 import Select from '../../components/select';
 import Question from '../../components/question';
 import Layout from '../../components/quiz-layout';
-import MultipleSelect from '../../components/multiple-select';
+import { useRecoilState, useResetRecoilState } from 'recoil';
 import converters from '../../components/functions/convertors';
-import AdvancedMultipleNested from '../../components/advanced-multiple-nested-input';
+import Vector, { createBranch, componentStateAtom, vectorPayload } from '../../components/Vector/';
+
+const vector: vectorPayload = {
+    'Counters': [createBranch('How many times per month do you sanitize food Counters?', 'frequency', 'number', 'placeholder', 1)],
+    'Tables': [createBranch('How many times per month do you sanitize Tables?', 'frequency', 'number', 'placeholder', 1)],
+    'Cabinets': [createBranch('How many times per month do you sanitize Cabinets?', 'frequency', 'number', 'placeholder', 1)],
+    'Stoves': [createBranch('How many times per month do you sanitize Stoves?', 'frequency', 'number', 'placeholder', 1)],
+    'Utensils': [createBranch('How many times per month do you sanitize Utensils?', 'frequency', 'number', 'placeholder', 1)],
+    'Glassware': [createBranch('How many times per month do you sanitize Glassware?', 'frequency', 'number', 'placeholder', 1)],
+    'Pots and Pans': [createBranch('How many times per month do you sanitize Pots and Pans?', 'frequency', 'number', 'placeholder', 1)],
+    'Gloves and Hands': [createBranch('How many times per month do you sanitize Gloves and Hands?', 'frequency', 'number', 'placeholder', 1)],
+    'Refrigerators': [createBranch('How many times per month do you sanitize Refrigerators?', 'frequency', 'number', 'placeholder', 1)],
+    ' Other Appliances and Surfaces': [createBranch('How many times per month do you sanitize Other Appliances and Surfaces? ', 'frequency', 'number', 'placeholder', 1)]
+}
 
 const FoodSurfacesAndPackages = ({ title, category, onComplete }: any) => {
-    const Max = 4
+    const Max = 3
     const [step, setStep] = useState(1)
     const [data, updateData] = useRecoilState(categoryState)
+    const resetVectorAtom = useResetRecoilState(componentStateAtom);
     const [state, setState] = useState<any>({
         food_surfaces: [],
         sanitize: {
             selected: []
         }
     })
-
 
     function calculate() {
 
@@ -49,6 +61,7 @@ const FoodSurfacesAndPackages = ({ title, category, onComplete }: any) => {
     function stepUp() {
         setStep(prev => prev + 1)
         if (Max == step) {
+            resetVectorAtom()
             const calculation = calculate()
             updateData({ ...data, [title]: calculation ? calculation : '--skipped' })
             onComplete()
@@ -65,15 +78,6 @@ const FoodSurfacesAndPackages = ({ title, category, onComplete }: any) => {
         setState((prev: any) => { return { ...prev, [id]: innerHTML } })
     }
 
-    function multiSelectInputOnChangeHandler(event: ChangeEvent<HTMLDivElement>) {
-        const { id, innerHTML } = event.target
-        if (!state[id].includes(innerHTML)) {
-            setState({ ...state, [id]: [...state[id], innerHTML] })
-        } else {
-            const filterArrWithoutselectedOptionValue = state[id].filter((value: any) => value !== innerHTML)
-            setState({ ...state, [id]: filterArrWithoutselectedOptionValue })
-        }
-    }
 
     return (
         <Layout {...{
@@ -81,18 +85,12 @@ const FoodSurfacesAndPackages = ({ title, category, onComplete }: any) => {
             stepUp,
             stepDown,
             category,
+            hideButton: step == 1
         }}>
 
 
             {step == 1 && (
-                <Question name="Select food-contact surfaces to sanitize">
-                    <MultipleSelect
-                        options={['Counters', 'Tables', 'Cabinets', 'Refrigerators', 'Stoves', 'Utensils', 'Glassware', 'Pots and Pans', 'Gloves and Hands', ' Other Appliances and Surfaces']}
-                        selectedOptions={state?.food_surfaces}
-                        onClick={multiSelectInputOnChangeHandler}
-                        id="food_surfaces"
-                    />
-                </Question>
+                <Vector data={vector} question="Choose Water System" next={stepUp} />
             )}
 
             {step == 2 && (
@@ -106,19 +104,8 @@ const FoodSurfacesAndPackages = ({ title, category, onComplete }: any) => {
                 </Question>
             )}
 
-            {step == 3 && (
-                <Question name="How many times per month do you sanitize food contact surfaces?">
-                    <AdvancedMultipleNested
-                        state={state}
-                        setState={setState}
-                        name="sanitize"
-                        options={state.food_surfaces}
-                        placeholder="Times"
-                    />
-                </Question>
-            )}
 
-            {step == 4 && (
+            {step == 3 && (
                 <Question name="How long do you want to use a laundry disinfectant and deodorizer?">
                     <Select
                         options={['1 month', '2 month', '3 month', '6 month', '1 year', '2 year', '5 year']}

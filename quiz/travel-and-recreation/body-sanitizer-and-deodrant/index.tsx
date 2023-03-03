@@ -1,13 +1,26 @@
 import { useState } from 'react'
 import { ChangeEvent } from 'react';
 import categoryState from '../../state';
-import { useRecoilState } from 'recoil';
 import Select from '../../components/select';
 import Question from '../../components/question';
 import Layout from '../../components/quiz-layout';
 import MultipleSelect from '../../components/multiple-select';
 import AdvancedMultipleNested from '../../components/advanced-multiple-nested-input';
 import converters from '../../components/functions/convertors';
+import { useRecoilState, useRecoilValue, useResetRecoilState } from 'recoil';
+import Vector, { componentStateAtom, createBranch, type vectorPayload } from '../../components/Vector/';
+
+const vector: vectorPayload = {
+    'Skin Sanitizer': [
+        createBranch("While on the road how many times per day do you use skin sanitizer?", 'frequency', 'number', 'placeholder', 1)
+    ],
+    'Body Deodorant': [
+        createBranch("How many times per month do you apply deodorant?", "frequency", "number", "placeholder", 1)
+    ],
+    'Insect Repellent': [
+        createBranch("How many times per month do you use insect repellent, or spray for bites?", "frequency", "number", "placeholder", 1)
+    ]
+}
 
 const BodySanitizerAndDeodrant = ({ title, category, onComplete }: any) => {
     const Max = 3 // total number of question (start from 1)
@@ -83,8 +96,6 @@ const BodySanitizerAndDeodrant = ({ title, category, onComplete }: any) => {
             stepDown,
             category,
         }}>
-
-
             {step == 1 && (
                 <Question name="Select food-contact surfaces to sanitize">
                     <MultipleSelect
