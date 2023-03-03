@@ -26,10 +26,11 @@ const CategoryCard = ({ name, data, disabled }: props) => {
             }
         }
     }
+
     function onReadMoreClickHandler() {
         setModel({
             title: name,
-            discription: data.discription
+            discription: data.discription.concat(data.discription_more)
         })
     }
     return (
@@ -47,12 +48,14 @@ const CategoryCard = ({ name, data, disabled }: props) => {
                     initial={{ y: -50 }}
                     key={isSelected as any}>
                     <h1 className={` text-left text-[20px] md:text-[21px] py-1 font-semibold capitalize ${!isSelected ? 'text-blue-1' : 'text-white'}`}>{name}</h1>
-                    <div className="flex items-center justify-center gap-5 py-2">
+                    <div className="flex items-center justify-between gap-5 py-2">
                         <div role={'button'} onClick={onReadMoreClickHandler} className="btn-sm btn btn-secondary text-white font-[500] capitalize hidden md:inline-flex">Read more </div>
-                        {icons.map((fileName) => <Image className="border-2 rounded-md border-blue-1" style={{ color: 'white', padding: '5px' }} width={40} height={40} alt="icon" src={`/icons/${name}/${fileName}`} />)}
+                        <div className="grid grid-cols-3 gap-x-5 w-full md:w-auto place-items-center ">
+                            {icons.map((fileName) => <Image className="border-2 rounded-md border-blue-1" style={{ color: 'white', padding: '5px' }} width={45} height={45} alt="icon" src={`/icons/${name}/${fileName}`} />)}
+                        </div>
                     </div>
 
-                    <p className={`text-left text-md font-[500] md:text-[16px] line-clamp`}>{data.discription}</p>
+                    <p className={`text-left text-md font-[500] md:text-[16px] --line-clamp`}>{data.discription}</p>
                     <div role={'button'} onClick={onReadMoreClickHandler} className="my-3 btn-sm btn btn-secondary text-white font-[500] capitalize flex  md:hidden">Read more </div>
 
                 </motion.div>

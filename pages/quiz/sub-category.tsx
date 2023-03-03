@@ -1,6 +1,7 @@
 import data from "../../data";
 import Router from "next/router";
 import { motion } from 'framer-motion'
+import Modal from "../../components/modal/Modal";
 import { selectedCategoryAtom } from "./categories";
 import Layout from "../../components/quiz-btn-layout";
 import { subCategories as categories_data } from "../../data";
@@ -10,12 +11,10 @@ import PrerequisiteDataError from "../../quiz/components/prerequisite";
 
 export const selectedSubCategoryAtom = atom<string[]>({
     key: 'selected-sub-category',
-    default: [
-        // 'recirculating & shocks'
-    ]
+    default: []
 })
 
-const ModelAtom = atom<any>({
+export const ModelAtom = atom<any>({
     key: 'model-atom',
     default: false
 })
@@ -25,22 +24,12 @@ export const categoryCounterAtom = atom({
     default: 0
 })
 
-const varients = {
-    initial: {
-        opacity: 0,
-        x: -100
-    },
-    animate: {
-        opacity: 1,
-        x: 0
-    },
-}
-
 const SubCategoriesPage = () => {
-    const [model, setModel] = useRecoilState(ModelAtom)
-    const [categoryCounter, setCategoryCounter] = useRecoilState(categoryCounterAtom)
+    const model = useRecoilValue(ModelAtom)
     const selectedCategories = useRecoilValue(selectedCategoryAtom)
     const [selectedSubCategories] = useRecoilState(selectedSubCategoryAtom)
+    const [categoryCounter, setCategoryCounter] = useRecoilState(categoryCounterAtom)
+
 
     const categoryName = selectedCategories[categoryCounter]
     const selectedCategoriesLength = selectedCategories.length - 1
@@ -71,42 +60,20 @@ const SubCategoriesPage = () => {
 
     return (
         <Layout onNext={Next} onPrevious={Previous} isEnabled={selectedSubCategories.length == 0} >
-            <div className="bg-[#74A3B6] h-full lg:overflow-hidden">
-
-                <motion.div className="bg-[#74A3B6] lg:h-full" key={categoryCounter} animate={'animate'} initial="initial" variants={varients} >
-                    <header className=" md:h-[20vh] h-[20vh] md:mt-0 flex items-center justify-center flex-col  px-5">
-
-                        <h1 className="text-center md:text-[50px] text-[35px] text-gray-100 uppercase font-bold ">{categoryName}</h1>
-                        <p className="text-white text-xl">Please select all that interest you from {categoryName}</p>
-
-                        <div className="md:block hidden w-[500px] bg-gray-100 rounded-full mt-5 ">
-                            <motion.div
-                                initial={{ width: 0 }}
-                                style={{ height: '2px' }}
-                                transition={{ duration: 1 }}
-                                animate={{ width: (500 / selectedCategories.length) * (categoryCounter + 1) }} className="bg-gray-500 rounded-full"></motion.div>
-                        </div>
-                        <div className="block md:hidden w-[200px] bg-gray-100 rounded-full mt-5 ">
-                            <motion.div
-                                initial={{ width: 0 }}
-                                style={{ height: '2px' }}
-                                transition={{ duration: 1 }}
-                                animate={{ width: (200 / selectedCategories.length) * (categoryCounter + 1) }} className="bg-gray-500 rounded-full"></motion.div>
-                        </div>
+            <div className="bg-[#74A3B6] h-full border border-blue-1">
+                {model && <Modal title={model.title} discription={model.discription} />}
+                <motion.div className="bg-[#74A3B6] h-full md:h-auto">
+                    <header className=" fixed top-0 left-0 flex items-center justify-center flex-col  px-5 bg-blue-1 w-full">
+                        <h1 className="text-center md:text-[40px] text-[30px] text-gray-100 capitalize h-[100px] flex items-center justify-center font-bold ">select categories</h1>
                     </header>
-
-                    <main className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-2 lg:gap-10 p-2 max-w-[1080px] m-auto h">
+                    <main className="bg-[#74A3B6] grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-2 lg:gap-6 p-2 max-w-[1400px]  m-auto mt-[100px] md:mt-[120px]">
                         {subCategoriesList?.map((keyName, number) => <CategoryCard disabled={false} data={subCategoriesDataList[keyName]} name={keyName} key={number} />)}
                     </main>
-
                 </motion.div>
             </div>
-
         </Layout >
     )
 
 }
 export default SubCategoriesPage
-
-
 
