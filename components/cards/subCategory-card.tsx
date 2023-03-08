@@ -3,7 +3,7 @@ import { motion } from 'framer-motion'
 import { useRecoilState } from "recoil"
 import { selectedSubCategoryAtom } from "../../pages/quiz/sub-category"
 import { ModelAtom } from "../../pages/quiz/sub-category"
-
+import { HiArrowRight } from 'react-icons/hi'
 interface props {
     name: string,
     data: any
@@ -27,7 +27,8 @@ const CategoryCard = ({ name, data, disabled }: props) => {
         }
     }
 
-    function onReadMoreClickHandler() {
+    function onReadMoreClickHandler(event: any) {
+        event.stopPropagation()
         setModel({
             title: name,
             discription: data.discription.concat(data.discription_more)
@@ -40,23 +41,26 @@ const CategoryCard = ({ name, data, disabled }: props) => {
                 onClick={onClickHandler}
                 whileFocus={{ scale: .9 }}
                 whileHover={{ scale: 1.1 }}
-                className=" p-5 rounded-lg overflow-y-hidden border-2  border-blue-1"
+                className=" p-5 rounded-3xl overflow-y-hidden border-4  border-green-1"
                 style={isSelected ? { background: '#95D074' } : { background: 'white' }}>
 
                 <motion.div
                     animate={{ y: 0 }}
                     initial={{ y: -50 }}
                     key={isSelected as any}>
-                    <h1 className={` text-left text-[20px] md:text-[21px] py-1 font-semibold capitalize ${!isSelected ? 'text-blue-1' : 'text-white'}`}>{name}</h1>
-                    <div className="flex items-center justify-between gap-5 py-2">
-                        <div role={'button'} onClick={onReadMoreClickHandler} className="btn-sm btn btn-secondary text-white font-[500] capitalize hidden md:inline-flex">Read more </div>
-                        <div className="grid grid-cols-3 gap-x-5 w-full md:w-auto place-items-center ">
-                            {icons.map((fileName) => <Image className="border-2 rounded-md border-blue-1" style={{ color: 'white', padding: '5px' }} width={45} height={45} alt="icon" src={`/icons/${name}/${fileName}`} />)}
+                    <h1 className={` text-left text-[20px] md:text-[21px] py-1 font-bold  uppercase ${!isSelected ? 'text-black' : 'text-white'}`}>{name}</h1>
+                    <p className={`text-left mt-2 text-md font-[400] md:text-[16px] `}>{data.discription}</p>
+
+                    <div className="flex items-center justify-between gap-5 py-3">
+                        <div role={'button'} onClick={onReadMoreClickHandler} className={`md:btn-md btn-sm w-20 md:w-auto p-2  h-auto  px-5 btn btn-secondary ${!isSelected ? 'bg-green-1' : 'bg-white text-green-1'} border-none text-white font-[500] capitalize  md:inline-flex`}>Read more <HiArrowRight className="ml-2" /> </div>
+
+                        <div className="grid grid-cols-3 md:gap-x-5 gap-x-1 w-full md:w-auto place-items-center ">
+                            {icons.map((fileName) => <Image className="border-4 rounded-full border-gray-300 " style={{ color: 'white', padding: '10px' }} width={60} height={60} alt="icon" src={`/icons/${name}/${fileName}`} />)}
                         </div>
                     </div>
 
-                    <p className={`text-left text-md font-[500] md:text-[16px] --line-clamp`}>{data.discription}</p>
-                    <div role={'button'} onClick={onReadMoreClickHandler} className="my-3 btn-sm btn btn-secondary text-white font-[500] capitalize flex  md:hidden">Read more </div>
+                    {/* <div role={'button'} onClick={onReadMoreClickHandler} className="my-3 btn-sm btn btn-secondary text-white font-[500] capitalize flex  md:hidden">Read more </div> */}
+
 
                 </motion.div>
             </motion.button>

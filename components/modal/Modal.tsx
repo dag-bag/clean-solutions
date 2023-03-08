@@ -17,7 +17,7 @@ function Modal({ title, discription }: any) {
     >
       <div className="modal-box bg-white">
         <h3 className="font-bold text-2xl capitalize">{title}</h3>
-        <p className="py-4 text-md">{discription}</p>
+        <p className="py-4 text-lg">{discription}</p>
         <div className="modal-laction ">
           <a href="#" onClick={onCloseHandler} className="btn bg-red-500 text-white border-none ">
             Close
