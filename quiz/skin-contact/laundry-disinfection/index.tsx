@@ -1,12 +1,32 @@
 import { useState } from 'react'
 import { ChangeEvent } from 'react';
 import categoryState from '../../state';
-import { useRecoilState } from 'recoil';
+import { useRecoilState, useRecoilValue } from 'recoil';
 import Select from '../../components/select';
 import Question from '../../components/question';
 import Layout from '../../components/quiz-layout';
-import MultipleSelect from '../../components/multiple-select';
 import converters from '../../components/functions/convertors';
+import calculateSanitizerConcentration from '../../components/functions/calculateSanitizerConcentration';
+
+import Vector, { createBranch, componentStateAtom, vectorPayload } from '../../components/Vector/';
+
+const vector: vectorPayload = {
+    'Everyday, Bodily Fluids Sweat, and Urine': [
+        createBranch('How much Everyday, Bodily Fluids Sweat, and Urine laundry do you wash on an averag monthe?', 'frequency', 'number', 'placeholder', 1),
+    ],
+    'Soiled, Heavy Bacteria, and Activewear': [
+        createBranch('How much Soiled, Heavy Bacteria, and Activewear laundry do you wash on an average month?', 'frequency', 'number', 'placeholder', 1),
+    ],
+    'Fungi, Mold, and Mildew': [
+        createBranch('How much Fungi, Mold, and Mildew laundry do you wash on an average month?', 'frequency', 'number', 'placeholder', 1),
+    ],
+    'Lice, Ticks, and Bedbugs': [
+        createBranch('How much Lice, Ticks, and Bedbugs laundry do you wash on an average month?', 'frequency', 'number', 'placeholder', 1),
+    ]
+
+}
+
+
 const LaundryDisinfection = ({ title, category, onComplete }: any) => {
     const Max = 3
     const [step, setStep] = useState(1)
@@ -14,6 +34,7 @@ const LaundryDisinfection = ({ title, category, onComplete }: any) => {
     const [state, setState] = useState<any>({
         multiselect: []
     })
+    const vectorValues = useRecoilValue(componentStateAtom)
 
     function calculate() {
         const laundryWeight: any = {
@@ -24,9 +45,15 @@ const LaundryDisinfection = ({ title, category, onComplete }: any) => {
             const months = (state?.duration.includes('month'))
                 ? state?.duration.match(/(\d+)/)[0] :
                 (state?.duration.match(/(\d+)/)[0] * 12)
-            const quantity = converters.gallonsToPpm(state.multiselect.length * 20)
-            const strenght = laundryWeight[state.freq]
-            return quantity * strenght * months
+
+            const sum = vectorValues.input.selected.map((key: string) => {
+                const { frequency } = vectorValues.input[key]
+                return (3785.41 * 20) * parseFloat(frequency)
+            }).reduce((t, k) => t + k)
+
+            console.log(sum)
+
+            return calculateSanitizerConcentration(laundryWeight[state.freq], 1, sum * months)
         } catch (err) {
             console.error('Question Skipped : cause --skipped flag in result/calculation')
         }
@@ -52,37 +79,21 @@ const LaundryDisinfection = ({ title, category, onComplete }: any) => {
         setState((prev: any) => { return { ...prev, [id]: innerHTML } })
     }
 
-    function multiSelectInputOnChangeHandler(event: ChangeEvent<HTMLDivElement>) {
-        const selectedOptionValue = event.target.innerHTML
-        if (!state.multiselect.includes(selectedOptionValue)) {
-            setState({ ...state, multiselect: [...state.multiselect, selectedOptionValue] })
-        } else {
-            const filterArrWithoutselectedOptionValue = state.multiselect.filter((value: any) => value !== selectedOptionValue)
-            setState({ ...state, multiselect: filterArrWithoutselectedOptionValue })
-        }
-    }
-
     return (
         <Layout {...{
             title,
             stepUp,
             stepDown,
             category,
+            hideButton: step == 1
         }}>
 
             {step == 1 && (
-                <Question name="Choose all that apply">
-                    <MultipleSelect
-                        options={['Everyday, Bodily Fluids Sweat, and Urine', 'Soiled, Heavy Bacteria, and Activewear', 'Fungi, Mold, and Mildew', 'Lice, Ticks, and Bedbugs']}
-                        selectedOptions={state.multiselect}
-                        onClick={multiSelectInputOnChangeHandler}
-                        id="multiselect"
-                    />
-                </Question>
+                <Vector data={vector} question="Choose Water System" next={stepUp} />
             )}
 
             {step == 2 && (
-                <Question name="How many loads of laundry (linens and clothes) do you wash on an average month?">
+                <Question name="Which strenght do you prefer?">
                     <Select
                         options={['everyday', 'moderate', 'heavy', 'insecticide']}
                         selectedOption={state?.freq}

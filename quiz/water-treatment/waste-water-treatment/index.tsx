@@ -20,16 +20,19 @@ import Vector, { createBranch, componentStateAtom, vectorPayload } from '../../c
 
 const vector: vectorPayload = {
     'Residential': [
-        createBranch("How much water Residential system with wastewater hold?", 'quantity', 'select', 'placeholder', undefined, undefined, ['small', 'medium', 'large']),
-        createBranch("How many times per month do you sanitize Commercial water systems?", 'frequency', 'number', 'placeholder', 1, 30)
+        createBranch("How much gallons water Residential wastewater system hold?", 'quantity', 'number', 'placeholder', 1),
+        createBranch("How many times per month do you sanitize Commercial water systems?", 'frequency', 'number', 'placeholder', 1, 30),
+        createBranch('Select which strengths you will need to apply in Residential water system?', 'strenght', 'select', "placeholder", undefined, undefined, ['light', 'moderate'])
     ],
     "Commercial": [
-        createBranch("How much water Commercial system with wastewater hold?", 'quantity', 'select', 'placeholder', undefined, undefined, ['small', 'medium', 'large']),
-        createBranch("How many times per month do you sanitize Commercial water systems?", 'frequency', 'number', 'placeholder', 1, 30)
+        createBranch("How much gallons water Commercial wastewater system hold?", 'quantity', 'number', 'placeholder', 1),
+        createBranch("How many times per month do you sanitize Commercial water systems?", 'frequency', 'number', 'placeholder', 1, 30),
+        createBranch('Select which strengths you will need to apply in Commercial water sytems?', 'strenght', 'select', "placeholder", undefined, undefined, ['light', 'moderate'])
     ],
     "RV Tanks": [
-        createBranch("How much water RV Tanks system with wastewater hold?", 'quantity', 'select', 'placeholder', undefined, undefined, ['small', 'medium', 'large']),
-        createBranch("How many times per month do you sanitize RV Tanks water systems?", 'frequency', 'number', 'placeholder', 1, 30)
+        createBranch("How much gallons water Rv Tanks wastewater system hold?", 'quantity', 'number', 'placeholder', 1),
+        createBranch("How many times per month do you sanitize RV Tanks water systems?", 'frequency', 'number', 'placeholder', 1, 30),
+        createBranch('Select which strengths you will need to apply in RV Tanks water sytems?', 'strenght', 'select', "placeholder", undefined, undefined, ['light', 'moderate'])
     ]
 }
 
@@ -39,8 +42,9 @@ import categoryState from '../../state';
 import Select from '../../components/select';
 import Question from '../../components/question';
 import Layout from '../../components/quiz-layout';
-import { useRecoilState, useResetRecoilState } from 'recoil';
-import converters from '../../components/functions/convertors';
+import { useRecoilState, useRecoilValue, useResetRecoilState } from 'recoil';
+import calculateSanitizerConcentration from '../../components/functions/calculateSanitizerConcentration';
+
 
 const WasteWaterTreatment = ({ title, category, onComplete }: any) => {
     const Max = 2 // total number of question (start from 1)
@@ -58,16 +62,26 @@ const WasteWaterTreatment = ({ title, category, onComplete }: any) => {
     }) // input data stored for calculation
     const [data, updateData] = useRecoilState(categoryState)
     const resetVectorAtom = useResetRecoilState(componentStateAtom);
+    const vectorValues = useRecoilValue(componentStateAtom)
+
 
     function calculate() {
-        function extractNumbers(str: string): number[] {
-            return str.match(/\d+/g)?.map(Number) || [];
-        }
+
         try {
-            const months = (state?.duration?.includes('month'))
+            const months = (state?.duration.includes('month'))
                 ? state?.duration.match(/(\d+)/)[0] :
                 (state?.duration.match(/(\d+)/)[0] * 12)
-            return 0 * months
+
+            const sum = vectorValues.input.selected.map((key: string) => {
+                const { frequency, quantity, strenght } = vectorValues.input[key]
+                const strenghtNumberValue = stenghtObject[key][strenght] as any
+                const preventDefaultValuesError = isNaN(strenghtNumberValue)
+                    ? stenghtObject[key].default
+                    : strenghtNumberValue
+                return calculateSanitizerConcentration(preventDefaultValuesError, 1, parseFloat(frequency) * (parseFloat(quantity) * 3785.41))
+            }).reduce((t, k) => t + k)
+
+            return sum * months
         } catch (err) {
             console.log(err)
             console.error('Question Skipped : cause --skipped flag in result/calculation')
@@ -103,6 +117,7 @@ const WasteWaterTreatment = ({ title, category, onComplete }: any) => {
             category,
             hideButton: step == 1
         }}>
+
 
             {step == 1 && (
                 <Vector data={vector} question="Choose Water System" next={stepUp} />

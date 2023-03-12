@@ -29,7 +29,7 @@ const CategoriesPage = () => {
 
                 <div className="h-[150px]">)</div>
 
-                <main className="  grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-5 lg:gap-6 p-2 max-w-[1200px]  m-auto bg-[#74A3B6]  ">
+                <main className="  grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-5 lg:gap-6 p-2 max-w-[1500px]  m-auto bg-[#74A3B6]  ">
                     {categories.map((keyName, number) => (
                         <CategoryCard name={keyName} key={number} />
                     ))}

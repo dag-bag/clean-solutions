@@ -1,8 +1,11 @@
 /** @format */
 import Link from "next/link";
-import { useState } from "react";
+import Model from '../../modal/Modal'
+import { useRecoilState } from "recoil";
 import Btn from "../../utils/Btn";
 import Image from "next/image";
+import { ModelAtom } from "../../../pages/quiz/sub-category";
+
 const TrustedIcons = [
   "bigstock-green-earth-and-leaves-14539535",
   "Non-Toxic-Icon",
@@ -11,13 +14,16 @@ const TrustedIcons = [
   "SeekPng.com_support-our-troops-png_5841661",
 ];
 const Main = () => {
-
-  const [isViewMoreEnabled, toggleViewMoreEnabled] = useState(false)
+  const [model, setModel] = useRecoilState(ModelAtom)
   function onViewMoreBtnHandler() {
-    toggleViewMoreEnabled(prev => !prev)
+    setModel({
+      title: "Discription",
+      discription: "Use it on hard and soft surfaces, food, plants, animals, skin, water, entire rooms, and much more. No organism tested has proven to be resilient. Kill 99.99% of ALL germs known to humankind Discover the many ways to use to defeat bacteria, viruses, mold, and odor.Your responses will aid in the creation of a custom, economical, eco-frienly EPA, NSF, NFPA FDA, CDC & FTC Cleared Disinfecting Solution"
+    })
   }
 
   return <>
+    {model && <Model title={model.title} discription={model.discription} />}
     <div className=" flex flex-col py-16 lg:pt-0 lg:flex-col lg:pb-0 min-h-screen max-h-[1000px] bg-blue-1 text-white relative">
       <div className=" flex flex-col items-start w-full max-w-xl px-4 mx-auto xl:px-10 xl:max-w-[92%] text-center ">
         <div className="mb-16 lg:mt-20 xl:my-52 xl:mt-20 xl:max-w-3xl lg:pr-5 ">
@@ -26,9 +32,9 @@ const Main = () => {
 
           <div className=" border-red-500 flex items-center justify-center flex-col">
 
-            <h2 className="text-5xl font-semibold sm:text-5xl sm:leading-none lg:text-5xl xl:text-[4.5rem] text-center font-heading">Take Your Own Adventure Quiz</h2>
+            <h2 className="text-5xl  font-semibold sm:text-5xl lg:text-5xl xl:text-[4.5rem] text-center">Take Your Own Adventure Quiz</h2>
 
-            <p className="text-base  md:text-md my-7 text-gray-200">{`Use it on hard and soft surfaces, food, plants, animals, skin, water, entire rooms, and much more. No organism tested has proven to be resilient. Kill 99.99% of ALL germs known to humankind. ${isViewMoreEnabled ? `Discover the many ways to use to defeat bacteria, viruses, mold, and odor.Your responses will aid in the creation of a custom, economical, eco-frienly EPA, NSF, NFPA FDA, CDC & FTC Cleared Disinfecting Solution.` : ''}`}</p>
+            <p className="text-[20px]  md:text-md my-7 text-gray-200">{`Use it on hard and soft surfaces, food, plants, animals, skin, water, entire rooms, and much more. No organism tested has proven to be resilient. Kill 99.99% of ALL germs known to humankind.`}</p>
 
           </div>
           <div className="flex flex-col items-center  md:flex-row justify-center">

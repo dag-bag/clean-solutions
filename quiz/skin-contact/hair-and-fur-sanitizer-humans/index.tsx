@@ -6,7 +6,7 @@ import Select from '../../components/select';
 import Question from '../../components/question';
 import Layout from '../../components/quiz-layout';
 import NumberInput from '../../components/NumberInput';
-import converters from '../../components/functions/convertors';
+import calculateSanitizerConcentration from '../../components/functions/calculateSanitizerConcentration';
 
 const HairAndFurSanitizerForHuman = ({ title, category, onComplete }: any) => {
     const Max = 3
@@ -25,10 +25,10 @@ const HairAndFurSanitizerForHuman = ({ title, category, onComplete }: any) => {
             const months = (state?.duration.includes('month'))
                 ? state?.duration.match(/(\d+)/)[0] :
                 (state?.duration.match(/(\d+)/)[0] * 12)
-            const quantity = converters.mlToPpm(selectValues[state.quan])
-            const strenght = 80
-            const frequency = state.freq * 4.4
-            return quantity * frequency * strenght * months
+
+            const totalUsageInMl = months * ((selectValues[state.quan] * state.freq) * 4.4)
+            return calculateSanitizerConcentration(80, 1, totalUsageInMl)
+
         } catch (err) {
             console.error('Question Skipped : cause --skipped flag in result/calculation')
         }

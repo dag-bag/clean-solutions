@@ -24,17 +24,14 @@ const vector: vectorPayload = {
 import { useState } from 'react'
 import { ChangeEvent } from 'react';
 import categoryState from '../../state';
-import { useRecoilState, useResetRecoilState } from 'recoil';
 import Select from '../../components/select';
-import quizdata from '../../../data';
 import Question from '../../components/question';
 import Layout from '../../components/quiz-layout';
-import converters from '../../components/functions/convertors';
+
+import { useRecoilState, useRecoilValue, useResetRecoilState } from 'recoil';
+import calculateSanitizerConcentration from '../../components/functions/calculateSanitizerConcentration';
 
 const DipEquipmentTools = ({ title, category, onComplete }: any) => {
-
-
-
     const Max = 2 // total number of question (start from 1)
     const [step, setStep] = useState(1)
     const [state, setState] = useState<any>({
@@ -42,25 +39,24 @@ const DipEquipmentTools = ({ title, category, onComplete }: any) => {
             selected: []
         },
     })
-    const [isReadMoreToggled, setReadMore] = useState(true)
-    const componentMeta = quizdata[category].categories[title]
+
     const [data, updateData] = useRecoilState(categoryState)
     const resetVectorAtom = useResetRecoilState(componentStateAtom);
+    const vectorValues = useRecoilValue(componentStateAtom)
 
-    const discription = isReadMoreToggled
-        ? componentMeta.discription
-        : componentMeta.discription.concat(componentMeta.discription_more)
 
     function calculate() {
         try {
             const months = (state?.duration.includes('month'))
                 ? state?.duration.match(/(\d+)/)[0] :
                 (state?.duration.match(/(\d+)/)[0] * 12)
-            const sum = state.waterRequire.selected.map((keyname: string) => {
-                return converters.gallonsToPpm(state.waterRequire[keyname]) * defaultStrenght[keyname]
-            }).reduce((total: number, num: number) => total + num)
 
-            return sum * (state?.freq * 4.4) * months
+            const sum = vectorValues.input.selected.map((key: string) => {
+                const { frequency, quantity } = vectorValues.input[key]
+                return calculateSanitizerConcentration(defaultStrenght[key], 1, parseFloat(frequency) * (parseFloat(quantity) * 3785.41) * 4.4)
+            }).reduce((t, k) => t + k)
+
+            return sum * months
         } catch (err) {
             console.error('Question Skipped : cause --skipped flag in result/calculation')
         }
@@ -82,10 +78,6 @@ const DipEquipmentTools = ({ title, category, onComplete }: any) => {
         }
     }
 
-    function readMoreClickHandler() {
-        setReadMore(p => !p)
-    }
-
     function selectInputOnChangeHandler(event: ChangeEvent<HTMLDivElement>) {
         const { id, innerHTML } = event.target
         setState((prev: any) => { return { ...prev, [id]: innerHTML } })
@@ -97,9 +89,6 @@ const DipEquipmentTools = ({ title, category, onComplete }: any) => {
             stepUp,
             stepDown,
             category,
-            discription,
-            isReadMoreToggled,
-            readMoreClickHandler,
             hideButton: step == 1
         }}>
 

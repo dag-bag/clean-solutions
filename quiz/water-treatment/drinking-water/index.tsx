@@ -3,33 +3,26 @@ import { ChangeEvent } from 'react';
 import categoryState from '../../state';
 import { useRecoilState } from 'recoil';
 import Select from '../../components/select';
-import quizdata from '../../../data';
 import Question from '../../components/question';
 import Layout from '../../components/quiz-layout';
 import NumberInput from '../../components/NumberInput';
-import converters from '../../components/functions/convertors';
+import calculateSanitizerConcentration from '../../components/functions/calculateSanitizerConcentration';
 
 const DrinkingWater = ({ title, category, onComplete }: any) => {
     const Max = 3 // total number of question (start from 1)
     const [step, setStep] = useState(1)
     const [state, setState] = useState<any>({}) // input data stored for calculation
-    const [isReadMoreToggled, setReadMore] = useState(true)
-    const componentMeta = quizdata[category].categories[title]
     const [data, updateData] = useRecoilState(categoryState)
-
-    const discription = isReadMoreToggled
-        ? componentMeta.discription
-        : componentMeta.discription.concat(componentMeta.discription_more)
 
     function calculate() {
         try {
             const months = (state?.duration.includes('month'))
                 ? state?.duration.match(/(\d+)/)[0] :
                 (state?.duration.match(/(\d+)/)[0] * 12)
-            const strenght = 0.8
-            const frequency = state.freq
-            const quantity = converters.gallonsToPpm(state.quantity * 30)
-            return quantity * frequency * strenght * months
+
+            const totalUsageInMl = months * (((state.quantity * 3785.41) * state.freq) * 30)
+            return calculateSanitizerConcentration(0.8, 1, totalUsageInMl)
+
         } catch (err) {
             console.error('Question Skipped : cause --skipped flag in result/calculation')
         }
@@ -50,10 +43,6 @@ const DrinkingWater = ({ title, category, onComplete }: any) => {
         }
     }
 
-    function readMoreClickHandler() {
-        setReadMore(p => !p)
-    }
-
     function selectInputOnChangeHandler(event: ChangeEvent<HTMLDivElement>) {
         const { id, innerHTML } = event.target
         setState((prev: any) => { return { ...prev, [id]: innerHTML } })
@@ -65,7 +54,6 @@ const DrinkingWater = ({ title, category, onComplete }: any) => {
             stepUp,
             stepDown,
             category,
-            discription,
 
         }}>
 

@@ -10,9 +10,8 @@ type Props = {
 };
 
 function SkinContact({ color, customStyle, className }: Props) {
-  const IconsClasses = `${
-    customStyle ? customStyle : " "
-  } w-12 h-12 bg-transparent`;
+  const IconsClasses = `${customStyle ? customStyle : " "
+    } w-12 h-12 bg-transparent`;
   return (
     <>
       <svg

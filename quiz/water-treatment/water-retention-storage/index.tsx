@@ -24,17 +24,17 @@ const vector: vectorPayload = {
     'Ponds, Reservoirs, and Retention Basins': [
         createBranch('How many times per month do you want to sanitize Ponds, Reservoirs, and Retention Basins?', 'frequency', 'number', "placeholder", 1),
         createBranch('How many gallons Ponds, Reservoirs, and Retention Basins hold?', 'quantity', 'number', "placeholder", 1),
-        createBranch('Select which strengths you will need to apply in Ponds, Reservoirs, and Retention Basins?', 'strenght', 'select', "placeholder", undefined, undefined, ['Light', 'Moderate'])
+        createBranch('Select which strengths you will need to apply in Ponds, Reservoirs, and Retention Basins?', 'strenght', 'select', "placeholder", undefined, undefined, ['light', 'moderate'])
     ],
     'Once-through Water Cooling Systems': [
         createBranch('How many times per month do you want to sanitize Once-through Water Cooling Systems?', 'frequency', 'number', "placeholder", 1),
         createBranch('How many gallons Once-through Water Cooling Systems hold?', 'quantity', 'number', "placeholder", 1),
-        createBranch('Select which strengths you will need to apply in Once-through Water Cooling Systems?', 'strenght', 'select', "placeholder", undefined, undefined, ['Light', 'Moderate', 'Heavy'])
+        createBranch('Select which strengths you will need to apply in Once-through Water Cooling Systems?', 'strenght', 'select', "placeholder", undefined, undefined, ['light', 'moderate', 'heavy'])
     ],
     'Aircraft, RV, Boat Tanks and Lines': [
         createBranch('How many times per month do you want to sanitize Aircraft, RV, Boat Tanks and Lines?', 'frequency', 'number', "placeholder", 1),
         createBranch('How many gallonsAircraft, RV, Boat Tanks and Lines hold?', 'quantity', 'number', "placeholder", 1),
-        createBranch('Select which strengths you will need to apply in Once-through Water Cooling Systems?', 'strenght', 'select', "placeholder", undefined, undefined, ['Light', 'Moderate', 'Heavy'])
+        createBranch('Select which strengths you will need to apply in Once-through Water Cooling Systems?', 'strenght', 'select', "placeholder", undefined, undefined, ['light', 'moderate', 'heavy'])
     ],
     'Other Non-Potable Water Storage': [
         createBranch('How many times per month do you want to sanitize Other Non-Potable Water Storage?', 'frequency', 'number', "placeholder", 1),
@@ -44,25 +44,20 @@ const vector: vectorPayload = {
 
 import { useState } from 'react'
 import { ChangeEvent } from 'react';
-import quizdata from '../../../data';
 import categoryState from '../../state';
 import Select from '../../components/select';
 import Question from '../../components/question';
 import Layout from '../../components/quiz-layout';
-import { useRecoilState, useResetRecoilState } from 'recoil';
+import { useRecoilState, useRecoilValue, useResetRecoilState } from 'recoil';
+import calculateSanitizerConcentration from '../../components/functions/calculateSanitizerConcentration';
 
 const WaterRetentionStorage = ({ title, category, onComplete }: any) => {
     const Max = 2 // total number of question (start from 1)
     const [step, setStep] = useState(1)
     const [state, setState] = useState<any>({})
-    const [isReadMoreToggled, setReadMore] = useState(true)
-    const componentMeta = quizdata[category].categories[title]
     const [data, updateData] = useRecoilState(categoryState)
     const resetVectorAtom = useResetRecoilState(componentStateAtom);
-
-    const discription = isReadMoreToggled
-        ? componentMeta.discription
-        : componentMeta.discription.concat(componentMeta.discription_more)
+    const vectorValues = useRecoilValue(componentStateAtom)
 
     function calculate() {
         try {
@@ -70,7 +65,16 @@ const WaterRetentionStorage = ({ title, category, onComplete }: any) => {
                 ? state?.duration.match(/(\d+)/)[0] :
                 (state?.duration.match(/(\d+)/)[0] * 12)
 
-            return 1 * months
+            const sum = vectorValues.input.selected.map((key: string) => {
+                const { frequency, quantity, strenght } = vectorValues.input[key]
+                const strenghtNumberValue = stenghtObject[key][strenght] as any
+                const preventDefaultValuesError = isNaN(strenghtNumberValue)
+                    ? stenghtObject[key].default
+                    : strenghtNumberValue
+                return calculateSanitizerConcentration(preventDefaultValuesError, 1, parseFloat(frequency) * (parseFloat(quantity) * 3785.41))
+            }).reduce((t, k) => t + k)
+
+            return sum * months
         } catch (err) {
             console.error('Question Skipped : cause --skipped flag in result/calculation')
         }
@@ -92,10 +96,6 @@ const WaterRetentionStorage = ({ title, category, onComplete }: any) => {
         }
     }
 
-    function readMoreClickHandler() {
-        setReadMore(p => !p)
-    }
-
     function selectInputOnChangeHandler(event: ChangeEvent<HTMLDivElement>) {
         const { id, innerHTML } = event.target
         setState((prev: any) => { return { ...prev, [id]: innerHTML } })
@@ -107,13 +107,8 @@ const WaterRetentionStorage = ({ title, category, onComplete }: any) => {
             stepUp,
             stepDown,
             category,
-            discription,
-            isReadMoreToggled,
-            readMoreClickHandler,
             hideButton: step == 1
         }}>
-
-            {/* {JSON.stringify(vectorState)} */}
 
             {step == 1 && (
                 <Vector data={vector} question={'Choose your water retention or storage containment devices'} next={stepUp} />

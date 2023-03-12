@@ -7,6 +7,7 @@ import Layout from '../../components/quiz-layout';
 import converters from '../../components/functions/convertors';
 import { useRecoilState, useRecoilValue, useResetRecoilState } from 'recoil';
 import Vector, { componentStateAtom, createBranch, type vectorPayload } from '../../components/Vector/';
+import calculateSanitizerConcentration from '../../components/functions/calculateSanitizerConcentration';
 
 const vector: vectorPayload = {
     'cats': [
@@ -42,12 +43,14 @@ const HairAndFurSanitizerForAnimals = ({ title, category, onComplete }: any) => 
                 ? state?.duration.match(/(\d+)/)[0] :
                 (state?.duration.match(/(\d+)/)[0] * 12)
 
-            const sum = vectorState.input.selected.map((keyName: string) => {
-                const Q = converters.gallonsToPpm(vectorState.input[keyName].quantity * gallonsOfWaterRequire[keyName])
+            const TotalQuanAndFreq = vectorState.input.selected.map((keyName: string) => {
+                const Q = vectorState.input[keyName].quantity * gallonsOfWaterRequire[keyName]
                 const F = vectorState.input[keyName].frequency
                 return Q * F
             }).reduce((t: number, k: number) => t + k)
-            return sum * months
+            console.log(TotalQuanAndFreq)
+            const totalUsageInMl = months * ((TotalQuanAndFreq) * 1)
+            return calculateSanitizerConcentration(160, 1, totalUsageInMl)
         } catch (err) {
             console.error('Question Skipped : cause --skipped flag in result/calculation')
         }

@@ -6,7 +6,7 @@ import Select from '../../components/select';
 import Question from '../../components/question';
 import Layout from '../../components/quiz-layout';
 import NumberInput from '../../components/NumberInput';
-import calculateWaterForMonth from '../../components/functions/calculateWaterForMonth';
+import calculateSanitizerConcentration from '../../components/functions/calculateSanitizerConcentration';
 
 const HandDisInfactant = ({ title, category, onComplete }: any) => {
     const Max = 2
@@ -19,7 +19,9 @@ const HandDisInfactant = ({ title, category, onComplete }: any) => {
             const months = (state?.duration.includes('month'))
                 ? state?.duration.match(/(\d+)/)[0] :
                 (state?.duration.match(/(\d+)/)[0] * 12)
-            return calculateWaterForMonth(50, (state.freq * 30 * 2 * months))
+
+            const totalUsageInMl = months * ((2 * state.freq) * 30)
+            return calculateSanitizerConcentration(50, 1, totalUsageInMl)
 
         } catch (err) {
             console.error('Question Skipped : cause --skipped flag in result/calculation')

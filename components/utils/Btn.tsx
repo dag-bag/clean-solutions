@@ -1,3 +1,4 @@
+
 /** @format */
 
 import Link from "next/link";
@@ -10,46 +11,33 @@ type Props = {
 
 function Btn({ hidden }: Props) {
   return (
-    <Link href="/quiz" legacyBehavior>
+    <Link href="/quiz">
       <button
-        className={`relative block w-full md:w-auto  md:inline-flex items-center justify-start py-4 pl-10 pr-14 overflow-hidden font-semibold text-white transition-all duration-150 ease-in-out rounded-full   bg-green-1 group border   ${hidden ? "hidden md:block" : ""
+        className={`relative btn  items-center justify-center py-7 w-[200px]  overflow-hidden font-medium text-indigo-600 transition duration-300 ease-out border-2 !border-white rounded-full shadow-md group ${hidden ? "hidden md:inline-flex" : "inline-flex"
           }`}
+
       >
-        <span className="absolute right-0 pr-4 duration-200 ease-out  ">
+        <span className="absolute inset-0 flex items-center justify-center text-[18px] w-full h-full text-white duration-300 -translate-x-full bg-blue-1 group-hover:translate-x-0 ease ">
+          Let's Go{" "}
           <svg
-            className="w-5 h-5 text-white"
+            className="w-6 h-6 ml-2"
             fill="none"
             stroke="currentColor"
             viewBox="0 0 24 24"
             xmlns="http://www.w3.org/2000/svg"
           >
             <path
-              strokeLinecap="round"
-              strokeLinejoin="round"
-              strokeWidth={2}
+              stroke-linecap="round"
+              stroke-linejoin="round"
+              stroke-width="2"
               d="M14 5l7 7m0 0l-7 7m7-7H3"
-            />
+            ></path>
           </svg>
         </span>
-        <span className="absolute left-0 pl-2.5 -translate-x-12  ease-out duration-200 ">
-          <svg
-            className="w-5 h-5 text-green-400"
-            fill="none"
-            stroke="currentColor"
-            viewBox="0 0 24 24"
-            xmlns="http://www.w3.org/2000/svg"
-          >
-            <path
-              strokeLinecap="round"
-              strokeLinejoin="round"
-              strokeWidth={2}
-              d="M14 5l7 7m0 0l-7 7m7-7H3"
-            />
-          </svg>
-        </span>
-        <span className="relative w-full text-left transition-colors duration-200 ease-in-out">
+        <span className=" text-[18px]  absolute flex items-center justify-center w-full h-full text-white border-white transition-all duration-300 transform group-hover:translate-x-full ease bg-green-1 capitalize ">
           Start Quiz
         </span>
+        <span className="relative invisible">Button Text</span>
       </button>
     </Link>
   );

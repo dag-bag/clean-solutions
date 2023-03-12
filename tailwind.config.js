@@ -54,6 +54,7 @@ module.exports = {
       },
       fontFamily: {
         sans: ['var(--font-inter)', ...fontFamily.sans],
+        head: ['Libre Baskerville', ...fontFamily.sans]
       }
     },
   },

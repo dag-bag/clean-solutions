@@ -30,7 +30,6 @@ const SubCategoriesPage = () => {
     const [selectedSubCategories] = useRecoilState(selectedSubCategoryAtom)
     const [categoryCounter, setCategoryCounter] = useRecoilState(categoryCounterAtom)
 
-
     const categoryName = selectedCategories[categoryCounter]
     const selectedCategoriesLength = selectedCategories.length - 1
     const subCategoriesList: string[] = categories_data[categoryName]
@@ -66,7 +65,7 @@ const SubCategoriesPage = () => {
                     <header className=" fixed top-0 left-0 flex items-center justify-center flex-col  px-5 bg-blue-1 w-full">
                         <h1 className="font-head text-center md:text-[40px] text-[30px] text-gray-100 capitalize h-[100px] flex items-center justify-center font-bold ">select categories</h1>
                     </header>
-                    <main className="bg-[#74A3B6] grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-2 lg:gap-6 p-2 max-w-[1400px]  m-auto mt-[100px] md:mt-[120px]">
+                    <main className="bg-[#74A3B6] grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-2 lg:gap-6 p-2 max-w-[1500px]  m-auto mt-[100px] md:mt-[120px]">
                         {subCategoriesList?.map((keyName, number) => <CategoryCard disabled={false} data={subCategoriesDataList[keyName]} name={keyName} key={number} />)}
                     </main>
                 </motion.div>

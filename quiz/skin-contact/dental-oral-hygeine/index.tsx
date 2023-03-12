@@ -7,7 +7,7 @@ import Question from '../../components/question';
 import Layout from '../../components/quiz-layout';
 import NumberInput from '../../components/NumberInput';
 import MultipleSelect from '../../components/multiple-select';
-import calculateWaterForMonth from '../../components/functions/calculateWaterForMonth';
+import calculateSanitizerConcentration from '../../components/functions/calculateSanitizerConcentration';
 
 const DentalOralHygeine = ({ title, category, onComplete }: any) => {
     const Max = 3
@@ -34,19 +34,15 @@ const DentalOralHygeine = ({ title, category, onComplete }: any) => {
                 ? state?.duration.match(/(\d+)/)[0] :
                 (state?.duration.match(/(\d+)/)[0] * 12)
 
-            // const quantity = state.multiselect.length * 946.353
-            // const strenght = state.multiselect.map((key: string) => strenghtObj[key]).reduce((t: number, k: number) => t + k)
-            // const frequency = state.freq * 4.4
-            // return quantity * frequency * strenght * months
-
-
             const sum = state.multiselect.map((key: string) => {
                 const q = state.multiselect.length * 946.353
                 const s = strenghtObj[key]
-            })
+                const f = state.freq
+                const totalUsageInMl = months * ((q * f) * 4.4)
+                return calculateSanitizerConcentration(s, 1, totalUsageInMl)
+            }).reduce((t: number, k: number) => t + k)
 
-            return 0
-
+            return sum
 
         } catch (err) {
             console.error('Question Skipped : cause --skipped flag in result/calculation')

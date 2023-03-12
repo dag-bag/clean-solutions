@@ -9,7 +9,7 @@ const BlogTile: React.FC<PostsInterFace> = (props) => {
     return (
         <div className="grid lg:grid-cols-[450px_auto] mb-5 bg-gray-100  overflow-hidden shadow">
             <div className="image-container">
-                <Image src={props._embedded["wp:featuredmedia"][0].link} layout="fill" alt="any" className={'image'} />
+                <Image src={props._embedded?.["wp:featuredmedia"][0].link} layout="fill" alt="any" className={'image'} />
             </div>
             <div className="p-10">
                 <h1 className="text-2xl font-[500] mb-5 text-blue-1">{props.title.rendered}</h1>

@@ -1,28 +1,27 @@
 const stenghtObject: any = {
     'Pools, Hot tubs, and Spas': {
-        Light: 0.25,
-        Moderate: 5,
-        Heavy: 3,
-        Shock: 50
+        light: 0.50,
+        moderate: 1,
+        heavy: 3,
+        shock: 50
     },
-    'Canning Retort and Pasteurizer Cooling Water': {
-        default: 5
+    'Canning Retort, Pasteurizer, Hydrocoolers Autoclaves': {
+        continous: 5,
+        shock: 50
+
     },
-    'Electronic Cooling Towers': {
-        Light: 0.1,
-        Moderate: 1,
-        Heavy: 5,
+    'Cooling Towers': {
+        light: 0.1,
+        moderate: 1,
+        heavy: 5,
     },
-    'Stainless Steel Transfer Lines, and Hydrocoolers': {
-        'Food Handling': 20,
-        Shock: 50
+    'Tanks, Transfer Lines & Recirculating Water Systems': {
+        light: 5,
+        moderate: 15,
+        heavy: 20,
+        shock: 50
     },
-    'Other Recirculating Water Systems': {
-        Light: 5,
-        Moderate: 15,
-        Heavy: 20,
-        Shock: 50
-    }
+
 }
 
 import Vector, { createBranch, type vectorPayload, componentStateAtom } from '../../components/Vector';
@@ -33,24 +32,20 @@ const vector: vectorPayload = {
         createBranch('How many times per month do you sanitize Pools, Hot tubs, and Spas?', 'frequency', 'number', 'placeholder', 1),
         createBranch('Select which strengths you will need to apply in Pools, Hot tubs, and Spas?', 'strenght', 'select', 'placeholder', undefined, undefined, ['light', 'moderate', 'heavy', 'shock']),
     ],
-    'Electronic Cooling Towers': [
-        createBranch('How many gallons are in each Electronic Cooling Towers?', 'quantity', 'number', 'placeholder', 1),
-        createBranch('How many times per month do you sanitize Electronic Cooling Towers?', 'frequency', 'number', 'placeholder', 1),
+    'Cooling Towers': [
+        createBranch('How many gallons are in each Cooling Towers?', 'quantity', 'number', 'placeholder', 1),
+        createBranch('How many times per month do you sanitize Cooling Towers?', 'frequency', 'number', 'placeholder', 1),
         createBranch('Select which strengths you will need to apply in Electronic Cooling Towers?', 'strenght', 'select', 'placeholder', undefined, undefined, ['light', 'moderate', 'heavy',]),
     ],
-    'Other Recirculating Water Systems': [
-        createBranch('How many gallons are in each Other Recirculating Water Systems?', 'quantity', 'number', 'placeholder', 1),
-        createBranch('How many times per month do you sanitize Other Recirculating Water Systems?', 'frequency', 'number', 'placeholder', 1),
-        createBranch('Select which strengths you will need to apply in Other Recirculating Water Systems?', 'strenght', 'select', 'placeholder', undefined, undefined, ['light', 'moderate', 'heavy', 'shock']),
+    'Canning Retort, Pasteurizer, Hydrocoolers Autoclaves': [
+        createBranch('How many gallons are in each Canning Retort, Pasteurizer, Hydrocoolers Autoclaves?', 'quantity', 'number', 'placeholder', 1),
+        createBranch('How many times per month do you sanitize Canning Retort, Pasteurizer, Hydrocoolers Autoclaves?', 'frequency', 'number', 'placeholder', 1),
+        createBranch('Select which strengths you will need to apply in Canning Retort, Pasteurizer, Hydrocoolers Autoclaves', 'strenght', 'select', 'placeholder', undefined, undefined, ['continous', 'shock']),
     ],
-    'Canning Retort and Pasteurizer Cooling Water': [
-        createBranch('How many gallons are in each Canning Retort and Pasteurizer Cooling Water?', 'quantity', 'number', 'placeholder', 1),
-        createBranch('How many times per month do you sanitize Canning Retort and Pasteurizer Cooling Water?', 'frequency', 'number', 'placeholder', 1),
-    ],
-    'Stainless Steel Transfer Lines, and Hydrocoolers': [
-        createBranch('How many gallons are in each Stainless Steel Transfer Lines, and Hydrocoolers?', 'quantity', 'number', 'placeholder', 1),
-        createBranch('How many times per month do you sanitize Stainless Steel Transfer Lines, and Hydrocoolers?', 'frequency', 'number', 'placeholder', 1),
-        createBranch('Select which strengths you will need to apply in Stainless Steel Transfer Lines, and Hydrocoolers?', 'strenght', 'select', 'placeholder', undefined, undefined, ['food handling', 'shock']),
+    'Tanks, Transfer Lines & Recirculating Water Systems': [
+        createBranch('How many gallons are in each Tanks, Transfer Lines & Recirculating Water Systems?', 'quantity', 'number', 'placeholder', 1),
+        createBranch('How many times per month do you sanitize Tanks, Transfer Lines & Recirculating Water Systems?', 'frequency', 'number', 'placeholder', 1),
+        createBranch('Select which strengths you will need to apply inTanks, Transfer Lines & Recirculating Water Systems?', 'strenght', 'select', 'placeholder', undefined, undefined, ['light', 'moderate', 'heavy', 'shock']),
     ],
 }
 
@@ -60,29 +55,16 @@ import categoryState from '../../state';
 import Select from '../../components/select';
 import Question from '../../components/question';
 import Layout from '../../components/quiz-layout';
-import { useRecoilState, useResetRecoilState } from 'recoil';
-import converters from '../../components/functions/convertors';
+import { useRecoilState, useResetRecoilState, useRecoilValue } from 'recoil';
+import calculateSanitizerConcentration from '../../components/functions/calculateSanitizerConcentration';
 
 const RecirculatingShocks = ({ title, category, onComplete }: any) => {
     const Max = 2
     const [step, setStep] = useState(1)
-    const [defaultStrenght, setDefaultStrenght] = useState(0)
-    const [state, setState] = useState<any>({
-        quantity: {
-            selected: []
-        },
-        frequncy: {
-            selected: []
-        },
-        strenght: {
-            selected: []
-        }
-
-
-    }) // input data stored for calculation
+    const [state, setState] = useState<any>({}) // input data stored for calculation
+    const vectorValues = useRecoilValue(componentStateAtom)
     const [data, updateData] = useRecoilState(categoryState)
     const resetVectorAtom = useResetRecoilState(componentStateAtom);
-
 
     function calculate() {
         try {
@@ -90,14 +72,14 @@ const RecirculatingShocks = ({ title, category, onComplete }: any) => {
                 ? state?.duration.match(/(\d+)/)[0] :
                 (state?.duration.match(/(\d+)/)[0] * 12)
 
-            const sum = state.quantity.selected.map((key: string) => {
-                const q = converters.gallonsToPpm(state.quantity[key])
-                const f = state.frequncy[key]
-                const s = (defaultStrenght == 0)
-                    ? stenghtObject[key][state.strenght[key]]
-                    : defaultStrenght
-                return q * f * s
-            }).reduce((t: number, k: number) => t + k)
+            const sum = vectorValues.input.selected.map((key: string) => {
+                const { frequency, quantity, strenght } = vectorValues.input[key]
+                const strenghtNumberValue = stenghtObject[key][strenght] as any
+                const preventDefaultValuesError = isNaN(strenghtNumberValue)
+                    ? stenghtObject[key].default
+                    : strenghtNumberValue
+                return calculateSanitizerConcentration(preventDefaultValuesError, 1, parseFloat(frequency) * (parseFloat(quantity) * 3785.41))
+            }).reduce((t, k) => t + k)
 
             return sum * months
         } catch (err) {
