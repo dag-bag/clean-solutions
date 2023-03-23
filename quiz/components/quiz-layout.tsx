@@ -1,4 +1,12 @@
-import Header from "./header"
+import { useState } from 'react'
+import quizdata from '../../data';
+import { ArrowLeftIcon, ArrowRightIcon } from "@heroicons/react/solid"
+
+interface NavigationButtonGroup {
+    onLeft: any,
+    onRight: any,
+}
+
 interface props {
     title: string,
     children: any,
@@ -8,26 +16,79 @@ interface props {
     stepDown?: () => void
 }
 
-const Layout: React.FC<props> = ({ children, category, title, stepUp, stepDown, hideButton }) => {
+export const NavigationButtonGroup: React.FC<NavigationButtonGroup> = ({ onLeft, onRight }) => {
     return (
-        <div className='md:grid md:gap-2 md:grid-cols-2 xl:max-w-screen-xl w-screen h-screen overflow-auto' >
-            <Header {...{ category, title }} />
-            <div className='md:h-screen flex items-center bg-blue-1 md:px-10 px-5 mt-5 md:mt-0 py-10'>
-                <div> {children}
+        <div className="flex items-center justify-between px-5">
 
-                    {!hideButton && (
-                        <>
-                            <hr className="my-3 md:my-5 opacity-50" />
-                            <div className="flex md:items-center md:justify-between mt-2 md:flex-row flex-col ">
-                                <button onClick={stepDown ?? undefined} className="w-full mx-1 items-center md:w-[150px] justify-start py-2 overflow-hidden  text-white text-xl transition-all duration-150 ease-in-out rounded-full  group border  my-2 font-normal hover:bg-green-1 hover:text-blue-1 hover:border-0  focus:bg-green-1 ">{'Back'}</button>
-                                <button onClick={stepUp} className="w-full mx-1 items-center md:w-[150px] justify-start py-2 overflow-hidden  text-white text-xl transition-all duration-150 ease-in-out rounded-full group border my-2 font-normal hover:bg-green-1 hover:text-blue-1 hover:border-0  focus:bg-green-1  ">{'Next'}</button>
-                            </div>
+            <button onClick={onLeft} className="bg-blue-1 p-4 rounded-full">
+                <ArrowLeftIcon width={20} color="white" />
+            </button>
 
-                        </>
-                    )}
+            <button onClick={onRight} className="bg-blue-1 p-4 rounded-full">
+                <ArrowRightIcon width={20} color="white" />
+            </button>
+
+        </div>
+    )
+}
+
+const Layout: React.FC<props> = ({ children, category, title, stepUp, stepDown, hideButton }) => {
+    const { discription, discription_more } = quizdata[category].categories[title]
+
+    const [enabled, setEnabled] = useState(true)
+
+    const hidePopup = () => {
+        setEnabled(false)
+    }
+    const showPopup = () => {
+        setEnabled(true)
+    }
+
+
+    return (
+        <>
+
+            {enabled && (
+                <div className='fixed top-0 left-0 w-full h-full bg-black bg-opacity-30 grid place-items-center'>
+                    <div className='max-w-[500px] bg-white px-10 py-10 text-xl rounded-md flex items-center flex-col'>
+                        <p className='mb-5'>{discription.concat(discription_more)}</p>
+                        <button onClick={hidePopup} className='text-md bg-red-100 text-red-500   px-10 h-[50px] rounded-md '> Close</button>
+                    </div>
+                </div>
+            )}
+
+            <div className='md:grid md:gap-2 md:grid-cols-2 xl:max-w-screen-xl w-screen h-screen overflow-aut borderr-red-500 overflow-y-auto md:overflow-y-none ' >
+
+                <div className="bg-blue-1 grid md:grid-rows-[200px_auto_100px] grid-rows-[100px_auto_20px]">
+
+                    <div className="flex items-center">
+                        <div className="bg-white py-5 px-10 rounded-md rounded-l-none ">
+                            <h1 className="text-green-1 md:text-3xl font-semibold capitalize">{category}</h1>
+                        </div>
+                    </div>
+
+                    <div className=" text-white flex flex-col  items-center px-5">
+                        <h2 className="text-center text-[25px] md:text-[30px] font-semibold mb-4 md:h-[150px] flex items-center  capitalize">{title}</h2>
+
+                        <p className="text-center text-xl mb-4 hidden md:block">{discription}</p>
+                        <button onClick={showPopup} className="border border-white  px-5 py-2 rounded-md">Read More</button>
+                    </div>
+
+                    <div></div>
+                </div>
+
+                <div className=" grid md:grid-rows-[200px_auto_100px] grid-rows-[auto_150px] mt-2 md:mt-0 ">
+                    <div className="hidden md:flex  items-center">
+                        <div className="  py-5 px-10 rounded-md rounded-l-none ">
+                            <img alt="logo" className="h-10" src="https://cleansolutions.tech/wp-content/uploads/2022/09/clean-solution-logo-1024x337-1-2.png" />
+                        </div>
+                    </div>
+                    {children}
+                    {!hideButton && <NavigationButtonGroup onLeft={stepDown} onRight={stepUp} />}
                 </div>
             </div>
-        </div>
+        </>
+
     )
 }
 export default Layout

@@ -40,21 +40,28 @@ const Selector: React.FC<props> = ({ data, question }) => {
 
     return (
         <Question name={question}>
-            {keys.map((keyName: string) => (
-                <Option name={keyName}
-                    onClick={onClickHandler}
-                    isSelected={state.input.selected.includes(keyName)} />
-            ))}
+
+
+            <div className="max-w-[400px] mx-auto">
+                {keys.map((keyName: string) => (
+                    <Option name={keyName}
+                        onClick={onClickHandler}
+                        isSelected={state.input.selected.includes(keyName)} />
+                ))}
+
+            </div>
+
+
         </Question>
     )
 }
 
 const Option: React.FC<optionProps> = ({ name, onClick, isSelected }) => {
-    const style = isSelected ? { background: '#95D074' } : undefined
+    const style = isSelected ? { background: '#518CA4', color: " white", transition: 'all .3s' } : undefined
     return (
         <div style={style}
             onClick={() => { onClick(name) }}
-            className="p-2 border-2 border-black rounded-full text-center my-2 capitalize font-semibold">{name}</div>
+            className="py-3 bg-gray-100 text-blue-1 rounded-md text-center text-lg my-3 capitalize font-bold">{name}</div>
     )
 }
 

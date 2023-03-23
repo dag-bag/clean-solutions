@@ -6,18 +6,21 @@ interface props {
 }
 const Select = ({ options, onClick, selectedOption, id }: props) => {
 
-    return <div className="lg:grid lg:grid-cols-2 lg:gap-x-2 " >
-        {options.map((keyName, index) => {
-            const isSelected = selectedOption == keyName
-            const props = {
-                keyName,
-                onClick,
-                isSelected,
-                id
-            }
-            return <Option {...props} key={index} />
-        })}
-    </div>
+    return (
+        <div className="max-w-[400px] mx-auto">
+
+            {options.map((keyName, index) => {
+                const isSelected = selectedOption == keyName
+                const props = {
+                    keyName,
+                    onClick,
+                    isSelected,
+                    id
+                }
+                return <Option {...props} key={index} />
+            })}
+        </div>
+    )
 }
 export default Select
 
@@ -29,10 +32,11 @@ interface optionProps {
 }
 
 const Option = ({ keyName, onClick, isSelected, id }: optionProps) => {
+    const style = isSelected ? { background: '#518CA4', color: " white", transition: 'all .3s' } : undefined
     return (
         <div
             id={id}
-            style={isSelected ? { background: '#95D074' } : undefined}
-            className="p-2 border-2 border-black rounded-full text-center my-2 capitalize font-semibold" onClick={onClick}>{keyName}</div>
+            style={style}
+            className="py-3 bg-gray-100 text-blue-1 rounded-md text-center text-lg my-3 capitalize font-bold" onClick={onClick}>{keyName}</div>
     )
 }

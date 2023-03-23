@@ -1,5 +1,5 @@
 const valuesObject: any = {
-    'Produce, Fruits, Vegetable': {
+    'Produce, Fruits and Vegetable': {
         'Spray': 945,
         'Soak': 3785
     },
@@ -7,16 +7,16 @@ const valuesObject: any = {
         'Spray': 475,
         'Soak': 1892
     },
-    'Raw Meat, Poultry, & Seafood': {
+    'Raw Meat, Poultry and Seafood': {
         'Spray': 945,
         'Soak': 3785
     },
 }
 
 const defaultStrenght: any = {
-    'Produce, Fruits, Vegetable': 5,
+    'Produce, Fruits and Vegetable': 5,
     'Eggshells': 5,
-    'Raw Meat, Poultry, & Seafood': 70,
+    'Raw Meat, Poultry and Seafood': 70,
 }
 
 import { useState } from 'react'
@@ -25,9 +25,9 @@ import categoryState from '../../state';
 import Select from '../../components/select';
 import Question from '../../components/question';
 import Layout from '../../components/quiz-layout';
-import { useRecoilState, useResetRecoilState } from 'recoil';
-import converters from '../../components/functions/convertors';
+import { useRecoilState, useRecoilValue, useResetRecoilState } from 'recoil';
 import Vector, { createBranch, componentStateAtom, vectorPayload } from '../../components/Vector/';
+import calculateSanitizerConcentration from '../../components/functions/calculateSanitizerConcentration';
 
 const vector: vectorPayload = {
     'Produce, Fruits and Vegetable': [
@@ -58,6 +58,7 @@ const GroceriesAndPerishableFoods = ({ title, category, onComplete }: any) => {
     }) // input data stored for calculation
     const [data, updateData] = useRecoilState(categoryState)
     const resetVectorAtom = useResetRecoilState(componentStateAtom);
+    const vectorValues = useRecoilValue(componentStateAtom)
 
     function calculate() {
         try {
@@ -65,12 +66,14 @@ const GroceriesAndPerishableFoods = ({ title, category, onComplete }: any) => {
                 ? state?.duration.match(/(\d+)/)[0] :
                 (state?.duration.match(/(\d+)/)[0] * 12)
 
-            const sum = state.quantity.selected.map((key: string) => {
-                const q = converters.mlToPpm(valuesObject[key][state.quantity[key]])
-                const f = state.frequency[key]
-                const s = defaultStrenght[key]
-                return q * f * s
-            }).reduce((t: number, v: number) => t + v)
+
+            const sum = vectorValues.input.selected.map((key: string) => {
+                const { frequency, quantity } = vectorValues.input[key]
+                const quantity_value = valuesObject[key][quantity]
+                const strenght_value = defaultStrenght[key]
+                return calculateSanitizerConcentration(strenght_value, 1, (frequency * quantity_value) * 4.4)
+            }).reduce((t, k) => t + k)
+
             return sum * months
         } catch (err) {
             console.error('Question Skipped : cause --skipped flag in result/calculation')
@@ -91,7 +94,6 @@ const GroceriesAndPerishableFoods = ({ title, category, onComplete }: any) => {
         if (step > 1) {
             setStep(prev => prev - 1)
         }
-
     }
 
     function selectInputOnChangeHandler(event: ChangeEvent<HTMLDivElement>) {
@@ -107,6 +109,7 @@ const GroceriesAndPerishableFoods = ({ title, category, onComplete }: any) => {
             category,
             hideButton: step == 1,
         }}>
+
 
             {step == 1 && (<Vector data={vector} question="Select Foods for Disinfectant" next={stepUp} />
             )}

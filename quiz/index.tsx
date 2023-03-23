@@ -33,7 +33,7 @@ const QuizNewWay = () => {
     }
 
     return (
-        <div className="fixed w-full h-full flex items-center justify-center">
+        <div className="fixed w-full h-full flex items-center justify-center ">
             {renderobject[selectedCategories[step - 1]]}
             <PrerequisiteDataError />
         </div >
