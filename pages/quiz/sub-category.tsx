@@ -11,7 +11,7 @@ import PrerequisiteDataError from "../../quiz/components/prerequisite";
 
 export const selectedSubCategoryAtom = atom<string[]>({
     key: 'selected-sub-category',
-    default: ['gloceries and perishable foods']
+    default: []
 })
 
 export const ModelAtom = atom<any>({
@@ -65,7 +65,7 @@ const SubCategoriesPage = () => {
                     <header className=" fixed top-0 left-0 flex items-center justify-center flex-col  z-50  px-5 bg-blue-1 w-full">
                         <h1 className="text-center md:text-[40px] text-[20px] text-gray-100  h-[100px] flex items-center justify-center font-medium  ">Select Categories</h1>
                     </header>
-                    <main className="bg-[#74A3B6] grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-2 lg:gap-6 p-2 max-w-[1500px]  m-auto mt-[100px] md:mt-[120px]">
+                    <main className=" bg-[#74A3B6] grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-2 lg:gap-6 p-2 max-w-[1280px]  m-auto mt-[100px] md:mt-[120px]">
                         {subCategoriesList?.map((keyName, number) => <CategoryCard disabled={false} data={subCategoriesDataList[keyName]} name={keyName} key={number} />)}
                     </main>
                 </motion.div>

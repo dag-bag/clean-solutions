@@ -60,7 +60,6 @@ const SkinInfactions = ({ title, category, onComplete }: any) => {
             {step == 1 && (
                 <Question name='How many times a month do you spray or soak fungi, yeast, or bacteria that can cause contamination or infectious diseases on skin?'>
                     <NumberInput min={1} max={30} name='freq' state={state} setState={setState} placeholder='usage per day' />
-
                 </Question>
             )}
 

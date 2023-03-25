@@ -64,9 +64,10 @@ const Branch: React.FC<props> = ({ data, name, onNext }) => {
                 </Question>
 
                 {data_key == 'strenght' && (
-                    <button onClick={onNotSureButtonClickHandler} className=" mx-1 items-center w-[150px] justify-start py-2 overflow-hidden  text-white transition-all duration-150 ease-in-out rounded-full group border my-2 font-normal"> Not Sure</button>
+                    <div className="flex items-center justify-center">
+                        <button onClick={onNotSureButtonClickHandler} className=" mx-1 items-center w-[150px] justify-start py-2 overflow-hidden  text-blue-1 transition-all duration-150 ease-in-out rounded-full group border-blue-1 border-2 my-2 font-normal"> Not Sure</button>
+                    </div>
                 )}
-
             </>
         )
     }

@@ -1,8 +1,29 @@
 import React from "react";
-import Image from "next/image";
-import Router from "next/router";
 import Layout from "../../components/quiz-btn-layout";
-import AnimatedCharacters from "../../components/AnimatedHeading";
+import Router from "next/router";
+import { motion } from 'framer-motion'
+
+const WaveAnimation = () => {
+
+    return (
+        <motion.div initial={{
+            rotate: 10
+        }} animate={{
+            rotate: 50
+        }}
+            transition={{
+                repeat: Infinity,
+                repeatType: "reverse",
+                duration: .5
+
+            }}
+            className="inline-block px-2 md:text-[4rem]">
+            👋
+        </motion.div>
+    )
+}
+
+
 
 function WelcomePage() {
     function Next() {
@@ -23,20 +44,21 @@ function WelcomePage() {
 
     return (
         <Layout onNext={Next} onPrevious={Prevous}>
-            <div className="flex items-center justify-center h-screen lg:p-20 md:p-20  flex-col-reverse md:flex-row scrollbar-hide border ">
-                <div className="flex-1 mt-5">
-                    <AnimatedCharacters />
-                </div>
-                <div className=" flex-1 items-center justify-center hidden md:flex ">
-                    <Image width={400} height={400} alt="non" src="/welcome.svg" />
-                </div>
-                <div className=" flex-1 items-center justify-center flex md:hidden pt-10 ">
-                    <Image width={200} height={200} alt="non" src="/welcome.svg" />
+
+
+            <div className="flex items-center justify-center h-full px-10">
+                <div>
+                    <h1 className="text-center text-[1.5rem] md:text-[3rem] flex items-center justify-center font-medium">Hey!, Deepak  <WaveAnimation /> </h1>
+                    <h3 className="text-center text-[2rem]  text-blue-1 md:text-[4rem] py-3 font-bold">Welcome to Clean Solutions.</h3>
+                    <p className="md:text-[20px] text-center">Tired of using so many different, bulky cleaning products for every job?</p>
                 </div>
             </div>
+
         </Layout>
 
     );
 }
 
 export default WelcomePage;
+
+

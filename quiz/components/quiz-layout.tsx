@@ -33,17 +33,18 @@ export const NavigationButtonGroup: React.FC<NavigationButtonGroup> = ({ onLeft,
 }
 
 const Layout: React.FC<props> = ({ children, category, title, stepUp, stepDown, hideButton }) => {
-    const { discription, discription_more } = quizdata[category].categories[title]
+
+    const { discription, discription_more } = quizdata[category].categories[title];
 
     const [enabled, setEnabled] = useState(false)
 
     const hidePopup = () => {
         setEnabled(false)
     }
+
     const showPopup = () => {
         setEnabled(true)
     }
-
 
     return (
         <>
@@ -88,7 +89,6 @@ const Layout: React.FC<props> = ({ children, category, title, stepUp, stepDown, 
                 </div>
             </div>
         </>
-
     )
 }
 export default Layout

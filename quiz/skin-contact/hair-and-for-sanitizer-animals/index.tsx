@@ -4,7 +4,6 @@ import categoryState from '../../state';
 import Select from '../../components/select';
 import Question from '../../components/question';
 import Layout from '../../components/quiz-layout';
-import converters from '../../components/functions/convertors';
 import { useRecoilState, useRecoilValue, useResetRecoilState } from 'recoil';
 import Vector, { componentStateAtom, createBranch, type vectorPayload } from '../../components/Vector/';
 import calculateSanitizerConcentration from '../../components/functions/calculateSanitizerConcentration';
