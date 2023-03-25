@@ -26,13 +26,13 @@ const Main = () => {
     {model && <Model title={model.title} discription={model.discription} />}
     <div className=" flex flex-col py-16 lg:pt-0 lg:flex-col lg:pb-0 min-h-screen max-h-[1000px] bg-blue-1 text-white relative">
       <div className=" flex flex-col items-start w-full max-w-xl px-4 mx-auto xl:px-10 xl:max-w-[92%] text-center ">
-        <div className="mb-16 lg:mt-20 xl:my-52 xl:mt-20 xl:max-w-3xl lg:pr-5 ">
+        <div className="mt-[5vh] xl:max-w-3xl lg:pr-5 ">
 
-          <h1 className="hollow mb-4 text-center text-5xl md:text-[4rem] text-white md:mb-12 max-w-3xl " >Clean Tech Solutions</h1>
+          <h1 className="hollow mb-4 text-center text-5xl md:text-[4rem] text-white md:mb-[2vh] max-w-3xl " >Clean Tech Solutions</h1>
 
           <div className=" border-red-500 flex items-center justify-center flex-col">
 
-            <h2 className="text-5xl font-semibold sm:text-5xl lg:text-5xl xl:text-[4.5rem] text-center">Take Your Own Adventure Quiz</h2>
+            <h2 className="text-5xl  font-semibold sm:text-5xl lg:text-5xl xl:text-[4.5rem] text-center">Take Your Own Adventure Quiz</h2>
 
             <p className="text-[20px]  md:text-md my-7 text-gray-200">{`Use it on hard and soft surfaces, food, plants, animals, skin, water, entire rooms, and much more. No organism tested has proven to be resilient. Kill 99.99% of ALL germs known to humankind.`}</p>
 

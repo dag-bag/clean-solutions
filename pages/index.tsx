@@ -12,9 +12,11 @@ const Index = () => {
         <meta name="description" content="this is a quiz ." />
         <meta name="viewport" content="initial-scale=1, width=device-width" />
       </Head>
-      <Navbar />
-      <Drawer />
-      <Main />
+      <div className="grid grid-rows-[80px_calc(100vh-80px)] ">
+        <Navbar />
+        {/* <Drawer /> */}
+        <Main />
+      </div>
     </div>
   );
 };

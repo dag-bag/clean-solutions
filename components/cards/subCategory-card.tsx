@@ -48,7 +48,7 @@ const CategoryCard = ({ name, data, disabled }: props) => {
                     animate={{ y: 0 }}
                     initial={{ y: -50 }}
                     key={isSelected as any}>
-                    <h1 className={` text-left text-[20px] md:text-[21px] py-1 font-bold  uppercase ${!isSelected ? 'text-black' : 'text-white'}`}>{name}</h1>
+                    <h1 className={` text-left text-[20px] md:text-[21px] py-1 font-semibold  uppercase ${!isSelected ? 'text-black' : 'text-white'}`}>{name}</h1>
                     <p className={`text-left mt-2 text-md font-[400] md:text-[16px] ${!isSelected ? 'text-black' : 'text-white'}`}>{data.discription}</p>
 
                     <div className="flex items-center justify-between gap-5 py-3">
@@ -58,10 +58,6 @@ const CategoryCard = ({ name, data, disabled }: props) => {
                             {icons.map((fileName) => <Image className={`border-4 rounded-full border-gray-300 ${isSelected ? 'filter brightness-0 invert hue-rotate-180' : ''}  `} style={{ color: 'white', padding: '10px' }} width={60} height={60} alt="icon" src={`/icons/${name}/${fileName}`} />)}
                         </div>
                     </div>
-
-                    {/* <div role={'button'} onClick={onReadMoreClickHandler} className="my-3 btn-sm btn btn-secondary text-white font-[500] capitalize flex  md:hidden">Read more </div> */}
-
-
                 </motion.div>
             </motion.button>
         </>
@@ -69,6 +65,3 @@ const CategoryCard = ({ name, data, disabled }: props) => {
 }
 export default CategoryCard
 
-
-
-// filter brightness-0 invert hue-rotate-180
