@@ -62,7 +62,7 @@ const SubCategoriesPage = () => {
             <div className="bg-[#74A3B6] h-full border border-blue-1">
                 {model && <Modal title={model.title} discription={model.discription} />}
                 <motion.div className="bg-[#74A3B6] h-full md:h-auto">
-                    <header className=" fixed top-0 left-0 flex items-center justify-center flex-col  px-5 bg-blue-1 w-full">
+                    <header className=" fixed top-0 left-0 flex items-center justify-center flex-col  z-50  px-5 bg-blue-1 w-full">
                         <h1 className="text-center md:text-[40px] text-[20px] text-gray-100  h-[100px] flex items-center justify-center font-medium  ">Select Categories</h1>
                     </header>
                     <main className="bg-[#74A3B6] grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-2 lg:gap-6 p-2 max-w-[1500px]  m-auto mt-[100px] md:mt-[120px]">

@@ -55,7 +55,7 @@ const CategoryCard = ({ name, data, disabled }: props) => {
                         <div role={'button'} onClick={onReadMoreClickHandler} className={`md:btn-md btn-sm w-20 md:w-auto p-2  h-auto  px-5 btn btn-secondary ${!isSelected ? 'bg-green-1' : 'bg-white text-green-1'} border-none text-white font-[500] capitalize  md:inline-flex`}>Read more <HiArrowRight className="ml-2" /> </div>
 
                         <div className="grid grid-cols-3 md:gap-x-5 gap-x-1 w-full md:w-auto place-items-center ">
-                            {icons.map((fileName) => <Image className={`border-4 rounded-full border-gray-300 ${isSelected ? 'filter brightness-0 invert hue-rotate-180' : ''}  `} style={{ color: 'white', padding: '10px' }} width={60} height={60} alt="icon" src={`/icons/${name}/${fileName}`} />)}
+                            {icons.map((fileName) => <Image className={`border-4 rounded-full border-gray-300 ${isSelected ? 'filter brightness-0 invert hue-rotate-180' : ''}  `} style={{ color: 'white', padding: '10px' }} width={70} height={70} alt="icon" src={`/icons/${name}/${fileName}`} />)}
                         </div>
                     </div>
                 </motion.div>
