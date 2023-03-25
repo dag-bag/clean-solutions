@@ -32,7 +32,7 @@ const Main = () => {
 
           <div className=" border-red-500 flex items-center justify-center flex-col">
 
-            <h2 className="text-5xl  font-semibold sm:text-5xl lg:text-5xl xl:text-[4.5rem] text-center">Take Your Own Adventure Quiz</h2>
+            <h2 className="text-5xl font-semibold sm:text-5xl lg:text-5xl xl:text-[4.5rem] text-center">Take Your Own Adventure Quiz</h2>
 
             <p className="text-[20px]  md:text-md my-7 text-gray-200">{`Use it on hard and soft surfaces, food, plants, animals, skin, water, entire rooms, and much more. No organism tested has proven to be resilient. Kill 99.99% of ALL germs known to humankind.`}</p>
 

@@ -44,62 +44,59 @@ const CategoryCard = ({ name }: any) => {
     }
     return (
         <motion.div
-            variants={dropOutVariant({
-                axis: "x",
-                axisValue: -400,
-            })}
-            className="h-[285px] ">
+
+        // className="min-h-[250px] max-w-[450px]  "
+
+        >
 
             <motion.div whileHover={{ scale: 1.05 }} whileTap={{ scale: 0.95 }}
-                className={`card  rounded-3xl w-full   `}
+                className={`card  rounded-xl `}
                 onClick={onClickHandler}>
                 <div
-                    className={` rounded-3xl front items-center justify-center flex-col  bg-white shadow-2xl    transition-all duration-200 ease-in-out z-50 ${isSelected ? "border-4 border-green-1" : ""
+                    className={` rounded-3xl front items-center justify-center flex-col  bg-white shadow-2xl    transition-all duration-200 ease-in-out z-50 ${isSelected ? "border-2 border-white !bg-blue-1" : ""
                         } `}>
 
+                    <h3 className={`text-center text-3xl font-bold px-3 uppercase ${isSelected ? 'text-white' : 'text-blue-1'}`}>{name}</h3>
 
-                    <h3 className="text-center text-3xl font-bold text-blue-1 uppercase ">{name}</h3>
-
-                    <p className="text-black text-base text-center mt-4 font-normal lowercase px-4">{data[name].self.discription}</p>
-                    <div className="mt-3 space-x-8 flex p-1">
+                    <div className="mt-3  space-x-5 flex p-1">
 
                         <div className={
-                            `${isSelected ? " border-green-1" : "border-gray-200"
-                            } rounded-full p-3 border-4`
+                            `${isSelected ? " border-blue-1 bg-white" : "border-blue-1"
+                            } rounded-full p-3 border-2 `
                         }>
-                            <SkinContact color={isSelected ? "#95D074" : "#518ca4"} className="w-10 h-10" />
+                            <SkinContact color={'black'} className="w-10 h-10" />
 
                         </div>
 
                         <div className={
-                            `${isSelected ? " border-green-1" : "border-gray-200"
-                            } rounded-full p-3 border-4`
+                            `${isSelected ? " border-blue-1 bg-white" : "border-blue-1"
+                            } rounded-full p-3 border-2`
                         }>
-                            <SkinContact color={isSelected ? "#95D074" : "#518ca4"} className="w-10 h-10" />
+                            <SkinContact color={'black'} className="w-10 h-10" />
 
                         </div>
 
 
                         <div className={
-                            `${isSelected ? " border-green-1" : "border-gray-200"
-                            } rounded-full p-3 border-4`
+                            `${isSelected ? " border-blue-1 bg-white" : "border-blue-1"
+                            } rounded-full p-3 border-2`
                         }>
-                            <SkinContact color={isSelected ? "#95D074" : "#518ca4"} className="w-10 h-10" />
+                            <SkinContact color={'black'} className="w-10 h-10" />
 
                         </div>
-
 
                     </div>
+
+                    <p className={` text-base text-center mt-4 font-normal  px-4 capitalize ${isSelected ? 'text-white' : 'text-black'}`}>{data[name].self.discription}</p>
+
                 </div>
                 <div
-                    className={` back  shadow-lg rounded-3xl ${isSelected ? "border-4 border-green-1" : ""
+                    className={` back  shadow-lg rounded-3xl ${isSelected ? "border-4" : ""
                         } bg-white  `}>
                     <div className="flex  flex-col">
                         <p className="text-xl text-center font-medium capitalize ">{data[name].self.discription}</p>
                         <button
-                            className={`${isSelected ? "bg-green-1" : "bg-blue-1"
-                                }  text-white rounded-lg py-2 mt-4 w-1/3 m-auto `}
-                        >
+                            className={`bg-blue-1 text-white rounded-lg py-2 mt-4 w-1/3 m-auto `}>
                             {isSelected ? "Selected" : "Select"}
                         </button>
                     </div>
