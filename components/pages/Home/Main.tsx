@@ -24,13 +24,13 @@ const Main = () => {
 
   return <>
     {model && <Model title={model.title} discription={model.discription} />}
-    <div className=" flex flex-col py-16 lg:pt-0 lg:flex-col lg:pb-0 min-h-screen max-h-[1000px] bg-blue-1 text-white relative">
+    <div className=" overflow-auto flex flex-col bg-blue-1 text-white relative !p-0 ">
       <div className=" flex flex-col items-start w-full max-w-xl px-4 mx-auto xl:px-10 xl:max-w-[92%] text-center ">
-        <div className="mt-[5vh] xl:max-w-3xl lg:pr-5 ">
+        <div className="mt-[2vh] xl:max-w-3xl lg:pr-5">
 
           <h1 className="hollow mb-4 text-center text-5xl md:text-[4rem] text-white md:mb-[2vh] max-w-3xl " >Clean Tech Solutions</h1>
 
-          <div className=" border-red-500 flex items-center justify-center flex-col">
+          <div className=" flex items-center justify-center flex-col">
 
             <h2 className="text-5xl  font-semibold sm:text-5xl lg:text-5xl xl:text-[4.5rem] text-center">Take Your Own Adventure Quiz</h2>
 
@@ -63,7 +63,7 @@ const Main = () => {
         </div>
       </div>
 
-      <div className="w-[45%] absolute right-0 -bottom-[15rem] hidden xl:block">
+      <div className="w-[45%] fixed z-0 right-0 -bottom-[15rem] hidden xl:block">
         <Image
           alt="main-image"
           src={'/sanitizer-quiz2.png'}
