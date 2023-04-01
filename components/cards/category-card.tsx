@@ -91,12 +91,13 @@ const CategoryCard = ({ name }: any) => {
 
                 </div>
                 <div
-                    className={` back  shadow-lg rounded-3xl ${isSelected ? "border-4" : ""
-                        } bg-white  `}>
+                    className={` back  shadow-lg rounded-3xl ${isSelected ? "bg-blue-1 border-4 border-white" : "bg-white"
+                        }   `}>
                     <div className="flex  flex-col">
-                        <p className="text-xl text-center font-medium capitalize ">{data[name].self.discription}</p>
+                        <p className={`text-xl text-center font-medium capitalize  ${isSelected ? "text-white" : "text-black"
+                            } `}>{data[name].self.discription}</p>
                         <button
-                            className={`bg-blue-1 text-white rounded-lg py-2 mt-4 w-1/3 m-auto `}>
+                            className={` text-white rounded-full py-2 mt-4 w-1/3 m-auto  tracking-wider ${isSelected ? "bg-green-1" : "bg-blue-1"}`}>
                             {isSelected ? "Selected" : "Select"}
                         </button>
                     </div>
