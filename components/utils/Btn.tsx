@@ -13,7 +13,7 @@ function Btn({ hidden }: Props) {
   return (
     <Link href="/quiz">
       <button
-        className={`relative btn  items-center justify-center py-7 w-[200px]  overflow-hidden font-medium text-indigo-600 transition duration-300 ease-out border-2 !border-white rounded-full shadow-md group ${hidden ? "hidden md:inline-flex" : "inline-flex"
+        className={`relative btn  items-center justify-center py-6 lg:w-[200px]  w-[250px] overflow-hidden font-medium text-indigo-600 transition duration-300 ease-out border-2 !border-white rounded-full shadow-md group ${hidden ? "hidden md:inline-flex" : "inline-flex"
           }`}
 
       >
