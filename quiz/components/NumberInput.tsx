@@ -26,7 +26,7 @@ const NumberInput = ({ max, min, name, state, setState, placeholder, onChange }:
 
     const value = state[name]
     return (
-        <div className="mx-auto w-[400px] mt-5">
+        <div className="mx-auto w-[400px] mt-10">
             <input
                 id="input"
                 name={name}
