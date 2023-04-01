@@ -56,7 +56,7 @@ const AnimatedCharacters = (props: any) => {
     console.log(Tag)
 
     return (
-        <h1 className="text-black ">
+        <h1 className="text-black text-center ">
 
             {words.map((word: string, index: number) => {
                 return (
@@ -75,7 +75,7 @@ const AnimatedCharacters = (props: any) => {
                                             ? 'xl:text-[70px] md:text-[50px] text-[35px] font-[600] text-blue-1'
                                             : Tag == 'h2'
                                                 ? 'xl:text-[50px] md:text-[30px] text-[20px] font-[500] text-gray-500'
-                                                : 'xl:text-[20px] md:text-[20px] text-[15px] font-[400] text-black'}
+                                                : 'xl:text-[20px] md:text-[20px]  text-[15px] font-[400] text-black'}
                                                  `}
                                         style={{ display: "inline-block" }}
                                         variants={item}>

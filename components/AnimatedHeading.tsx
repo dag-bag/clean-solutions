@@ -18,15 +18,9 @@ export default function AnimationHeading() {
 
     // Placeholder text data, as if from API
     const placeholderText: Placeholder[] = [
-        { type: "heading1", text: `Hyy, ${userName}` },
-        {
-            type: "heading2",
-            text: "Welcome to Clean Tech Solutions",
-        },
-        {
-            type: "heading3",
-            text: "Tired of using so many different, bulky cleaning products for every job?",
-        },
+        { type: "heading1", text: `Welcome to Clean Solutions.` },
+        { type: "heading3", text: `Tired of using so many different, bulky cleaning products for every job?` },
+
     ];
 
     const container = {
