@@ -147,10 +147,9 @@ function Drawer() {
             <div className="mt-6">
               <Link
                 href={"/checkout"}
-                className="flex items-center justify-center rounded-md border border-transparent bg-green-1 btn  px-6 py-3 text-base font-medium text-white shadow-sm hover:bg-blue-1">
-                
-                  Checkout
-                
+                className="flex items-center justify-center rounded-md border border-transparent bg-green-1 btn  px-6 py-3 text-base font-medium text-white shadow-sm hover:bg-blue-1"
+              >
+                Checkout
               </Link>
             </div>
             <div className="mt-6  justify-center text-center text-sm text-gray-500 flex flex-col">
