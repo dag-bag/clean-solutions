@@ -27,7 +27,7 @@ const Main = () => {
       <div className="bg-blue-1 min-h-[calc(100vh-64px)]  lg:grid lg:grid-cols-[1.5fr_1fr] ">
         <div className="flex flex-col items-center justify-center mt-10 lg:mt-0">
           <div className="xl:max-w-[700px] lg:max-w-[500px] max-w-[90%] mx-auto grid gap-10 lg:gap-[5vh] mb-5">
-            <h1 className="hollow  text-center text-5xl md:text-[4rem] text-white  ">
+            <h1 className="hollow  text-center text-4xl md:text-[4rem] text-white  ">
               Clean Tech Solutions
             </h1>
             <h2 className="text-5xl  font-semibold sm:text-5xl lg:text-5xl xl:text-[4rem] text-center">
