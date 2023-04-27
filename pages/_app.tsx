@@ -1,11 +1,13 @@
 /** @format */
 import "../styles/globals.css";
+import { useEffect } from "react";
 import "../styles/styles.css";
 import { RecoilRoot } from "recoil";
 import type { AppProps } from "next/app";
+import AOS from "aos";
+import "aos/dist/aos.css";
 
 // import { Poppins } from '@next/font/google'
-
 
 // const poppins = Poppins({
 //   subsets: ['latin'],
@@ -14,13 +16,15 @@ import type { AppProps } from "next/app";
 // })
 
 function MyApp({ Component, pageProps, router }: AppProps) {
+  useEffect(() => {
+    AOS.init({
+      once: true,
+    });
+  }, []);
   return (
     <main>
       <RecoilRoot>
-        <Component
-          {...pageProps}
-          key={router.asPath}
-        />
+        <Component {...pageProps} key={router.asPath} />
       </RecoilRoot>
     </main>
   );

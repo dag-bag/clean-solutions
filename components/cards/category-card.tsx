@@ -54,7 +54,7 @@ const CategoryCard = ({ name }: any) => {
       >
         <div
           className={` rounded-3xl front items-center justify-center  flex-col  bg-white shadow-2xl    transition-all duration-200 ease-in-out z-50  ${
-            isSelected ? "border-2 border-white !bg-green-1" : ""
+            isSelected ? "border-2 border-white !bg-green-1" : "bg-white"
           } `}
         >
           <h3
@@ -113,7 +113,7 @@ const CategoryCard = ({ name }: any) => {
               {data[name].self.discription}
             </p>
             <button
-              className={` text-white rounded-full py-2 mt-4 w-1/3 m-auto  tracking-wider ${
+              className={` text-black rounded-full py-2 mt-4 w-1/3 m-auto  tracking-wider ${
                 isSelected ? "bg-white text-black" : "bg-blue-1"
               }`}
             >

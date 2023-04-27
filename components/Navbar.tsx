@@ -6,7 +6,7 @@ import Image from "next/image";
 
 function Navbar() {
   return (
-    <div className="z-50 bg-white flex">
+    <div className="z-50 bg-white flex" data-aos="fade-down">
       <div className="navbar  max-w-7xl mx-auto ">
         <div className="navbar-start py-1.5">
           <Link href={"/"} legacyBehavior>
