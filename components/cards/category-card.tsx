@@ -58,7 +58,7 @@ const CategoryCard = ({ name }: any) => {
           } `}
         >
           <h3
-            className={`text-center text-3xl font-bold px-3 uppercase ${
+            className={`text-center text-2xl font-bold px-3 uppercase ${
               isSelected ? "text-white" : "text-blue-1"
             }`}
           >
