@@ -56,11 +56,11 @@ function Quiz() {
         style={{ backgroundImage: `url("./page1.png")` }}
         className="hero min-h-screen overflow-hidden bg-center bg-cover"
       >
-        <div className="hero-overlay bg-opacity-80 bg-blue-1"></div>
+        <div className="hero-overlay bg-opacity-80 bg-green-1"></div>
         <div className="hero-content text-center text-neutral-content">
           <form onSubmit={handleSubmit} className="max-w-4xl text-white">
             <div className=" pt-14 pb-4 my-5 rounded-md px-5">
-              <h1 className="md:text-5xl text-[35px]  text-white font-semibold sm:text-5xl sm:leading-none lg:text-5xl xl:text-[3rem] mb-7">
+              <h1 className="md:text-5xl text-[35px]  text-black font-semibold sm:text-5xl sm:leading-none lg:text-5xl xl:text-[3rem] mb-7">
                 {" "}
                 {data[0].question}{" "}
               </h1>
@@ -91,7 +91,7 @@ function Quiz() {
               </Spacing>
             </div>
 
-            <p className="mb-5 md:text-2xl text-[22px] font-[400] text-white font-[roboto] ">
+            <p className="mb-5 md:text-2xl text-[22px] font-[400] text-black font-[roboto] ">
               Clean Solutions is a bio-security company specializing in quickly
               identifying economical and eco-friendly solutions to micro-organic
               challenges. With our focus on safety and improving health through

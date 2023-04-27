@@ -1,4 +1,3 @@
-
 /** @format */
 
 import Link from "next/link";
@@ -13,11 +12,11 @@ function Btn({ hidden }: Props) {
   return (
     <Link href="/quiz">
       <button
-        className={`relative btn  items-center justify-center py-6 lg:w-[200px]  w-[250px] overflow-hidden font-medium text-indigo-600 transition duration-300 ease-out border-2 !border-white rounded-full shadow-md group ${hidden ? "hidden md:inline-flex" : "inline-flex"
-          }`}
-
+        className={`relative btn  items-center justify-center py-6 lg:w-[200px]  w-[250px] overflow-hidden font-medium text-indigo-600 transition duration-300 ease-out border-2 !border-white rounded-full shadow-md group ${
+          hidden ? "hidden md:inline-flex" : "inline-flex"
+        }`}
       >
-        <span className="absolute inset-0 flex items-center justify-center text-[18px] w-full h-full text-white duration-300 -translate-x-full bg-blue-1 group-hover:translate-x-0 ease ">
+        <span className="absolute inset-0 flex items-center justify-center text-[18px] w-full h-full text-white duration-300 -translate-x-full bg-green-1 group-hover:translate-x-0 ease ">
           Let's Go{" "}
           <svg
             className="w-6 h-6 ml-2"
@@ -34,7 +33,7 @@ function Btn({ hidden }: Props) {
             ></path>
           </svg>
         </span>
-        <span className=" text-[18px]  absolute flex items-center justify-center w-full h-full text-white border-white transition-all duration-300 transform group-hover:translate-x-full ease bg-green-1 capitalize ">
+        <span className=" text-[18px]  absolute flex items-center justify-center w-full h-full text-white border-white transition-all duration-300 transform group-hover:translate-x-full ease bg-[#ED6463] capitalize ">
           Start Quiz
         </span>
         <span className="relative invisible">Button Text</span>
