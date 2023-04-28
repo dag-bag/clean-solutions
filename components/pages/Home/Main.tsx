@@ -34,8 +34,8 @@ const Main = () => {
           >
             {" "}
             <h1 className="clean_tech_text mb-0">Clean Tech Solutions</h1>
-            <h2 className="text-5xl  font-semibold sm:text-5xl lg:text-5xl xl:text-[4rem] text-center">
-              Take Your Own Adventure Quiz
+            <h2 className="text-4xl  font-semibold sm:text-4xl lg:text-4xl xl:text-[3.7rem] take_head text-center">
+              Take Your Own <span className="block mt-4">Adventure Quiz</span>
             </h2>
             <p className="text-[20px] text-center md:text-md   text-gray-200">
               Use it on hard and soft surfaces, food, plants, animals, skin,

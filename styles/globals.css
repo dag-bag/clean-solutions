@@ -368,7 +368,9 @@
   .cat_heading_adjust {
     font-size: 1.4rem;
   }
-
+  .take_head {
+    font-size: 45px !important;
+  }
   .card {
     color: inherit;
     cursor: pointer;
@@ -379,6 +381,12 @@
   }
   .cat_para_adj {
     font-size: 14px;
+  }
+  .sub_box_adjust {
+    padding: 12px !important;
+  }
+  .sub_cat_box {
+    height: 10px;
   }
 }
 
