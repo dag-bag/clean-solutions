@@ -1,18 +1,17 @@
-@import url('https://fonts.googleapis.com/css2?family=Libre+Baskerville:wght@400;700&display=swap');
-@import url('https://fonts.googleapis.com/css2?family=Jost:wght@100;200;300;400;500;600;700;800;900&display=swap');
+@import url("https://fonts.googleapis.com/css2?family=Libre+Baskerville:wght@400;700&display=swap");
+@import url("https://fonts.googleapis.com/css2?family=Jost:wght@100;200;300;400;500;600;700;800;900&display=swap");
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
 
 @layer base {
   html {
-    @apply  !text-gray-900;
+    @apply !text-gray-900;
     background-color: white !important;
   }
 }
 
 @layer utilities {
-
   .line-clamp {
     display: -webkit-box;
     -webkit-line-clamp: 3;
@@ -38,7 +37,6 @@
     position: relative !important;
     height: 100% !important;
   }
-
 
   .hero-section {
     align-items: flex-start;
@@ -102,7 +100,7 @@
     transform: scale(1.05) translateZ(0);
   }
 
-  .card-grid:hover>.card2:not(:hover) .card__background {
+  .card-grid:hover > .card2:not(:hover) .card__background {
     filter: brightness(0.5) saturate(0) contrast(1.2) blur(20px);
   }
 
@@ -166,7 +164,6 @@
     height: 100%;
     perspective: 1000px;
     position: relative;
-    ;
   }
 
   @media screen and (max-width: 800px) {
@@ -328,22 +325,65 @@
 
   .bg1 {
     background: rgb(81, 140, 164);
-    background: linear-gradient(90deg,
-        rgba(81, 140, 164, 1) 0%,
-        rgba(255, 255, 255, 1) 60%);
+    background: linear-gradient(
+      90deg,
+      rgba(81, 140, 164, 1) 0%,
+      rgba(255, 255, 255, 1) 60%
+    );
   }
 
   .bg2 {
     background: rgb(56, 189, 248);
-    background: linear-gradient(180deg,
-        rgba(56, 189, 248, 1) 0%,
-        rgba(255, 255, 255, 1) 60%);
+    background: linear-gradient(
+      180deg,
+      rgba(56, 189, 248, 1) 0%,
+      rgba(255, 255, 255, 1) 60%
+    );
   }
 
   .quiz-bg {
     background: rgb(81, 140, 164);
-    background: linear-gradient(180deg,
-        rgb(81, 140, 164) 0%,
-        rgba(255, 255, 255, 1) 76%);
+    background: linear-gradient(
+      180deg,
+      rgb(81, 140, 164) 0%,
+      rgba(255, 255, 255, 1) 76%
+    );
   }
+}
+
+@media (max-height: 577.9px) {
+  .clean_tech_text {
+    font-size: 45px !important;
+  }
+  .cat_box_adjust {
+    font-size: 25px !important;
+    height: 50px;
+  }
+  .cat_height {
+    height: 50px;
+  }
+  .cat_card_adjust {
+    height: 230px !important;
+  }
+  .cat_heading_adjust {
+    font-size: 1.4rem;
+  }
+
+  .card {
+    color: inherit;
+    cursor: pointer;
+    width: 100%;
+    height: 95%;
+    perspective: 1000px;
+    position: relative;
+  }
+  .cat_para_adj {
+    font-size: 14px;
+  }
+}
+
+.clean_tech_text {
+  font-size: 62px;
+  text-align: center;
+  color: white;
 }

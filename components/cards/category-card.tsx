@@ -53,12 +53,12 @@ const CategoryCard = ({ name }: any) => {
         onClick={onClickHandler}
       >
         <div
-          className={` rounded-3xl front items-center justify-center  flex-col  bg-white shadow-2xl    transition-all duration-200 ease-in-out z-50  ${
+          className={` rounded-3xl cat_card_adjust front items-center justify-center  flex-col  bg-white shadow-2xl    transition-all duration-200 ease-in-out z-50  ${
             isSelected ? "border-2 border-white !bg-green-1" : "bg-white"
           } `}
         >
           <h3
-            className={`text-center text-2xl font-bold px-3 uppercase ${
+            className={`text-center text-2xl cat_heading_adjust font-bold px-3 uppercase ${
               isSelected ? "text-white" : "text-blue-1"
             }`}
           >
@@ -92,7 +92,7 @@ const CategoryCard = ({ name }: any) => {
           </div>
 
           <p
-            className={` text-base text-center mt-4 font-normal  px-4 capitalize ${
+            className={` text-base text-center mt-4 cat_para_adj font-normal  px-4 capitalize ${
               isSelected ? "text-white" : "text-black"
             }`}
           >
@@ -100,7 +100,7 @@ const CategoryCard = ({ name }: any) => {
           </p>
         </div>
         <div
-          className={` back  shadow-lg rounded-3xl ${
+          className={` back cat_card_adjust  shadow-lg rounded-3xl ${
             isSelected ? " !bg-green-1 border-4 border-white" : "bg-white"
           }   `}
         >
