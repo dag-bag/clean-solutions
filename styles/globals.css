@@ -388,6 +388,9 @@
   .sub_cat_box {
     height: 10px;
   }
+  .icon_height_adj {
+    width: 4rem !important;
+  }
 }
 
 .clean_tech_text {

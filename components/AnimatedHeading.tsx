@@ -1,4 +1,3 @@
-import { quizPage } from "../pages/quiz";
 import { useRecoilValue } from "recoil";
 import React, { useState } from "react";
 import { motion } from "framer-motion";
@@ -10,7 +9,6 @@ interface Placeholder {
 }
 
 export default function AnimationHeading() {
-  const userName = useRecoilValue(quizPage);
   const [replay, setReplay] = useState(true);
 
   // Placeholder text data, as if from API

@@ -66,7 +66,7 @@ const Main = () => {
               {TrustedIcons.map((icon) => (
                 <div className="flex items-center">
                   <img
-                    className=" w-20 h-auto "
+                    className=" w-20 h-auto icon_height_adj"
                     src={`./label-icons/${icon}.png`}
                     width={50}
                     height={20}

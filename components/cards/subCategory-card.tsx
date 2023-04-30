@@ -37,10 +37,10 @@ const CategoryCard = ({ name, data, disabled }: props) => {
   return (
     <>
       <motion.button
-        whileTap={{ scale: 0.9 }}
+        whileTap={{ scale: 1.04 }}
         onClick={onClickHandler}
         whileFocus={{ scale: 0.9 }}
-        whileHover={{ scale: 1.1 }}
+        whileHover={{ scale: 1.029 }}
         className=" p-5 sub_box_adjust rounded-3xl overflow-y-hidden border-4  border-green-1"
         style={isSelected ? { background: "#95D074" } : { background: "white" }}
       >

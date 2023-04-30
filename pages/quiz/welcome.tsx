@@ -1,8 +1,10 @@
 import React from "react";
 import Layout from "../../components/quiz-btn-layout";
 import Router from "next/router";
+import { useRecoilValue } from "recoil";
 import { motion } from "framer-motion";
 import AnimationHeading from "../../components/AnimatedHeading";
+import { quizPage } from "../quiz";
 
 const WaveAnimation = () => {
   return (
@@ -26,6 +28,7 @@ const WaveAnimation = () => {
 };
 
 function WelcomePage() {
+  const userName = useRecoilValue(quizPage);
   function Next() {
     Router.push("get-email");
   }
@@ -52,7 +55,7 @@ function WelcomePage() {
           className="flex flex-col items-center justify-center"
         >
           <h1 className="text-center text-[1.5rem] md:text-[3rem] text-white font-medium">
-            Hey!, Deepak <WaveAnimation />{" "}
+            Hey!, {userName} <WaveAnimation />{" "}
           </h1>
           <AnimationHeading />
         </motion.div>
