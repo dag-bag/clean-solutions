@@ -6,7 +6,7 @@ type Props = {
 import React from "react";
 import Head from "next/head";
 import Navbar from "../../components/Navbar";
-import { GetStaticPaths, GetStaticProps } from "next";
+import { GetServerSideProps, GetStaticPaths, GetStaticProps } from "next";
 import { PostsInterFace } from "../../types/blogs";
 
 function BlogsDetailsPage({ post }: Props) {
@@ -21,33 +21,34 @@ function BlogsDetailsPage({ post }: Props) {
           <h1
             dangerouslySetInnerHTML={{
               __html: post.title.rendered,
-            }} className="max-w-6xl font-heading font-extrabold text-blue-1"></h1>
+            }}
+            className="max-w-6xl font-heading font-extrabold text-blue-1"
+          ></h1>
         </div>
-        <div className="p-5 mx-auto text-center max-w-6xl prose py-10 md:prose-xl prose-headings:font-heading prose-h1:font-bold prose-p:text-left  prose-p:text-gray-500 prose-p:my-0 prose-h1:py-10 prose-table:border-gray-100 prose-table:border-2 prose-a:text-sm prose-a:text-blue-500 "
+        <div
+          className="p-5 mx-auto text-center max-w-6xl prose py-10 md:prose-xl prose-headings:font-heading prose-h1:font-bold prose-p:text-left  prose-p:text-gray-500 prose-p:my-0 prose-h1:py-10 prose-table:border-gray-100 prose-table:border-2 prose-a:text-sm prose-a:text-blue-500 "
           dangerouslySetInnerHTML={{
             __html: post.content.rendered,
           }}
         ></div>
       </>
-
     </>
   );
 }
 
 export default BlogsDetailsPage;
-export const getStaticPaths: GetStaticPaths = async () => {
-  const getPaths = await fetch(
-    "https://customcleansolutions.com/wp-json/wp/v2/posts?_fields=id"
-  );
-  const ids = await getPaths.json();
-  const paths = ids.map((post: { id: number }) => ({
-    params: { blog: `${post.id}` },
-  }));
-  return { paths, fallback: "blocking" };
-};
+// export const getStaticPaths: GetStaticPaths = async () => {
+//   const getPaths = await fetch(
+//     "https://customcleansolutions.com/wp-json/wp/v2/posts?_fields=id"
+//   );
+//   const ids = await getPaths.json();
+//   const paths = ids.map((post: { id: number }) => ({
+//     params: { blog: `${post.id}` },
+//   }));
+//   return { paths, fallback: "blocking" };
+// };
 
-
-export const getStaticProps: GetStaticProps = async ({ params }) => {
+export const getServerSideProps: GetServerSideProps = async ({ params }) => {
   // _fields You can Select What kind of properties You Want to Get
   const getPostResponse = await fetch(
     `https://customcleansolutions.com/wp-json/wp/v2/posts/${params?.blog}?_embed`
