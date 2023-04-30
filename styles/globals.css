@@ -391,10 +391,33 @@
   .icon_height_adj {
     width: 4rem !important;
   }
+  .text-height_adj {
+    height: 90px !important;
+  }
 }
 
 .clean_tech_text {
   font-size: 62px;
   text-align: center;
   color: white;
+}
+
+.customise_scroll_bar::-webkit-scrollbar {
+  width: 10px;
+}
+
+/* Track */
+.customise_scroll_bar::-webkit-scrollbar-track {
+  background: #f1f1f1;
+}
+
+/* Handle */
+.customise_scroll_bar::-webkit-scrollbar-thumb {
+  background: #95d074;
+  border-radius: 10px;
+}
+
+/* Handle on hover */
+.customise_scroll_bar::-webkit-scrollbar-thumb:hover {
+  background: #555;
 }

@@ -21,7 +21,7 @@ export const NavigationButtonGroup: React.FC<NavigationButtonGroup> = ({
   onRight,
 }) => {
   return (
-    <div className="flex items-center justify-between px-5">
+    <div className="flex items-center justify-between px-5 ">
       <button onClick={onLeft} className="bg-blue-1 p-4 rounded-full">
         <ArrowLeftIcon width={20} color="white" />
       </button>
@@ -78,7 +78,7 @@ const Layout: React.FC<props> = ({
       )}
 
       <div className="md:grid md:gap-2 md:grid-cols-2 xl:max-w-screen-xl w-screen h-screen overflow-aut borderr-red-500 overflow-y-auto md:overflow-y-none ">
-        <div className="bg-blue-1 grid md:grid-rows-[200px_auto_100px] grid-rows-[100px_auto_20px]">
+        <div className="bg-blue-1 grid md:grid-rows-[150px_auto_100px] grid-rows-[100px_auto_20px]">
           <div className="flex items-center">
             <div className="bg-white py-5 px-10 rounded-md rounded-l-none ">
               <h1 className="text-green-1 md:text-3xl font-semibold capitalize">
@@ -87,12 +87,12 @@ const Layout: React.FC<props> = ({
             </div>
           </div>
 
-          <div className=" text-white flex my-auto flex-col px-7">
-            <h2 className="text-[25px] md:text-[30px] font-semibold mb-4  flex  capitalize">
+          <div className=" text-white  px-7">
+            <h2 className="text-[25px] md:h-[150px] text-height_adj flex flex-col justify-center  md:text-[30px] font-semibold mb-4  flex  capitalize">
               {title}
             </h2>
 
-            <p className="text-xl mb-4 hidden md:block">{discription}</p>
+            <p className="text-xl mb-10 hidden md:block">{discription}</p>
             <button
               onClick={showPopup}
               className="border border-white w-1/4  px-5 py-2 rounded-md"
@@ -104,7 +104,7 @@ const Layout: React.FC<props> = ({
           <div></div>
         </div>
 
-        <div className=" grid md:grid-rows-[200px_auto_100px] grid-rows-[auto_150px] mt-2 md:mt-0 ">
+        <div className=" grid md:grid-rows-[150px_auto_100px] grid-rows-[auto_150px] mt-2 md:mt-0 ">
           <div className="hidden md:flex  items-center">
             <div className="  py-5 pl-5 rounded-md rounded-l-none ">
               <img
