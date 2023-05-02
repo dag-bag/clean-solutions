@@ -8,6 +8,7 @@ import { subCategories as categories_data } from "../../data";
 import { atom, useRecoilValue, useRecoilState } from "recoil";
 import CategoryCard from "../../components/cards/subCategory-card";
 import PrerequisiteDataError from "../../quiz/components/prerequisite";
+import PageTransitionWrapper from "../../components/PageTransitionWrapper";
 
 export const selectedSubCategoryAtom = atom<string[]>({
   key: "selected-sub-category",
@@ -78,16 +79,18 @@ const SubCategoriesPage = () => {
             </h1>
           </header>
           <div className="h-[30px] sub_cat_box"></div>
-          <main className=" bg-[#74A3B6] grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-2 lg:gap-3 p-2 max-w-[1280px]  m-auto mt-[50px]">
-            {subCategoriesList?.map((keyName, number) => (
-              <CategoryCard
-                disabled={false}
-                data={subCategoriesDataList[keyName]}
-                name={keyName}
-                key={number}
-              />
-            ))}
-          </main>
+          <PageTransitionWrapper>
+            <main className=" bg-[#74A3B6] grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-2 lg:gap-3 p-2 max-w-[1280px]  m-auto mt-[50px]">
+              {subCategoriesList?.map((keyName, number) => (
+                <CategoryCard
+                  disabled={false}
+                  data={subCategoriesDataList[keyName]}
+                  name={keyName}
+                  key={number}
+                />
+              ))}
+            </main>
+          </PageTransitionWrapper>
         </motion.div>
       </div>
     </Layout>

@@ -3,6 +3,7 @@ import { useRecoilState, atom } from "recoil";
 import Layout from "../../components/quiz-btn-layout";
 import CategoryCard from "../../components/cards/category-card";
 import setQueriesChangeRoutes from "../../components/functions/setQueriesChangeRoutes";
+import PageTransitionWrapper from "../../components/PageTransitionWrapper";
 export const selectedCategoryAtom = atom<string[]>({
   key: "selected-category",
   default: [],
@@ -26,11 +27,13 @@ const CategoriesPage = () => {
           </h1>
         </header>
         <div className="h-[100px] cat_height"></div>
-        <main className=" grid-rows-[250px_250px_250px_250px_250px_250px] md:grid-rows-[250px_250px_250px] lg:grid-rows-[250px_250px]  grid h-[calc(100%-200px)] md:grid-cols-2  lg:grid-cols-3 gap-5 lg:gap-4     p-2 max-w-[1280px]  m-auto bg-[#74A3B6]  ">
-          {categories.map((keyName, number) => (
-            <CategoryCard name={keyName} key={number} />
-          ))}
-        </main>
+        <PageTransitionWrapper>
+          <main className=" grid-rows-[250px_250px_250px_250px_250px_250px] md:grid-rows-[250px_250px_250px] lg:grid-rows-[250px_250px]  grid h-[calc(100%-200px)] md:grid-cols-2  lg:grid-cols-3 gap-5 lg:gap-4     p-2 max-w-[1280px]  m-auto bg-[#74A3B6]  ">
+            {categories.map((keyName, number) => (
+              <CategoryCard name={keyName} key={number} />
+            ))}
+          </main>
+        </PageTransitionWrapper>
       </div>
     </Layout>
   );
