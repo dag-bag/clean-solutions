@@ -32,6 +32,7 @@
     "mongoose": "^6.7.2",
     "next": "^13.3.1",
     "next-images": "^1.8.5",
+    "next-page-transitions": "^1.0.0-beta.2",
     "nodemailer": "^6.9.1",
     "react": "^18.1.0",
     "react-dom": "18.1.0",

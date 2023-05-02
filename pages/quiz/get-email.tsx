@@ -61,7 +61,7 @@ const GetEmailPage = () => {
         <div className="hero-content text-center text-neutral-content">
           <form onSubmit={formik.handleSubmit} className="max-w-4xl text-white">
             <div
-              data-aos="fade-up"
+              data-aos="fade-left"
               className=" pt-14 pb-4 my-5 rounded-md px-5"
             >
               <h1 className="text-5xl text-green-1-tt font-semibold sm:text-5xl sm:leading-none lg:text-5xl xl:text-[3rem] mb-7">

@@ -421,3 +421,17 @@
 .customise_scroll_bar::-webkit-scrollbar-thumb:hover {
   background: #555;
 }
+
+/* page transtions */
+
+.page-transition-entering {
+  opacity: 0;
+}
+
+.page-transition-entered {
+  opacity: 1;
+}
+
+.page-transition-exiting {
+  opacity: 0;
+}

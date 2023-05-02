@@ -60,7 +60,7 @@ function Quiz() {
         <div className="hero-content text-center text-neutral-content">
           <form onSubmit={handleSubmit} className="max-w-4xl text-white">
             <div
-              data-aos="fade-down"
+              data-aos="fade-left"
               className=" pt-14 pb-4 my-5 rounded-md px-5"
             >
               <h1 className="md:text-5xl text-[35px]  text-black font-semibold sm:text-5xl sm:leading-none lg:text-5xl xl:text-[3rem] mb-7">
@@ -95,7 +95,7 @@ function Quiz() {
             </div>
 
             <p
-              data-aos="fade-up"
+              data-aos="fade-left"
               className="mb-5 md:text-2xl text-[22px] font-[400] text-black font-[roboto] "
             >
               Clean Solutions is a bio-security company specializing in quickly
