@@ -6,8 +6,11 @@
     "start": "next start"
   },
   "dependencies": {
+    "@emotion/react": "^11.11.0",
+    "@emotion/styled": "^11.11.0",
     "@headlessui/react": "^1.7.7",
     "@heroicons/react": "v1",
+    "@mui/material": "^5.13.3",
     "@next/font": "^13.1.6",
     "@paypal/checkout-server-sdk": "^1.0.3",
     "@paypal/react-paypal-js": "^7.8.2",
