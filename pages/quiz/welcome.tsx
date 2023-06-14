@@ -47,7 +47,7 @@ function WelcomePage() {
 
   return (
     <Layout onNext={Next} onPrevious={Prevous}>
-      <div className="flex bg-green-1 items-center justify-center h-full px-10">
+      <div className="flex  items-center justify-center h-full px-10 bg-[conic-gradient(at_left,_var(--tw-gradient-stops))] from-green-200 to-green-1">
         <motion.div
           initial={{ opacity: 0, y: -100 }}
           animate={{ opacity: 1, y: 0 }}

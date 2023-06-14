@@ -1,5 +1,5 @@
 const Foo = () => (
-  <div className="w-full min-h-screen font-sans text-gray-900 bg-gradient-to-br from-transparent to-green-100">
+  <div className="w-full min-h-screen  text-gray-900 bg-gradient-to-br from-transparent to-green-100">
     <div className="fixed px-3 py-2 text-sm font-bold text-white bg-gray-900 rounded bottom-4 left-4 z-50">
       <span className="sm:hidden">DEFAULT</span>
       <span className="hidden sm:inline-block md:hidden">SM</span>
@@ -9,7 +9,12 @@ const Foo = () => (
     </div>
     <nav className="flex justify-between items-center py-8 px-6 mx-auto max-w-screen-xl md:px-12 lg:px-16 xl:px-24">
       <a href="#" className="text-3xl md:text-4xl font-bold tracking-wide">
-        Clean<span className="text-green">Tech</span>
+        <img
+          src="https://cleansolutions.tech/wp-content/uploads/2022/09/clean-solution-logo-1024x337-1-2.png"
+          className="w-52"
+          alt=""
+        />
+        {/* Clean<span className="text-green">Tech</span> */}
       </a>
       <div className="inset-0 transition-all bg-white/70 backdrop-blur-xl z-20 md:static md:bg-transparent md:flex items-center justify-center space-y-8 md:space-y-0 md:space-x-8 flex-col md:flex-row lg:space-x-14">
         <ul className="flex flex-col md:flex-row items-center space-y-6 md:space-y-0 md:space-x-6 lg:md:-x-8">
@@ -36,14 +41,17 @@ const Foo = () => (
           src="/img/leaf.png"
           alt=""
         /> */}
-        <span className="flex items-center px-1 text-xl text-green">
+        <span className="flex items-center px-1 text-xl text-[#518ca4]">
           <span className="font-medium">100% Trusted By Brands</span>
           {/* <img className="w-auto h-8" src="/img/vegetable.png" alt="" /> */}
         </span>
         <h1 className="pt-4 text-4xl sm:text-5xl lg:text-6xl font-bold tracking-tighter leading-tight whitespace-nowrap">
           Clean Tech Solutions <br />
           Take Your Own <br />
-          <span className="whitespace-nowrap text-green"> Adventure Quiz</span>
+          <span className="whitespace-nowrap text-[#518ca4]">
+            {" "}
+            Adventure Quiz
+          </span>
         </h1>
         <p className="pt-8 sm:text-lg max-w-md font-normal text-gray-600 leading-relaxed">
           Today’s world requires a stronger and safer response for disinfection.
@@ -64,7 +72,7 @@ const Foo = () => (
           src="/img/dish.png"
           alt=""
         />
-        <div className="absolute right-0 lg:-right-6 top-0 lg:top-28 flex flex-col py-5 px-7 rounded-2xl shadow-xl bg-white/80 backdrop-blur-xl hover:-translate-y-2 hover:shadow-2xl transition-all duration-300">
+        {/* <div className="absolute right-0 lg:-right-6 top-0 lg:top-28 flex flex-col py-5 px-7 rounded-2xl shadow-xl bg-white/80 backdrop-blur-xl hover:-translate-y-2 hover:shadow-2xl transition-all duration-300">
           <div className="flex -space-x-3">
             <div
               v-for="i in 3"
@@ -75,11 +83,9 @@ const Foo = () => (
           </div>
           <div className="pt-3 font-bold">Happy customers</div>
           <div className="flex items-center text-gray-600 leading-relaxed">
-            {/* <staricon className="w-5 h-5"> */}
             <span className="pl-1">4.9 (+2.5k Ratings)</span>
-            {/* </staricon> */}
           </div>
-        </div>
+        </div> */}
       </div>
     </div>
   </div>

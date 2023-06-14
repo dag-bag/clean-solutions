@@ -72,7 +72,7 @@ const AnimatedCharacters = (props: any) => {
                   <motion.span
                     className={` ${
                       Tag == "h1"
-                        ? "xl:text-[70px] md:text-[50px] text-[35px] font-[600] text-blue-1"
+                        ? "xl:text-[70px] md:text-[50px] text-[35px] font-[600] text-blue-1 "
                         : Tag == "h2"
                         ? "xl:text-[50px] md:text-[30px] text-[20px] font-[500] text-gray-500"
                         : "xl:text-[20px] md:text-[20px]  text-[15px] font-[400] text-black"

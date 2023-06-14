@@ -58,10 +58,15 @@ export default function AnimationHeading() {
       variants={container}
       className="p-5 md:p-0"
     >
-      <div className="container">
+      <div className="container ">
         {placeholderText.map((placeholder, index) => {
           return (
-            <motion.div key={index} variants={itemVariants} custom={index}>
+            <motion.div
+              key={index}
+              variants={itemVariants}
+              custom={index}
+              className="mb-2 "
+            >
               <AnimatedText {...placeholder} />
             </motion.div>
           );

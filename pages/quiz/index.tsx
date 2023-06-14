@@ -53,17 +53,17 @@ function Quiz() {
   return (
     <Layout onNext={Next} onPrevious={Prevous} isEnabled={!isValid}>
       <div
-        style={{ backgroundImage: `url("./page1.png")` }}
-        className="hero min-h-screen overflow-hidden bg-center bg-cover"
+        // style={{ backgroundImage: `url("./page1.png")` }}
+        className="hero min-h-screen overflow-hidden bg-center bg-cover bg-[conic-gradient(at_left,_var(--tw-gradient-stops))] from-green-200 to-green-1"
       >
-        <div className="hero-overlay bg-opacity-80 bg-green-1"></div>
+        {/* <div className="hero-overlay bg-opacity-80 "></div> */}
         <div className="hero-content text-center text-neutral-content">
           <form onSubmit={handleSubmit} className="max-w-4xl text-white">
             <div
               data-aos="fade-left"
-              className=" pt-14 pb-4 my-5 rounded-md px-5"
+              className="  pb-4 my-5 rounded-md px-5 flex justify-center items-center flex-col"
             >
-              <h1 className="md:text-5xl text-[35px]  text-black font-semibold sm:text-5xl sm:leading-none lg:text-5xl xl:text-[3rem] mb-7">
+              <h1 className="md:text-5xl text-[35px]  text-fun-1   sm:text-5xl sm:leading-none lg:text-5xl xl:text-[2.5rem] mb-7 bg-white py-3 rounded-full max-w-2xl font-semibold px-6 md:mb-12">
                 {" "}
                 {data[0].question}{" "}
               </h1>
@@ -84,7 +84,7 @@ function Quiz() {
                 />
 
                 {errors.name && (
-                  <div>
+                  <div className="text-error">
                     <span>
                       {" "}
                       <i className="text-red-500">●</i> {errors.name}
@@ -96,7 +96,7 @@ function Quiz() {
 
             <p
               data-aos="fade-left"
-              className="mb-5 md:text-2xl text-[22px] font-[400] text-black font-[roboto] "
+              className="mb-5 !font-light text-lg text-fun-1 drop-shadow-lg"
             >
               Clean Solutions is a bio-security company specializing in quickly
               identifying economical and eco-friendly solutions to micro-organic

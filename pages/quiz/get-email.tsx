@@ -54,20 +54,20 @@ const GetEmailPage = () => {
   return (
     <Layout onNext={Next} onPrevious={Prevous} isEnabled={!formik.isValid}>
       <div
-        style={{ backgroundImage: `url("./page1.png")` }}
-        className="hero min-h-screen overflow-hidden bg-center bg-cover"
+        // style={{ backgroundImage: `url("./page1.png")` }}
+        className="hero min-h-screen overflow-hidden bg-center bg-cover bg-[conic-gradient(at_left,_var(--tw-gradient-stops))] from-green-200 to-green-1"
       >
-        <div className="hero-overlay bg-opacity-80 bg-blue-1"></div>
+        {/* <div className="hero-overlay bg-opacity-80 "></div> */}
         <div className="hero-content text-center text-neutral-content">
           <form onSubmit={formik.handleSubmit} className="max-w-4xl text-white">
             <div
               data-aos="fade-left"
-              className=" pt-14 pb-4 my-5 rounded-md px-5"
+              className="  pb-4 my-5 rounded-md px-5 flex justify-center items-center flex-col"
             >
-              <h1 className="text-5xl text-green-1-tt font-semibold sm:text-5xl sm:leading-none lg:text-5xl xl:text-[3rem] mb-7">
+              <h1 className="md:text-5xl text-[35px]  text-fun-1   sm:text-5xl sm:leading-none lg:text-5xl xl:text-[2.5rem] mb-7 bg-white py-3 rounded-full max-w-2xl font-semibold px-6 md:mb-12">
                 Your Email Address
               </h1>
-              <Spacing spacing={2} className="mb-10">
+              <Spacing spacing={2} className="">
                 <input
                   ref={ref}
                   name="email"
@@ -81,7 +81,7 @@ const GetEmailPage = () => {
                   } input input-bordered w-full max-w-xl  rounded-full text-center border-2  py-5  md:text-[18px] placeholder:text-gray-300  bg-transparent !bg-white !text-black `}
                 />
                 {formik.errors && (
-                  <div>
+                  <div className="text-error">
                     <span>
                       {" "}
                       <i className="text-red-500">●</i> {formik.errors.email}
@@ -90,6 +90,19 @@ const GetEmailPage = () => {
                 )}
               </Spacing>
             </div>
+            <p
+              data-aos="fade-left"
+              className="mb-5 !font-light text-lg text-fun-1 drop-shadow-lg"
+            >
+              Clean Solutions is a bio-security company specializing in quickly
+              identifying economical and eco-friendly solutions to micro-organic
+              challenges. With our focus on safety and improving health through
+              innovative products and services, our formulas are incredibly
+              versatile and typically cost less than 80% of what you’re paying
+              now. We reduce our environmental footprint with unique products
+              that eliminate over 95% of petroleum plastics used in conventional
+              packaging.
+            </p>
           </form>
         </div>
       </div>
